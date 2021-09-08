@@ -4,8 +4,8 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-USER_GROUP_CHOICES = ('admin', 'teacher', 'student')
-USER_GROUP_CHOICES_RUS = ('Админ', 'Преподаватель', 'Студент')
+USER_GROUP_CHOICES = ('admin', 'manager', 'teacher', 'student')
+USER_GROUP_CHOICES_RUS = ('Администратор', 'Менеджер учебного процесса', 'Преподаватель', 'Студент')
 USER_GROUP_CHOICES = list(zip(USER_GROUP_CHOICES, USER_GROUP_CHOICES_RUS))
 
 
@@ -34,6 +34,20 @@ class Group(models.Model):
         verbose_name_plural = 'Группы'
 
 
+class Photo(models.Model):
+    """ Модель галереи пользователей """
+    image = models.ImageField(upload_to='images/photos', verbose_name='Изображение', max_length=None)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
+    likes = models.ManyToManyField('Profile', verbose_name='Лайки', blank=True, related_name='likes')
+
+    def __str__(self):
+        return self.image.name
+
+    class Meta:
+        verbose_name = 'Фотография'
+        verbose_name_plural = 'Фотографии'
+
+
 class Profile(models.Model):
     """ Модель профиля пользователей """
     GENDER_CHOICES = ('m', 'f')
@@ -45,7 +59,8 @@ class Profile(models.Model):
     gender = models.CharField(max_length=50, verbose_name='Пол', choices=GENDER_CHOICES)
     phone = PhoneNumberField(verbose_name='Номер телефона', unique=True)
     date_of_birthday = models.DateField(verbose_name='Дата рождения')
-    avatar = models.ImageField(verbose_name='Аватарка', upload_to='images/avatars', blank=True, null=True)
+    avatar = models.ImageField(verbose_name='Аватарка', upload_to='images/photos', blank=True, null=True)
+    photos = models.ManyToManyField(Photo, verbose_name='Фотографии', blank=True)
     friends = models.ManyToManyField(User, blank=True, verbose_name='Друзья', related_name='friends')
     user_group = models.CharField(
         max_length=50,

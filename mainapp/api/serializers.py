@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from ..models import (
     Profile,
+    Photo,
     Student,
     Teacher,
     Manager,
@@ -50,6 +51,20 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
         fields = ['middle_name', 'gender', 'phone', 'date_of_birthday']
 
 
+class PhotoSerializer(serializers.ModelSerializer):
+    """ Серилизация модели галереи """
+    likes = ProfileSerializer(read_only=False, many=True)
+
+    class Meta:
+        model = Photo
+        fields = ['image', 'date', 'likes']
+
+
+class UploadPhotoSerializer(serializers.Serializer):
+    """ Серилизация модели галереи """
+    image = serializers.ImageField()
+
+
 class CreateProfileSerializer(serializers.Serializer):
     """ Серилизатор регистрации сотрудника """
     username = serializers.CharField(max_length=50)
@@ -85,12 +100,14 @@ class CreateProfileSerializer(serializers.Serializer):
 
 
 class TeacherSerializer(ProfileSerializer):
-    """ Сериализация модели студентов """
+    """ Сериализация модели преподавателей """
+    photos = PhotoSerializer(read_only=False, many=True)
+
     class Meta:
         model = Teacher
         fields = [
             'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'date_of_birthday', 'education', 'professional_activity'
+            'date_of_birthday', 'education', 'professional_activity', 'photos'
         ]
 
 
@@ -106,22 +123,25 @@ class GroupSerializer(serializers.ModelSerializer):
 class StudentSerializer(ProfileSerializer):
     """ Сериализация модели студентов """
     group = GroupSerializer(read_only=True, many=True)
+    photos = PhotoSerializer(read_only=False, many=True)
 
     class Meta:
         model = Student
         fields = [
             'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'hobbies', 'dream', 'date_of_birthday', 'group'
+            'hobbies', 'dream', 'date_of_birthday', 'group', 'photos'
         ]
 
 
 class ManagerSerializer(ProfileSerializer):
     """ Сериализация модели менеджера учебного процесса """
+    photos = PhotoSerializer(read_only=False, many=True)
+
     class Meta:
         model = Manager
         fields = [
             'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'date_of_birthday'
+            'date_of_birthday', 'photos'
         ]
 
 
@@ -158,6 +178,9 @@ class TimetableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timetable
         fields = ['date', 'lesson', 'group', 'is_finished']
+
+    def create(self, validated_data):
+        return super().create(validated_data)
 
 
 class CertificateSerializer(serializers.ModelSerializer):

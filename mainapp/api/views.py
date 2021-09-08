@@ -1,17 +1,17 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import viewsets, renderers
-from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
 
-from .mixins import ProfileAPIViewMixin
+from .mixins import ProfileManagerMixin
 from .renders import CustomBrowsableAPIRenderer
 from .serializers import (
     StudentSerializer,
     TeacherSerializer,
+    ManagerSerializer,
     CourseSerializer,
     LessonSerializer,
     LessonRetrieveSerializer,
@@ -19,8 +19,11 @@ from .serializers import (
     TimetableSerializer,
     CertificateSerializer,
     AcademicPerformanceSerializer,
+    UploadPhotoSerializer,
 )
-from ..models import Student, Teacher, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance
+from ..models import (
+    Student, Teacher, Manager, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance
+)
 
 
 class AllStudentsViewSet(viewsets.ModelViewSet):
@@ -71,6 +74,8 @@ class PersonalProfileView(APIView):
             return Student.objects.filter(user=user)
         elif user.profile.user_group == 'teacher':
             return Teacher.objects.filter(user=user)
+        elif user.profile.user_group == 'manager':
+            return Manager.objects.filter(user=user)
         else:
             return None
 
@@ -81,6 +86,8 @@ class PersonalProfileView(APIView):
             serializer = StudentSerializer(obj, many=True)
         elif user.profile.user_group == 'teacher':
             serializer = TeacherSerializer(obj, many=True)
+        elif user.profile.user_group == 'manager':
+            serializer = ManagerSerializer(obj, many=True)
         else:
             return Response(status=404)
         return Response(serializer.data)
@@ -115,7 +122,7 @@ class AllCoursesViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class LessonsDetailView(ProfileAPIViewMixin):
+class LessonsDetailView(ProfileManagerMixin):
     """ Эндпоинт списка доступных уроков относящихся к курсу """
     def get(self, *args, **kwargs):
         item_profile = self.get_profile()   # get_profile - метод миксина ProfileAPIViewMixin
@@ -140,7 +147,7 @@ class LessonsDetailView(ProfileAPIViewMixin):
                 return Response(status=400)
 
 
-class TimetableViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
+class TimetableViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
     """ Эндпоинт учебного рассписания """
     serializer_class = TimetableSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -153,7 +160,7 @@ class TimetableViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
             return Timetable.objects.filter(group__in=item_profile.teacher.group.all())
 
 
-class CertificateViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
+class CertificateViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
     """ Эндпоинт списка полученных сертификатов """
     serializer_class = CertificateSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -163,7 +170,7 @@ class CertificateViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
         return Certificate.objects.filter(profile=item_profile)
 
 
-class AcademicPerformanceViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
+class AcademicPerformanceViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
     """ Эндпоинт успеваемости обучающегося """
     serializer_class = AcademicPerformanceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -186,3 +193,28 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
             return Response(status=201)
         else:
             return Response(status=404)
+
+
+class UploadPhotoView(ProfileManagerMixin):
+    """ Эндпоинт загрузки фотографии """
+    def post(self, request, *args, **kwargs):
+        file_serializer = UploadPhotoSerializer(data=request.data)
+        if file_serializer.is_valid():
+            self.add_photo(request)
+            return Response(status=201)
+        else:
+            return Response(status=400)
+
+
+class UploadAvatarView(ProfileManagerMixin):
+    """ Эндпоинт загрузки аватарки """
+    def post(self, request, *args, **kwargs):
+        item_profile = self.get_profile()
+        file_serializer = UploadPhotoSerializer(data=request.data)
+        if file_serializer.is_valid():
+            new_avatar = self.add_photo(request)
+            item_profile.avatar = new_avatar.image.url
+            item_profile.save()
+            return Response(status=201)
+        else:
+            return Response(status=400)

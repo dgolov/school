@@ -12,6 +12,8 @@ from .views import (
     TimetableViewSet,
     CertificateViewSet,
     AcademicPerformanceViewSet,
+    UploadPhotoView,
+    UploadAvatarView,
 )
 
 
@@ -30,6 +32,8 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/', PersonalProfileView.as_view(), name='profile'),
     path('profile/create/', ProfileCreateView.as_view(), name='create_profile'),
-    path('courses/<int:course_pk>/lessons/<int:pk>', LessonsDetailView.as_view())
+    path('profile/upload-photo', UploadPhotoView.as_view(), name='upload_photo'),
+    path('profile/upload-avatar', UploadAvatarView.as_view(), name='upload_avatar'),
+    path('courses/<int:course_pk>/lessons/<int:pk>', LessonsDetailView.as_view(), name='lesson_detail'),
 ]
 urlpatterns += router.urls
