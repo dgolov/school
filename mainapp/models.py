@@ -9,6 +9,18 @@ USER_GROUP_CHOICES_RUS = ('Админ', 'Преподаватель', 'Студ�
 USER_GROUP_CHOICES = list(zip(USER_GROUP_CHOICES, USER_GROUP_CHOICES_RUS))
 
 
+class IntegerRangeField(models.IntegerField):
+    """ Числовое поле с максимальным и минимальным значением """
+    def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        models.IntegerField.__init__(self, verbose_name, name, **kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value, 'max_value': self.max_value}
+        defaults.update(kwargs)
+        return super(IntegerRangeField, self).formfield(**defaults)
+
+
 class Group(models.Model):
     """ Модель группы обучающихся """
     name = models.CharField(max_length=50, verbose_name='Название группы')
@@ -166,5 +178,33 @@ class Certificate(models.Model):
 
 
 class AcademicPerformance(models.Model):
-    """ Модель успеваемости """
-    pass
+    """ Модель успеваемости по 10 бальной шкале """
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Обучающийся')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
+    date = models.DateField(verbose_name='Дата оценки')
+    homework_grade = IntegerRangeField(
+        min_value=1,
+        max_value=10,
+        verbose_name='Домашняя работа',
+        null=True,
+        blank=True
+    )
+    classwork_grade = IntegerRangeField(
+        min_value=1,
+        max_value=10,
+        verbose_name='Классная работа',
+        null=True,
+        blank=True
+    )
+    test_grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Контрольная работа', null=True, blank=True)
+    examination_grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Экзамен', null=True, blank=True)
+    late = models.BooleanField(default=False, verbose_name='Опоздание')
+    absent = models.BooleanField(default=False, verbose_name='Отсутствие')
+
+    def __str__(self):
+        return f'{self.student} - {self.lesson} - {self.date}'
+
+    class Meta:
+        verbose_name = 'Успеваемость'
+        verbose_name_plural = 'Успеваемость'

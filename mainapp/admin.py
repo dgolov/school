@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Teacher, Manager, Group, Course, Lesson, Timetable, Certificate
+from .models import Student, Teacher, Manager, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -54,6 +54,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 @admin.register(Timetable)
 class TimetableAdmin(admin.ModelAdmin):
+    """ Отображение рассписания в админке """
     list_display = ['id', 'lesson', 'group', 'date']
     list_display_links = ['id', 'lesson']
     list_filter = ['lesson', 'group', 'date']
@@ -61,6 +62,15 @@ class TimetableAdmin(admin.ModelAdmin):
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
+    """ Отображение сертификатов в админке """
     list_display = ['id', 'profile', 'course']
     list_display_links = ['id', 'profile']
     list_filter = ['course']
+
+
+@admin.register(AcademicPerformance)
+class AcademicPerformanceAdmin(admin.ModelAdmin):
+    """ Отображение успеваемости в админке """
+    list_display = ['student', 'lesson', 'teacher', 'date']
+    list_filter = ['lesson']
+    list_display_links = ['student', 'lesson']

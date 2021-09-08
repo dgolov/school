@@ -21,6 +21,7 @@ router.register('teachers', AllTeachersViewSet, basename='teachers')
 router.register('courses', AllCoursesViewSet, basename='courses')
 router.register('timetable', TimetableViewSet, basename='timetable')
 router.register('certificates', CertificateViewSet, basename='certificates')
+router.register('performance', AcademicPerformanceViewSet, basename='performance')
 
 
 urlpatterns = [

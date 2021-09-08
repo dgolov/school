@@ -172,4 +172,12 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 class AcademicPerformanceSerializer(serializers.ModelSerializer):
     """ Серилизация модели успеваемости """
-    pass
+    class Meta:
+        model = AcademicPerformance
+        fields = [
+            'student', 'lesson', 'teacher', 'date', 'homework_grade', 'classwork_grade', 'test_grade',
+            'examination_grade', 'late', 'absent'
+        ]
+
+    def create(self, validated_data):
+        return super().create(validated_data)

@@ -20,7 +20,7 @@ from .serializers import (
     CertificateSerializer,
     AcademicPerformanceSerializer,
 )
-from ..models import Student, Teacher, Course, Lesson, Timetable, Certificate, AcademicPerformance
+from ..models import Student, Teacher, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance
 
 
 class AllStudentsViewSet(viewsets.ModelViewSet):
@@ -56,7 +56,7 @@ class LoginView(APIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return Response(status=200)
+                return Response(status=201)
             else:
                 return Response(status=404)
         else:
@@ -98,7 +98,7 @@ class PersonalProfileView(APIView):
             teacher.education = data.get('education')
             teacher.professional_activity = data.get('professional_activity')
             teacher.save()
-        return Response(status=200)
+        return Response(status=201)
 
 
 class AllCoursesViewSet(viewsets.ModelViewSet):
@@ -165,4 +165,24 @@ class CertificateViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
 
 class AcademicPerformanceViewSet(viewsets.ModelViewSet, ProfileAPIViewMixin):
     """ Эндпоинт успеваемости обучающегося """
-    pass
+    serializer_class = AcademicPerformanceSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        item_profile = self.get_profile()
+        if item_profile.user_group == 'student':
+            return AcademicPerformance.objects.filter(student=item_profile)
+        elif item_profile.user_group == 'teacher':
+            teacher_groups = Group.objects.filter(teacher=item_profile)
+            teacher_students = Student.objects.filter(group__in=teacher_groups)
+            return AcademicPerformance.objects.filter(student__in=teacher_students)
+
+    def create(self, request, *args, **kwargs):
+        item_profile = self.get_profile()
+        if item_profile.user_group == 'teacher':
+            serializer = AcademicPerformanceSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(status=201)
+        else:
+            return Response(status=404)
