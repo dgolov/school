@@ -62,6 +62,17 @@ class Profile(models.Model):
     avatar = models.ImageField(verbose_name='Аватарка', upload_to='images/photos', blank=True, null=True)
     photos = models.ManyToManyField(Photo, verbose_name='Фотографии', blank=True)
     friends = models.ManyToManyField(User, blank=True, verbose_name='Друзья', related_name='friends')
+    friend_request_in = models.ManyToManyField(
+        User,
+        blank=True,
+        verbose_name='Входящие заявки в друзья',
+        related_name='in_friends')
+    friend_request_out = models.ManyToManyField(
+        User,
+        blank=True,
+        verbose_name='Исходящие заявки в друзья',
+        related_name='out_friends'
+    )
     user_group = models.CharField(
         max_length=50,
         verbose_name='Группа пользователей',
@@ -111,7 +122,7 @@ class Teacher(Profile):
         verbose_name_plural = 'Преподаватели'
 
 
-class Manager(Profile):
+class EducationalManager(Profile):
     """ Модель менеджера учебного процесса """
 
     class Meta:
@@ -119,11 +130,29 @@ class Manager(Profile):
         verbose_name_plural = 'Менеджеры учебного процесса'
 
 
+class Category(models.Model):
+    """ Модель категории курса """
+    name = models.CharField(max_length=100, verbose_name='Название Категории')
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['id']
+
+
 class Course(models.Model):
     """ Модель курса """
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', blank=True, null=True)
     name = models.CharField(max_length=100, verbose_name='Название курса')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель курса')
     price = models.DecimalField(verbose_name='Цена', max_digits=3000000, decimal_places=2)
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
+    video_presentation = models.SlugField(verbose_name='Ссылка на видеопрезентацию курса', blank=True, null=True)
     is_finished = models.ManyToManyField(
         Student,
         blank=True,
@@ -146,6 +175,12 @@ class Lesson(models.Model):
     video_slug = models.SlugField(verbose_name='Ссылка на видеозапись урока', blank=True, null=True)
     lesson_number = models.PositiveIntegerField(verbose_name='Номер урока в курсе', default=1)
     description = models.TextField(verbose_name='Описание урока', blank=True, null=True)
+    materials = models.FileField(
+        upload_to='files/courses/materials',
+        verbose_name='Материалы курса',
+        blank=True,
+        null=True
+    )
     is_finished = models.ManyToManyField(
         Student,
         blank=True,

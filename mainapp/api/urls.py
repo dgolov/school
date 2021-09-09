@@ -3,24 +3,28 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views import (
-    AllStudentsViewSet,
-    AllTeachersViewSet,
+    StudentsViewSet,
+    TeachersViewSet,
     PersonalProfileView,
     ProfileCreateView,
-    AllCoursesViewSet,
+    FriendRequestView,
+    FriendResponseView,
+    CategoryListView,
+    CoursesViewSet,
     LessonsDetailView,
     TimetableViewSet,
     CertificateViewSet,
     AcademicPerformanceViewSet,
     UploadPhotoView,
     UploadAvatarView,
+    LikePhotoView,
 )
 
 
 router = routers.SimpleRouter()
-router.register('students', AllStudentsViewSet, basename='students')
-router.register('teachers', AllTeachersViewSet, basename='teachers')
-router.register('courses', AllCoursesViewSet, basename='courses')
+router.register('students', StudentsViewSet, basename='students')
+router.register('teachers', TeachersViewSet, basename='teachers')
+router.register('courses', CoursesViewSet, basename='courses')
 router.register('timetable', TimetableViewSet, basename='timetable')
 router.register('certificates', CertificateViewSet, basename='certificates')
 router.register('performance', AcademicPerformanceViewSet, basename='performance')
@@ -34,6 +38,10 @@ urlpatterns = [
     path('profile/create/', ProfileCreateView.as_view(), name='create_profile'),
     path('profile/upload-photo', UploadPhotoView.as_view(), name='upload_photo'),
     path('profile/upload-avatar', UploadAvatarView.as_view(), name='upload_avatar'),
+    path('profile/like-photo', LikePhotoView.as_view(), name='like-photo'),
+    path('profile/add-friend-request', FriendRequestView.as_view(), name='add-friend-request'),
+    path('profile/add-friend-response', FriendResponseView.as_view(), name='add-friend-response'),
+    path('categories', CategoryListView.as_view(), name='categories'),
     path('courses/<int:course_pk>/lessons/<int:pk>', LessonsDetailView.as_view(), name='lesson_detail'),
 ]
 urlpatterns += router.urls

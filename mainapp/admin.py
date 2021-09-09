@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 
 from .models import (
-    Student, Teacher, Manager, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance, Photo
+    Student, Teacher, EducationalManager, Group, Category, Course, Lesson, Timetable, Certificate, AcademicPerformance, Photo
 )
 
 
@@ -60,11 +60,18 @@ class TeacherAdmin(ProfileAdmin):
     search_fields = ['user__last_name', 'user__first_name', 'middle_name', 'professional_activity']
 
 
-@admin.register(Manager)
+@admin.register(EducationalManager)
 class ManagerAdmin(ProfileAdmin):
     """ Отображение списка преподователей в админке """
     list_display = ['full_name', 'username', 'user_group']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
+    search_fields = ['name']
 
 
 @admin.register(Course)

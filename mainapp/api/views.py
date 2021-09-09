@@ -1,17 +1,21 @@
 from django.contrib.auth import authenticate, login
-from rest_framework import viewsets, renderers
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
 
-from .mixins import ProfileManagerMixin
+from .mixins import ProfileManagerMixin, AddFriendMixin
 from .renders import CustomBrowsableAPIRenderer
 from .serializers import (
-    StudentSerializer,
-    TeacherSerializer,
-    ManagerSerializer,
+    ProfileSerializer,
+    StudentDetailSerializer,
+    TeacherDetailSerializer,
+    EducationalManagerDetailSerializer,
+    CategorySerializer,
     CourseSerializer,
     LessonSerializer,
     LessonRetrieveSerializer,
@@ -21,27 +25,56 @@ from .serializers import (
     AcademicPerformanceSerializer,
     UploadPhotoSerializer,
 )
+from .utils import get_serializer_to_display_the_profile
 from ..models import (
-    Student, Teacher, Manager, Group, Course, Lesson, Timetable, Certificate, AcademicPerformance
+    Profile,
+    Student,
+    Teacher,
+    EducationalManager,
+    Group,
+    Category,
+    Course,
+    Lesson,
+    Timetable,
+    Certificate,
+    AcademicPerformance,
 )
 
 
-class AllStudentsViewSet(viewsets.ModelViewSet):
+class BaseProfileViewSet(viewsets.ModelViewSet):
+    """ Базовый класс для отображения профилей """
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    detail_serializer_class = None  # Сериализатор для детального отображения информации
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+        obj = get_object_or_404(self.queryset, pk=pk)
+        serializer = get_serializer_to_display_the_profile(request, obj, self.detail_serializer_class)
+        return Response(serializer.data)
+
+
+class StudentsViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех обучающихся """
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    detail_serializer_class = StudentDetailSerializer
 
 
-class AllTeachersViewSet(viewsets.ModelViewSet):
+class TeachersViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех преподавателей """
     queryset = Teacher.objects.all()
-    serializer_class = TeacherSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    detail_serializer_class = TeacherDetailSerializer
+
+
+class EducationalManagerViewSet(BaseProfileViewSet):
+    """ Эндпоинт списка всех менеджеров учебного процесса """
+    permission_classes = [IsAdminUser]
+    queryset = EducationalManager.objects.all()
+    detail_serializer_class = EducationalManagerDetailSerializer
 
 
 class ProfileCreateView(CreateAPIView):
     """ Эндпоинт регистрации нового обучающегося """
+    permission_classes = [AllowAny]
     serializer_class = CreateProfileSerializer
 
 
@@ -75,7 +108,7 @@ class PersonalProfileView(APIView):
         elif user.profile.user_group == 'teacher':
             return Teacher.objects.filter(user=user)
         elif user.profile.user_group == 'manager':
-            return Manager.objects.filter(user=user)
+            return EducationalManager.objects.filter(user=user)
         else:
             return None
 
@@ -83,11 +116,11 @@ class PersonalProfileView(APIView):
         user = self.request.user
         obj = self.get_queryset(user)
         if user.profile.user_group == 'student':
-            serializer = StudentSerializer(obj, many=True)
+            serializer = StudentDetailSerializer(obj, many=True)
         elif user.profile.user_group == 'teacher':
-            serializer = TeacherSerializer(obj, many=True)
+            serializer = TeacherDetailSerializer(obj, many=True)
         elif user.profile.user_group == 'manager':
-            serializer = ManagerSerializer(obj, many=True)
+            serializer = EducationalManagerDetailSerializer(obj, many=True)
         else:
             return Response(status=404)
         return Response(serializer.data)
@@ -108,11 +141,32 @@ class PersonalProfileView(APIView):
         return Response(status=201)
 
 
-class AllCoursesViewSet(viewsets.ModelViewSet):
+class FriendRequestView(APIView, AddFriendMixin):
+    """ Эндпоинт обработки исходящей заявки на добавление в друзья """
+    def post(self, *args, **kwargs):
+        status = self.add_request_friend(data=self.request.data, item_profile=self.request.user.profile)
+        return Response(status=status)
+
+
+class FriendResponseView(APIView, AddFriendMixin):
+    """ Эндпоинт обработки входящей заявки на добавление в друзья """
+    def post(self, *args, **kwargs):
+        status = self.add_response_friend(data=self.request.data, item_profile=self.request.user.profile)
+        return Response(status=status)
+
+
+class CategoryListView(ListAPIView):
+    """ Эндпоинт списка категорий курсов """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
+
+
+class CoursesViewSet(viewsets.ModelViewSet):
     """  Эндпоинт списка всех курсов """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
     @action(detail=True, renderer_classes=[CustomBrowsableAPIRenderer])
     def lessons(self, request, *args, **kwargs):
@@ -204,6 +258,17 @@ class UploadPhotoView(ProfileManagerMixin):
             return Response(status=201)
         else:
             return Response(status=400)
+
+
+class LikePhotoView(ProfileManagerMixin):
+    """ Эндпоинт лайка фото """
+    parser_classes = [JSONParser]
+
+    def post(self, *args, **kwargs):
+        data = self.request.data
+        photo_id = data.get('id')
+        status = self.like_photo(photo_id)
+        return Response(status=status)
 
 
 class UploadAvatarView(ProfileManagerMixin):
