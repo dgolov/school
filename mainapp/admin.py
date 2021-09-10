@@ -20,7 +20,8 @@ class ProfileAdmin(admin.ModelAdmin):
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     """ Отображение списка групп в админке """
-    list_display = ['name', 'teacher']
+    list_display = ['id', 'name', 'teacher']
+    list_display_links = ['name']
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
 
@@ -28,8 +29,9 @@ class GroupAdmin(admin.ModelAdmin):
 class StudentAdmin(ProfileAdmin):
     """ Отображение списка учеников в админке """
     # readonly_fields = ('user', 'first_name', 'last_name', 'email')
-    list_display = ['full_name', 'username', 'user_group']
-    list_filter = ['group']
+    list_display = ['id', 'full_name', 'username', 'user_group']
+    list_display_links = ['full_name']
+    list_filter = ['group_list']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
     # fieldsets = (
     #     ('Обучающийся', {
@@ -56,14 +58,16 @@ class StudentAdmin(ProfileAdmin):
 @admin.register(Teacher)
 class TeacherAdmin(ProfileAdmin):
     """ Отображение списка преподователей в админке """
-    list_display = ['full_name', 'username', 'professional_activity', 'user_group']
+    list_display = ['id', 'full_name', 'username', 'professional_activity', 'user_group']
+    list_display_links = ['full_name']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name', 'professional_activity']
 
 
 @admin.register(EducationalManager)
 class ManagerAdmin(ProfileAdmin):
     """ Отображение списка преподователей в админке """
-    list_display = ['full_name', 'username', 'user_group']
+    list_display = ['id', 'full_name', 'username', 'user_group']
+    list_display_links = ['full_name']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
 
 
@@ -77,7 +81,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     """ Отображение списка курсов в админке """
-    list_display = ['name', 'teacher']
+    list_display = ['id', 'name', 'teacher']
+    list_display_links = ['name']
     list_filter = ['teacher']
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
@@ -85,7 +90,8 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
     """ Отображение списка уоков в админке """
-    list_display = ['theme', 'course']
+    list_display = ['id', 'theme', 'course', 'lesson_number']
+    list_display_links = ['theme']
     list_filter = ['course']
     search_fields = ['theme', 'course__name']
 
@@ -93,8 +99,9 @@ class LessonAdmin(admin.ModelAdmin):
 @admin.register(Timetable)
 class TimetableAdmin(admin.ModelAdmin):
     """ Отображение рассписания в админке """
-    list_display = ['id', 'lesson', 'group', 'date']
+    list_display = ['id', 'lesson', 'group', 'date', 'is_finished']
     list_display_links = ['id', 'lesson']
+    list_editable = ['is_finished']
     list_filter = ['lesson', 'group', 'date']
     search_fields = ['lesson__theme', 'group__name']
 

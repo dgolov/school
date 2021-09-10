@@ -45,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_avatar(obj):
         if obj.profile.avatar:
-            return obj.profile.avatar.url
+            return obj.profile.avatar.image.url
         else:
             return None
 
@@ -140,22 +140,6 @@ class CreateProfileSerializer(serializers.Serializer):
         return new_user
 
 
-class TeacherDetailSerializer(ProfileSerializerBase):
-    """ Сериализация модели преподавателей """
-    photos = PhotoSerializer(read_only=False, many=True)
-    friends = UserSerializer(read_only=True, many=True)
-    friend_request_in = UserSerializer(read_only=True, many=True)
-    friend_request_out = UserSerializer(read_only=True, many=True)
-
-    class Meta:
-        model = Teacher
-        fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'date_of_birthday', 'education', 'professional_activity', 'photos', 'avatar', 'friends',
-            'friend_request_in', 'friend_request_out', 'user_group'
-        ]
-
-
 class GroupSerializer(serializers.ModelSerializer):
     """ Сериализация модели групп """
     teacher = ProfileSerializer()
@@ -165,9 +149,26 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'teacher']
 
 
+class TeacherDetailSerializer(ProfileSerializerBase):
+    """ Сериализация модели преподавателей """
+    photos = PhotoSerializer(read_only=False, many=True)
+    friends = UserSerializer(read_only=True, many=True)
+    friend_request_in = UserSerializer(read_only=True, many=True)
+    friend_request_out = UserSerializer(read_only=True, many=True)
+    group_list = GroupSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Teacher
+        fields = [
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
+            'date_of_birthday', 'education', 'professional_activity', 'group_list', 'photos', 'avatar', 'friends',
+            'friend_request_in', 'friend_request_out', 'user_group'
+        ]
+
+
 class StudentDetailSerializer(ProfileSerializerBase):
     """ Сериализация детальной модели студентов (видят друзья) """
-    group = GroupSerializer(read_only=True, many=True)
+    group_list = GroupSerializer(read_only=True, many=True)
     photos = PhotoSerializer(read_only=False, many=True)
     friends = UserSerializer(read_only=True, many=True)
     friend_request_in = UserSerializer(read_only=True, many=True)
@@ -177,7 +178,7 @@ class StudentDetailSerializer(ProfileSerializerBase):
         model = Student
         fields = [
             'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'hobbies', 'dream', 'date_of_birthday', 'group', 'photos', 'avatar', 'friends', 'friend_request_in',
+            'hobbies', 'dream', 'date_of_birthday', 'group_list', 'photos', 'avatar', 'friends', 'friend_request_in',
             'friend_request_out', 'user_group'
         ]
 
@@ -234,12 +235,20 @@ class LessonRetrieveSerializer(LessonSerializer):
 
 class TimetableSerializer(serializers.ModelSerializer):
     """ Серилизация модели рассписания занятий """
-    group = GroupSerializer()
     lesson = LessonSerializer()
+    group = GroupSerializer()
 
     class Meta:
         model = Timetable
         fields = ['date', 'lesson', 'group', 'is_finished']
+
+
+class TimetableCreateSerializer(serializers.ModelSerializer):
+    """ Серилизация модели рассписания занятий """
+
+    class Meta:
+        model = Timetable
+        fields = ['date', 'lesson', 'group']
 
     def create(self, validated_data):
         return super().create(validated_data)

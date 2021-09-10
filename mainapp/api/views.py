@@ -1,14 +1,15 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
-from rest_framework.parsers import JSONParser
-from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 
-from .mixins import ProfileManagerMixin, AddFriendMixin
+from .classes import BuyingCourseManager
+from .mixins import PhotoManagerMixin, AddFriendMixin
 from .renders import CustomBrowsableAPIRenderer
 from .serializers import (
     ProfileSerializer,
@@ -21,13 +22,14 @@ from .serializers import (
     LessonRetrieveSerializer,
     CreateProfileSerializer,
     TimetableSerializer,
+    TimetableCreateSerializer,
     CertificateSerializer,
     AcademicPerformanceSerializer,
+    PhotoSerializer,
     UploadPhotoSerializer,
 )
-from .utils import get_serializer_to_display_the_profile
+from .utils import get_serializer_to_display_the_profile, check_correct_data_for_add_in_timetable, delete_file
 from ..models import (
-    Profile,
     Student,
     Teacher,
     EducationalManager,
@@ -38,6 +40,7 @@ from ..models import (
     Timetable,
     Certificate,
     AcademicPerformance,
+    Photo,
 )
 
 
@@ -92,11 +95,11 @@ class LoginView(APIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return Response(status=201)
+                return Response(status=status.HTTP_201_CREATED)
             else:
-                return Response(status=404)
+                return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            return Response(status=404)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class PersonalProfileView(APIView):
@@ -122,7 +125,7 @@ class PersonalProfileView(APIView):
         elif user.profile.user_group == 'manager':
             serializer = EducationalManagerDetailSerializer(obj, many=True)
         else:
-            return Response(status=404)
+            return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
@@ -138,21 +141,41 @@ class PersonalProfileView(APIView):
             teacher.education = data.get('education')
             teacher.professional_activity = data.get('professional_activity')
             teacher.save()
-        return Response(status=201)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class FriendRequestView(APIView, AddFriendMixin):
     """ Эндпоинт обработки исходящей заявки на добавление в друзья """
     def post(self, *args, **kwargs):
-        status = self.add_request_friend(data=self.request.data, item_profile=self.request.user.profile)
-        return Response(status=status)
+        http_status = self.add_request_friend(data=self.request.data, item_profile=self.request.user.profile)
+        return Response(status=http_status)
+
+    def delete(self, *args, **kwargs):
+        http_status = self.unsubscribe(data=self.request.data, item_profile=self.request.user.profile)
+        return Response(status=http_status)
 
 
 class FriendResponseView(APIView, AddFriendMixin):
-    """ Эндпоинт обработки входящей заявки на добавление в друзья """
+    """ Эндпоинт обработки входящей заявки на добавление в друзья
+    Ожидается в запросе "answer" содержащий значение ответа
+    Значения ключа "answer":
+    "refuse" - отказ от дружбы
+    "add" - добавление в друзья
+    """
     def post(self, *args, **kwargs):
-        status = self.add_response_friend(data=self.request.data, item_profile=self.request.user.profile)
-        return Response(status=status)
+        data = self.request.data
+        answer = data.get('answer')
+        if answer == 'add':
+            http_status = self.add_response_friend(data=self.request.data, item_profile=self.request.user.profile)
+        elif answer == 'refuse':
+            http_status = self.refuse_response_friend(data=self.request.data, item_profile=self.request.user.profile)
+        else:
+            http_status = 400
+        return Response(status=http_status)
+
+    def delete(self, *args, **kwargs):
+        http_status = self.delete_friend(data=self.request.data, item_profile=self.request.user.profile)
+        return Response(status=http_status)
 
 
 class CategoryListView(ListAPIView):
@@ -176,10 +199,18 @@ class CoursesViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class LessonsDetailView(ProfileManagerMixin):
+class BuyingACourseView(APIView):
+    """ Эндпоинт покупки курса """
+    def put(self, *args, **kwargs):
+        buy_manager = BuyingCourseManager()
+        http_status = buy_manager.get_buy_status(self.request)
+        return Response(status=http_status)
+
+
+class LessonsDetailView(APIView):
     """ Эндпоинт списка доступных уроков относящихся к курсу """
     def get(self, *args, **kwargs):
-        item_profile = self.get_profile()   # get_profile - метод миксина ProfileAPIViewMixin
+        item_profile = self.request.user.profile
         course_pk = kwargs.get('course_pk')
         lesson_pk = kwargs.get('pk')
         course = Course.objects.get(pk=course_pk)
@@ -190,7 +221,7 @@ class LessonsDetailView(ProfileManagerMixin):
                 serializer = LessonRetrieveSerializer(lesson_objects, many=False)
                 return Response(serializer.data)
             else:
-                return Response(status=400)
+                return Response(status=status.HTTP_402_PAYMENT_REQUIRED)
 
         elif item_profile.user_group == 'teacher':
             if course in item_profile.teacher.courses.all():
@@ -198,88 +229,158 @@ class LessonsDetailView(ProfileManagerMixin):
                 serializer = LessonRetrieveSerializer(lesson_objects, many=False)
                 return Response(serializer.data)
             else:
-                return Response(status=400)
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-class TimetableViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
+class TimetableViewSet(viewsets.ModelViewSet):
     """ Эндпоинт учебного рассписания """
     serializer_class = TimetableSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        item_profile = self.get_profile()
+        item_profile = self.request.user.profile
         if item_profile.user_group == 'student':
-            return Timetable.objects.filter(group__in=item_profile.student.group.all())
+            return Timetable.objects.filter(group__in=item_profile.student.group_list.all())
         elif item_profile.user_group == 'teacher':
-            return Timetable.objects.filter(group__in=item_profile.teacher.group.all())
+            return Timetable.objects.filter(group__in=item_profile.teacher.group_list.all())
+
+    def create(self, request, *args, **kwargs):
+        item_profile = self.request.user.profile
+        if item_profile.user_group == 'teacher' or item_profile.user_group == 'manager':
+            data = request.data
+            data_check_status = check_correct_data_for_add_in_timetable(item_profile, data)
+            if data_check_status != 202:
+                return Response(status=data_check_status)
+            serializer = TimetableCreateSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        elif item_profile.user_group == 'student':
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-class CertificateViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
+class CertificateViewSet(viewsets.ModelViewSet):
     """ Эндпоинт списка полученных сертификатов """
     serializer_class = CertificateSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        item_profile = self.get_profile()
+        item_profile = self.request.user.profile
         return Certificate.objects.filter(profile=item_profile)
 
 
-class AcademicPerformanceViewSet(viewsets.ModelViewSet, ProfileManagerMixin):
+class AcademicPerformanceViewSet(viewsets.ModelViewSet):
     """ Эндпоинт успеваемости обучающегося """
     serializer_class = AcademicPerformanceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        item_profile = self.get_profile()
+        item_profile = self.request.user.profile
         if item_profile.user_group == 'student':
             return AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
             teacher_groups = Group.objects.filter(teacher=item_profile)
-            teacher_students = Student.objects.filter(group__in=teacher_groups)
+            teacher_students = Student.objects.filter(group_list__in=teacher_groups)
             return AcademicPerformance.objects.filter(student__in=teacher_students)
 
     def create(self, request, *args, **kwargs):
-        item_profile = self.get_profile()
+        item_profile = request.user.profile
         if item_profile.user_group == 'teacher':
             serializer = AcademicPerformanceSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
-            return Response(status=201)
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response(status=404)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-class UploadPhotoView(ProfileManagerMixin):
+class UploadPhotoView(APIView, PhotoManagerMixin):
     """ Эндпоинт загрузки фотографии """
+    parser_classes = (MultiPartParser, FileUploadParser,)
+
     def post(self, request, *args, **kwargs):
         file_serializer = UploadPhotoSerializer(data=request.data)
         if file_serializer.is_valid():
             self.add_photo(request)
-            return Response(status=201)
+            return Response(status=status.HTTP_201_CREATED)
         else:
-            return Response(status=400)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class LikePhotoView(ProfileManagerMixin):
+class DeletePhotoView(DestroyAPIView):
+    """ Эндпоинт удаления фото """
+    serializer_class = PhotoSerializer
+
+    def get_queryset(self):
+        queryset = Photo.objects.filter(pk=self.kwargs.get('pk'))
+        return queryset
+
+    def destroy(self, request, *args, **kwargs):
+        profile = self.request.user.profile
+        try:
+            instance = self.get_object()
+        except Photo.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if instance.for_profile == profile:
+            if instance == profile.avatar:
+                profile.avatar = None
+            delete_file(instance.image.url)
+            self.perform_destroy(instance)
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class LikePhotoView(APIView, PhotoManagerMixin):
     """ Эндпоинт лайка фото """
     parser_classes = [JSONParser]
+    # TODO Лайк фото только друзьям
 
-    def post(self, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = self.request.data
         photo_id = data.get('id')
-        status = self.like_photo(photo_id)
-        return Response(status=status)
+        http_status = self.like_photo(request, photo_id)
+        return Response(status=http_status)
 
 
-class UploadAvatarView(ProfileManagerMixin):
+class UploadAvatarView(APIView, PhotoManagerMixin):
     """ Эндпоинт загрузки аватарки """
+    parser_classes = (MultiPartParser, FileUploadParser,)
+
     def post(self, request, *args, **kwargs):
-        item_profile = self.get_profile()
+        item_profile = request.user.profile
         file_serializer = UploadPhotoSerializer(data=request.data)
         if file_serializer.is_valid():
             new_avatar = self.add_photo(request)
-            item_profile.avatar = new_avatar.image.url
+            item_profile.avatar = new_avatar
             item_profile.save()
-            return Response(status=201)
+            return Response(status=status.HTTP_201_CREATED)
         else:
-            return Response(status=400)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class SetAvatarView(APIView):
+    """ Эндпоинт установки аватарки из существующих фото """
+    def put(self, *args, **kwargs):
+        data = self.request.data
+        profile = self.request.user.profile
+        photo = Photo.objects.get(pk=data['id'])
+        if photo in profile.photos.all():
+            profile.avatar = photo
+            profile.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, *args, **kwargs):
+        """ Удаление аватарки с сохранением фото в галереи """
+        profile = self.request.user.profile
+        if not profile.avatar:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        profile.avatar = None
+        profile.save()
+        return Response(status=status.HTTP_202_ACCEPTED)

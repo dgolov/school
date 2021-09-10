@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-# from django_fsm import FSMField
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -39,6 +38,7 @@ class Photo(models.Model):
     image = models.ImageField(upload_to='images/photos', verbose_name='Изображение', max_length=None)
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
     likes = models.ManyToManyField('Profile', verbose_name='Лайки', blank=True, related_name='likes')
+    for_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, verbose_name='Пользователь')
 
     def __str__(self):
         return self.image.name
@@ -59,8 +59,15 @@ class Profile(models.Model):
     gender = models.CharField(max_length=50, verbose_name='Пол', choices=GENDER_CHOICES)
     phone = PhoneNumberField(verbose_name='Номер телефона', unique=True)
     date_of_birthday = models.DateField(verbose_name='Дата рождения')
-    avatar = models.ImageField(verbose_name='Аватарка', upload_to='images/photos', blank=True, null=True)
-    photos = models.ManyToManyField(Photo, verbose_name='Фотографии', blank=True)
+    avatar = models.ForeignKey(
+        Photo,
+        verbose_name='Аватарка',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='avatar'
+    )
+    photos = models.ManyToManyField(Photo, verbose_name='Фотографии', blank=True, related_name='photo_list')
     friends = models.ManyToManyField(User, blank=True, verbose_name='Друзья', related_name='friends')
     friend_request_in = models.ManyToManyField(
         User,
@@ -73,6 +80,7 @@ class Profile(models.Model):
         verbose_name='Исходящие заявки в друзья',
         related_name='out_friends'
     )
+    followers = models.ManyToManyField(User, blank=True, verbose_name='Пописчики', related_name='followers')
     user_group = models.CharField(
         max_length=50,
         verbose_name='Группа пользователей',
@@ -86,7 +94,7 @@ class Profile(models.Model):
 
 class Student(Profile):
     """ Модель обучающихся """
-    group = models.ManyToManyField(Group, verbose_name='Группы', blank=True)
+    group_list = models.ManyToManyField(Group, verbose_name='Группы', blank=True, related_name='student_groups')
     hobbies = models.TextField(verbose_name='Увлечения', blank=True, null=True)
     dream = models.TextField(verbose_name='Мечта', blank=True, null=True)
     courses = models.ManyToManyField(
@@ -103,6 +111,7 @@ class Student(Profile):
 
 class Teacher(Profile):
     """ Модель преподавателей """
+    group_list = models.ManyToManyField(Group, verbose_name='Группы', blank=True, related_name='teacher_groups')
     education = models.CharField(max_length=100, verbose_name='Образование', blank=True, null=True)
     professional_activity = models.CharField(
         max_length=150,
