@@ -9,13 +9,17 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 
 from .classes import BuyingCourseManager
-from .mixins import PhotoManagerMixin, AddFriendMixin
+from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
 from .renders import CustomBrowsableAPIRenderer
 from .serializers import (
     ProfileSerializer,
     StudentDetailSerializer,
     TeacherDetailSerializer,
     EducationalManagerDetailSerializer,
+    GroupSerializer,
+    DialogSerializer,
+    DialogAttachmentSerializer,
+    MessageViewSerializer,
     CategorySerializer,
     CourseSerializer,
     LessonSerializer,
@@ -28,12 +32,18 @@ from .serializers import (
     PhotoSerializer,
     UploadPhotoSerializer,
 )
-from .utils import get_serializer_to_display_the_profile, check_correct_data_for_add_in_timetable, delete_file
+from .utils import (
+    get_serializer_to_display_the_profile,
+    check_correct_data_for_add_in_timetable, delete_file,
+    get_student_group_name_list,
+)
 from ..models import (
     Student,
     Teacher,
     EducationalManager,
     Group,
+    DialogAttachment,
+    Message,
     Category,
     Course,
     Lesson,
@@ -45,7 +55,8 @@ from ..models import (
 
 
 class BaseProfileViewSet(viewsets.ModelViewSet):
-    """ Базовый класс для отображения профилей """
+    """ Базовый класс для отображения профилей
+    """
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     detail_serializer_class = None  # Сериализатор для детального отображения информации
@@ -57,32 +68,38 @@ class BaseProfileViewSet(viewsets.ModelViewSet):
 
 
 class StudentsViewSet(BaseProfileViewSet):
-    """ Эндпоинт списка всех обучающихся """
+    """ Эндпоинт списка всех обучающихся
+    """
     queryset = Student.objects.all()
     detail_serializer_class = StudentDetailSerializer
 
 
 class TeachersViewSet(BaseProfileViewSet):
-    """ Эндпоинт списка всех преподавателей """
+    """ Эндпоинт списка всех преподавателей
+    """
     queryset = Teacher.objects.all()
     detail_serializer_class = TeacherDetailSerializer
 
 
 class EducationalManagerViewSet(BaseProfileViewSet):
-    """ Эндпоинт списка всех менеджеров учебного процесса """
+    """ Эндпоинт списка всех менеджеров учебного процесса
+    """
     permission_classes = [IsAdminUser]
     queryset = EducationalManager.objects.all()
     detail_serializer_class = EducationalManagerDetailSerializer
 
 
 class ProfileCreateView(CreateAPIView):
-    """ Эндпоинт регистрации нового обучающегося """
+    """ Эндпоинт регистрации нового обучающегося
+    """
     permission_classes = [AllowAny]
     serializer_class = CreateProfileSerializer
 
 
 class LoginView(APIView):
-    """ Эндпоинт входа в систему """
+    """ Эндпоинт входа в систему
+    Request data: username, password
+    """
     @staticmethod
     def post(request, format=None):
         data = request.data
@@ -103,7 +120,12 @@ class LoginView(APIView):
 
 
 class PersonalProfileView(APIView):
-    """ Эндпоинт личного кабинета """
+    """ Эндпоинт личного кабинета
+    Request data for students: hobbies - увлечения
+                               dreams - мечта
+    Request data for teachers: education - образование
+                               professional_activity - профессиональная деятельность
+    """
     @staticmethod
     def get_queryset(user):
         if user.profile.user_group == 'student':
@@ -129,6 +151,7 @@ class PersonalProfileView(APIView):
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
+        """ Редактировать профиль """
         data = request.data
         user = self.request.user
         if user.profile.user_group == 'student':
@@ -145,12 +168,16 @@ class PersonalProfileView(APIView):
 
 
 class FriendRequestView(APIView, AddFriendMixin):
-    """ Эндпоинт обработки исходящей заявки на добавление в друзья """
+    """ Эндпоинт обработки исходящей заявки на добавление в друзья
+        Данные: id - id пользователя
+    """
     def post(self, *args, **kwargs):
+        """ Предложить дружбу """
         http_status = self.add_request_friend(data=self.request.data, item_profile=self.request.user.profile)
         return Response(status=http_status)
 
     def delete(self, *args, **kwargs):
+        """ Отписаться """
         http_status = self.unsubscribe(data=self.request.data, item_profile=self.request.user.profile)
         return Response(status=http_status)
 
@@ -163,6 +190,7 @@ class FriendResponseView(APIView, AddFriendMixin):
     "add" - добавление в друзья
     """
     def post(self, *args, **kwargs):
+        """ Принять предложение дружбы (либо отказать в зависимости от ключа answer) """
         data = self.request.data
         answer = data.get('answer')
         if answer == 'add':
@@ -174,25 +202,50 @@ class FriendResponseView(APIView, AddFriendMixin):
         return Response(status=http_status)
 
     def delete(self, *args, **kwargs):
+        """ Удалить из друзей """
         http_status = self.delete_friend(data=self.request.data, item_profile=self.request.user.profile)
         return Response(status=http_status)
 
 
+class GroupViewSet(viewsets.ModelViewSet):
+    """ Эндроинт списка групп (Мои группы)
+    """
+    serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        item_profile = self.request.user.profile
+        if item_profile.user_group == 'student':
+            student_group_name_lest = get_student_group_name_list(item_profile.student)
+            queryset = Group.objects.filter(name__in=student_group_name_lest)
+        elif item_profile.user_group == 'teacher':
+            teacher = item_profile.teacher
+            queryset = Group.objects.filter(teacher=teacher)
+        elif item_profile.user_group == 'manager':
+            manager = item_profile.educationalmanager
+            queryset = Group.objects.filter(manager=manager)
+        else:
+            return None
+        return queryset
+
+
 class CategoryListView(ListAPIView):
-    """ Эндпоинт списка категорий курсов """
+    """ Эндпоинт списка категорий курсов
+    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
 
 
 class CoursesViewSet(viewsets.ModelViewSet):
-    """  Эндпоинт списка всех курсов """
+    """ Эндпоинт списка всех курсов
+    """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [AllowAny]
 
     @action(detail=True, renderer_classes=[CustomBrowsableAPIRenderer])
     def lessons(self, request, *args, **kwargs):
+        """ Уроки в курсе """
         course = self.get_object()
         lesson_objects = Lesson.objects.filter(course=course.pk).order_by('lesson_number')
         serializer = LessonSerializer(lesson_objects, many=True)
@@ -200,7 +253,9 @@ class CoursesViewSet(viewsets.ModelViewSet):
 
 
 class BuyingACourseView(APIView):
-    """ Эндпоинт покупки курса """
+    """ Эндпоинт покупки курса
+    Request data: id - id курса
+    """
     def put(self, *args, **kwargs):
         buy_manager = BuyingCourseManager()
         http_status = buy_manager.get_buy_status(self.request)
@@ -208,7 +263,8 @@ class BuyingACourseView(APIView):
 
 
 class LessonsDetailView(APIView):
-    """ Эндпоинт списка доступных уроков относящихся к курсу """
+    """ Эндпоинт списка доступных уроков относящихся к курсу
+    """
     def get(self, *args, **kwargs):
         item_profile = self.request.user.profile
         course_pk = kwargs.get('course_pk')
@@ -233,7 +289,11 @@ class LessonsDetailView(APIView):
 
 
 class TimetableViewSet(viewsets.ModelViewSet):
-    """ Эндпоинт учебного рассписания """
+    """ Эндпоинт учебного рассписания
+    Request data: date - дата,
+                  lesson - id урока,
+                  group - id группы
+    """
     serializer_class = TimetableSerializer
     permission_classes = [IsAuthenticated]
 
@@ -245,6 +305,7 @@ class TimetableViewSet(viewsets.ModelViewSet):
             return Timetable.objects.filter(group__in=item_profile.teacher.group_list.all())
 
     def create(self, request, *args, **kwargs):
+        """ Добавить урок в рассписание """
         item_profile = self.request.user.profile
         if item_profile.user_group == 'teacher' or item_profile.user_group == 'manager':
             data = request.data
@@ -262,7 +323,8 @@ class TimetableViewSet(viewsets.ModelViewSet):
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
-    """ Эндпоинт списка полученных сертификатов """
+    """ Эндпоинт списка полученных сертификатов
+    """
     serializer_class = CertificateSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -272,7 +334,18 @@ class CertificateViewSet(viewsets.ModelViewSet):
 
 
 class AcademicPerformanceViewSet(viewsets.ModelViewSet):
-    """ Эндпоинт успеваемости обучающегося """
+    """ Эндпоинт успеваемости обучающегося
+    Request data: student - id студента,
+                  lesson - id урока,
+                  teacher - id преподавателя,
+                  date - дата оценки,
+                  homework_grade - домашняя работа,
+                  classwork_grade - классная работа,
+                  test_grade - контрольная работа,
+                  examination_grade - экзамен,
+                  late - опоздание,
+                  absent - отсутствие
+    """
     serializer_class = AcademicPerformanceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -286,6 +359,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
             return AcademicPerformance.objects.filter(student__in=teacher_students)
 
     def create(self, request, *args, **kwargs):
+        """ Поставить оценку """
         item_profile = request.user.profile
         if item_profile.user_group == 'teacher':
             serializer = AcademicPerformanceSerializer(data=request.data)
@@ -299,7 +373,9 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
 
 
 class UploadPhotoView(APIView, PhotoManagerMixin):
-    """ Эндпоинт загрузки фотографии """
+    """ Эндпоинт загрузки фотографии
+    Request data: image - Файл изображения
+    """
     parser_classes = (MultiPartParser, FileUploadParser,)
 
     def post(self, request, *args, **kwargs):
@@ -312,7 +388,9 @@ class UploadPhotoView(APIView, PhotoManagerMixin):
 
 
 class DeletePhotoView(DestroyAPIView):
-    """ Эндпоинт удаления фото """
+    """ Эндпоинт удаления фото
+    Kwargs url data: pk - id фотографии
+    """
     serializer_class = PhotoSerializer
 
     def get_queryset(self):
@@ -336,9 +414,10 @@ class DeletePhotoView(DestroyAPIView):
 
 
 class LikePhotoView(APIView, PhotoManagerMixin):
-    """ Эндпоинт лайка фото """
+    """ Эндпоинт лайка фото
+    Request data: id - id фотографии
+    """
     parser_classes = [JSONParser]
-    # TODO Лайк фото только друзьям
 
     def post(self, request, *args, **kwargs):
         data = self.request.data
@@ -348,7 +427,9 @@ class LikePhotoView(APIView, PhotoManagerMixin):
 
 
 class UploadAvatarView(APIView, PhotoManagerMixin):
-    """ Эндпоинт загрузки аватарки """
+    """ Эндпоинт загрузки аватарки
+    Request data: image - Файл изображения
+    """
     parser_classes = (MultiPartParser, FileUploadParser,)
 
     def post(self, request, *args, **kwargs):
@@ -364,7 +445,9 @@ class UploadAvatarView(APIView, PhotoManagerMixin):
 
 
 class SetAvatarView(APIView):
-    """ Эндпоинт установки аватарки из существующих фото """
+    """ Эндпоинт установки аватарки из существующих фото
+    Request data: id - id фотографии
+    """
     def put(self, *args, **kwargs):
         data = self.request.data
         profile = self.request.user.profile
@@ -384,3 +467,41 @@ class SetAvatarView(APIView):
         profile.avatar = None
         profile.save()
         return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
+    """ Эндпоинт списка диалогов
+    """
+    serializer_class = DialogSerializer
+
+    def get_queryset(self):
+        item_profile = self.request.user.profile
+        return item_profile.participants.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        message_list = Message.objects.filter(dialog=instance)
+        self.read_messages(message_list=message_list)
+        serializer = MessageViewSerializer(message_list, many=True)
+        return Response(serializer.data)
+
+
+class CreateAGroupDialog(APIView, MessageMixin):
+    """ Эндпоинт создания беседы
+    Request data: name - Название беседы
+                  participants - список участников
+    """
+    def post(self, request, *args, **kwargs):
+        http_status = self.create_group_dialog(self.request)
+        return Response(status=http_status)
+
+
+class SendMessageView(APIView, MessageMixin):
+    """ Эндпоинт отправки сообщений
+    Request data: user_id - Пользователь которому отправляем сообщение
+                  dialog - id диалога (если уже есть существующий)
+                  text - текст сообщения
+    """
+    def post(self, request, *args, **kwargs):
+        http_status = self.send_message(self.request)
+        return Response(status=http_status)

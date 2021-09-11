@@ -1,4 +1,5 @@
-from mainapp.models import Photo, Profile
+from mainapp.api.serializers import MessageSerializer
+from mainapp.models import Photo, Profile, Dialog
 
 
 class PhotoManagerMixin:
@@ -30,7 +31,8 @@ class PhotoManagerMixin:
 
 
 class AddFriendMixin:
-    """ Класс миксин обработки входящих и исходящих заявок на добавление в друзья """
+    """ Класс миксин обработки входящих и исходящих заявок на добавление в друзья
+    """
     @staticmethod
     def get_profile(data):
         user_id = data.get('id')
@@ -99,3 +101,53 @@ class AddFriendMixin:
             return 201
         else:
             return 203
+
+
+class MessageMixin:
+    """ Класс миксин для работы с системой личных сообщений
+    """
+    @staticmethod
+    def read_messages(message_list):
+        """ При открытии диалога непрочитанные сообщения становятся прочитанными """
+        for message in message_list:
+            if not message.is_read:
+                message.is_read = True
+                message.save()
+
+    @staticmethod
+    def create_group_dialog(request):
+        """ Создание беседы """
+        item_profile = request.user.profile
+        data = request.data
+        name = data.get('name')
+        if not name:
+            return 400
+        participant_list = data.get('participants')
+        dialog = Dialog.objects.create(name=name, is_group=True, group_founder=item_profile)
+        profiles_list = Profile.objects.filter(pk__in=participant_list)
+        for profile in profiles_list:
+            dialog.participants.add(profile)
+        return 201
+
+    @staticmethod
+    def send_message(request):
+        item_profile = request.user.profile
+        data = request.data
+        to_user_id = data.pop('user_id')
+        try:
+            to_profile = Profile.objects.get(pk=to_user_id)
+        except Profile.DoesNotExist:
+            return 400
+        if to_profile.user not in item_profile.friends.all():
+            return 403
+        if not data.get('dialog'):
+            new_dialog = Dialog.objects.create(name=f'{item_profile} - {to_profile}')
+            new_dialog.participants.add(item_profile)
+            new_dialog.participants.add(to_profile)
+            data['dialog'] = new_dialog.pk
+        data['from_user'] = item_profile.pk
+        serializer = MessageSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+        return 201
+

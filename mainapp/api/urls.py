@@ -9,6 +9,7 @@ from .views import (
     ProfileCreateView,
     FriendRequestView,
     FriendResponseView,
+    GroupViewSet,
     CategoryListView,
     CoursesViewSet,
     BuyingACourseView,
@@ -21,16 +22,21 @@ from .views import (
     UploadAvatarView,
     SetAvatarView,
     LikePhotoView,
+    DialogViewSet,
+    CreateAGroupDialog,
+    SendMessageView,
 )
 
 
 router = routers.SimpleRouter()
 router.register('students', StudentsViewSet, basename='students')
 router.register('teachers', TeachersViewSet, basename='teachers')
+router.register('groups', GroupViewSet, basename='groups')
 router.register('courses', CoursesViewSet, basename='courses')
 router.register('timetable', TimetableViewSet, basename='timetable')
 router.register('certificates', CertificateViewSet, basename='certificates')
 router.register('performance', AcademicPerformanceViewSet, basename='performance')
+router.register('dialogs', DialogViewSet, basename='dialogs')
 
 
 urlpatterns = [
@@ -49,5 +55,8 @@ urlpatterns = [
     path('categories', CategoryListView.as_view(), name='categories'),
     path('courses/buy', BuyingACourseView.as_view(), name='buy-course'),
     path('courses/<int:course_pk>/lessons/<int:pk>', LessonsDetailView.as_view(), name='lesson_detail'),
+    path('send-message', SendMessageView.as_view(), name='send_message'),
+    path('create-group-dialog', CreateAGroupDialog.as_view(), name='create_group_dialog'),
 ]
+
 urlpatterns += router.urls
