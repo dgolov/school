@@ -196,11 +196,28 @@ class GroupSerializer(serializers.ModelSerializer):
     """ Сериализация модели групп
     """
     teacher = ProfileSerializer()
-    manager = EducationalManagerSerializer()
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'teacher', 'manager']
+        fields = ['id', 'name', 'teacher']
+
+
+class GroupRetrieveSerializer(serializers.ModelSerializer):
+    """ Детальная сериализация модели групп (со списком одногруппников)
+    """
+    teacher = ProfileSerializer()
+    manager = EducationalManagerSerializer()
+    students = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Group
+        fields = ['id', 'name', 'teacher', 'manager', 'students']
+
+    @staticmethod
+    def get_students(obj):
+        students = obj.student_groups.all()
+        serializer = ProfileSerializer(students, many=True)
+        return serializer.data
 
 
 class TeacherDetailSerializer(ProfileSerializerBase):
@@ -215,8 +232,8 @@ class TeacherDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = Teacher
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'date_of_birthday', 'education', 'professional_activity', 'group_list', 'photos', 'avatar', 'friends',
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'date_of_birthday',
+            'education', 'professional_activity', 'courses', 'group_list', 'photos', 'avatar', 'friends',
             'friend_request_in', 'friend_request_out', 'user_group'
         ]
 
@@ -233,8 +250,8 @@ class StudentDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = Student
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'hobbies', 'dream', 'date_of_birthday', 'group_list', 'photos', 'avatar', 'friends', 'friend_request_in',
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'hobbies', 'dream',
+            'date_of_birthday',  'courses', 'group_list', 'photos', 'avatar', 'friends', 'friend_request_in',
             'friend_request_out', 'user_group'
         ]
 

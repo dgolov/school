@@ -1,22 +1,23 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, decorators
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 
 from .classes import BuyingCourseManager
 from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
-from .renders import CustomBrowsableAPIRenderer
 from .serializers import (
     ProfileSerializer,
     StudentDetailSerializer,
     TeacherDetailSerializer,
     EducationalManagerDetailSerializer,
     GroupSerializer,
+    GroupRetrieveSerializer,
     DialogSerializer,
     DialogAttachmentSerializer,
     MessageViewSerializer,
@@ -58,10 +59,11 @@ class BaseProfileViewSet(viewsets.ModelViewSet):
     """ Базовый класс для отображения профилей
     """
     serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     detail_serializer_class = None  # Сериализатор для детального отображения информации
 
     def retrieve(self, request, pk=None, *args, **kwargs):
+        """ Если пользователь в друзьях, то отображается подробная информация """
         obj = get_object_or_404(self.queryset, pk=pk)
         serializer = get_serializer_to_display_the_profile(request, obj, self.detail_serializer_class)
         return Response(serializer.data)
@@ -209,14 +211,16 @@ class FriendResponseView(APIView, AddFriendMixin):
 
 class GroupViewSet(viewsets.ModelViewSet):
     """ Эндроинт списка групп (Мои группы)
+        В retrieve action доступен список одногруппников
     """
+    permission_classes = [IsAuthenticated]
     serializer_class = GroupSerializer
+    serializer_class_by_action = {'retrieve': GroupRetrieveSerializer}
 
     def get_queryset(self):
         item_profile = self.request.user.profile
         if item_profile.user_group == 'student':
-            student_group_name_lest = get_student_group_name_list(item_profile.student)
-            queryset = Group.objects.filter(name__in=student_group_name_lest)
+            queryset = item_profile.student.group_list.all()
         elif item_profile.user_group == 'teacher':
             teacher = item_profile.teacher
             queryset = Group.objects.filter(teacher=teacher)
@@ -227,13 +231,19 @@ class GroupViewSet(viewsets.ModelViewSet):
             return None
         return queryset
 
+    def get_serializer_class(self):
+        try:
+            return self.serializer_class_by_action[self.action]
+        except KeyError:
+            return self.serializer_class
+
 
 class CategoryListView(ListAPIView):
     """ Эндпоинт списка категорий курсов
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CoursesViewSet(viewsets.ModelViewSet):
@@ -241,15 +251,36 @@ class CoursesViewSet(viewsets.ModelViewSet):
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    permission_classes_by_action = {'list': [IsAuthenticatedOrReadOnly]}
 
-    @action(detail=True, renderer_classes=[CustomBrowsableAPIRenderer])
+    @action(detail=True, renderer_classes=[JSONRenderer])
     def lessons(self, request, *args, **kwargs):
         """ Уроки в курсе """
         course = self.get_object()
         lesson_objects = Lesson.objects.filter(course=course.pk).order_by('lesson_number')
         serializer = LessonSerializer(lesson_objects, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, renderer_classes=[JSONRenderer])
+    def available(self, request, *args, **kwargs):
+        """ Список доступных курсов """
+        item_profile = self.request.user.profile
+
+        if item_profile.user_group == 'student':
+            available_courses_qs = item_profile.student.courses.all()
+        elif item_profile.user_group == 'teacher':
+            available_courses_qs = item_profile.teacher.courses.all()
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        serializer = CourseSerializer(available_courses_qs, many=True)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
 
 
 class BuyingACourseView(APIView):
@@ -272,20 +303,16 @@ class LessonsDetailView(APIView):
         course = Course.objects.get(pk=course_pk)
 
         if item_profile.user_group == 'student':
-            if course in item_profile.student.courses.all():
-                lesson_objects = Lesson.objects.get(pk=lesson_pk, course=course_pk)
-                serializer = LessonRetrieveSerializer(lesson_objects, many=False)
-                return Response(serializer.data)
-            else:
+            if course not in item_profile.student.courses.all():
                 return Response(status=status.HTTP_402_PAYMENT_REQUIRED)
-
         elif item_profile.user_group == 'teacher':
-            if course in item_profile.teacher.courses.all():
-                lesson_objects = Lesson.objects.get(course=course_pk)
-                serializer = LessonRetrieveSerializer(lesson_objects, many=False)
-                return Response(serializer.data)
-            else:
+            if course not in item_profile.teacher.courses.all():
                 return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        lesson_objects = Lesson.objects.get(pk=lesson_pk, course=course_pk)
+        serializer = LessonRetrieveSerializer(lesson_objects, many=False)
+        return Response(serializer.data)
 
 
 class TimetableViewSet(viewsets.ModelViewSet):
@@ -326,7 +353,7 @@ class CertificateViewSet(viewsets.ModelViewSet):
     """ Эндпоинт списка полученных сертификатов
     """
     serializer_class = CertificateSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         item_profile = self.request.user.profile
@@ -347,7 +374,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
                   absent - отсутствие
     """
     serializer_class = AcademicPerformanceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         item_profile = self.request.user.profile
