@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Академия будущего</title>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='../../assets/css/style.css'/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .mySlides {
+            display: none;
+            min-height: 70vh;
+            background-color: #222;
+            margin: auto;
+            position: relative;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+        }
+
+        .cursor {
+            cursor: pointer;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 45%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .number_text {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        .caption-container {
+            display: block;
+            text-align: center;
+            background-color: #222;
+            padding: 2px 16px;
+            color: white;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .column {
+            float: left;
+            width: 33.33%;
+            margin-bottom: 5px;
+        }
+
+        @media (min-width: 992px) {
+            .column {
+                float: left;
+                width: 16.66%;
+            }
+        }
+
+        .column img {
+            border-radius: 10px;
+        }
+
+        .image {
+            width: 100%;
+            max-height: 70vh;
+            margin: auto;
+            padding-top: 30px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        .demo {
+            opacity: 0.6;
+        }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+
+        #like_image {
+            width: 30px;
+            position: absolute;
+            left: 10px;
+            padding-top: 5px;
+        }
+
+        #like_count {
+            position: absolute;
+            left: 40px;
+            padding: 5px 0 0 8px;
+            font-size: 20px;
+        }
+
+        #delete {
+            position: absolute;
+            right: 15px;
+            color: gray;
+            padding-top: 5px;
+        }
+
+        #edit {
+            position: absolute;
+            right: 85px;
+            color: gray;
+            padding-top: 5px;
+        }
+
+        .liked {
+            color: #FF7979;
+        }
+    </style>
+</head>
+<body>
+<div class="nav_bar">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+        <div class="navbar__inner">
+            <a href="../index.html" class="navbar__logo">Logo</a>
+            <nav class="navbar__menu">
+                <ul class="main-nav">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="../education.html">Обучение</a></li>
+                    <li><a href="../construction-page.html">Новости</a></li>
+                    <li><a href="../construction-page.html">Об академии</a></li>
+                    <li><a href="../construction-page.html">Контакты</a></li>
+                </ul>
+                <ul>
+                    <li><a href="../profile.html">Иван Гришин</a></li>
+                    <li>
+                        <img class="center" src="../../assets/images/avatars/mike.jpeg"
+                             style="display: inline-block; width: 30px; height: 30px; border: 0; border-radius: 50%; margin: auto; text-align: right">
+                    </li>
+                </ul>
+            </nav>
+            <div class="navbar__menu-mob"><a href="" id='toggle'>
+                <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+                          class=""></path>
+                </svg>
+            </a></div>
+        </div>
+    </div>
+</div>
+<div class="step landing__section" style="background-color: #f7f7f7">
+    <div class="page">
+        <div class="container mt-5">
+            <div class="page__inner">
+                <div class="page__menu">
+                    <h3>Фотографии</h3>
+                    <hr>
+                    <ul class="vMenu">
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/profile.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile.html"> Личный кабинет </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/courses.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/my-courses.html"> Доступные курсы </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/calendar.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/timetable.html"> Расписание </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/positive_dynamics.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/academic-performance.html"> Успеваемость </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/group.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/my-groups.html"> Мои группы </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/users_people.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/friends.html"> Мои друзья </a>
+                            <div class="notification_numbers">1</div>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/followers.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/null.html"> Мои подписчики </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/message.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="chats.html"> Мои сообщения </a>
+                            <div class="notification_numbers">2</div>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/photos.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/photo.html"> Мои фотографии </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/search.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/search.html"> Поиск </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/settings.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../construction-page.html"> Настройки </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/games.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../construction-page.html"> Игры </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page__main">
+                    <div class="col-md-12">
+                        <button class="grey-button" style="height: 68%; width: 100%;">Загрузить фото</button>
+                    </div>
+                    <div class="image-container">
+                        <div class="mySlides">
+                            <div class="number_text">1 / 6</div>
+                            <img src="../../assets/images/avatars/mike.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <div class="mySlides">
+                            <div class="number_text">2 / 6</div>
+                            <img src="../../assets/images/avatars/vipa.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <div class="mySlides">
+                            <div class="number_text">3 / 6</div>
+                            <img src="../../assets/images/avatars/anka.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <div class="mySlides">
+                            <div class="number_text">4 / 6</div>
+                            <img src="../../assets/images/test/bee-on-daisy.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <div class="mySlides">
+                            <div class="number_text">5 / 6</div>
+                            <img src="../../assets/images/chess.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <div class="mySlides">
+                            <div class="number_text">6 / 6</div>
+                            <img src="../../assets/images/avatars/morozov.jpeg" class="image" ondblclick="like()">
+                        </div>
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        <div class="caption-container" style="height: 4vh;">
+                            <a onclick="like()"><img src="../../assets/images/icons/like.svg" id="like_image"></a>
+                            <p id="like_count">6</p>
+                            <a href="#" id="delete">Удалить</a>
+                            <a href="#" id="edit">Редактировать</a>
+                        </div>
+                        <div class="caption-container">
+                            <p id="caption" class="mt-2"></p>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/avatars/mike.jpeg "
+                                     style="width:100%; height: 90px;" onclick="currentSlide(1)" alt="Турция">
+                            </div>
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/avatars/vipa.jpeg"
+                                     style="width:100%; height: 90px;" onclick="currentSlide(2)"
+                                     alt="Тестовое описание">
+                            </div>
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/avatars/anka.jpeg"
+                                     style="width:100%; height: 90px;" onclick="currentSlide(3)"
+                                     alt="Анка пулеметчица">
+                            </div>
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/test/bee-on-daisy.jpeg"
+                                     style="width:100%; height: 90px;" onclick="currentSlide(4)" alt="Ромашка">
+                            </div>
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/chess.jpeg"
+                                     style="width:100%; height: 90px;" onclick="currentSlide(5)" alt="Шахматы">
+                            </div>
+                            <div class="column">
+                                <img class="demo cursor" src="../../assets/images/avatars/morozov.jpeg"
+                                     style="width:100%; height: 90px;" onclick="currentSlide(6)"
+                                     alt="Павлик Морозов">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer footer--dark">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="../index.html" class="footer__textLogo">Академия будущего</a>
+                    </div>
+                    <div class="footer__row">
+                        Logo
+                    </div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">Дзержинск Грибоедова 48</div>
+                    <div class="footer__row">+7 (910) 799-15-24</div>
+                    <div class="footer__row">8-800-555-35-35</div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer__link">Правила пользования Платформой</a>
+                    </div>
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer__link">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/vk.png" style="width: 30px;">
+                        </a>
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/instagram.png" style="width: 30px;">
+                        </a>
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/youtoube.png" style="width: 30px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    document.getElementById('like_image').addEventListener("dblclick", like);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("demo");
+        let captionText = document.getElementById("caption");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+
+    function like() {
+        let like_image = document.getElementById('like_image')
+        let like_count = document.getElementById('like_count')
+
+        if (like_image.getAttribute('src') === "../images/icons/like.svg") {
+            like_image.src = '../images/icons/like_fill.svg';
+            like_count.textContent++;
+            like_count.className = 'liked'
+        } else {
+            like_image.src = '../images/icons/like.svg';
+            like_count.textContent--;
+            like_count.className = ''
+        }
+    }
+</script>
+<script src='../../assets/js/main_app.min.js'></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

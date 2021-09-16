@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Authentication @Evie</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='../assets/css/style.css'/>
+</head>
+<body>
+<div class="nav_bar">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+        <div class="navbar__inner">
+            <a href="index.html" class="navbar__logo">Logo</a>
+            <nav class="navbar__menu">
+                <ul class="main-nav">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="education.html">Обучение</a></li>
+                    <li><a href="construction-page.html">Новости</a></li>
+                    <li><a href="construction-page.html">Об академии</a></li>
+                    <li><a href="construction-page.html">Контакты</a></li>
+                </ul>
+                <ul>
+                    <li><a href="signup.html">Регистрация</a></li>
+                    <li><a href="auth.html">Вход</a></li>
+                </ul>
+            </nav>
+            <div class="navbar__menu-mob">
+                <a href="" id='toggle'>
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="currentColor"
+                              d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+                              class=""></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="auth">
+    <div class="container">
+        <div class="auth__inner">
+            <div class="auth__media">
+                <img src="../assets/images/undraw_selfie.svg">
+            </div>
+            <div class="auth__auth">
+                <h1 class="auth__title">Регистрация</h1>
+                <p>Заполните краткую анкету чтобы зарегистрироваться на сайте</p>
+                <form method='post' action="/example" autocompelete="new-password" role="presentation" class="form">
+                    <input name="email" class="fakefield">
+                    <label>Логин</label>
+                    <input type="text" name="email" id='email' placeholder="username">
+                    <label>Пароль</label>
+                    <input type="password" name="password" id='password'
+                           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                           autocomplete="off">
+                    <label>Повтор пароля</label>
+                    <input type="password" name="password" id='password2'
+                           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                           autocomplete="off">
+                    <label>Фамилия</label>
+                    <input type="text" name="last_name" id='last_name' placeholder="Иванов">
+                    <label>Имя</label>
+                    <input type="text" name="first_name" id='first_name' placeholder="Иван">
+                    <label>Отчество</label>
+                    <input type="text" name="middle_name" id='middle_name' placeholder="Иванович">
+                    <label>Телефон</label>
+                    <input type="text" name="phone" id='phone' placeholder="+79997778899">
+                    <button type='submit' class="button button__accent">Зарегистрироваться</button>
+                    <h6 class="left-align">Уже зарегистрированы? <a href="auth.html">Войти</a></h6>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer footer--dark">
+    <div class="container">
+        <div class="footer__inner">
+            <div class="footer__data__item">
+                <div class="footer__row">
+                    <a href="index.html" class="footer__textLogo">Академия будущего</a>
+                </div>
+                <div class="footer__row">
+                    Logo
+                </div>
+            </div>
+            <div class="footer__data__item">
+                <div class="footer__row">Дзержинск Грибоедова 48</div>
+                <div class="footer__row">+7 (910) 799-15-24</div>
+                <div class="footer__row">8-800-555-35-35</div>
+            </div>
+            <div class="footer__data__item">
+                <div class="footer__row">
+                    <a href="#" target="_blank" class="footer__link">Правила пользования Платформой</a>
+                </div>
+                <div class="footer__row">
+                    <a href="#" target="_blank" class="footer__link">Политика конфиденциальности</a>
+                </div>
+            </div>
+            <div class="footer__data__item">
+                <div class="footer__row">
+                    <a href="#" target="_blank" class="footer_social_link mb-2">
+                        <img src="../assets/images/vk.png" style="width: 30px;">
+                    </a>
+                    <a href="#" target="_blank" class="footer_social_link mb-2">
+                        <img src="../assets/images/instagram.png" style="width: 30px;">
+                    </a>
+                    <a href="#" target="_blank" class="footer_social_link mb-2">
+                        <img src="../assets/images/youtoube.png" style="width: 30px;">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src='../assets/js/main_app.min.js'></script>
+<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

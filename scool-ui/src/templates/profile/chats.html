@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Академия будущего</title>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
+    <link rel='stylesheet' href='../../assets/css/style.css'/>
+    <style>
+        .messages_area {
+            border-bottom: 2px solid #f7f7f7;
+            padding: 10px 5px;
+            display: inline-block;
+            height: 100px;
+            width: 100%;
+        }
+
+        .messages_area:hover {
+            border-bottom: 2px solid #f7f7f7;
+            padding: 10px 5px;
+            display: block;
+            height: 100px;
+            width: 100%;
+            background-color: #e5ebf1;
+            border-radius: 10px;
+        }
+
+        .new_messages_area {
+            border-bottom: 2px solid #f7f7f7;
+            padding: 10px 5px;
+            display: block;
+            height: 100px;
+            width: 100%;
+            background-color: #e5ebf1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<!--https://evie.undraw.co/docs-->
+<body>
+<div class="nav_bar">
+    <nav class="nav__mobile"></nav>
+    <div class="container">
+        <div class="navbar__inner">
+            <a href="../index.html" class="navbar__logo">Logo</a>
+            <nav class="navbar__menu">
+                <ul class="main-nav">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="../education.html">Обучение</a></li>
+                    <li><a href="../construction-page.html">Новости</a></li>
+                    <li><a href="../construction-page.html">Об академии</a></li>
+                    <li><a href="../construction-page.html">Контакты</a></li>
+                </ul>
+                <ul>
+                    <li><a href="../profile.html">Иван Гришин</a></li>
+                    <li>
+                        <img class="center" src="../../assets/images/avatars/mike.jpeg"
+                             style="display: inline-block; width: 30px; height: 30px; border: 0; border-radius: 50%; margin: auto; text-align: right">
+                    </li>
+                </ul>
+            </nav>
+            <div class="navbar__menu-mob"><a href="" id='toggle'>
+                <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                          d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+                          class=""></path>
+                </svg>
+            </a></div>
+        </div>
+    </div>
+</div>
+<div class="step landing__section" style="background-color: #f7f7f7">
+    <div class="page">
+        <div class="container mt-5">
+            <div class="page__inner">
+                <div class="page__menu">
+                    <h3>Сообщения</h3>
+                    <hr>
+                    <ul class="vMenu">
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/profile.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile.html"> Личный кабинет </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/courses.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/my-courses.html"> Доступные курсы </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/calendar.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/timetable.html"> Расписание </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/positive_dynamics.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/academic-performance.html"> Успеваемость </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/group.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/my-groups.html"> Мои группы </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/users_people.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/friends.html"> Мои друзья </a>
+                            <div class="notification_numbers">1</div>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/followers.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/null.html"> Мои подписчики </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/message.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="chats.html"> Мои сообщения </a>
+                            <div class="notification_numbers">2</div>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/photos.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/photo.html"> Мои фотографии </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/search.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../profile/search.html"> Поиск </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/settings.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../construction-page.html"> Настройки </a>
+                        </li>
+                        <li class="left-align px-2">
+                            <img src="../../assets/images/icons/games.svg" style="width: 16px; margin-right: 5px;">
+                            <a href="../construction-page.html"> Игры </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page__main">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <form>
+                                <input type='text' placeholder="Поиск" class="w-100">
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="grey-button" style="height: 68%;">Создать группу</button>
+                        </div>
+                    </div>
+                    <div class="messages_area" onclick="to_messages('messages.html')">
+                        <div class="row">
+                            <div style="width: 20%;">
+                                <img src="../../assets/images/avatars/mike2.jpeg"
+                                     style="width: 75px; height: 75px; border-radius: 50%;">
+                            </div>
+                            <div style="width: 80%;">
+                                <div class="row">
+                                    <div style="width: 70%; text-align: left">
+                                        <a href="#">Майк Иванов</a>
+                                    </div>
+                                    <div style="width: 30%;">13:08</div>
+                                </div>
+                                <div class="row">
+                                    <div style="width: 100%; text-align: left; padding: 10px; font-size: 14px; color: gray">
+                                        <a href="messages.html">Привет, как дела?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new_messages_area" onclick="to_messages('messages.html')">
+                        <div class="row">
+                            <div style="width: 20%;">
+                                <img src="../../assets/images/avatars/user_test.jpeg"
+                                     style="width: 75px; height: 75px; border-radius: 50%;">
+                            </div>
+                            <div style="width: 80%;">
+                                <div class="row">
+                                    <div style="width: 70%; text-align: left">
+                                        <a href="#">Егор Лавыгин</a>
+                                    </div>
+                                    <div style="width: 30%;">Вчера</div>
+                                </div>
+                                <div class="row">
+                                    <div style="width: 100%; text-align: left; padding: 10px; font-size: 14px; color: gray">
+                                        <a href="messages.html">Тестовое сообщение</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer footer--dark">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="index.html" class="footer__textLogo">Академия будущего</a>
+                    </div>
+                    <div class="footer__row">
+                        Logo
+                    </div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">Дзержинск Грибоедова 48</div>
+                    <div class="footer__row">+7 (910) 799-15-24</div>
+                    <div class="footer__row">8-800-555-35-35</div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer__link">Правила пользования Платформой</a>
+                    </div>
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer__link">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div class="footer__data__item">
+                    <div class="footer__row">
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/vk.png" style="width: 30px;">
+                        </a>
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/instagram.png" style="width: 30px;">
+                        </a>
+                        <a href="#" target="_blank" class="footer_social_link mb-2">
+                            <img src="../../assets/images/youtoube.png" style="width: 30px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function to_messages(url) {
+        document.location.href = url;
+    }
+</script>
+<script src='../../assets/js/main_app.min.js'></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
