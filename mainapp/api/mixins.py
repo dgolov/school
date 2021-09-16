@@ -116,31 +116,80 @@ class MessageMixin:
 
     @staticmethod
     def create_group_dialog(request):
-        """ Создание беседы """
+        """ Создание беседы
+        :param request: - данные запроса (name - имя нового диалога, participants - участники)
+        :return: Сообщение и статус код
+        """
         item_profile = request.user.profile
         data = request.data
         name = data.get('name')
-        if not name:
-            return 400
         participant_list = data.get('participants')
+        if not name or not participant_list:
+            return 'No data', 400
         dialog = Dialog.objects.create(name=name, is_group=True, group_founder=item_profile)
         profiles_list = Profile.objects.filter(pk__in=participant_list)
         for profile in profiles_list:
             dialog.participants.add(profile)
-        return 201
+        return 'Created', 201
+
+    @staticmethod
+    def add_user_in_dialog(request):
+        """ Приглашение нового участника в диалог
+        :param request: данные запроса (id - id диалога, user - приглашенный пользователь)
+        :return: Сообщение и статус код
+        """
+        item_profile = request.user.profile
+        data = request.data
+        dialog_id = data.get('id')
+        profile_id = data.get('user')
+
+        try:
+            dialog = Dialog.objects.get(pk=dialog_id)
+        except Dialog.DoesNotExist:
+            return f'Dialog {dialog_id} does not Exist', 400
+
+        if not dialog.is_group:
+            return f'Dialog {dialog_id} is not a group', 403
+
+        try:
+            profile = Profile.objects.get(pk=profile_id)
+        except Profile.DoesNotExist:
+            return f'Profile {profile_id} does not Exist', 400
+
+        if profile.user not in item_profile.friends.all():
+            return f'Profile {profile_id} is not your friend', 403
+        if profile in dialog.participants.all():
+            return f'Profile {profile_id} is already in the dialog', 208
+
+        dialog.participants.add(profile)
+        return 'Success', 201
 
     @staticmethod
     def send_message(request):
+        """ Отправка сообщений
+        :param request: данные запроса (user_id - id пользователя которому отправляем сообщения, не обязательный
+                                                  параметр, если его нету, используется id диалога)
+                                        dialog - id диалога, не обязательный параметр, если нет используется user_id)
+                                        text - Текст сообщения
+        :return: Сообщение и статус код
+        """
         item_profile = request.user.profile
         data = request.data
-        to_user_id = data.pop('user_id')
+        if not data.get('text') or data.get('text') == '':
+            return f'Please input a text', 400
         try:
-            to_profile = Profile.objects.get(pk=to_user_id)
-        except Profile.DoesNotExist:
-            return 400
-        if to_profile.user not in item_profile.friends.all():
-            return 403
+            to_user_id = data.pop('user_id')
+            try:
+                to_profile = Profile.objects.get(pk=to_user_id)
+            except Profile.DoesNotExist:
+                return f'Profile {to_user_id} does not Exist', 400
+            if to_profile.user not in item_profile.friends.all():
+                return f'Profile {to_user_id} is not your friend', 403
+        except KeyError:
+            to_profile = None
         if not data.get('dialog'):
+            if not to_profile:
+                return 'You must specify a profile id or dialogue id', 400
             new_dialog = Dialog.objects.create(name=f'{item_profile} - {to_profile}')
             new_dialog.participants.add(item_profile)
             new_dialog.participants.add(to_profile)
@@ -149,5 +198,5 @@ class MessageMixin:
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-        return 201
+        return 'Created', 201
 

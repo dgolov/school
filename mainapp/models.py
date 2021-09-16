@@ -67,7 +67,11 @@ class Profile(models.Model):
     middle_name = models.CharField(max_length=50, verbose_name='Отчество')
     gender = models.CharField(max_length=50, verbose_name='Пол', choices=GENDER_CHOICES)
     phone = PhoneNumberField(verbose_name='Номер телефона', unique=True)
+    city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
+    vk_slug = models.SlugField(verbose_name='Ссылка на профиль vk.com', blank=True, null=True)
+    instagram_slug = models.SlugField(verbose_name='Ссылка на профиль instagram', blank=True, null=True)
     date_of_birthday = models.DateField(verbose_name='Дата рождения')
+    about = models.TextField(verbose_name='О себе', blank=True, null=True)
     avatar = models.ForeignKey(
         Photo,
         verbose_name='Аватарка',

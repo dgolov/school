@@ -232,9 +232,9 @@ class TeacherDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = Teacher
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'date_of_birthday',
-            'education', 'professional_activity', 'courses', 'group_list', 'photos', 'avatar', 'friends',
-            'friend_request_in', 'friend_request_out', 'user_group'
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'vk_slug',
+            'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
+            'group_list', 'photos', 'avatar', 'friends', 'friend_request_in', 'friend_request_out', 'user_group'
         ]
 
 
@@ -250,9 +250,9 @@ class StudentDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = Student
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'hobbies', 'dream',
-            'date_of_birthday',  'courses', 'group_list', 'photos', 'avatar', 'friends', 'friend_request_in',
-            'friend_request_out', 'user_group'
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'vk_slug',
+            'instagram_slug', 'hobbies', 'dream', 'about', 'date_of_birthday',  'courses', 'group_list', 'photos',
+            'avatar', 'friends', 'friend_request_in', 'friend_request_out', 'user_group'
         ]
 
 
@@ -380,4 +380,4 @@ class MessageViewSerializer(MessageSerializer):
 
     class Meta:
         model = Message
-        fields = ['id', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read']
+        fields = ['id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read']

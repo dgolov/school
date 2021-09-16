@@ -514,13 +514,19 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
 
 
 class CreateAGroupDialog(APIView, MessageMixin):
-    """ Эндпоинт создания беседы
-    Request data: name - Название беседы
-                  participants - список участников
+    """ Эндпоинт создания беседы и приглашения пользователей в беседу
+    Request data POST: name - Название беседы
+                       participants - список участников
+    Request data PUT: id - id диалога
+                      user - id приглашенного пользователя
     """
     def post(self, request, *args, **kwargs):
-        http_status = self.create_group_dialog(self.request)
-        return Response(status=http_status)
+        message, http_status = self.create_group_dialog(self.request)
+        return Response(data={"message": message}, status=http_status)
+
+    def put(self, request, *args, **kwargs):
+        message, http_status = self.add_user_in_dialog(self.request)
+        return Response(data={"message": message}, status=http_status)
 
 
 class SendMessageView(APIView, MessageMixin):
@@ -530,5 +536,5 @@ class SendMessageView(APIView, MessageMixin):
                   text - текст сообщения
     """
     def post(self, request, *args, **kwargs):
-        http_status = self.send_message(self.request)
-        return Response(status=http_status)
+        message, http_status = self.send_message(self.request)
+        return Response(data={"message": message}, status=http_status)
