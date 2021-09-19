@@ -372,25 +372,29 @@ class DialogSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов
     """
     participants = ProfileSerializer(read_only=False, many=True)
-    new_messages = serializers.SerializerMethodField()
+    last_message = serializers.SerializerMethodField()
 
     class Meta:
         model = Dialog
         fields = [
-            'id', 'name', 'participants', 'is_group', 'group_founder', 'image', 'new_messages'
+            'id', 'name', 'participants', 'is_group', 'group_founder', 'image', 'last_message',
         ]
         read_only_fields = (
-            'new_messages',
+            'new_messages', 'last_message_text'
         )
 
     @staticmethod
-    def get_new_messages(obj):
-        """ Проверяет есть ли непрочитанные сообщения в диалоге """
-        messages = Message.objects.filter(dialog=obj)
-        for message in messages:
-            if not message.is_read:
-                return True
-        return False
+    def get_last_message(obj):
+        """ Получает текст последнего сообщения и его состояние - прочитанное или нет """
+        messages = Message.objects.filter(dialog=obj).order_by('-id')
+        try:
+            last_message = messages[0]
+            return {
+                'text': last_message.text,
+                'is_read': last_message.is_read
+            }
+        except IndexError:
+            return None
 
 
 class DialogAttachmentSerializer(serializers.ModelSerializer):

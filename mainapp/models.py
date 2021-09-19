@@ -210,7 +210,7 @@ class DialogAttachment(models.Model):
 class Message(models.Model):
     """ Модель личных сообщений
     """
-    dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE, verbose_name='Диалог')
+    dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE, verbose_name='Диалог', related_name='dialog')
     from_user = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
@@ -283,7 +283,7 @@ class Lesson(models.Model):
     """
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс')
     theme = models.CharField(max_length=100, verbose_name='Тема урока')
-    video_slug = models.SlugField(verbose_name='Ссылка на видеозапись урока', blank=True, null=True)
+    video_slug = models.CharField(max_length=100, verbose_name='Ссылка на видеозапись урока', blank=True, null=True)
     lesson_number = models.PositiveIntegerField(verbose_name='Номер урока в курсе', default=1)
     description = models.TextField(verbose_name='Описание урока', blank=True, null=True)
     materials = models.FileField(
@@ -343,26 +343,16 @@ class Certificate(models.Model):
 class AcademicPerformance(models.Model):
     """ Модель успеваемости по 10 бальной шкале
     """
+    TYPE_CHOICES = ('homework', 'classwork', 'test', 'examination')
+    TYPE_CHOICES_RUS = ('Домашняя работа', 'Класная работа', 'Контрольная работа', 'Экзамен')
+    TYPE_CHOICES = list(zip(TYPE_CHOICES, TYPE_CHOICES_RUS))
+
     student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Обучающийся')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
     date = models.DateField(verbose_name='Дата оценки')
-    homework_grade = IntegerRangeField(
-        min_value=1,
-        max_value=10,
-        verbose_name='Домашняя работа',
-        null=True,
-        blank=True
-    )
-    classwork_grade = IntegerRangeField(
-        min_value=1,
-        max_value=10,
-        verbose_name='Классная работа',
-        null=True,
-        blank=True
-    )
-    test_grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Контрольная работа', null=True, blank=True)
-    examination_grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Экзамен', null=True, blank=True)
+    type_grade = models.CharField(max_length=50, verbose_name='Тип оценки', choices=TYPE_CHOICES)
+    grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка')
     late = models.BooleanField(default=False, verbose_name='Опоздание')
     absent = models.BooleanField(default=False, verbose_name='Отсутствие')
 

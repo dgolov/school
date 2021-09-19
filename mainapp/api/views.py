@@ -75,7 +75,6 @@ class UserRetrieveView(APIView):
     """
     def get(self, *args, **kwargs):
         item_profile = Profile.objects.get(user=self.request.user)
-        print(item_profile)
         serializer = ProfileSerializer(item_profile, many=False)
         return Response(serializer.data)
 
