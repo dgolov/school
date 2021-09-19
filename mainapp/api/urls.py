@@ -1,8 +1,11 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views import (
+    UserRetrieveView,
     StudentsViewSet,
     TeachersViewSet,
     PersonalProfileView,
@@ -43,6 +46,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/', UserRetrieveView.as_view(), name='user'),
     path('profile/', PersonalProfileView.as_view(), name='profile'),
     path('profile/create/', ProfileCreateView.as_view(), name='create_profile'),
     path('profile/upload-photo/', UploadPhotoView.as_view(), name='upload_photo'),
@@ -60,3 +64,6 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

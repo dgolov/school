@@ -34,6 +34,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'profile_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'date_of_birthday', 'avatar'
         ]
+        read_only_fields = (
+            'profile_id', 'gender', 'date_of_birthday', 'avatar'
+        )
 
     @staticmethod
     def get_profile_id(obj):
@@ -90,7 +93,9 @@ class AvatarSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Photo
-        fields = ['image']
+        fields = [
+            'image',
+        ]
 
 
 class ProfileSerializer(ProfileSerializerBase):
@@ -101,7 +106,9 @@ class ProfileSerializer(ProfileSerializerBase):
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'first_name', 'last_name', 'gender', 'avatar', 'user_group']
+        fields = [
+            'id', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
+        ]
 
 
 class ProfileCreateSerializer(serializers.ModelSerializer):
@@ -109,7 +116,9 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Profile
-        fields = ['middle_name', 'gender', 'phone', 'date_of_birthday']
+        fields = [
+            'middle_name', 'gender', 'phone', 'date_of_birthday'
+        ]
 
 
 class PhotoSerializer(serializers.ModelSerializer):
@@ -119,7 +128,9 @@ class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Photo
-        fields = ['id', 'image', 'date', 'likes']
+        fields = [
+            'id', 'image', 'date', 'likes'
+        ]
 
 
 class UploadPhotoSerializer(serializers.Serializer):
@@ -182,12 +193,13 @@ class EducationalManagerDetailSerializer(ProfileSerializerBase):
     friends = UserSerializer(read_only=True, many=True)
     friend_request_in = UserSerializer(read_only=True, many=True)
     friend_request_out = UserSerializer(read_only=True, many=True)
+    avatar = PhotoSerializer()
 
     class Meta:
         model = EducationalManager
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone',
-            'date_of_birthday', 'photos', 'avatar', 'friends', 'friend_request_in', 'friend_request_out',
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
+            'date_of_birthday','photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
             'user_group'
         ]
 
@@ -199,7 +211,9 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'teacher']
+        fields = [
+            'id', 'name', 'teacher'
+        ]
 
 
 class GroupRetrieveSerializer(serializers.ModelSerializer):
@@ -211,7 +225,9 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'teacher', 'manager', 'students']
+        fields = [
+            'id', 'name', 'teacher', 'manager', 'students'
+        ]
 
     @staticmethod
     def get_students(obj):
@@ -228,13 +244,14 @@ class TeacherDetailSerializer(ProfileSerializerBase):
     friend_request_in = UserSerializer(read_only=True, many=True)
     friend_request_out = UserSerializer(read_only=True, many=True)
     group_list = GroupSerializer(read_only=True, many=True)
+    avatar = PhotoSerializer()
 
     class Meta:
         model = Teacher
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'vk_slug',
-            'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
-            'group_list', 'photos', 'avatar', 'friends', 'friend_request_in', 'friend_request_out', 'user_group'
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city', 'vk_slug',
+            'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses','group_list',
+            'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
         ]
 
 
@@ -246,13 +263,14 @@ class StudentDetailSerializer(ProfileSerializerBase):
     friends = UserSerializer(read_only=True, many=True)
     friend_request_in = UserSerializer(read_only=True, many=True)
     friend_request_out = UserSerializer(read_only=True, many=True)
+    avatar = PhotoSerializer()
 
     class Meta:
         model = Student
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'vk_slug',
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city', 'vk_slug',
             'instagram_slug', 'hobbies', 'dream', 'about', 'date_of_birthday',  'courses', 'group_list', 'photos',
-            'avatar', 'friends', 'friend_request_in', 'friend_request_out', 'user_group'
+            'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
         ]
 
 
@@ -282,7 +300,9 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ['id', 'course', 'theme', 'lesson_number']
+        fields = [
+            'id', 'course', 'theme', 'lesson_number'
+        ]
 
 
 class LessonRetrieveSerializer(LessonSerializer):
@@ -302,7 +322,9 @@ class TimetableSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Timetable
-        fields = ['date', 'lesson', 'group', 'is_finished']
+        fields = [
+            'id', 'date', 'lesson', 'group', 'is_finished'
+        ]
 
 
 class TimetableCreateSerializer(serializers.ModelSerializer):
@@ -310,7 +332,9 @@ class TimetableCreateSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Timetable
-        fields = ['date', 'lesson', 'group']
+        fields = [
+            'date', 'lesson', 'group'
+        ]
 
     def create(self, validated_data):
         return super().create(validated_data)
@@ -324,17 +348,20 @@ class CertificateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Certificate
-        fields = ['profile', 'course', 'image', 'date']
+        fields = [
+            'profile', 'course', 'image', 'date'
+        ]
 
 
 class AcademicPerformanceSerializer(serializers.ModelSerializer):
     """ Серилизация модели успеваемости
     """
+    lesson = LessonSerializer()
+
     class Meta:
         model = AcademicPerformance
         fields = [
-            'student', 'lesson', 'teacher', 'date', 'homework_grade', 'classwork_grade', 'test_grade',
-            'examination_grade', 'late', 'absent'
+            'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent'
         ]
 
     def create(self, validated_data):
@@ -345,10 +372,25 @@ class DialogSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов
     """
     participants = ProfileSerializer(read_only=False, many=True)
+    new_messages = serializers.SerializerMethodField()
 
     class Meta:
         model = Dialog
-        fields = '__all__'
+        fields = [
+            'id', 'name', 'participants', 'is_group', 'group_founder', 'image', 'new_messages'
+        ]
+        read_only_fields = (
+            'new_messages',
+        )
+
+    @staticmethod
+    def get_new_messages(obj):
+        """ Проверяет есть ли непрочитанные сообщения в диалоге """
+        messages = Message.objects.filter(dialog=obj)
+        for message in messages:
+            if not message.is_read:
+                return True
+        return False
 
 
 class DialogAttachmentSerializer(serializers.ModelSerializer):
@@ -358,7 +400,9 @@ class DialogAttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DialogAttachment
-        fields = ['dialog', 'file']
+        fields = [
+            'dialog', 'file'
+        ]
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -380,4 +424,6 @@ class MessageViewSerializer(MessageSerializer):
 
     class Meta:
         model = Message
-        fields = ['id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read']
+        fields = [
+            'id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read',
+        ]

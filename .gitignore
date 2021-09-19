@@ -1,6 +1,15 @@
 conf/
 env/
-db.sqlite3
+
 media/*
+
+db.sqlite3
+local_settings.py
+
 .idea
 __pycache__/*
+*.log
+*.pot
+*.pyc
+
+/scool-ui/

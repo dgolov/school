@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthentic
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
 
 from .classes import BuyingCourseManager
 from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
@@ -39,6 +39,7 @@ from .utils import (
     get_student_group_name_list,
 )
 from ..models import (
+    Profile,
     Student,
     Teacher,
     EducationalManager,
@@ -66,6 +67,16 @@ class BaseProfileViewSet(viewsets.ModelViewSet):
         """ Если пользователь в друзьях, то отображается подробная информация """
         obj = get_object_or_404(self.queryset, pk=pk)
         serializer = get_serializer_to_display_the_profile(request, obj, self.detail_serializer_class)
+        return Response(serializer.data)
+
+
+class UserRetrieveView(APIView):
+    """ Эндпоинт получения данных о текущем пользователе
+    """
+    def get(self, *args, **kwargs):
+        item_profile = Profile.objects.get(user=self.request.user)
+        print(item_profile)
+        serializer = ProfileSerializer(item_profile, many=False)
         return Response(serializer.data)
 
 
@@ -131,11 +142,11 @@ class PersonalProfileView(APIView):
     @staticmethod
     def get_queryset(user):
         if user.profile.user_group == 'student':
-            return Student.objects.filter(user=user)
+            return Student.objects.get(user=user)
         elif user.profile.user_group == 'teacher':
-            return Teacher.objects.filter(user=user)
+            return Teacher.objects.get(user=user)
         elif user.profile.user_group == 'manager':
-            return EducationalManager.objects.filter(user=user)
+            return EducationalManager.objects.get(user=user)
         else:
             return None
 
@@ -143,11 +154,11 @@ class PersonalProfileView(APIView):
         user = self.request.user
         obj = self.get_queryset(user)
         if user.profile.user_group == 'student':
-            serializer = StudentDetailSerializer(obj, many=True)
+            serializer = StudentDetailSerializer(obj, many=False)
         elif user.profile.user_group == 'teacher':
-            serializer = TeacherDetailSerializer(obj, many=True)
+            serializer = TeacherDetailSerializer(obj, many=False)
         elif user.profile.user_group == 'manager':
-            serializer = EducationalManagerDetailSerializer(obj, many=True)
+            serializer = EducationalManagerDetailSerializer(obj, many=False)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.data)
@@ -252,7 +263,9 @@ class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
-    permission_classes_by_action = {'list': [IsAuthenticatedOrReadOnly]}
+    permission_classes_by_action = {'list': [IsAuthenticatedOrReadOnly],
+                                    'retrieve': [IsAuthenticatedOrReadOnly],
+                                    'lessons': [IsAuthenticatedOrReadOnly], }
 
     @action(detail=True, renderer_classes=[JSONRenderer])
     def lessons(self, request, *args, **kwargs):
@@ -504,6 +517,12 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
     def get_queryset(self):
         item_profile = self.request.user.profile
         return item_profile.participants.all()
+
+    def list(self, request, *args, **kwargs):
+        dialogs_list = self.get_queryset()
+        serializer = DialogSerializer(dialogs_list, many=True)
+        serializer.is_new_messages = False
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
