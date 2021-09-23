@@ -1,0 +1,250 @@
+<template>
+  <div id="messages">
+    <navbar></navbar>
+    <div class="step landing__section main-section">
+      <div class="page">
+        <div class="container mt-5">
+          <div class="page__inner">
+            <profile-menu :header="header"></profile-menu>
+            <div class="page__main">
+              <div class="row">
+                <div class="chat_header px-4">
+                  <a href="#" class="pt-3">{{ getChatName(responseData[0].dialog) }}</a>
+                  <img :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
+                </div>
+              </div>
+              <hr/>
+              <div id="messenger">
+                <div v-for="(message, index) in responseData" :class="setClassToMessageArea(message)" :key="index">
+                  <p :class="setClassToMessageDate(message)">
+                    {{ message.from_user.first_name }} {{ message.from_user.last_name }}
+                    {{ reformatDateTime(message.date_and_time) }}
+                  </p>
+                  <a href="#">
+                    <img v-if="getMessageAvatar(message)"
+                         :src="`http://127.0.0.1:8000${message.from_user.avatar.image}`" class="message_avatar">
+                  </a>
+                  <p :class="setClassToMessageText(message)">{{ message.text }}</p>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-md-9">
+                  <form>
+                    <input id='input_text' type='text' placeholder="Введите сообщение..." class="w-100">
+                  </form>
+                </div>
+                <div class="col-md-3">
+                  <button class="grey-button" style="height: 68%;" @click="sendMessage()">
+                    Отправить
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Navbar from "../../components/Navbar";
+import ProfileMenu from "../../components/Profile/ProfileMenu";
+import {requestsMixin} from "../../components/mixins/requestsMixin";
+import {redirect} from "../../components/mixins/redirect";
+import {getDateTime} from "../../components/mixins/getDateTime";
+import {dialogMixin} from "../../components/mixins/dialogMixin";
+
+export default {
+  name: "Messages",
+
+  components: {
+    Navbar, ProfileMenu
+  },
+
+  data() {
+    return {
+      header: 'Сообщения',
+      in_message_date: 'in_message_date',
+      in_message: 'in_message',
+      in_message_text: 'in_message_text',
+      out_message_date: 'out_message_date',
+      out_message: 'out_message',
+      out_message_text: 'out_message_text',
+      out_message_didnt_read: 'out_message_didnt_read',
+      containerScrollHeight: 0,
+    }
+  },
+
+  props: {
+    id: String
+  },
+
+  mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
+
+  created() {
+    this.createGetRequest(`/dialogs/${this.id}/`)
+  },
+
+  updated() {
+    this.scrollMessageList()
+  },
+
+  methods: {
+    sendMessage() {
+      //TODO send message to server and parse now date and time
+      let input_text = document.getElementById('input_text');
+      let now = new Date()
+      let data = {
+        "from_user": {
+          "id": this.$store.state.authUser.id,
+          "first_name": this.$store.state.authUser.first_name,
+          "last_name": this.$store.state.authUser.last_name,
+        },
+        "attachment": null,
+        "text": input_text.value,
+        "date_and_time": '2021-09-11T15:58:22.341424Z',
+        "is_read": false
+      }
+      this.responseData.push(data)
+      input_text.value = '';
+      this.scrollMessageList()
+    },
+    setClassToMessageArea(message) {
+      if (message.from_user.id === this.$store.state.authUser.id) {
+        if (message.is_read) {
+          return this.out_message;
+        } else {
+          return this.out_message_didnt_read;
+        }
+      } else {
+        return this.in_message;
+      }
+    },
+    setClassToMessageDate(message) {
+      if (message.from_user.id === this.$store.state.authUser.id) {
+        return this.out_message_date;
+      } else {
+        return this.in_message_date;
+      }
+    },
+    setClassToMessageText(message) {
+      if (message.from_user.id === this.$store.state.authUser.id) {
+        return this.out_message_text;
+      } else {
+        return this.in_message_text;
+      }
+    },
+    getMessageAvatar(message) {
+      if (message.from_user.id === this.$store.state.authUser.id) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    scrollMessageList() {
+      // Прокрутка окна диалога вниз при загрузке страницы или при отправке сообщения
+      setTimeout(() => {
+        let div = document.getElementById('messenger')
+        div.scrollTop  = div.scrollHeight;
+      });
+    }
+  }
+}
+</script>
+
+<style scoped>
+#messenger {
+  text-align: left;
+  height: 70vh;
+  overflow: scroll;
+  padding-bottom: 30px;
+  margin: 0;
+}
+
+.out_message {
+  width: 100%;
+  display: block;
+  float: right;
+}
+
+.in_message {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+.out_message_date {
+  width: 100%;
+  font-size: 12px;
+  margin: 0;
+  color: gray;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.in_message_date {
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  margin: 0;
+  color: gray;
+  padding-left: 5px;
+}
+
+.out_message_didnt_read {
+  min-height: 50px;
+  width: 100%;
+  display: block;
+  float: right;
+  background-color: #e5ebf1;
+}
+
+.in_message_didnt_read {
+  min-height: 50px;
+  width: 100%;
+  display: block;
+  float: left;
+  background-color: #e5ebf1;
+}
+
+.out_message_text {
+  background-color: #bfe2e9;
+  padding: 10px;
+  border-radius: 10px;
+  width: auto;
+  float: right;
+  margin: 0 10px 8px 50px;
+}
+
+.in_message_text {
+  background-color: #fccdac;
+  padding: 10px;
+  border-radius: 10px;
+  width: auto;
+  float: left;
+  margin: 0 60px 8px 5px;
+}
+
+.chat_header {
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+}
+
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: right;
+}
+
+.message_avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  float: left;
+  margin-top: 5px;
+}
+</style>

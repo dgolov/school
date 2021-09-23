@@ -1,8 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Home from '../views/Home.vue'
 import Auth from "../views/Auth";
-import Profile from "../views/Profile";
+import Profile from "../views/Profile/Profile";
+import Education from "../views/Education";
+import EducationSingle from "../views/EducationSingle";
+import SignUp from "../views/SignUp";
+import About from "../views/About";
+import News from "../views/News";
+import Contacts from "../views/Contacts";
+import MyCourses from "../views/Profile/MyCourses";
+import CourseSingle from "../views/Profile/CourseSingle";
+import Lesson from "../views/Profile/Lesson";
+import TimeTable from "../views/Profile/TimeTable";
+import AcademicPerformance from "../views/Profile/AcademicPerformance";
+import Chats from "../views/Profile/Chats";
+import Messages from "../views/Profile/Messages";
+import Friends from "../views/Profile/Friends";
+import Followers from "../views/Profile/Followers";
+import Groups from "../views/Profile/Groups";
+import GroupSingle from "../views/Profile/GroupSingle";
+import Search from "../views/Profile/Search";
+import Photo from "../views/Profile/Photo";
+import MyProfile from "../views/Profile/MyProfile";
+import Subscriptions from "../views/Profile/Subscriptions";
+import FriendRequests from "../views/Profile/FriendRequests";
+
 
 Vue.use(VueRouter)
 
@@ -15,7 +39,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: About
   },
   {
     path: '/auth',
@@ -23,13 +47,135 @@ const routes = [
     component: Auth
   },
   {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
+  },
+  {
     path: '/profile',
+    name: 'MyProfile',
+    component: MyProfile,
+  },
+  {
+    path: '/profiles/:id',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    props: true
+  },
+  {
+    path: '/profile/my-courses',
+    name: 'MyCourses',
+    component: MyCourses
+  },
+  {
+    path: '/profile/timetable',
+    name: 'TimeTable',
+    component: TimeTable
+  },
+  {
+    path: '/profile/chats',
+    name: 'Chats',
+    component: Chats
+  },
+  {
+    path: '/profile/chats/:id',
+    name: 'Messages',
+    component: Messages,
+    props: true
+  },
+  {
+    path: '/profiles/:id/friends',
+    name: 'Friends',
+    component: Friends,
+    props: true
+  },
+  {
+    path: '/profiles/:id/followers',
+    name: 'Followers',
+    component: Followers,
+    props: true
+  },
+  {
+    path: '/profiles/:id/subscriptions',
+    name: 'Subscriptions',
+    component: Subscriptions,
+    props: true
+  },
+  {
+    path: '/profile/friend-requests',
+    name: 'FriendRequests',
+    component: FriendRequests,
+  },
+  {
+    path: '/profiles/:id/photo',
+    name: 'Photo',
+    component: Photo,
+    props: true
+  },
+  {
+    path: '/profile/groups',
+    name: 'Groups',
+    component: Groups
+  },
+  {
+    path: '/profile/groups/:id',
+    name: 'GroupSingle',
+    component: GroupSingle,
+    props: true
+  },
+  {
+    path: '/profile/search',
+    name: 'Search',
+    component: Search
+  },
+  {
+    path: '/profile/academic-performance',
+    name: 'AcademicPerformance',
+    component: AcademicPerformance
+  },
+  {
+    path: '/profile/my-courses/:id',
+    name: 'CourseSingle',
+    component: CourseSingle,
+    props: true
+  },
+  {
+    path: '/profile/my-courses/:courseId/lesson/:lessonId',
+    name: 'Lesson',
+    component: Lesson,
+    props: true
+  },
+  {
+    path: '/education',
+    name: 'Education',
+    component: Education
+  },
+  {
+    path: '/education/:id',
+    name: 'EducationSingle',
+    component: EducationSingle,
+    props: true
+  },
+  {
+    path: '/news',
+    name: 'News',
+    component: News
+  },
+  {
+    path: '/news/:id',
+    name: 'NewsSingle',
+    component: News,
+    props: true
+  },
+  {
+    path: '/contacts',
+    name: 'Contacts',
+    component: Contacts
   }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

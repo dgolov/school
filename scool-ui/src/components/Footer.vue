@@ -22,6 +22,9 @@
           <div class="footer__row">
             <a href="#" target="_blank" class="footer__link">Политика конфиденциальности</a>
           </div>
+          <div class="footer__row">
+            <a href="#" target="_blank" class="footer__link">Вакансии</a>
+          </div>
         </div>
         <div class="footer__data__item">
           <div class="footer__row">

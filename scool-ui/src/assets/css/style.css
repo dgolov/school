@@ -6,6 +6,20 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+@font-face {
+    font-family: "AlegreyaSansSC-Light";
+    src: url("../../assets/fonts/AlegreyaSansSC-Light.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "AlegreyaSansSC-Black";
+    src: url("../../assets/fonts/AlegreyaSansSC-Black.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
 html {
     line-height: 1.15;
     /* 1 */
@@ -374,12 +388,12 @@ img, svg {
     max-width: 100%;
 }
 
-.container {
-    width: 88%;
-    max-width: 1080px;
-    margin: 0 auto;
-    position: relative;
-}
+/*.container {*/
+/*    width: 88%;*/
+/*    max-width: 1080px;*/
+/*    margin: 0 auto;*/
+/*    position: relative;*/
+/*}*/
 
 .row100 {
     display: block;
@@ -883,7 +897,7 @@ select::-ms-expand {
     z-index: 100;
     width: 100%;
     /*background-color: #6C63FF;*/
-    background-color: #b02f12;
+    background-color: #592323;
     transition: 0.7s;
 }
 
@@ -893,6 +907,8 @@ select::-ms-expand {
 }
 
 .navbar__inner {
+    /*font-family: "AlegreyaSansSC-Black", sans-serif;*/
+    /*font-size: 18px;*/
     -js-display: flex;
     display: flex;
     align-items: center;
@@ -941,7 +957,6 @@ select::-ms-expand {
 
 ul.main-nav {
     text-align: left;
-    margin-right: 180px;
 }
 
 .navbar__menu a {
@@ -1064,7 +1079,7 @@ ul.main-nav {
 .hero {
     position: relative;
     width: 100%;
-    background-image: url("../images/chess.jpeg");
+    background-image: url("../images/evie_default_bg.jpeg");
     box-shadow: 0 4px 11px rgba(124, 146, 169, 0.5);
     background-size: cover;
     background-position: center center;
@@ -1091,13 +1106,13 @@ ul.main-nav {
 .hero__overlay--gradient {
     /*background: linear-gradient(to right, #6C63FF, #4641FF);*/
     /*background: linear-gradient(to right, #252463, #333333);*/
-    background: linear-gradient(to right, #591107, #291c18);
+    background: linear-gradient(to right, #262626, #291c18);
 }
 
 .hero__overlay--gradientVertical {
     /*background: linear-gradient(to bottom, #6C63FF, #4641FF);*/
     /*background: linear-gradient(to bottom, #151d63, #333333);*/
-    background: linear-gradient(to right, #591107, #291c18);
+    background: linear-gradient(to right, #262626, #291c18);
 }
 
 .hero__mask {
@@ -1130,15 +1145,19 @@ ul.main-nav {
 
 /*--- CONTENT STYLING ---*/
 .hero__title {
+    font-family: "AlegreyaSansSC-Light", sans-serif;
+    font-size: 40px;
+    font-weight: 100;
     color: inherit;
     margin-bottom: 1.25em;
 }
 
 .hero__text {
-    opacity: 0.85;
+    /*font-family: "RalewayRegular", sans-serif;*/
+    font-size: 20px;
+    color: #000000;
     line-height: 1.7;
     text-align: left;
-    font-size: 1.1em;
 }
 
 .hero .button {

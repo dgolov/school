@@ -9,19 +9,19 @@
           </div>
           <div class="auth__auth">
             <h1 class="auth__title">Вход в аккаунт</h1>
+            <p v-if="error.status" class="error">{{ error.message }}</p>
             <p>Введите свой адрес электронной почты и пароль, чтобы продолжить</p>
-            <form method='post' action="#" autocompelete="new-password" role="presentation" class="form">
-              <input name="email" class="fakefield">
+            <form action="#" method="get" autocompelete="new-password" class="form" id="formLogin">
               <label>Логин</label>
-              <input type="text" name="email" id='email' placeholder="Имя пользователя...">
+              <input v-model="username" type="text" name="login" placeholder="Введите имя пользователя..." required>
               <label>Пароль</label>
-              <input type="password" name="password" id='password'
-                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                     autocomplete="off">
-              <button type='submit' class="button button__accent">Войти</button>
-              <h6 class="left-align"><a href="#">Забыли пароль?</a></h6>
-              <h6 class="left-align">У вас еще нет аккаунта? <a href="#">Зарегистрироваться</a></h6>
+              <input v-model="password" type="password" name="password" placeholder="Введите пароль" autocomplete="off" required>
+              <button type="button" class="button button__accent" @click="login()">Войти</button>
             </form>
+              <h6 class="left-align"><a href="#">Забыли пароль?</a></h6>
+              <h6 class="left-align">У вас еще нет аккаунта?
+                <a href="#" @click="goTo('SignUp')">Зарегистрироваться</a>
+              </h6>
           </div>
         </div>
       </div>
@@ -31,13 +31,88 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import {redirect} from "../components/mixins/redirect";
+
 
 export default {
   name: "Auth",
-  components: {Navbar}
+
+  mixins: [redirect],
+
+  components: {
+    Navbar
+  },
+
+  data() {
+    return {
+      username: '',
+      password: '',
+      error: {
+        status: false,
+        message: ""
+      },
+    }
+  },
+
+  created() {
+    if (this.$store.state.isAuthenticated) {
+      // Если пользователь вс системе - выгоняем его отсюда
+      this.goTo('Home')
+    }
+  },
+
+  methods: {
+    async login() {
+      const body = {
+        username: this.username,
+        password: this.password
+      }
+      axios
+          .post(`${this.$store.getters.getServerUrl}/token/`, body)
+          .then((response) => {
+            this.$store.commit("updateToken", response.data.access);
+            this.$store.commit("updateRefreshToken", response.data.refresh);
+            const base = {
+              baseURL: this.$store.state.backendUrl,
+              headers: {
+                Authorization: `Bearer ${this.$store.state.jwt}`,
+                "Content-Type": "application/json",
+              },
+              xhrFields: {
+                withCredentials: true,
+              },
+            };
+            const axiosInstance = axios.create(base);
+            axiosInstance({
+              url: "/user/",
+              method: "get",
+              params: {},
+            }).then((response) => {
+              this.$store.commit("setAuthUser", {
+                authUser: response.data,
+                isAuthenticated: true,
+              });
+              this.goTo('Profile', {id: this.$store.state.authUser.id})
+            });
+          })
+          .catch((error) => {
+            if (error.request.status === 401) {
+              this.error.status = true;
+              this.error.message = "Указано неверное имя пользователя или пароль";
+            }
+            console.log(error);
+            console.debug(error);
+            console.dir(error);
+          });
+    },
+  }
 }
 </script>
 
-<style scoped>
 
+<style scoped>
+.error {
+  color: red;
+}
 </style>

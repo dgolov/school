@@ -1,155 +1,5 @@
 // Equivalent of jQuery .ready
-document.addEventListener('DOMContentLoaded',function(){
-
-	// Initialize variables
-	var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop; // Scroll position of body
-
-	// Listener to resizes
-	window.onresize = function(event) {
-    	lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-	};
-
-	// Helper functions
-	// Detect offset of element
-	function getOffset( el ) {
-		var _x = 0;
-		var _y = 0;
-		while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-			_x += el.offsetLeft - el.scrollLeft;
-			_y += el.offsetTop - el.scrollTop;
-			el = el.offsetParent;
-		}
-		return { top: _y, left: _x };
-	};
-
-	// Add class to element => https://www.sitepoint.com/add-remove-css-class-vanilla-js/
-	function addNewClass(elements, myClass) {
-		// if there are no elements, we're done
-		if (!elements) { return; }
-		// if we have a selector, get the chosen elements
-		if (typeof(elements) === 'string') {
-			elements = document.querySelectorAll(elements);
-		}
-		// if we have a single DOM element, make it an array to simplify behavior
-		else if (elements.tagName) { elements=[elements]; }
-		// add class to all chosen elements
-		for (var i=0; i<elements.length; i++) {
-			// if class is not already found
-			if ( (' '+elements[i].className+' ').indexOf(' '+myClass+' ') < 0 ) {
-			// add class
-			elements[i].className += ' ' + myClass;
-			}
-		}
-	};
-
-	// Remove class from element => https://www.sitepoint.com/add-remove-css-class-vanilla-js/
-	function removeClass(elements, myClass) {
-		// if there are no elements, we're done
-		if (!elements) { return; }
-
-		// if we have a selector, get the chosen elements
-		if (typeof(elements) === 'string') {
-			elements = document.querySelectorAll(elements);
-		}
-		// if we have a single DOM element, make it an array to simplify behavior
-		else if (elements.tagName) { elements=[elements]; }
-		// create pattern to find class name
-		var reg = new RegExp('(^| )'+myClass+'($| )','g');
-		// remove class from all chosen elements
-		for (var i=0; i<elements.length; i++) {
-			elements[i].className = elements[i].className.replace(reg,' ');
-		}
-	}
-
-	// Smooth scrolling => https://codepen.io/andylobban/pen/qOLKVW
-	if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
-		// Function to animate the scroll
-		var smoothScroll = function (anchor, duration) {
-		// Calculate how far and how fast to scroll
-		var startLocation = window.pageYOffset;
-		var endLocation = anchor.offsetTop - 40; // Remove 40 pixels for padding
-		var distance = endLocation - startLocation;
-		var increments = distance/(duration/16);
-		var stopAnimation;
-		// Scroll the page by an increment, and check if it's time to stop
-		var animateScroll = function () {
-			window.scrollBy(0, increments);
-			stopAnimation();
-		};
-	// If scrolling down
-		if ( increments >= 0 ) {
-		// Stop animation when you reach the anchor OR the bottom of the page
-			stopAnimation = function () {
-				var travelled = window.pageYOffset;
-				if ( (travelled >= (endLocation - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
-					clearInterval(runAnimation);
-				}
-			};
-		}
-            // Loop the animation function
-            var runAnimation = setInterval(animateScroll, 16);
-        };
-		// Define smooth scroll links
-		var scrollToggle = document.querySelectorAll('.scroll');
-		// For each smooth scroll link
-		[].forEach.call(scrollToggle, function (toggle) {
-			// When the smooth scroll link is clicked
-			toggle.addEventListener('click', function(e) {
-		// Prevent the default link behavior
-		e.preventDefault();
-		// Get anchor link and calculate distance from the top
-		var dataTarget = document.querySelector('.landing__section');
-		var dataSpeed = toggle.getAttribute('data-speed');
-	 	// If the anchor exists
-		if (dataTarget) {
-			// Scroll to the anchor
-				smoothScroll(dataTarget, dataSpeed || 700);
-			}
-		}, false);
-		});
-	}
-
-	
-		// Listen to scroll position changes
-	window.addEventListener("scroll",function(){
-
-		// NAVIGATION BAR ON LANDING FIXED
-		// If there is a #navConverter element then attach listener to scroll events
-		if (document.body.contains(document.getElementById("navConverter"))){
-			var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-			// if the current body position is less than 20 pixels away from our converter, convert
-			if (lastScrollTop > (getOffset( document.getElementById('navConverter') ).top - 60)){ removeClass(document.querySelector('.nav_bar'),'navbar--extended');} else {addNewClass(document.querySelector('.nav_bar'),'navbar--extended');}
-		}
-
-		// SCROLL TO NEXT ELEMENT ON LANDING
-		if (document.body.contains(document.getElementById('scrollToNext'))){
-			var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-			// if the current body position is less than 20 pixels away from the top, hide the icon
-			if (lastScrollTop > 20){ addNewClass(document.getElementById('scrollToNext'),'invisible');} else {removeClass(document.getElementById('scrollToNext'),'invisible');}
-		}
-	});
-
-	// Responsive mobile menu
-	// Create the menu 
-	if (document.getElementsByClassName("nav__mobile") && document.getElementsByClassName('nav__mobile').length > 0){
-		var navElements = document.getElementsByClassName('navbar__menu')[0].innerHTML;
-		document.getElementsByClassName('nav__mobile')[0].innerHTML = navElements;
-		// Load 
-		var nav = responsiveNav(".nav__mobile", { // Selector
-			animate: true, // Boolean: Use CSS3 transitions, true or false
-			transition: 284, // Integer: Speed of the transition, in milliseconds
-			label: "Menu", // String: Label for the navigation toggle
-			insert: "before", // String: Insert the toggle before or after the navigation
-			customToggle: "toggle", // Selector: Specify the ID of a custom toggle
-			openPos: "relative", // String: Position of the opened nav, relative or static
-			navClass: "nav__mobile", // String: Default CSS class. If changed, you need to edit the CSS too!
-		});
-	} else {
-		 addNewClass(document.querySelector('.navbar__menu'),'navbar__menu--noMob');
-		 addNewClass(document.querySelector('.navbar__menu-mob'), 'navbar__menu-mob--noMob');
-	};	
-});
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.flexibility = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+function func1(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.flexibility = f()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = function alignContent(target) {
 	var start;
 	var factor;
@@ -789,25 +639,8 @@ module.exports = function write(target) {
 
 },{}]},{},[13])(13)
 });
-/*! responsive-nav.js 1.0.39
- * https://github.com/viljamis/responsive-nav.js
- * http://responsive-nav.com
- *
- * Copyright (c) 2015 @viljamis
- * Available under the MIT license
- Licensed under the MIT license.
 
-Copyright (c) 2013 Viljami Salminen, http://viljamis.com/
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-/* global Event */
-(function (document, window, index) {
+function func(document, window, index) {
   // Index is used to keep multiple navs on the same page namespaced
 
   "use strict";
@@ -1460,4 +1293,155 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     window.responsiveNav = responsiveNav;
   }
 
-}(document, window, 0));
+}(document, window, 0);
+
+document.addEventListener('DOMContentLoaded',function(){
+
+	// Initialize variables
+	var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop; // Scroll position of body
+
+	// Listener to resizes
+	window.onresize = function(event) {
+		lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+	};
+
+	// Helper functions
+	// Detect offset of element
+	function getOffset( el ) {
+		var _x = 0;
+		var _y = 0;
+		while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+			_x += el.offsetLeft - el.scrollLeft;
+			_y += el.offsetTop - el.scrollTop;
+			el = el.offsetParent;
+		}
+		return { top: _y, left: _x };
+	};
+
+	// Add class to element => https://www.sitepoint.com/add-remove-css-class-vanilla-js/
+	function addNewClass(elements, myClass) {
+		// if there are no elements, we're done
+		if (!elements) { return; }
+		// if we have a selector, get the chosen elements
+		if (typeof(elements) === 'string') {
+			elements = document.querySelectorAll(elements);
+		}
+		// if we have a single DOM element, make it an array to simplify behavior
+		else if (elements.tagName) { elements=[elements]; }
+		// add class to all chosen elements
+		for (var i=0; i<elements.length; i++) {
+			// if class is not already found
+			if ( (' '+elements[i].className+' ').indexOf(' '+myClass+' ') < 0 ) {
+				// add class
+				elements[i].className += ' ' + myClass;
+			}
+		}
+	};
+
+	// Remove class from element => https://www.sitepoint.com/add-remove-css-class-vanilla-js/
+	function removeClass(elements, myClass) {
+		// if there are no elements, we're done
+		if (!elements) { return; }
+
+		// if we have a selector, get the chosen elements
+		if (typeof(elements) === 'string') {
+			elements = document.querySelectorAll(elements);
+		}
+		// if we have a single DOM element, make it an array to simplify behavior
+		else if (elements.tagName) { elements=[elements]; }
+		// create pattern to find class name
+		var reg = new RegExp('(^| )'+myClass+'($| )','g');
+		// remove class from all chosen elements
+		for (var i=0; i<elements.length; i++) {
+			elements[i].className = elements[i].className.replace(reg,' ');
+		}
+	}
+
+	// Smooth scrolling => https://codepen.io/andylobban/pen/qOLKVW
+	if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
+		// Function to animate the scroll
+		var smoothScroll = function (anchor, duration) {
+			// Calculate how far and how fast to scroll
+			var startLocation = window.pageYOffset;
+			var endLocation = anchor.offsetTop - 40; // Remove 40 pixels for padding
+			var distance = endLocation - startLocation;
+			var increments = distance/(duration/16);
+			var stopAnimation;
+			// Scroll the page by an increment, and check if it's time to stop
+			var animateScroll = function () {
+				window.scrollBy(0, increments);
+				stopAnimation();
+			};
+			// If scrolling down
+			if ( increments >= 0 ) {
+				// Stop animation when you reach the anchor OR the bottom of the page
+				stopAnimation = function () {
+					var travelled = window.pageYOffset;
+					if ( (travelled >= (endLocation - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
+						clearInterval(runAnimation);
+					}
+				};
+			}
+			// Loop the animation function
+			var runAnimation = setInterval(animateScroll, 16);
+		};
+		// Define smooth scroll links
+		var scrollToggle = document.querySelectorAll('.scroll');
+		// For each smooth scroll link
+		[].forEach.call(scrollToggle, function (toggle) {
+			// When the smooth scroll link is clicked
+			toggle.addEventListener('click', function(e) {
+				// Prevent the default link behavior
+				e.preventDefault();
+				// Get anchor link and calculate distance from the top
+				var dataTarget = document.querySelector('.landing__section');
+				var dataSpeed = toggle.getAttribute('data-speed');
+				// If the anchor exists
+				if (dataTarget) {
+					// Scroll to the anchor
+					smoothScroll(dataTarget, dataSpeed || 700);
+				}
+			}, false);
+		});
+	}
+
+
+	// Listen to scroll position changes
+	window.addEventListener("scroll",function(){
+
+		// NAVIGATION BAR ON LANDING FIXED
+		// If there is a #navConverter element then attach listener to scroll events
+		if (document.body.contains(document.getElementById("navConverter"))){
+			var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			// if the current body position is less than 20 pixels away from our converter, convert
+			if (lastScrollTop > (getOffset( document.getElementById('navConverter') ).top - 60)){ removeClass(document.querySelector('.nav_bar'),'navbar--extended');} else {addNewClass(document.querySelector('.nav_bar'),'navbar--extended');}
+		}
+
+		// SCROLL TO NEXT ELEMENT ON LANDING
+		if (document.body.contains(document.getElementById('scrollToNext'))){
+			var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			// if the current body position is less than 20 pixels away from the top, hide the icon
+			if (lastScrollTop > 20){ addNewClass(document.getElementById('scrollToNext'),'invisible');} else {removeClass(document.getElementById('scrollToNext'),'invisible');}
+		}
+	});
+
+	// Responsive mobile menu
+	// Create the menu
+	if (document.getElementsByClassName("nav__mobile") && document.getElementsByClassName('nav__mobile').length > 0){
+		var navElements = document.getElementsByClassName('navbar__menu')[0].innerHTML;
+		document.getElementsByClassName('nav__mobile')[0].innerHTML = navElements;
+		// Load
+		var nav = responsiveNav(".nav__mobile", { // Selector
+			animate: true, // Boolean: Use CSS3 transitions, true or false
+			transition: 284, // Integer: Speed of the transition, in milliseconds
+			label: "Menu", // String: Label for the navigation toggle
+			insert: "before", // String: Insert the toggle before or after the navigation
+			customToggle: "toggle", // Selector: Specify the ID of a custom toggle
+			openPos: "relative", // String: Position of the opened nav, relative or static
+			navClass: "nav__mobile", // String: Default CSS class. If changed, you need to edit the CSS too!
+		});
+	} else {
+		addNewClass(document.querySelector('.navbar__menu'),'navbar__menu--noMob');
+		addNewClass(document.querySelector('.navbar__menu-mob'), 'navbar__menu-mob--noMob');
+	};
+});
