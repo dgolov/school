@@ -56,11 +56,18 @@ import {redirect} from "./mixins/redirect";
 export default {
   data() {
     return {
-      user: this.$store.state.authUser,
-      authenticated: this.$store.state.isAuthenticated,
+      user: {},
+      authenticated: false,
     }
   },
+
+  created(){
+    this.user = this.$store.getters.getProfileInfo;
+    this.authenticated = this.$store.state.isAuthenticated;
+  },
+
   name: "NavbarMain",
+
   components: {
     NavLogin
   },

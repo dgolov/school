@@ -29,7 +29,7 @@
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>
-                <a href="#" @click="goTo('Profile', {id: user.id})">
+                <a href="#" @click="goTo('MyProfile')">
                   {{ user.first_name }} {{ user.last_name }}
                 </a>
               </li>
@@ -62,9 +62,14 @@ export default {
 
   data() {
     return {
-      user: this.$store.state.authUser,
-      authenticated: this.$store.state.isAuthenticated,
+      user: {},
+      authenticated: false
     }
+  },
+
+  created(){
+    this.user = this.$store.getters.getProfileInfo;
+    this.authenticated = this.$store.state.isAuthenticated;
   },
 
   mixins: [redirect],

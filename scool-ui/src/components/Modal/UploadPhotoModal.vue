@@ -13,7 +13,7 @@
       </slot>
       <slot name="footer">
         <div class="modal-footer">
-          <button class="grey-button upload-photo-button" @click="submitFile()">Загрузить фото</button>
+          <button class="gray-button upload-photo-button" @click="submitFile()">Загрузить фото</button>
         </div>
       </slot>
     </div>
@@ -41,14 +41,16 @@ export default {
     closeModal() {
       this.show = false
     },
+
     handleFileUpload() {
       this.file = this.$refs.fileInput.files[0];
     },
-    submitFile() {
+
+    async submitFile() {
       let formData = new FormData();
       let url = `${this.$store.state.backendUrl}/profile/upload-photo/`
       formData.append('image', this.file);
-      axios.post(url,
+      await axios.post(url,
           formData,
           {
             headers: {
@@ -57,10 +59,10 @@ export default {
             }
           }
       ).then(() => {
-        console.log('SUCCESS!!');
+        this.closeModal();
+        this.$emit('reLoad');
       })
           .catch((error) => {
-            console.log('FAILURE!!');
             if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();

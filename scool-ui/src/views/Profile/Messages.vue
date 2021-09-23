@@ -9,8 +9,8 @@
             <div class="page__main">
               <div class="row">
                 <div class="chat_header px-4">
-                  <a href="#" class="pt-3">{{ getChatName(responseData[0].dialog) }}</a>
-                  <img :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
+                  <a v-if="responseData[0]" href="#" class="pt-3">{{ getChatName(responseData[0].dialog) }}</a>
+                  <img v-if="responseData[0]" :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
                 </div>
               </div>
               <hr/>
@@ -24,14 +24,15 @@
                     <img v-if="getMessageAvatar(message)"
                          :src="`http://127.0.0.1:8000${message.from_user.avatar.image}`" class="message_avatar">
                   </a>
-                  <p :class="setClassToMessageText(message)">{{ message.text }}</p>
+                  <p v-if="message" :class="setClassToMessageText(message)">{{ message.text }}</p>
                 </div>
               </div>
               <hr/>
               <div class="row">
                 <div class="col-md-9">
                   <form>
-                    <input id='input_text' type='text' placeholder="Введите сообщение..." class="w-100">
+                    <input v-model="input_text" id='input_text' type='text'
+                           placeholder="Введите сообщение..." class="w-100">
                   </form>
                 </div>
                 <div class="col-md-3">
@@ -55,6 +56,7 @@ import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import {getDateTime} from "../../components/mixins/getDateTime";
 import {dialogMixin} from "../../components/mixins/dialogMixin";
+import axios from "axios";
 
 export default {
   name: "Messages",
@@ -74,6 +76,7 @@ export default {
       out_message_text: 'out_message_text',
       out_message_didnt_read: 'out_message_didnt_read',
       containerScrollHeight: 0,
+      input_text: ""
     }
   },
 
@@ -93,8 +96,10 @@ export default {
 
   methods: {
     sendMessage() {
+      if (!this.input_text) {
+        return 0
+      }
       //TODO send message to server and parse now date and time
-      let input_text = document.getElementById('input_text');
       let now = new Date()
       let data = {
         "from_user": {
@@ -103,14 +108,40 @@ export default {
           "last_name": this.$store.state.authUser.last_name,
         },
         "attachment": null,
-        "text": input_text.value,
+        "text": this.input_text,
         "date_and_time": '2021-09-11T15:58:22.341424Z',
         "is_read": false
       }
       this.responseData.push(data)
-      input_text.value = '';
-      this.scrollMessageList()
+      this.sendToServer()
     },
+
+    async sendToServer(){
+      let data = {
+        "dialog": Number(this.id),
+        "text": this.input_text
+      }
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/send-message/`,
+        method: "post",
+        data: data
+      })
+          .then(() => {
+            this.input_text = '';
+            this.scrollMessageList()
+          })
+          .catch((error) => {
+            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+              this.addFriend('/profile/friend-request/');
+            } else {
+              console.log(error.request);
+            }
+          })
+    },
+
     setClassToMessageArea(message) {
       if (message.from_user.id === this.$store.state.authUser.id) {
         if (message.is_read) {
@@ -122,6 +153,7 @@ export default {
         return this.in_message;
       }
     },
+
     setClassToMessageDate(message) {
       if (message.from_user.id === this.$store.state.authUser.id) {
         return this.out_message_date;
@@ -129,6 +161,7 @@ export default {
         return this.in_message_date;
       }
     },
+
     setClassToMessageText(message) {
       if (message.from_user.id === this.$store.state.authUser.id) {
         return this.out_message_text;
@@ -136,13 +169,11 @@ export default {
         return this.in_message_text;
       }
     },
+
     getMessageAvatar(message) {
-      if (message.from_user.id === this.$store.state.authUser.id) {
-        return false;
-      } else {
-        return true;
-      }
+      return message.from_user.id !== this.$store.state.authUser.id;
     },
+
     scrollMessageList() {
       // Прокрутка окна диалога вниз при загрузке страницы или при отправке сообщения
       setTimeout(() => {
@@ -153,6 +184,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #messenger {

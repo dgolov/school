@@ -6,7 +6,7 @@
       </form>
     </div>
     <div class="col-md-3">
-      <button class="grey-button search_button">Найти друзей</button>
+      <button class="gray-button search_button">Найти друзей</button>
     </div>
   </div>
 </template>

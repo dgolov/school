@@ -14,7 +14,7 @@
                   </form>
                 </div>
                 <div class="col-md-3">
-                  <button class="grey-button filter-button">Фильтр</button>
+                  <button class="gray-button filter-button">Фильтр</button>
                 </div>
               </div>
               <div class="row my-3">
@@ -26,7 +26,7 @@
                 </div>
               </div>
               <hr/>
-              <profiles-list :profiles="responseData"></profiles-list>
+              <profiles-list :profiles="responseData" @reLoad="reloadList()"></profiles-list>
             </div>
           </div>
         </div>
@@ -54,22 +54,33 @@ export default {
   data() {
     return {
       header: 'Поиск',
+      searchUserGroup: ''
     }
   },
 
   created() {
-    this.createGetRequest('/students/')
+    this.createGetRequest('/students/');
+    this.searchUserGroup = 'students';
   },
 
   mixins: [requestsMixin, redirect],
 
   methods: {
     getTeachers() {
-      this.createGetRequest('/teachers/')
+      this.createGetRequest('/teachers/');
+      this.searchUserGroup = 'teachers';
     },
     getStudents() {
-      this.createGetRequest('/students/')
-    }
+      this.createGetRequest('/students/');
+      this.searchUserGroup = 'students';
+    },
+    reloadList() {
+      if(this.searchUserGroup === 'students'){
+        this.createGetRequest('/students/');
+      } else {
+        this.createGetRequest('/teachers/');
+      }
+    },
   },
 }
 </script>

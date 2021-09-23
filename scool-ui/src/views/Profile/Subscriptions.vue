@@ -11,7 +11,7 @@
                 <input type='text' placeholder="Поиск">
               </form>
               <friends-list :header="header" :profiles="responseData.friend_request_out"
-                            @reLoad="`/profile/${id}/subscriptions/`"></friends-list>
+                            @reLoad="createGetRequest(`/profile/${id}/subscriptions/`)"></friends-list>
             </div>
           </div>
         </div>

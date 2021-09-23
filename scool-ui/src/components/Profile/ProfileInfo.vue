@@ -9,7 +9,7 @@
         <h6 v-else-if="profile.user_group === 'teacher'" class="center">Преподаватель</h6>
         <h6 v-else-if="profile.user_group === 'manager'" class="center">Менеджер учебного процесса</h6>
         <hr/>
-        <button v-if="profile.id === $store.state.authUser.id" class="grey-button">Редактировать профиль</button>
+        <button v-if="profile.id === $store.state.authUser.id" class="gray-button">Редактировать профиль</button>
         <button v-if="isFriend(profile.user)" class="w-100"
                 @click="removeFriend(profile, 'profile')">Удалить из друзей</button>
         <button v-else-if="isSubscription(profile.user)" class="w-100"

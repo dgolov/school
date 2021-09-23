@@ -35,14 +35,13 @@ export const requestsMixin = {
                 .catch((error) => {
                     if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
-                        console.log(1)
                         this.refreshToken()
                         this.createGetRequest(url)
                     }
                 })
-            if (url === `/profile/${this.$store.state.authUser.id}` || url === '/profile') {
+            if (url === `/profile/${this.$store.state.authUser.id}`) {
                 // Если запрос данных профиля, то сохраняем их в state
-                this.$store.commit("setProfileInfo", this.responseData);
+                this.$store.commit("setProfileInfo", {profileInfo: this.responseData});
             }
         },
 

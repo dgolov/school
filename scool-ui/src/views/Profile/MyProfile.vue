@@ -6,7 +6,7 @@
         <div class="container mt-5">
           <div class="page__inner">
             <profile-menu :header="header"></profile-menu>
-            <profile-info :profile="responseData"></profile-info>
+            <profile-info v-if="responseData" :profile="responseData"></profile-info>
           </div>
         </div>
       </div>
@@ -34,8 +34,8 @@ export default {
     ProfileMenu, Navbar, ProfileInfo
   },
 
-  async created() {
-    await this.createGetRequest(`/profile/${this.$store.state.authUser.id}`)
+  created() {
+    this.createGetRequest(`/profile/${this.$store.state.authUser.id}`)
   },
 
   mixins: [redirect, requestsMixin],

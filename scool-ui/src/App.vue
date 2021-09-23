@@ -10,7 +10,7 @@
 @import "./assets/css/style.css";
 
 .main-section {
-  background-color: #f7f7f7
+  background-color: #f7f7f7;
 }
 </style>
 

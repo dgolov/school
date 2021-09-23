@@ -10,7 +10,8 @@
               <form>
                 <input type='text' placeholder="Поиск">
               </form>
-              <friends-list :header="header" :profiles="responseData.followers" @reLoad="`/profile/${id}/followers/`"></friends-list>
+              <friends-list :header="header" :profiles="responseData.followers"
+                            @reLoad="createGetRequest(`/profile/${id}/followers/`)"></friends-list>
             </div>
           </div>
         </div>

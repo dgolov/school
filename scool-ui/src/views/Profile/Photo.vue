@@ -9,24 +9,41 @@
             <div class="page__main">
               <div class="col-md-12">
                 <div>
-                  <button class="grey-button upload-photo-button" @click="showModal">Загрузить фото</button>
-                  <upload-photo-modal ref="modal"></upload-photo-modal>
+                  <button class="gray-button upload-photo-button" @click="showUploadModal">Загрузить фото</button>
+                  <upload-photo-modal ref="uploadModal"
+                                      @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></upload-photo-modal>
                 </div>
               </div>
               <div class="image-container">
-                <div v-for="photo in responseData.photos" class="mySlides">
+                <div v-if="responseData" v-for="photo in responseData.photos" class="mySlides">
+                  <button class="photo-button" v-if="Number(id) === $store.state.authUser.id && responseData"
+                          id="set-avatar" @click="setAvatar(responseData.photos[slideIndex - 1].id)">
+                    Установить как фото профиля
+                  </button>
                   <div class="number_text">{{ slideIndex }} / {{ responseData.photos.length }}</div>
                   <img :src="`http://127.0.0.1:8000${photo.image}`" class="image" @dblclick="like()">
                 </div>
                 <a class="prev" @click="plusSlides(-1)">&#10094;</a>
                 <a class="next" @click="plusSlides(1)">&#10095;</a>
                 <div class="caption-container">
-                  <a v-if="photos" @click="like()">
+                  <a v-if="responseData.photos" @click="like()">
                     <img :src="likeImage" class="like_image">
                   </a>
-                  <p v-if="photos" id="like_count">{{ photos[slideIndex - 1].likes.length }}</p>
-                  <a v-if="Number(id) === $store.state.authUser.id" href="#" id="delete">Удалить</a>
-                  <a v-if="Number(id) === $store.state.authUser.id" href="#" id="edit">Редактировать</a>
+                  <p v-if="responseData.photos" id="like_count">
+                    {{ responseData.photos[slideIndex - 1].likes.length }}
+                  </p>
+                  <button class="photo-button" v-if="Number(id) === $store.state.authUser.id" id="delete"
+                          @click="showDeleteModal()">Удалить
+                  </button>
+                  <delete-photo-modal v-if="responseData.photos" ref="deleteModal"
+                                      :id="responseData.photos[slideIndex - 1].id"
+                                      @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></delete-photo-modal>
+                  <button class="photo-button" v-if="Number(id) === $store.state.authUser.id" id="edit"
+                          @click="showEditModal()">Редактировать
+                  </button>
+                  <edit-photo-modal v-if="responseData.photos" ref="editModal"
+                                    :id="responseData.photos[slideIndex - 1].id" :caption="captionText"
+                                    @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></edit-photo-modal>
                 </div>
                 <div class="description-container">
                   <p id="caption" class="py-2"></p>
@@ -46,12 +63,15 @@
   </div>
 </template>
 
+
 <script>
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
-import UploadPhotoModal from "../../components/Profile/UploadPhotoModal";
+import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
+import EditPhotoModal from "../../components/Modal/EditPhotoModal";
+import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 import axios from "axios";
 
 
@@ -59,7 +79,7 @@ export default {
   name: "Photo",
 
   components: {
-    Navbar, ProfileMenu, UploadPhotoModal
+    Navbar, ProfileMenu, UploadPhotoModal, EditPhotoModal, DeletePhotoModal
   },
 
   data() {
@@ -72,35 +92,50 @@ export default {
   },
 
   props: {
-    id: String,
+    id: Number,
   },
 
   created() {
-    this.createGetRequest(`/profile/${this.id}/gallery/`)
+    this.createGetRequest(`/profile/${String(this.id)}/gallery/`)
   },
 
   updated() {
+    console.log(this.likeImage)
     this.showSlides(this.slideIndex);
+    this.likeImage = this.getSelfLikeImage()
   },
 
   mixins: [requestsMixin, redirect],
 
   methods: {
-    showModal: function () {
-      this.$refs.modal.show = true
+    showUploadModal() {
+      // Показать окно загрузки изображения
+      this.$refs.uploadModal.show = true
+    },
+
+    showDeleteModal() {
+      // Показать окно удаления изображения
+      this.$refs.deleteModal.show = true
+    },
+
+    showEditModal() {
+      // Показать окно редактирования описания к изображению
+      this.$refs.editModal.show = true
     },
 
     plusSlides(n) {
+      // Переключение слайдов стрелками
       this.slideIndex += n
       this.showSlides(this.slideIndex);
     },
 
     currentSlide(n) {
+      // Выбор слайда из из общего списка внизу
       this.showSlides(this.slideIndex = n);
     },
 
     showSlides(n) {
-      // Слайды
+      // Показ слайда
       let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("demo");
@@ -120,14 +155,12 @@ export default {
       slides[this.slideIndex - 1].style.display = "block";
       dots[this.slideIndex - 1].className += " active";
       captionText.innerHTML = dots[this.slideIndex - 1].alt;
-      this.photos = this.responseData.photos
-      this.getSelfLikeImage()
     },
 
     async like() {
       // Поставить лайк / дизлайк
       let body = {
-        'id': this.photos[this.slideIndex - 1].id
+        'id': this.responseData.photos[this.slideIndex - 1].id
       };
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
@@ -136,16 +169,21 @@ export default {
         data: body,
       })
           .then(() => {
-            let likesList = this.photos[this.slideIndex - 1].likes
+            let likesList = this.responseData.photos[this.slideIndex - 1].likes
+            let selfLiked = false; // Лайк текущего пользователя изначально ставим в false
+            console.log(likesList)
             if (likesList.length === 0) {
               likesList.push(this.$store.state.authUser)
             } else {
               for (let i = 0; i < likesList.length; i++) {
                 if (this.$store.state.authUser.id === likesList[i].id) {
-                  likesList.splice(i, 1);
-                } else {
-                  likesList.push(this.$store.state.authUser)
+                  likesList.splice(i, 1); // Если находим текущего пользователя в списке лайков, то удаляем его оттуда
+                  selfLiked = true;       // и переводим флаг лайка текущего пользователя в true
+                  break;
                 }
+              }
+              if (!selfLiked) {   // Если текущего пользователя в списке лайков не нашлось, то добавляем его в список
+                likesList.push(this.$store.state.authUser)
               }
             }
           })
@@ -158,23 +196,50 @@ export default {
               console.log(error)
             }
           })
+      this.likeImage = this.getSelfLikeImage()
     },
 
     getSelfLikeImage() {
-      // Показывает соответствующую иконку был ли лайк от текущего пользователя
-      let likesList = this.photos[this.slideIndex - 1].likes
+      //Показывает соответствующую иконку был ли лайк от текущего пользователя
+      let likesList = this.responseData.photos[this.slideIndex - 1].likes;
       if (likesList.length === 0) {
-        this.likeImage = require('../../assets/images/icons/like.svg')
-        return false
+        return  require('../../assets/images/icons/like.svg');
       }
       for (let like of likesList) {
         if (this.$store.state.authUser.id === like.id) {
-          this.likeImage = require('../../assets/images/icons/like_fill.svg')
-        } else {
-          this.likeImage = require('../../assets/images/icons/like.svg')
+          return require('../../assets/images/icons/like_fill.svg');
         }
       }
-    }
+      return require('../../assets/images/icons/like.svg');
+    },
+
+    async setAvatar(id) {
+      console.log(1)
+      let body = {
+        "id": id
+      }
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/profile/set-avatar/`,
+        method: "put",
+        data: body
+      })
+          .then(() => {
+            this.createGetRequest(`/profile/${this.$store.state.authUser.id}`)
+            setTimeout(() => {
+              window.location.reload()
+            }, 20)
+          })
+          .catch((error) => {
+            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+              this.addFriend('/profile/friend-request/');
+            } else {
+              console.log(error.request);
+            }
+          })
+    },
   },
 }
 </script>
@@ -323,13 +388,13 @@ export default {
 .like_image {
   width: 30px;
   position: absolute;
-  left: 10px;
+  left: 30px;
   padding-top: 5px;
 }
 
 #like_count {
   position: absolute;
-  left: 40px;
+  left: 60px;
   padding: 5px 0 0 8px;
   font-size: 20px;
 }
@@ -341,6 +406,10 @@ export default {
   padding-top: 5px;
 }
 
+#delete:hover {
+  color: #ffffff;
+}
+
 #edit {
   position: absolute;
   right: 85px;
@@ -348,7 +417,28 @@ export default {
   padding-top: 5px;
 }
 
+#edit:hover {
+  color: #ffffff;
+}
+
+#set-avatar {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  color: gray;
+  padding-top: 5px;
+}
+
+#set-avatar:hover {
+  color: #ffffff;
+}
+
 .liked {
   color: #FF7979;
+}
+
+.photo-button {
+  border: none;
+  background: none;
 }
 </style>

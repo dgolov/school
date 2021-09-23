@@ -11,7 +11,7 @@
               <friends-menu v-if="id === $store.state.authUser.id"></friends-menu>
               <hr/>
               <friends-list :header="header" :profiles="responseData.friends"
-                            @reLoad="`/profile/${id}/friends/`"></friends-list>
+                            @reLoad="createGetRequest(`/profile/${id}/friends/`)"></friends-list>
             </div>
           </div>
         </div>

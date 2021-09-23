@@ -1861,10 +1861,27 @@ ul.main-nav {
     margin-left: 7px;
 }
 
-.grey-button {
+.gray-button {
     width: 100%;
     background-color: #e5ebf1;
     border: 0;
+}
+
+.red-button {
+    width: 100%;
+    background-color: #f2e6e6;
+    border: 0;
+    color: #870303;
+}
+
+.gray-button:hover {
+    background-color: #d3e0ed;
+    color: #021042;
+}
+
+.red-button:hover {
+    background-color: #edd3d3;
+    color: #420202;
 }
 
 .row_list {
