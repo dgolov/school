@@ -1,6 +1,7 @@
 <!--Для отображения друзей, подписчиков, подписок (для списка в поиске и в группах другой алгоритм запросов на бэк-->
 <template>
   <div v-if="profiles" id="profile-list">
+    <message-modal v-if="modalVisible" @close="modalVisible = false" :id="modalData"></message-modal>
     <div v-for="profile in profiles" class="row row_list">
       <div class="col-md-3 mt-3">
         <img v-if="profile.avatar" class="center small_avatar"
@@ -17,10 +18,11 @@
       </div>
       <div class="col-md-4 left-align pt-4">
         <div v-if="isFriend(profile.id)">
-          <a href="#">
+          <button @click="showMessageModal(profile.profile_id)"
+                  style="margin: 0; border: none; padding: 0; color: #000000;">
             <img src="../../assets/images/icons/send-message.svg" class="friends_button">
             Написать сообщение
-          </a>
+          </button>
         </div>
         <div v-if="isFriend(profile.id)">
           <a href="#" @click="removeFriend(profile, 'user')">
@@ -52,21 +54,40 @@
   </div>
 </template>
 
+
 <script>
 import {redirect} from "../mixins/redirect";
 import {friendMixin} from "../mixins/friendMixin";
+import MessageModal from "../Modal/MessageModalFromUsersList";
 
 export default {
   name: "FriendsList",
+
+  data() {
+    return {
+      modalVisible: false,
+      modalData: null,
+    }
+  },
 
   props: {
     profiles: Array,
     header: String,
   },
 
+  components: {
+    MessageModal
+  },
+
   mixins: [redirect, friendMixin],
 
   methods: {
+    showMessageModal(id) {
+      // Показать окно отправки сообщения
+      this.modalData = id
+      this.modalVisible = true
+    },
+
     getUserGroup(userGroup) {
       if (userGroup === 'student') {
         return 'Студент';
@@ -81,6 +102,7 @@ export default {
   },
 }
 </script>
+
 
 <style scoped>
 .friends_button {

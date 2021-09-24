@@ -52,7 +52,7 @@ export default {
     async deletePhoto() {
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
-        url: `/profile/delete-photo/${this.id}/`,
+        url: `/profile/delete-photo/${this.id}`,
         method: "delete",
       })
           .then(() => {

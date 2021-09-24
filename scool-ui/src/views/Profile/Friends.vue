@@ -43,11 +43,11 @@ export default {
   },
 
   props: {
-    id: String
+    id: Number
   },
 
   created() {
-    this.createGetRequest(`/profile/${this.id}/friends/`)
+    this.createGetRequest(`/profile/${String(this.id)}/friends/`)
   },
 
   mixins: [requestsMixin, redirect],

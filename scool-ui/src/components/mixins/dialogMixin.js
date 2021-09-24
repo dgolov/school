@@ -8,6 +8,7 @@ export const dialogMixin = {
                 }
             }
         },
+
         getChatImage(chat) {
             let path = '';
             if (!chat.is_group) {
@@ -18,6 +19,7 @@ export const dialogMixin = {
             }
             return path;
         },
+
         getChatName(chat) {
             let name = ''
             if (!chat.is_group) {
@@ -28,5 +30,13 @@ export const dialogMixin = {
             }
             return name;
         },
+
+        getUserId(chat){
+            if (chat.is_group) {
+                return false;
+            }
+            let participant = this.getParticipant(chat.participants);
+            return participant.id;
+        }
     }
 }

@@ -33,13 +33,20 @@ export const requestsMixin = {
             })
                 .then((response) => this.responseData = response.data)
                 .catch((error) => {
-                    if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+                    if (error.request.status === 403) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
-                        this.refreshToken()
-                        this.createGetRequest(url)
+                        if (!this.$store.getters.getRefreshStatus) {
+                            // Повторный запрос выполнится при статусе обновления токена false
+                            this.$store.commit('setRefreshStatus', true);   // Ставим статус обновления токена
+                            let newToken = this.refreshToken();
+                            if (newToken) {
+                                this.$store.commit('setRefreshStatus', false);
+                                console.log(this.$store.state.jwt)
+                            }
+                        }
                     }
                 })
-            if (url === `/profile/${this.$store.state.authUser.id}`) {
+            if (url === `/profile/${this.$store.state.authUser.id}/`) {
                 // Если запрос данных профиля, то сохраняем их в state
                 this.$store.commit("setProfileInfo", {profileInfo: this.responseData});
             }
@@ -47,14 +54,16 @@ export const requestsMixin = {
 
         async refreshToken() {
             /* Обновление токена */
-            console.log(2)
             const body = {
                 'refresh': this.$store.getters.getRefreshJWT
             };
+            let access = ''
             await axios
                 .post(`${this.$store.state.backendUrl}/token/refresh/`, body)
                 .then(response => {
                     this.$store.commit("updateToken", response.data.access)
+                    access = response.data.access
+                    this.base.headers.Authorization = `Bearer ${access}`
                 })
                 .catch((error) => {
                     if (error.request.status === 403) {
@@ -63,6 +72,7 @@ export const requestsMixin = {
                         this.goTo('/')
                     }
                 })
+            return access
         }
     }
 }

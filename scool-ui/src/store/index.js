@@ -11,6 +11,7 @@ export default new Vuex.Store({
     isAuthenticated: false,
     jwt: localStorage.getItem("token"),
     refreshJwt: localStorage.getItem("refresh_token"),
+    refreshStatus: false,
     backendUrl: "http://127.0.0.1:8000/api",
     isMainPage: false,
     error: '',
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     },
     updateToken(state, newToken) {
       // Записывается во время авторизации либо во время обновления токена
+      console.log(newToken)
       localStorage.setItem("token", newToken);
       state.jwt = newToken;
     },
@@ -37,11 +39,15 @@ export default new Vuex.Store({
       localStorage.setItem("refresh_token", newToken);
       state.refreshJwt = newToken;
     },
+    setRefreshStatus(status){
+      this.refreshStatus = status
+    },
     removeToken(state) {
       localStorage.removeItem("token");
       localStorage.removeItem("refresh_token");
       state.jwt = null;
       state.refreshJwt = null;
+      state.isAuthenticated = false;
     },
   },
 
@@ -60,6 +66,9 @@ export default new Vuex.Store({
     },
     getRefreshJWT: state => {
       return state.refreshJwt
+    },
+    getRefreshStatus: state => {
+      return state.refreshStatus
     },
     getIsAuthenticated: state => {
       return state.isAuthenticated

@@ -14,7 +14,10 @@
                   </form>
                 </div>
                 <div class="col-md-3">
-                  <button class="grey-button create-button;">Создать группу</button>
+                  <button class="gray-button create-button;" @click="goTo('CreateGroupChat')"
+                          @reLoad="createGetRequest('dialogs');">
+                    Создать группу
+                  </button>
                 </div>
               </div>
               <div v-for="chat in responseData" :class="setClassFromChatArea(chat)" :id="chat.id"
@@ -82,21 +85,26 @@ export default {
 
   methods: {
     setClassFromChatArea(chat) {
-      if (chat.last_message.is_read) {
+      if (!chat.last_message) {
         return this.messagesAreaClass;
       }
-      else {
+      if (chat.last_message.is_read) {
+        return this.messagesAreaClass;
+      } else {
         if (chat.last_message.from_user === this.$store.state.authUser.id) {
           return this.messagesAreaClass;
         }
         return this.newMessagesAreaClass;
       }
     },
+
     setClassFromLastMessageArea(chat) {
-      if (chat.last_message.is_read) {
+      if (!chat.last_message) {
         return this.last_message_area;
       }
-      else {
+      if (chat.last_message.is_read) {
+        return this.last_message_area;
+      } else {
         if (chat.last_message.from_user === this.$store.state.authUser.id) {
           return this.last_message_area_didnt_read;
         }
@@ -104,6 +112,7 @@ export default {
       }
     },
   }
+  ,
 }
 </script>
 

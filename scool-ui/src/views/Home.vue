@@ -14,7 +14,7 @@
                   <p class="hero__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
                     Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
                 </div>
-                <div class="col-md-4 main-section mx-3 px-3 py-2" style="border-radius: 10px;">
+                <div class="col-md-4 main-section m-lg-4 mx-3 px-3 py-2" style="border-radius: 10px;">
                   <p class="hero__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
                     Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
                 </div>

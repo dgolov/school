@@ -39,7 +39,7 @@ export default {
   },
 
   async created() {
-    await this.createGetRequest(`/profile/${this.id}`)
+    await this.createGetRequest(`/profile/${this.id}/`)
   },
 
   mixins: [redirect, requestsMixin],

@@ -2,6 +2,7 @@
 (для списка друзей, подписчиков и подписок другой алгоритм запросов на бэк)-->
 <template>
   <div v-if="profiles" id="profile-list">
+    <message-modal v-if="modalVisible" @close="modalVisible = false" :id="modalData"></message-modal>
     <div v-for="profile in profiles" class="row row_list">
       <div class="col-md-3 mt-3">
         <img v-if="profile.avatar" class="center small_avatar"
@@ -18,13 +19,13 @@
       </div>
       <div class="col-md-4 left-align pt-4">
         <div v-if="isFriend(profile.user)">
-          <a href="@">
+          <button @click="showMessageModal(profile.id)" style="margin: 0; border: none; padding: 0; color: #000000;">
             <img src="../../assets/images/icons/send-message.svg" class="friends_button">
             Написать сообщение
-          </a>
+          </button>
         </div>
         <div v-if="isFriend(profile.user)">
-          <a href="#"  @click="removeFriend(profile, 'profile')">
+          <a href="#" @click="removeFriend(profile, 'profile')">
             <img src="../../assets/images/icons/delete.svg" class="friends_button">
             Удалить из друзей
           </a>
@@ -56,17 +57,35 @@
 <script>
 import {friendMixin} from "../mixins/friendMixin";
 import {redirect} from "../mixins/redirect";
+import MessageModal from "../Modal/MessageModalFromUsersList";
 
 export default {
   name: "ProfilesList",
+
+  data() {
+    return {
+      modalVisible: false,
+      modalData: null,
+    }
+  },
 
   props: {
     profiles: Object
   },
 
+  components: {
+    MessageModal
+  },
+
   mixins: [friendMixin, redirect],
 
   methods: {
+    showMessageModal(id) {
+      // Показать окно отправки сообщения
+      this.modalData = id
+      this.modalVisible = true
+    },
+
     getUserGroup(userGroup) {
       if (userGroup === 'student') {
         return 'Студент';
@@ -78,6 +97,7 @@ export default {
         return '';
       }
     },
+
     getImage(url) {
       // Некоторые данные приходят с сервера с абсолютным адресом, некоторые с относительным, вероятно из-за ViewSets
       // Данный метод временно решает эту проблему

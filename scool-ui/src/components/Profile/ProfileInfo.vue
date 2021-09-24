@@ -19,9 +19,8 @@
         <button v-else-if="profile.id !== $store.state.authUser.id" class="w-100"
                 @click="addFriend(profile, 'profile')">Добавить в друзья
         </button>
-        <a v-if="isFriend(profile.user)" href="#">
-          <button class="w-100">Написать сообщение</button>
-        </a>
+        <button v-if="isFriend(profile.user)" class="w-100" @click="showMessageModal()">Написать сообщение</button>
+        <message-modal v-if="isFriend(profile.user)" :id="profile.id" ref="messageModal"></message-modal>
       </div>
       <div class="col-md-6">
         <img v-if="profile.avatar" class="center profile-avatar"
@@ -169,14 +168,25 @@
 import {redirect} from "../mixins/redirect";
 import {friendMixin} from "../mixins/friendMixin";
 import {requestsMixin} from "../mixins/requestsMixin";
-import axios from "axios";
+import MessageModal from "../Modal/MessageModal";
 
 export default {
   name: "ProfileInfo",
 
+  components: {
+    MessageModal
+  },
+
   props: ['profile'],
 
   mixins: [redirect, friendMixin, requestsMixin],
+
+  methods: {
+    showMessageModal() {
+      // Показать окно отправки сообщения
+      this.$refs.messageModal.show = true
+    },
+  }
 }
 </script>
 

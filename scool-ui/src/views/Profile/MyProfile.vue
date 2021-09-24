@@ -35,7 +35,7 @@ export default {
   },
 
   created() {
-    this.createGetRequest(`/profile/${this.$store.state.authUser.id}`)
+    this.createGetRequest(`/profile/${this.$store.state.authUser.id}/`)
   },
 
   mixins: [redirect, requestsMixin],

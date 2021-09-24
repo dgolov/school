@@ -8,9 +8,16 @@
             <profile-menu :header="header"></profile-menu>
             <div class="page__main">
               <div class="row">
-                <div class="chat_header px-4">
-                  <a v-if="responseData[0]" href="#" class="pt-3">{{ getChatName(responseData[0].dialog) }}</a>
-                  <img v-if="responseData[0]" :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
+                <div class="chat_header px-4" v-if="responseData.length > 0">
+                  <a v-if="responseData && !responseData[0].dialog.is_group" href="#" class="pt-3"
+                     @click="goTo('Profile', {id: getUserId(responseData[0].dialog)})">
+                    {{ getChatName(responseData[0].dialog) }}
+                  </a>
+                  <a v-else-if="responseData && responseData[0].dialog.is_group" href="#" class="pt-3">
+                    {{ getChatName(responseData[0].dialog) }}
+                  </a>
+                  <img v-if="responseData" :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
+                  <a href="#" v-if="responseData[0].dialog.is_group" class="group_chat_settings">Настройка беседы</a>
                 </div>
               </div>
               <hr/>
@@ -36,7 +43,7 @@
                   </form>
                 </div>
                 <div class="col-md-3">
-                  <button class="grey-button" style="height: 68%;" @click="sendMessage()">
+                  <button class="gray-button" style="height: 68%;" @click="sendMessage()">
                     Отправить
                   </button>
                 </div>
@@ -81,13 +88,13 @@ export default {
   },
 
   props: {
-    id: String
+    id: Number
   },
 
   mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
 
   created() {
-    this.createGetRequest(`/dialogs/${this.id}/`)
+    this.createGetRequest(`/dialogs/${String(this.id)}/`)
   },
 
   updated() {
@@ -135,7 +142,7 @@ export default {
             if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
-              this.addFriend('/profile/friend-request/');
+              this.sendToServer('/send-message/');
             } else {
               console.log(error.request);
             }
@@ -176,10 +183,12 @@ export default {
 
     scrollMessageList() {
       // Прокрутка окна диалога вниз при загрузке страницы или при отправке сообщения
-      setTimeout(() => {
-        let div = document.getElementById('messenger')
-        div.scrollTop  = div.scrollHeight;
-      });
+      if (this.responseData.length > 0) {
+        setTimeout(() => {
+          let div = document.getElementById('messenger')
+          div.scrollTop = div.scrollHeight;
+        });
+      }
     }
   }
 }
@@ -278,5 +287,13 @@ export default {
   border-radius: 50%;
   float: left;
   margin-top: 5px;
+}
+
+.group_chat_settings {
+  display: block;
+  left: 0;
+  bottom: 0;
+  color: gray;
+  font-size: 12px;
 }
 </style>

@@ -1,19 +1,23 @@
+<!--Модальное окно для отправки сообщений со страницы списка нескольких пользователей-->
 <template>
   <div v-if="show" class="modal-shadow" @click.self="closeModal">
     <div class="modal">
       <div class="modal-close" @click="closeModal">&#10006;</div>
       <slot name="title">
-        <h3 class="system-color">Загрузить новую фотографию</h3>
+        <h3 class="system-color">Новое сообщение</h3>
       </slot>
       <slot name="body">
-        <div class="modal-content">
-          <p>Выберите файл изображения для загрузки в галерею</p>
-          <input type="file" id="file-input" class="file-input" ref="fileInput" v-on:change="handleFileUpload()">
-        </div>
+        <textarea v-model="caption" id="file-input" class="file-input"></textarea>
       </slot>
       <slot name="footer">
         <div class="modal-footer">
-          <button class="gray-button upload-photo-button" @click="submitFile()">Загрузить фото</button>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <button class="gray-button upload-photo-button" @click="sendMessage(id, caption)">Отправить</button>
+              </div>
+            </div>
+          </div>
         </div>
       </slot>
     </div>
@@ -22,17 +26,21 @@
 
 
 <script>
-import {requestsMixin} from "../mixins/requestsMixin";
 import axios from "axios";
+import {requestsMixin} from "../mixins/requestsMixin";
 
 export default {
-  name: "ModalWindow",
+  name: "MessageModal",
 
   data() {
     return {
-      show: false,
-      file: '',
+      show: true,
+      caption: ''
     }
+  },
+
+  props: {
+    id: Number,
   },
 
   mixins: [requestsMixin],
@@ -42,37 +50,35 @@ export default {
       this.show = false
     },
 
-    handleFileUpload() {
-      this.file = this.$refs.fileInput.files[0];
-    },
-
-    async submitFile() {
-      let formData = new FormData();
-      let url = `${this.$store.state.backendUrl}/profile/upload-photo/`
-      formData.append('image', this.file);
-      await axios.post(url,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.jwt}`,
-              'Content-Type': 'multipart/form-data'
-            }
-          }
-      ).then(() => {
-        this.closeModal();
-        this.$emit('close');
+    async sendMessage(id, message) {
+      if(!message) {
+        return false
+      }
+      let data = {
+        "user_id": id,
+        "text": message
+      }
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/send-message/`,
+        method: "post",
+        data: data
       })
+          .then(() => {
+            this.closeModal();
+            this.$emit('reLoad');
+          })
           .catch((error) => {
             if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
-              this.submitFile();
+              this.sendToServer('/send-message/');
             } else {
-              console.log(error);
+              console.log(error.request);
             }
-          });
+          })
     },
-  },
+  }
 }
 </script>
 
@@ -107,14 +113,14 @@ html, body {
 @media (max-width: 992px) {
   .modal {
     width: 90%;
-    height: 80%;
+    height: 50%;
   }
 }
 
 @media (min-width: 992px) {
   .modal {
     width: 50%;
-    height: 80%;
+    height: 43%;
   }
 }
 

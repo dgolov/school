@@ -15,8 +15,8 @@ import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
 import TimeTable from "../views/Profile/TimeTable";
 import AcademicPerformance from "../views/Profile/AcademicPerformance";
-import Chats from "../views/Profile/Chats";
-import Messages from "../views/Profile/Messages";
+import Chats from "../views/Messages/Chats";
+import Messages from "../views/Messages/Messages";
 import Friends from "../views/Profile/Friends";
 import Followers from "../views/Profile/Followers";
 import Groups from "../views/Profile/Groups";
@@ -26,6 +26,7 @@ import Photo from "../views/Profile/Photo";
 import MyProfile from "../views/Profile/MyProfile";
 import Subscriptions from "../views/Profile/Subscriptions";
 import FriendRequests from "../views/Profile/FriendRequests";
+import CreateGroupChat from "../views/Messages/CreateGroupChat";
 
 
 Vue.use(VueRouter)
@@ -81,6 +82,12 @@ const routes = [
     path: '/profile/chats/:id',
     name: 'Messages',
     component: Messages,
+    props: true
+  },
+  {
+    path: "/profile/chats/create-group",
+    name: 'CreateGroupChat',
+    component: CreateGroupChat,
     props: true
   },
   {
