@@ -1,5 +1,7 @@
+from django.db.models import Q, Count
+
 from mainapp.api.serializers import MessageSerializer
-from mainapp.models import Photo, Profile, Dialog
+from mainapp.models import Photo, Profile, Dialog, Message
 
 
 class PhotoManagerMixin:
@@ -18,7 +20,7 @@ class PhotoManagerMixin:
         profile = request.user.profile
         try:
             item_photo = Photo.objects.get(pk=photo_id)
-            if item_photo.for_profile.user not in profile.friends.all():
+            if item_photo.for_profile.user not in profile.friends.all() and item_photo.for_profile != profile:
                 return 403
             if profile in item_photo.likes.all():
                 item_photo.likes.remove(profile)
@@ -107,9 +109,12 @@ class MessageMixin:
     """ Класс миксин для работы с системой личных сообщений
     """
     @staticmethod
-    def read_messages(message_list):
+    def read_messages(request, message_list):
         """ При открытии диалога непрочитанные сообщения становятся прочитанными """
+        item_profile = request.user.profile
         for message in message_list:
+            if message.from_user == item_profile:
+                continue
             if not message.is_read:
                 message.is_read = True
                 message.save()
@@ -124,12 +129,23 @@ class MessageMixin:
         data = request.data
         name = data.get('name')
         participant_list = data.get('participants')
+        if item_profile.gender == 'm':
+            message_text = f'{item_profile} создал беседу'
+        else:
+            message_text = f'{item_profile} создала беседу'
         if not name or not participant_list:
             return 'No data', 400
         dialog = Dialog.objects.create(name=name, is_group=True, group_founder=item_profile)
+        message = Message.objects.create(
+            dialog=dialog,
+            from_user=item_profile,
+            text=message_text,
+            system_message=True)
         profiles_list = Profile.objects.filter(pk__in=participant_list)
         for profile in profiles_list:
             dialog.participants.add(profile)
+        dialog.last_message = message
+        dialog.save()
         return 'Created', 201
 
     @staticmethod
@@ -164,8 +180,7 @@ class MessageMixin:
         dialog.participants.add(profile)
         return 'Success', 201
 
-    @staticmethod
-    def send_message(request):
+    def send_message(self, request):
         """ Отправка сообщений
         :param request: данные запроса (user_id - id пользователя которому отправляем сообщения, не обязательный
                                                   параметр, если его нету, используется id диалога)
@@ -190,13 +205,32 @@ class MessageMixin:
         if not data.get('dialog'):
             if not to_profile:
                 return 'You must specify a profile id or dialogue id', 400
-            new_dialog = Dialog.objects.create(name=f'{item_profile} - {to_profile}')
-            new_dialog.participants.add(item_profile)
-            new_dialog.participants.add(to_profile)
-            data['dialog'] = new_dialog.pk
+            dialog = self._get_dialog(item_profile, to_profile)
+            data['dialog'] = dialog.pk
+        else:
+            dialog = Dialog.objects.get(pk=data.get('dialog'))
         data['from_user'] = item_profile.pk
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-        return 'Created', 201
+            return 'Created', 201
+        else:
+            return f'Bad request Data', 400
 
+    @staticmethod
+    def _get_dialog(item_profile, to_profile):
+        """ Проверяет существует ли диалог (если сообщение написанно из профиля пользователя
+            Если диалог существует, то возвращается его объект,
+            если не существует, то создается и возвращается новый объект диалога
+        :param item_profile: Текущий пользователь (который отправляет сообщение)
+        :param to_profile: Пользователь которому отправляют сообщение
+        :return: id диалога
+        """
+        my_dialog = Dialog.objects.filter(is_group=False, participants__exact=item_profile)
+        for dialog in my_dialog:
+            if to_profile in dialog.participants.all():
+                return dialog
+        dialog = Dialog.objects.create(name=f'{item_profile} - {to_profile}')
+        dialog.participants.add(item_profile)
+        dialog.participants.add(to_profile)
+        return dialog

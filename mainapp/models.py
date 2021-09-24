@@ -47,6 +47,7 @@ class Photo(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
     likes = models.ManyToManyField('Profile', verbose_name='Лайки', blank=True, related_name='likes')
     for_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, verbose_name='Пользователь')
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
 
     def __str__(self):
         return self.image.name
@@ -168,6 +169,14 @@ class Dialog(models.Model):
         related_name='participants'
     )
     is_group = models.BooleanField(default=False, verbose_name='Беседа')
+    last_message = models.ForeignKey(
+        'Message',
+        on_delete=models.CASCADE,
+        verbose_name='Последнее сообщение',
+        related_name='last_message',
+        blank=True,
+        null=True
+    )
     group_founder = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
@@ -229,6 +238,7 @@ class Message(models.Model):
         verbose_name='Вложение'
     )
     is_read = models.BooleanField(default=False, verbose_name='Прочитано')
+    system_message = models.BooleanField(default=False, verbose_name='Системное сообщение')
 
     def __str__(self):
         return f'{self.from_user} - {self.text}'

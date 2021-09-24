@@ -12,6 +12,11 @@ from .views import (
     ProfileCreateView,
     FriendRequestView,
     FriendResponseView,
+    FriendsListView,
+    OutRequestsListView,
+    InRequestsListView,
+    FollowersListView,
+    GalleryListView,
     GroupViewSet,
     CategoryListView,
     CoursesViewSet,
@@ -43,12 +48,19 @@ router.register('dialogs', DialogViewSet, basename='dialogs')
 
 
 urlpatterns = [
+    # Auth
     path('auth/', include('djoser.urls')),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/', UserRetrieveView.as_view(), name='user'),
-    path('profile/', PersonalProfileView.as_view(), name='profile'),
+    # Profile
+    path('profile/<int:pk>/', PersonalProfileView.as_view(), name='profile'),
     path('profile/create/', ProfileCreateView.as_view(), name='create_profile'),
+    path('profile/<int:pk>/friends/', FriendsListView.as_view(), name='friends'),
+    path('profile/<int:pk>/followers/', FollowersListView.as_view(), name='followers'),
+    path('profile/<int:pk>/subscriptions/', OutRequestsListView.as_view(), name='subscriptions'),
+    path('profile/<int:pk>/gallery/', GalleryListView.as_view(), name='gallery'),
+    path('profile/friend-requests/', InRequestsListView.as_view(), name='friend_requests'),
     path('profile/upload-photo/', UploadPhotoView.as_view(), name='upload_photo'),
     path('profile/delete-photo/<int:pk>/', DeletePhotoView.as_view(), name='delete_photo'),
     path('profile/upload-avatar/', UploadAvatarView.as_view(), name='upload_avatar'),
@@ -56,9 +68,11 @@ urlpatterns = [
     path('profile/like-photo/', LikePhotoView.as_view(), name='like-photo'),
     path('profile/friend-request/', FriendRequestView.as_view(), name='friend-request'),
     path('profile/friend-response/', FriendResponseView.as_view(), name='friend-response'),
+    # Courses
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('courses/buy/', BuyingACourseView.as_view(), name='buy-course'),
     path('courses/<int:course_pk>/lessons/<int:pk>/', LessonsDetailView.as_view(), name='lesson_detail'),
+    # Messages
     path('send-message/', SendMessageView.as_view(), name='send_message'),
     path('create-group-dialog/', CreateAGroupDialog.as_view(), name='create_group_dialog'),
 ]

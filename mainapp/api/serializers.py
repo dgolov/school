@@ -28,11 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
     gender = serializers.SerializerMethodField()
     date_of_birthday = serializers.SerializerMethodField()
     avatar = serializers.SerializerMethodField()
+    user_group = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
-            'profile_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'date_of_birthday', 'avatar'
+            'id', 'profile_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'date_of_birthday', 'avatar',
+            'user_group',
         ]
         read_only_fields = (
             'profile_id', 'gender', 'date_of_birthday', 'avatar'
@@ -49,6 +51,10 @@ class UserSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_date_of_birthday(obj):
         return obj.profile.date_of_birthday
+
+    @staticmethod
+    def get_user_group(obj):
+        return obj.profile.user_group
 
     @staticmethod
     def get_avatar(obj):
@@ -94,7 +100,7 @@ class AvatarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = [
-            'image',
+            'id', 'image',
         ]
 
 
@@ -107,7 +113,8 @@ class ProfileSerializer(ProfileSerializerBase):
     class Meta:
         model = Profile
         fields = [
-            'id', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
+            'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
+            'friends', 'followers', 'friend_request_in', 'friend_request_out',
         ]
 
 
@@ -117,19 +124,31 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
-            'middle_name', 'gender', 'phone', 'date_of_birthday'
+            'middle_name', 'gender', 'phone', 'date_of_birthday',
         ]
 
 
 class PhotoSerializer(serializers.ModelSerializer):
-    """ Серилизация модели галереи
+    """ Серилизация модели фотографий
     """
     likes = ProfileSerializer(read_only=False, many=True)
 
     class Meta:
         model = Photo
         fields = [
-            'id', 'image', 'date', 'likes'
+            'id', 'image', 'date', 'likes', 'description'
+        ]
+
+
+class GallerySerializer(serializers.ModelSerializer):
+    """ Серилизация галереи пользователя
+    """
+    photos = PhotoSerializer(read_only=False, many=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'photos',
         ]
 
 
@@ -198,7 +217,7 @@ class EducationalManagerDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = EducationalManager
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
+            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
             'date_of_birthday','photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
             'user_group'
         ]
@@ -249,28 +268,68 @@ class TeacherDetailSerializer(ProfileSerializerBase):
     class Meta:
         model = Teacher
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city', 'vk_slug',
-            'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses','group_list',
-            'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
+            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
+            'vk_slug', 'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
+            'group_list', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
+            'user_group',
         ]
 
 
 class StudentDetailSerializer(ProfileSerializerBase):
     """ Сериализация детальной модели студентов (видят друзья)
     """
-    group_list = GroupSerializer(read_only=True, many=True)
-    photos = PhotoSerializer(read_only=False, many=True)
-    friends = UserSerializer(read_only=True, many=True)
-    friend_request_in = UserSerializer(read_only=True, many=True)
-    friend_request_out = UserSerializer(read_only=True, many=True)
     avatar = PhotoSerializer()
 
     class Meta:
         model = Student
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city', 'vk_slug',
-            'instagram_slug', 'hobbies', 'dream', 'about', 'date_of_birthday',  'courses', 'group_list', 'photos',
-            'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
+            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
+            'vk_slug', 'instagram_slug', 'hobbies', 'dream', 'about', 'date_of_birthday',  'courses', 'group_list',
+            'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
+        ]
+
+
+class FriendsSerializer(serializers.ModelSerializer):
+    """ Серилизация друзей профиля """
+    friends = UserSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'friends',
+        ]
+
+
+class FollowersSerializer(serializers.ModelSerializer):
+    """ Серилизация подписчиков профиля """
+    followers = UserSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'followers',
+        ]
+
+
+class FriendsRequestInSerializer(serializers.ModelSerializer):
+    """ Серилизация входящих заявок в друзья """
+    friend_request_in = UserSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'friend_request_in',
+        ]
+
+
+class FriendsRequestOutSerializer(serializers.ModelSerializer):
+    """ Серилизация исходящих заявок в друзья (подписок)"""
+    friend_request_out = UserSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'friend_request_out',
         ]
 
 
@@ -368,33 +427,28 @@ class AcademicPerformanceSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class LastMessageSerializer(serializers.ModelSerializer):
+    """ Серилизация чтения личных сообщений
+    """
+
+    class Meta:
+        model = Message
+        fields = [
+            'text', 'date_and_time', 'is_read', 'from_user'
+        ]
+
+
 class DialogSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов
     """
     participants = ProfileSerializer(read_only=False, many=True)
-    last_message = serializers.SerializerMethodField()
+    last_message = LastMessageSerializer()
 
     class Meta:
         model = Dialog
         fields = [
             'id', 'name', 'participants', 'is_group', 'group_founder', 'image', 'last_message',
         ]
-        read_only_fields = (
-            'new_messages', 'last_message_text'
-        )
-
-    @staticmethod
-    def get_last_message(obj):
-        """ Получает текст последнего сообщения и его состояние - прочитанное или нет """
-        messages = Message.objects.filter(dialog=obj).order_by('-id')
-        try:
-            last_message = messages[0]
-            return {
-                'text': last_message.text,
-                'is_read': last_message.is_read
-            }
-        except IndexError:
-            return None
 
 
 class DialogAttachmentSerializer(serializers.ModelSerializer):
@@ -412,12 +466,19 @@ class DialogAttachmentSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     """ Серилизация отправки личных сообщений
     """
+
     class Meta:
         model = Message
         fields = '__all__'
 
     def create(self, validated_data):
-        return super().create(validated_data)
+        dialog_id = self.data.get('dialog')
+        dialog = Dialog.objects.get(pk=dialog_id)
+        new_message = super().create(validated_data)
+        # Помещаем последнее сообщение в объект диалога
+        dialog.last_message = new_message
+        dialog.save()
+        return new_message
 
 
 class MessageViewSerializer(MessageSerializer):
@@ -425,6 +486,7 @@ class MessageViewSerializer(MessageSerializer):
     """
     from_user = ProfileSerializer()
     attachment = DialogAttachmentSerializer()
+    dialog = DialogSerializer()
 
     class Meta:
         model = Message

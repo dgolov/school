@@ -16,6 +16,11 @@ from .serializers import (
     StudentDetailSerializer,
     TeacherDetailSerializer,
     EducationalManagerDetailSerializer,
+    FriendsSerializer,
+    FollowersSerializer,
+    FriendsRequestInSerializer,
+    FriendsRequestOutSerializer,
+    GallerySerializer,
     GroupSerializer,
     GroupRetrieveSerializer,
     DialogSerializer,
@@ -39,6 +44,7 @@ from .utils import (
     get_student_group_name_list,
 )
 from ..models import (
+    User,
     Profile,
     Student,
     Teacher,
@@ -83,14 +89,14 @@ class StudentsViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех обучающихся
     """
     queryset = Student.objects.all()
-    detail_serializer_class = StudentDetailSerializer
+    detail_serializer_class = ProfileSerializer
 
 
 class TeachersViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех преподавателей
     """
     queryset = Teacher.objects.all()
-    detail_serializer_class = TeacherDetailSerializer
+    detail_serializer_class = ProfileSerializer
 
 
 class EducationalManagerViewSet(BaseProfileViewSet):
@@ -98,7 +104,7 @@ class EducationalManagerViewSet(BaseProfileViewSet):
     """
     permission_classes = [IsAdminUser]
     queryset = EducationalManager.objects.all()
-    detail_serializer_class = EducationalManagerDetailSerializer
+    detail_serializer_class = ProfileSerializer
 
 
 class ProfileCreateView(CreateAPIView):
@@ -138,8 +144,14 @@ class PersonalProfileView(APIView):
     Request data for teachers: education - образование
                                professional_activity - профессиональная деятельность
     """
+    serializer_classes = {
+        'student': StudentDetailSerializer,
+        'teacher': TeacherDetailSerializer,
+        'manager': EducationalManagerDetailSerializer
+    }
+
     @staticmethod
-    def get_queryset(user):
+    def get_queryset(user, *args, **kwargs):
         if user.profile.user_group == 'student':
             return Student.objects.get(user=user)
         elif user.profile.user_group == 'teacher':
@@ -149,17 +161,17 @@ class PersonalProfileView(APIView):
         else:
             return None
 
-    def get(self, request, format=None):
-        user = self.request.user
-        obj = self.get_queryset(user)
-        if user.profile.user_group == 'student':
-            serializer = StudentDetailSerializer(obj, many=False)
-        elif user.profile.user_group == 'teacher':
-            serializer = TeacherDetailSerializer(obj, many=False)
-        elif user.profile.user_group == 'manager':
-            serializer = EducationalManagerDetailSerializer(obj, many=False)
-        else:
+    def get(self, request, *args, **kwargs):
+        item_user = self.request.user
+        user = Profile.objects.get(pk=kwargs.get('pk')).user
+        queryset = self.get_queryset(user)
+        if not queryset:
             return Response(status=status.HTTP_403_FORBIDDEN)
+        if user == item_user or user in item_user.profile.friends.all():
+            serializer = self.serializer_classes[user.profile.user_group]
+            serializer = serializer(queryset, many=False)
+        else:
+            serializer = ProfileSerializer(queryset, many=False)
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
@@ -177,6 +189,57 @@ class PersonalProfileView(APIView):
             teacher.professional_activity = data.get('professional_activity')
             teacher.save()
         return Response(status=status.HTTP_201_CREATED)
+
+
+class FriendsListView(ListAPIView):
+    """ Эндпоинт друзей профиля """
+    serializer_class = FriendsSerializer
+
+    def list(self, request, *args, **kwargs):
+        profile = self.get_queryset(pk=kwargs.get('pk'))
+        item_user = self.request.user
+        if item_user.profile != profile and item_user not in profile.friends.all():
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        serializer = self.serializer_class(profile)
+        return Response(serializer.data)
+
+    def get_queryset(self, *args, **kwargs):
+        try:
+            return Profile.objects.get(pk=kwargs.get('pk'))
+        except Profile.DoesNotExist:
+            return None
+
+
+class FollowersListView(FriendsListView):
+    """ Эндпоинт подписчиков профиля """
+    serializer_class = FollowersSerializer
+
+
+class OutRequestsListView(FriendsListView):
+    """ Эндпоинт подписок профиля """
+    serializer_class = FriendsRequestOutSerializer
+
+
+class InRequestsListView(ListAPIView):
+    """ Эндпоинт входящих заявок в друзья """
+    serializer_class = FriendsRequestInSerializer
+
+    def list(self, request, *args, **kwargs):
+        profile = self.get_queryset()
+        serializer = self.serializer_class(profile)
+        return Response(serializer.data)
+
+    def get_queryset(self, *args, **kwargs):
+        try:
+            return self.request.user.profile
+        except Profile.DoesNotExist:
+            return None
+
+
+class GalleryListView(FriendsListView):
+    """ Эндпоинт галереи профиля """
+    # TODO Изменить класс родитель на APIView и реализовать метод PUT для редактирования описания к фото
+    serializer_class = GallerySerializer
 
 
 class FriendRequestView(APIView, AddFriendMixin):
@@ -515,10 +578,11 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
 
     def get_queryset(self):
         item_profile = self.request.user.profile
-        return item_profile.participants.all()
+        return item_profile.participants.all().order_by('-last_message')
 
     def list(self, request, *args, **kwargs):
         dialogs_list = self.get_queryset()
+
         serializer = DialogSerializer(dialogs_list, many=True)
         serializer.is_new_messages = False
         return Response(serializer.data)
@@ -526,7 +590,7 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         message_list = Message.objects.filter(dialog=instance)
-        self.read_messages(message_list=message_list)
+        self.read_messages(request, message_list=message_list)
         serializer = MessageViewSerializer(message_list, many=True)
         return Response(serializer.data)
 
