@@ -41,7 +41,7 @@ export const requestsMixin = {
                             let newToken = this.refreshToken();
                             if (newToken) {
                                 this.$store.commit('setRefreshStatus', false);
-                                console.log(this.$store.state.jwt)
+                                this.createGetRequest(url)
                             }
                         }
                     }

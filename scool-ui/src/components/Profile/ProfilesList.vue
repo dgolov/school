@@ -70,7 +70,7 @@ export default {
   },
 
   props: {
-    profiles: Object
+    profiles: Array
   },
 
   components: {

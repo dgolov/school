@@ -1,12 +1,12 @@
 <template>
   <div id="group-single">
     <navbar></navbar>
-    <div class="step landing__section" style="background-color: #f7f7f7">
+    <div class="step landing__section main-section">
       <div class="page">
         <div class="container mt-5">
           <div class="page__inner">
             <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
+            <div class="page__main" v-if="responseData">
               <div class="row">
                 <div class="col-md-12">
                   <group-search></group-search>
@@ -28,8 +28,8 @@
 <script>
 import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
-import GroupSearch from "./GroupSearch";
-import SingleGroupHeader from "../../components/Profile/SingleGroupHeader";
+import GroupSearch from "../../components/Groups/GroupSearch";
+import SingleGroupHeader from "../../components/Groups/SingleGroupHeader";
 import ProfilesList from "../../components/Profile/ProfilesList";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";

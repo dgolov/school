@@ -34,8 +34,8 @@
 <script>
 import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
-import GroupsHeader from "../../components/Profile/GroupsHeader";
-import GroupSearch from "./GroupSearch";
+import GroupsHeader from "../../components/Groups/GroupsHeader";
+import GroupSearch from "../../components/Groups/GroupSearch";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 

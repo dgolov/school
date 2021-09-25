@@ -100,7 +100,6 @@ export default {
   },
 
   updated() {
-    console.log(this.likeImage)
     this.showSlides(this.slideIndex);
     this.likeImage = this.getSelfLikeImage()
   },
@@ -171,7 +170,6 @@ export default {
           .then(() => {
             let likesList = this.responseData.photos[this.slideIndex - 1].likes
             let selfLiked = false; // Лайк текущего пользователя изначально ставим в false
-            console.log(likesList)
             if (likesList.length === 0) {
               likesList.push(this.$store.state.authUser)
             } else {
@@ -214,7 +212,6 @@ export default {
     },
 
     async setAvatar(id) {
-      console.log(1)
       let body = {
         "id": id
       }

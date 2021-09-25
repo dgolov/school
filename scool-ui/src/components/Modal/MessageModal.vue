@@ -39,10 +39,6 @@ export default {
     }
   },
 
-  created() {
-    console.log(122)
-  },
-
   props: {
     id: Number,
   },
@@ -103,6 +99,7 @@ html, body {
 
 .modal {
   display: block;
+  height: 40%;
   background: #fff;
   border-radius: 8px;
   padding: 15px;
@@ -116,14 +113,12 @@ html, body {
 @media (max-width: 992px) {
   .modal {
     width: 90%;
-    height: 50%;
   }
 }
 
 @media (min-width: 992px) {
   .modal {
     width: 50%;
-    height: 43%;
   }
 }
 

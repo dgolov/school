@@ -114,9 +114,7 @@ export const friendMixin = {
                             friends.splice(i, 1);
                         }
                     }
-                    console.log(1)
                     this.$emit('reLoad')
-                    console.log(2)
                 })
                 .catch((error) => {
                     if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
