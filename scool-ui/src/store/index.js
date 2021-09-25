@@ -30,7 +30,6 @@ export default new Vuex.Store({
     },
     updateToken(state, newToken) {
       // Записывается во время авторизации либо во время обновления токена
-      console.log(newToken)
       localStorage.setItem("token", newToken);
       state.jwt = newToken;
     },

@@ -34,7 +34,7 @@
                 </a>
               </li>
               <li>
-                <img v-if="authenticated" class="center avatar" :src="`http://127.0.0.1:8000${user.avatar.image}`">
+                <img v-if="authenticated" class="center avatar" :src="getAvatar()">
               </li>
             </ul>
             <ul v-else style="float: right;">
@@ -73,6 +73,18 @@ export default {
   },
 
   mixins: [redirect],
+
+  methods: {
+    getAvatar() {
+      let path = ''
+      try {
+        path = `http://127.0.0.1:8000${this.user.avatar.image}`;
+      } catch {
+        path = require('../assets/images/avatars/mike2.jpeg');
+      }
+      return path;
+    },
+  }
 }
 </script>
 

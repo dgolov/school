@@ -13,7 +13,11 @@ export const dialogMixin = {
             let path = '';
             if (!chat.is_group) {
                 let participant = this.getParticipant(chat.participants);
-                path = `http://127.0.0.1:8000${participant.avatar.image}`;
+                try {
+                    path = `http://127.0.0.1:8000${participant.avatar.image}`;
+                } catch {
+                    path = require('../../assets/images/avatars/mike2.jpeg');
+                }
             } else {
                 path = chat.image;
             }

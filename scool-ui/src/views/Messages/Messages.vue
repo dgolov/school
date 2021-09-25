@@ -29,7 +29,7 @@
                   </p>
                   <a href="#">
                     <img v-if="getMessageAvatar(message)"
-                         :src="`http://127.0.0.1:8000${message.from_user.avatar.image}`" class="message_avatar">
+                         :src="getAvatarPath()" class="message_avatar">
                   </a>
                   <p v-if="message" :class="setClassToMessageText(message)">{{ message.text }}</p>
                 </div>
@@ -102,6 +102,17 @@ export default {
   },
 
   methods: {
+    getAvatarPath(){
+      let path = ''
+      try {
+        path = `http://127.0.0.1:8000${message.from_user.avatar.image}`;
+      } catch {
+        path = require('../../assets/images/avatars/mike2.jpeg');
+      }
+      return path;
+
+    },
+
     sendMessage() {
       if (!this.input_text) {
         return 0
