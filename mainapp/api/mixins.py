@@ -207,8 +207,6 @@ class MessageMixin:
                 return 'You must specify a profile id or dialogue id', 400
             dialog = self._get_dialog(item_profile, to_profile)
             data['dialog'] = dialog.pk
-        else:
-            dialog = Dialog.objects.get(pk=data.get('dialog'))
         data['from_user'] = item_profile.pk
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():

@@ -101,6 +101,7 @@ class Profile(models.Model):
         choices=USER_GROUP_CHOICES,
         default='student'
     )
+    is_active = models.BooleanField(default=True, verbose_name='Активный пользователь')
 
     def __str__(self):
         return f'{self.user.last_name} {self.user.first_name}'
@@ -279,6 +280,7 @@ class Course(models.Model):
         verbose_name='Обучающиеся завершившие курс',
         related_name='is_finished_course'
     )
+    is_active = models.BooleanField(default=True, verbose_name='Доступный курс')
 
     def __str__(self):
         return self.name
@@ -308,6 +310,7 @@ class Lesson(models.Model):
         verbose_name='Обучающиеся завершившие урок',
         related_name='is_finished_lesson'
     )
+    is_active = models.BooleanField(default=True, verbose_name='Доступный урок')
 
     def __str__(self):
         return self.theme

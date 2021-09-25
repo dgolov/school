@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
     'management.apps.ManagementConfig',
+
     'rest_framework',
     # 'rest_framework.authtoken',
-    'djoser',
+    # 'djoser',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -200,7 +202,7 @@ SIMPLE_JWT = {
     # 'USER_ID_FIELD': 'id',
     # 'USER_ID_CLAIM': 'user_id',
     #
-    # 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     # 'TOKEN_TYPE_CLAIM': 'token_type',
     #
     # 'JTI_CLAIM': 'jti',

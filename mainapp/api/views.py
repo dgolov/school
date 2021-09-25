@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, decorators
@@ -7,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthentic
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView
 
 from .classes import BuyingCourseManager
 from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
@@ -36,6 +38,7 @@ from .serializers import (
     CertificateSerializer,
     AcademicPerformanceSerializer,
     PhotoSerializer,
+    PhotoUpdateDescriptionSerializer,
     UploadPhotoSerializer,
 )
 from .utils import (
@@ -61,6 +64,8 @@ from ..models import (
     Photo,
 )
 
+
+# USERS
 
 class BaseProfileViewSet(viewsets.ModelViewSet):
     """ Базовый класс для отображения профилей
@@ -191,6 +196,8 @@ class PersonalProfileView(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
+# FRIENDS FOLLOWERS SUBSCRIPTIONS
+
 class FriendsListView(ListAPIView):
     """ Эндпоинт друзей профиля """
     serializer_class = FriendsSerializer
@@ -236,12 +243,6 @@ class InRequestsListView(ListAPIView):
             return None
 
 
-class GalleryListView(FriendsListView):
-    """ Эндпоинт галереи профиля """
-    # TODO Изменить класс родитель на APIView и реализовать метод PUT для редактирования описания к фото
-    serializer_class = GallerySerializer
-
-
 class FriendRequestView(APIView, AddFriendMixin):
     """ Эндпоинт обработки исходящей заявки на добавление в друзья
         Данные: id - id пользователя
@@ -282,6 +283,8 @@ class FriendResponseView(APIView, AddFriendMixin):
         return Response(status=http_status)
 
 
+# GROUPS
+
 class GroupViewSet(viewsets.ModelViewSet):
     """ Эндроинт списка групп (Мои группы)
         В retrieve action доступен список одногруппников
@@ -310,6 +313,8 @@ class GroupViewSet(viewsets.ModelViewSet):
         except KeyError:
             return self.serializer_class
 
+
+# COURSES AND LESSONS
 
 class CategoryListView(ListAPIView):
     """ Эндпоинт списка категорий курсов
@@ -386,9 +391,13 @@ class LessonsDetailView(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
         lesson_objects = Lesson.objects.get(pk=lesson_pk, course=course_pk)
+        if not lesson_objects.is_active:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = LessonRetrieveSerializer(lesson_objects, many=False)
         return Response(serializer.data)
 
+
+# TIMETABLE AND ACADEMIC PERFORMANCE
 
 class TimetableViewSet(viewsets.ModelViewSet):
     """ Эндпоинт учебного рассписания
@@ -422,17 +431,6 @@ class TimetableViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_204_NO_CONTENT)
         elif item_profile.user_group == 'student':
             return Response(status=status.HTTP_403_FORBIDDEN)
-
-
-class CertificateViewSet(viewsets.ModelViewSet):
-    """ Эндпоинт списка полученных сертификатов
-    """
-    serializer_class = CertificateSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        item_profile = self.request.user.profile
-        return Certificate.objects.filter(profile=item_profile)
 
 
 class AcademicPerformanceViewSet(viewsets.ModelViewSet):
@@ -472,6 +470,52 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+# CERTIFICATES
+
+class CertificateViewSet(viewsets.ModelViewSet):
+    """ Эндпоинт списка полученных сертификатов
+    """
+    serializer_class = CertificateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        item_profile = self.request.user.profile
+        return Certificate.objects.filter(profile=item_profile)
+
+
+# PHOTOS
+
+class GalleryListView(FriendsListView):
+    """ Эндпоинт галереи профиля
+    """
+    serializer_class = GallerySerializer
+
+
+class EditPhotoDescription(APIView):
+    """ Эндпоинт добавления описания к фото
+    Request data: id - id изображения
+                  description - Новое описание к изображению
+    """
+    def put(self, request, *args, **kwargs):
+        photo = self.get_queryset()
+        item_user = request.user.profile
+        if item_user != photo.for_profile:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        serializer = PhotoUpdateDescriptionSerializer(data=self.request.data)
+        if serializer.is_valid():
+            serializer.update(instance=photo, validated_data=self.request.data)
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self, *args, **kwargs):
+        data = self.request.data
+        try:
+            return Photo.objects.get(pk=data.get('id'))
+        except Photo.DoesNotExist:
+            return None
 
 
 class UploadPhotoView(APIView, PhotoManagerMixin):
@@ -594,6 +638,8 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
         serializer = MessageViewSerializer(message_list, many=True)
         return Response(serializer.data)
 
+
+# MESSAGES
 
 class CreateAGroupDialog(APIView, MessageMixin):
     """ Эндпоинт создания беседы и приглашения пользователей в беседу

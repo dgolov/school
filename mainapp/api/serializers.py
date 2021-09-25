@@ -29,12 +29,13 @@ class UserSerializer(serializers.ModelSerializer):
     date_of_birthday = serializers.SerializerMethodField()
     avatar = serializers.SerializerMethodField()
     user_group = serializers.SerializerMethodField()
+    is_active = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
             'id', 'profile_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'date_of_birthday', 'avatar',
-            'user_group',
+            'user_group', 'is_active'
         ]
         read_only_fields = (
             'profile_id', 'gender', 'date_of_birthday', 'avatar'
@@ -62,6 +63,10 @@ class UserSerializer(serializers.ModelSerializer):
             return obj.profile.avatar.image.url
         else:
             return None
+
+    @staticmethod
+    def get_is_active(obj):
+        return obj.profile.is_active
 
 
 class ProfileSerializerBase(serializers.ModelSerializer):
@@ -114,7 +119,7 @@ class ProfileSerializer(ProfileSerializerBase):
         model = Profile
         fields = [
             'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
-            'friends', 'followers', 'friend_request_in', 'friend_request_out',
+            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active'
         ]
 
 
@@ -136,8 +141,24 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = [
-            'id', 'image', 'date', 'likes', 'description'
+            'id', 'image', 'date', 'likes', 'for_profile', 'description'
         ]
+
+
+class PhotoUpdateDescriptionSerializer(serializers.ModelSerializer):
+    """ Серилизация модели фотографий
+    """
+
+    class Meta:
+        model = Photo
+        fields = [
+            'id', 'description'
+        ]
+
+    def update(self, instance, validated_data):
+        instance.description = validated_data['description']
+        instance.save()
+        return instance
 
 
 class GallerySerializer(serializers.ModelSerializer):
@@ -200,7 +221,8 @@ class EducationalManagerSerializer(ProfileSerializerBase):
     class Meta:
         model = EducationalManager
         fields = [
-            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'user_group'
+            'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'user_group',
+            'is_active'
         ]
 
 
@@ -218,8 +240,8 @@ class EducationalManagerDetailSerializer(ProfileSerializerBase):
         model = EducationalManager
         fields = [
             'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
-            'date_of_birthday','photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
-            'user_group'
+            'date_of_birthday', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
+            'user_group', 'is_active'
         ]
 
 
@@ -271,7 +293,7 @@ class TeacherDetailSerializer(ProfileSerializerBase):
             'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
             'vk_slug', 'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
             'group_list', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
-            'user_group',
+            'user_group', 'is_active'
         ]
 
 
@@ -285,7 +307,8 @@ class StudentDetailSerializer(ProfileSerializerBase):
         fields = [
             'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
             'vk_slug', 'instagram_slug', 'hobbies', 'dream', 'about', 'date_of_birthday',  'courses', 'group_list',
-            'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group'
+            'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group',
+            'is_active'
         ]
 
 
