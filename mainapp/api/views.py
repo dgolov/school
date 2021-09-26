@@ -26,8 +26,8 @@ from .serializers import (
     GroupSerializer,
     GroupRetrieveSerializer,
     DialogSerializer,
-    DialogAttachmentSerializer,
     MessageViewSerializer,
+    GroupDialogUpdateSerializer,
     CategorySerializer,
     CourseSerializer,
     LessonSerializer,
@@ -44,16 +44,14 @@ from .serializers import (
 from .utils import (
     get_serializer_to_display_the_profile,
     check_correct_data_for_add_in_timetable, delete_file,
-    get_student_group_name_list,
 )
 from ..models import (
-    User,
     Profile,
     Student,
     Teacher,
     EducationalManager,
     Group,
-    DialogAttachment,
+    Dialog,
     Message,
     Category,
     Course,
@@ -279,6 +277,7 @@ class FriendResponseView(APIView, AddFriendMixin):
 
     def delete(self, *args, **kwargs):
         """ Удалить из друзей """
+        print(2)
         http_status = self.delete_friend(data=self.request.data, item_profile=self.request.user.profile)
         return Response(status=http_status)
 
@@ -646,14 +645,45 @@ class CreateAGroupDialog(APIView, MessageMixin):
     Request data POST: name - Название беседы
                        participants - список участников
     Request data PUT: id - id диалога
-                      user - id приглашенного пользователя
+                      users - список с id приглашенных пользователей
     """
     def post(self, request, *args, **kwargs):
+        # Создание групповой беседы
         message, http_status = self.create_group_dialog(self.request)
         return Response(data={"message": message}, status=http_status)
 
     def put(self, request, *args, **kwargs):
+        # Приглашение новых участников в беседу
         message, http_status = self.add_user_in_dialog(self.request)
+        return Response(data={"message": message}, status=http_status)
+
+
+class UploadGroupDialogImage(APIView, MessageMixin):
+    """ Эндпоинт установки изображения на аватар групового чата
+    Request data: image - Файл изображения
+    """
+    parser_classes = (MultiPartParser, FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+        file_serializer = UploadPhotoSerializer(data=request.data)
+        dialog_id = kwargs.get('pk')
+        if file_serializer.is_valid():
+            message, http_status = self.set_chat_image(request, pk=dialog_id)
+            if http_status == 201:
+                return Response(data=file_serializer.data, status=http_status)
+            else:
+                return Response(data={"message": message}, status=http_status)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateGroupDialogName(APIView, MessageMixin):
+    """ Обновление названия беседы
+    request data: name - Название диалога
+    kwargs: pk - id диалога
+    """
+    def put(self, request, *args, **kwargs):
+        message, http_status = self.set_dialog_name(request, dialog_id=kwargs.get('pk'))
         return Response(data={"message": message}, status=http_status)
 
 

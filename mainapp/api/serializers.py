@@ -193,15 +193,17 @@ class CreateProfileSerializer(serializers.Serializer):
         pass
 
     def create(self, validated_data):
+        print(1)
         new_user = User.objects.create(
             username=validated_data['username'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             email=validated_data['email']
         )
+        print(2)
         new_user.set_password(validated_data['password'])
         new_user.save()
-
+        print(3)
         profile_data = validated_data.pop('profile')
         Student.objects.create(
             user=new_user,
@@ -210,6 +212,7 @@ class CreateProfileSerializer(serializers.Serializer):
             gender=profile_data['gender'],
             date_of_birthday=profile_data['date_of_birthday']
         )
+        print(4)
 
         return new_user
 
@@ -383,7 +386,7 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = [
-            'id', 'course', 'theme', 'lesson_number'
+            'id', 'course', 'theme', 'lesson_number', 'is_active'
         ]
 
 
@@ -461,17 +464,43 @@ class LastMessageSerializer(serializers.ModelSerializer):
         ]
 
 
+class DialogImageSerializer(serializers.ModelSerializer):
+    """ Серилизация аватара диалога
+    """
+    class Meta:
+        model = DialogAttachment
+        fields = [
+            'file'
+        ]
+
+
 class DialogSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов
     """
     participants = ProfileSerializer(read_only=False, many=True)
     last_message = LastMessageSerializer()
+    image = DialogImageSerializer()
 
     class Meta:
         model = Dialog
         fields = [
             'id', 'name', 'participants', 'is_group', 'group_founder', 'image', 'last_message',
         ]
+
+
+class GroupDialogUpdateSerializer(serializers.ModelSerializer):
+    """ Серилизация модели диалогов для обновления названия групповой беседы
+    """
+    class Meta:
+        model = Dialog
+        fields = [
+            'name'
+        ]
+
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
 
 
 class DialogAttachmentSerializer(serializers.ModelSerializer):
@@ -514,5 +543,5 @@ class MessageViewSerializer(MessageSerializer):
     class Meta:
         model = Message
         fields = [
-            'id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read',
+            'id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read', 'system_message'
         ]

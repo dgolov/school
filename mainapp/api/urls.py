@@ -34,6 +34,8 @@ from .views import (
     DialogViewSet,
     CreateAGroupDialog,
     SendMessageView,
+    UploadGroupDialogImage,
+    UpdateGroupDialogName,
 )
 
 
@@ -76,6 +78,8 @@ urlpatterns = [
     # Messages
     path('send-message/', SendMessageView.as_view(), name='send_message'),
     path('create-group-dialog/', CreateAGroupDialog.as_view(), name='create_group_dialog'),
+    path('upload-dialog-image/<int:pk>/', UploadGroupDialogImage.as_view(), name='upload_dialog_image'),
+    path('update-group-chat/<int:pk>/', UpdateGroupDialogName.as_view(), name='update_group_chat'),
 ]
 
 urlpatterns += router.urls

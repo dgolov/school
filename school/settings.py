@@ -47,8 +47,6 @@ INSTALLED_APPS = [
     'management.apps.ManagementConfig',
 
     'rest_framework',
-    # 'rest_framework.authtoken',
-    # 'djoser',
     'corsheaders',
     'drf_yasg',
 ]
@@ -62,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainapp.api.middleware.NoAuthorisationJWT'
 ]
 
 ROOT_URLCONF = 'school.urls'
@@ -171,17 +170,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-
-
-# DJOSER
-
-# DJOSER = {
-#     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-#     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-#     'ACTIVATION_URL': '#/activate/{uid}/{token}',
-#     'SEND_ACTIVATION_EMAIL': False,
-#     'SERIALIZERS': {},
-# }
 
 
 # JWT

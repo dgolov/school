@@ -69,8 +69,8 @@ class Profile(models.Model):
     gender = models.CharField(max_length=50, verbose_name='Пол', choices=GENDER_CHOICES)
     phone = PhoneNumberField(verbose_name='Номер телефона', unique=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
-    vk_slug = models.SlugField(verbose_name='Ссылка на профиль vk.com', blank=True, null=True)
-    instagram_slug = models.SlugField(verbose_name='Ссылка на профиль instagram', blank=True, null=True)
+    vk_slug = models.CharField(max_length=50, verbose_name='Ссылка на профиль vk.com', blank=True, null=True)
+    instagram_slug = models.CharField(max_length=50, verbose_name='Ссылка на профиль instagram', blank=True, null=True)
     date_of_birthday = models.DateField(verbose_name='Дата рождения')
     about = models.TextField(verbose_name='О себе', blank=True, null=True)
     avatar = models.ForeignKey(
@@ -104,7 +104,7 @@ class Profile(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активный пользователь')
 
     def __str__(self):
-        return f'{self.user.last_name} {self.user.first_name}'
+        return f'{self.user.first_name} {self.user.last_name}'
 
     def get_fio(self):
         return f'{self.user.last_name} {self.user.first_name} {self.middle_name}'
@@ -207,7 +207,14 @@ class DialogAttachment(models.Model):
     """ Модель вложений диалога
     """
     dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE, verbose_name='Диалог')
-    file = models.FileField(upload_to='files/messages_files', blank=True, null=True, verbose_name='Файл')
+    file = models.FileField(upload_to='files/messages_files', verbose_name='Файл')
+    from_user = models.ForeignKey(
+        Profile,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name='Пользователь'
+    )
 
     def __str__(self):
         return f'{self.file} - {self.dialog}'
