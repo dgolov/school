@@ -42,8 +42,9 @@
                           @click="showEditModal()">Редактировать
                   </button>
                   <edit-photo-modal v-if="responseData.photos" ref="editModal"
-                                    :id="responseData.photos[slideIndex - 1].id" :caption="captionText"
-                                    @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></edit-photo-modal>
+                                    :id="responseData.photos[slideIndex - 1].id"
+                                    @reLoad="createGetRequest(`/profile/${id}/gallery/`)">
+                  </edit-photo-modal>
                 </div>
                 <div class="description-container">
                   <p id="caption" class="py-2"></p>

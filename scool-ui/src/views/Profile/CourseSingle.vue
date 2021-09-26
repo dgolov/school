@@ -10,9 +10,9 @@
           <hr/>
           <ol class="lesson-list">
             <li v-for="lesson in responseData" class="py-3">
-              <a href="#" @click="goToLesson(lesson.course.id, lesson.id)">{{lesson.theme}}</a>
+              <a v-if="lesson.is_active" href="#" @click="goToLesson(lesson.course.id, lesson.id)">{{lesson.theme}}</a>
+              <p v-else class="no-active" style="margin: 0;">{{lesson.theme}} (Урок недоступен)</p>
             </li>
-<!--            <li class="py-3 disabled"><a href="#">Заключение</a></li>-->
           </ol>
         </div>
       </div>

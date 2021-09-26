@@ -68,7 +68,7 @@ export default {
             this.closeModal();
           })
           .catch((error) => {
-            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+            if (error.request.status === 401) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');

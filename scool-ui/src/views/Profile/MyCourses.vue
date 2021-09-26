@@ -9,13 +9,17 @@
             <div class="page__main">
               <div v-for="course in responseData" class="row course_container">
                 <div class="col-md-8">
-                  <h4 class="left-align">
-                    <a href="#" @click="goToCourse(course.id)">{{ course.name }}</a>
+                  <h4 class="left-align" v-if="course.is_active">
+                    <a v-if="course.is_active" href="#" @click="goToCourse(course.id)">{{ course.name }}</a>
                   </h4>
+                  <h4 v-else class="left-align no-active">{{ course.name }}</h4>
                   <h6 class="left-align">{{ course.category.name }}</h6>
                 </div>
                 <div class="col-md-4 left-align pt-4 system-color">
-                  <div><a href="#" @click="goToCourse(course.id)">Описание курса</a></div>
+                  <div>
+                    <a v-if="course.is_active" href="#" @click="goToCourse(course.id)">Описание курса</a>
+                    <p v-else class="no-active">Курс недоступен</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -25,6 +29,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import Navbar from "../../components/Navbar";
@@ -58,6 +63,7 @@ export default {
   },
 }
 </script>
+
 
 <style scoped>
 .course_container {

@@ -24,7 +24,7 @@
       </div>
       <div class="col-md-6">
         <img v-if="profile.avatar" class="center profile-avatar"
-             :src="`http://127.0.0.1:8000${profile.avatar.image}`">
+             :src="`${$store.getters.getServerUrl}${profile.avatar.image}`">
         <img v-else src="../../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
       </div>
     </div>

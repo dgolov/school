@@ -5,6 +5,7 @@
   </div>
 </template>
 
+
 <style>
 @import "./assets/bootstrap/css/bootstrap.css";
 @import "./assets/css/style.css";
@@ -12,7 +13,12 @@
 .main-section {
   background-color: #f7f7f7;
 }
+
+.no-active {
+  color: gray;
+}
 </style>
+
 
 <script>
 import Footer from "./components/Footer";

@@ -27,6 +27,9 @@ import MyProfile from "../views/Profile/MyProfile";
 import Subscriptions from "../views/Profile/Subscriptions";
 import FriendRequests from "../views/Profile/FriendRequests";
 import CreateGroupChat from "../views/Messages/CreateGroupChat";
+import Settings from "../views/Profile/Settings";
+import Games from "../views/Profile/Games";
+import GroupChatSettings from "../views/Messages/GroupChatSettings";
 
 
 Vue.use(VueRouter)
@@ -85,6 +88,12 @@ const routes = [
     props: true
   },
   {
+    path: '/profile/chats/:id/settings',
+    name: 'GroupChatSettings',
+    component: GroupChatSettings,
+    props: true
+  },
+  {
     path: "/profile/chats/create-group",
     name: 'CreateGroupChat',
     component: CreateGroupChat,
@@ -134,6 +143,16 @@ const routes = [
     path: '/profile/search',
     name: 'Search',
     component: Search
+  },
+  {
+    path: '/profile/settings',
+    name: 'Settings',
+    component: Settings
+  },
+  {
+    path: '/profile/games',
+    name: 'Games',
+    component: Games
   },
   {
     path: '/profile/academic-performance',

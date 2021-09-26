@@ -16,7 +16,6 @@ export const requestsMixin = {
                 },
             },
             responseData: {},
-            errorAccessToken: '{"detail":"Given token not valid for any token type","code":"token_not_valid","messages":[{"token_class":"AccessToken","token_type":"access","message":"Token is invalid or expired"}]}'
         }
     },
 
@@ -33,7 +32,7 @@ export const requestsMixin = {
             })
                 .then((response) => this.responseData = response.data)
                 .catch((error) => {
-                    if (error.request.status === 403) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         if (!this.$store.getters.getRefreshStatus) {
                             // Повторный запрос выполнится при статусе обновления токена false
@@ -66,7 +65,7 @@ export const requestsMixin = {
                     this.base.headers.Authorization = `Bearer ${access}`
                 })
                 .catch((error) => {
-                    if (error.request.status === 403) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - refresh токен просрочен, LogOut
                         this.$store.commit("removeToken")
                         this.goTo('/')

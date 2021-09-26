@@ -37,7 +37,7 @@
                     </div>
                     <div class="row">
                       <div :class="setClassFromLastMessageArea(chat)"
-                           @click="goTo('Messages', {id: chat.id})">
+                           @click="goTo('Messages', {id: String(chat.id)})">
                         <a v-if="chat.last_message" href="#">{{ chat.last_message.text }}</a>
                       </div>
                     </div>
@@ -80,7 +80,7 @@ export default {
   mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
 
   created() {
-    this.createGetRequest('dialogs');
+    this.createGetRequest('/dialogs/');
   },
 
   methods: {

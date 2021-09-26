@@ -47,11 +47,11 @@
       </li>
       <li class="left-align px-2">
         <img src="../../assets/images/icons/settings.svg" class="menu-icon">
-        <a href="#"> Настройки </a>
+        <a href="#" @click="goTo('Settings')"> Настройки </a>
       </li>
       <li class="left-align px-2">
         <img src="../../assets/images/icons/games.svg" class="menu-icon">
-        <a href="#"> Игры </a>
+        <a href="#" @click="goTo('Games')"> Игры </a>
       </li>
       <li class="left-align px-2">
         <img src="../../assets/images/icons/exit.svg" class="menu-icon">

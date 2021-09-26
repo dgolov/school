@@ -16,20 +16,25 @@
                   <a v-else-if="responseData && responseData[0].dialog.is_group" href="#" class="pt-3">
                     {{ getChatName(responseData[0].dialog) }}
                   </a>
-                  <img v-if="responseData" :src="getChatImage(responseData[0].dialog)" class="chat-avatar" @load="">
-                  <a href="#" v-if="responseData[0].dialog.is_group" class="group_chat_settings">Настройка беседы</a>
+                  <img v-if="responseData" :src="getChatImage(responseData[0].dialog)" class="chat-avatar">
+                  <a href="#" v-if="responseData[0].dialog.is_group" class="group_chat_settings"
+                     @click="goTo('GroupChatSettings', { dialog: responseData[0].dialog})">
+                    Настройка беседы
+                  </a>
                 </div>
               </div>
               <hr/>
               <div id="messenger">
                 <div v-for="(message, index) in responseData" :class="setClassToMessageArea(message)" :key="index">
-                  <p :class="setClassToMessageDate(message)">
+                  <p v-if="!message.system_message" :class="setClassToMessageDate(message)">
                     {{ message.from_user.first_name }} {{ message.from_user.last_name }}
                     {{ reformatDateTime(message.date_and_time) }}
                   </p>
+<!--                  <p v-else :class="setClassToMessageDate(message)">-->
+<!--                    {{ reformatDateTime(message.date_and_time) }}-->
+<!--                  </p>-->
                   <a href="#">
-                    <img v-if="getMessageAvatar(message)"
-                         :src="getAvatarPath()" class="message_avatar">
+                    <img v-if="getMessageAvatar(message)" :src="getAvatarPath(message)" class="message_avatar">
                   </a>
                   <p v-if="message" :class="setClassToMessageText(message)">{{ message.text }}</p>
                 </div>
@@ -82,13 +87,15 @@ export default {
       out_message: 'out_message',
       out_message_text: 'out_message_text',
       out_message_didnt_read: 'out_message_didnt_read',
+      systemMessage: 'system_message',
+      systemMessageText: 'system_message_text',
       containerScrollHeight: 0,
       input_text: ""
     }
   },
 
   props: {
-    id: Number
+    id: String
   },
 
   mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
@@ -102,7 +109,7 @@ export default {
   },
 
   methods: {
-    getAvatarPath(){
+    getAvatarPath(message){
       let path = ''
       try {
         path = `http://127.0.0.1:8000${message.from_user.avatar.image}`;
@@ -161,6 +168,9 @@ export default {
     },
 
     setClassToMessageArea(message) {
+      if (message.system_message) {
+        return this.systemMessage
+      }
       if (message.from_user.id === this.$store.state.authUser.id) {
         if (message.is_read) {
           return this.out_message;
@@ -181,6 +191,9 @@ export default {
     },
 
     setClassToMessageText(message) {
+      if (message.system_message) {
+        return this.systemMessageText;
+      }
       if (message.from_user.id === this.$store.state.authUser.id) {
         return this.out_message_text;
       } else {
@@ -189,6 +202,9 @@ export default {
     },
 
     getMessageAvatar(message) {
+      if (message.system_message) {
+        return false;
+      }
       return message.from_user.id !== this.$store.state.authUser.id;
     },
 
@@ -261,6 +277,12 @@ export default {
   background-color: #e5ebf1;
 }
 
+.system_message {
+  text-align: center;
+  padding: 10px;
+  width: auto;
+}
+
 .out_message_text {
   background-color: #bfe2e9;
   padding: 10px;
@@ -277,6 +299,12 @@ export default {
   width: auto;
   float: left;
   margin: 0 60px 8px 5px;
+}
+
+.system_message_text {
+  color: gray;
+  font-size: 14px;
+  width: auto;
 }
 
 .chat_header {

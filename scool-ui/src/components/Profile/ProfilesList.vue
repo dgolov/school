@@ -102,7 +102,7 @@ export default {
       // Некоторые данные приходят с сервера с абсолютным адресом, некоторые с относительным, вероятно из-за ViewSets
       // Данный метод временно решает эту проблему
       if (url.indexOf('http://127.0.0.1:8000') === -1) {
-        return `http://127.0.0.1:8000${url}`
+        return `${this.$store.getters.getServerUrl}${url}`
       } else {
         return url
       }

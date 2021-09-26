@@ -30,7 +30,7 @@ export const friendMixin = {
         },
 
         isFriend(profileID) {
-            const myFriends = this.$store.state.authUser.friends
+            const myFriends = this.$store.state.profileInfo.friends
             // Проверяет является ли пользователь другом
             // myFriends - список друзей текущего пользователя
             for (let friendId of myFriends) {
@@ -42,7 +42,7 @@ export const friendMixin = {
         },
 
         isFollower(profileID) {
-            const myFollowers = this.$store.state.authUser.followers
+            const myFollowers = this.$store.state.profileInfo.followers
             // Проверяет является ли пользователь подписчиком
             // myFollowers - список подписчиков текущего пользователя
             for (let followerId of myFollowers) {
@@ -54,7 +54,7 @@ export const friendMixin = {
         },
 
         isSubscription(profileID) {
-            const mybSubscriptions = this.$store.state.authUser.friend_request_out
+            const mybSubscriptions = this.$store.state.profileInfo.friend_request_out
             // Проверяет подписан ли текущий пользователь на пользователя
             // mybSubscriptions - список подписок текущего пользователя
             for (let subscriptionId of mybSubscriptions) {
@@ -78,12 +78,12 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let subscriptions = this.$store.state.authUser.friend_request_out;
+                    let subscriptions = this.$store.state.profileInfo.friend_request_out;
                     subscriptions.push(this.user);
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
-                    if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken();
                         this.addFriend('/profile/friend-request/');
@@ -101,14 +101,14 @@ export const friendMixin = {
             };
             const axiosInstance = axios.create(this.base);
             await axiosInstance({
-                url: '/profile/friend-response',
+                url: '/profile/friend-response/',
                 method: "delete",
                 data: body,
             })
                 .then(() => {
-                    let followers = this.$store.state.authUser.followers
+                    let followers = this.$store.state.profileInfo.followers
                     followers.push(this.user)
-                    let friends = this.$store.state.authUser.friends
+                    let friends = this.$store.state.profileInfo.friends
                     for(let i = 0; i < friends.length; i++) {
                         if (friends[i] === this.user) {
                             friends.splice(i, 1);
@@ -117,10 +117,10 @@ export const friendMixin = {
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
-                    if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
-                        this.addFriend('/profile/friend-response')
+                        this.addFriend('/profile/friend-response/')
                     } else {
                         console.log(error.request)
                     }
@@ -141,15 +141,15 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let friends = this.$store.state.authUser.friends;
+                    let friends = this.$store.state.profileInfo.friends;
                     friends.push(this.user);
-                    let followers = this.$store.state.authUser.followers;
+                    let followers = this.$store.state.profileInfo.followers;
                     for(let i = 0; i < friends.length; i++) {
                         if (followers[i] === this.user) {
                             followers.splice(i, 1);
                         }
                     }
-                    let requests = this.$store.state.authUser.friend_request_in
+                    let requests = this.$store.state.profileInfo.friend_request_in
                     for(let i = 0; i < requests.length; i++) {
                         if (requests[i] === this.user) {
                             requests.splice(i, 1);
@@ -158,10 +158,10 @@ export const friendMixin = {
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
-                    if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
-                        this.addFriend('/profile/friend-response')
+                        this.addFriend('/profile/friend-response/')
                     } else {
                         console.log(error.request)
                     }
@@ -181,7 +181,7 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let subscriptions = this.$store.state.authUser.friend_request_out
+                    let subscriptions = this.$store.state.profileInfo.friend_request_out
                     for(let i = 0; i < subscriptions.length; i++) {
                         if (subscriptions[i] === this.user) {
                             subscriptions.splice(i, 1);
@@ -190,7 +190,7 @@ export const friendMixin = {
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
-                    if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+                    if (error.request.status === 401) {
                         // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
                         this.addFriend('/profile/friend-request/')

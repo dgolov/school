@@ -21,14 +21,13 @@
                     <button class="gray-button filter-button">Фильтр</button>
                   </div>
                 </div>
-                <div style="text-align: left; height: 40vh;">
-                  <div v-for="friend in responseData.friends" class="my-3 py-2"
-                       style="border-bottom: 2px solid #f7f7f7;">
+                <div class="friends-block">
+                  <div v-for="friend in responseData.friends" class="my-3 py-2 row_list">
                     <input type="checkbox" :id="friend.profile_id" :value="friend.profile_id" v-model="participants">
                     <label :for="friend.profile_id">
                       {{ friend.first_name }} {{ friend.last_name }}
                     </label>
-                    <img :src="friend.avatar" style="float: right">
+                    <img :src="getAvatarPath(friend)" class="avatar">
                   </div>
                 </div>
                 <hr />
@@ -58,6 +57,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import axios from "axios";
+import {groupChatMixin} from "../../components/mixins/groupChatMixin";
 
 export default {
   name: "CreateGroupChat",
@@ -65,7 +65,8 @@ export default {
   data() {
     return {
       name: '',
-      participants: [this.$store.state.profileInfo.id]
+      participants: [this.$store.state.profileInfo.id],
+      header: 'Сообщения',
     }
   },
 
@@ -79,7 +80,7 @@ export default {
     )
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [requestsMixin, redirect, groupChatMixin],
 
   methods: {
     async createGroupChat() {
@@ -97,7 +98,7 @@ export default {
             this.goTo('Chats')
           })
           .catch((error) => {
-            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+            if (error.request.status === 401) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.addFriend('/profile/friend-request/');
@@ -112,5 +113,18 @@ export default {
 
 
 <style scoped>
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  float: right;
+  margin-top: 5px;
+  margin-right: 20px;
+}
 
+.friends-block {
+  text-align: left;
+  height: 40vh;
+  overflow: scroll;
+}
 </style>

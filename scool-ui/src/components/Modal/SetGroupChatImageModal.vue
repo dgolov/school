@@ -1,13 +1,13 @@
 <template>
-  <div v-if="show" class="modal-shadow" @click.self="closeModal">
+  <div v-if="show" class="modal-shadow" @click.self="closeModal()">
     <div class="modal">
-      <div class="modal-close" @click="closeModal">&#10006;</div>
+      <div class="modal-close" @click="closeModal()">&#10006;</div>
       <slot name="title">
-        <h3 class="system-color">Загрузить новую фотографию</h3>
+        <h3 class="system-color">Загрузить изображение группового чата</h3>
       </slot>
       <slot name="body">
         <div class="modal-content">
-          <p>Выберите файл изображения для загрузки в галерею</p>
+          <p>Выберите файл изображения для загрузки</p>
           <input type="file" id="file-input" class="file-input" ref="fileInput" v-on:change="handleFileUpload()">
         </div>
       </slot>
@@ -37,9 +37,14 @@ export default {
 
   mixins: [requestsMixin],
 
+  props: {
+    id: Number,
+  },
+
   methods: {
     closeModal() {
       this.show = false
+      this.$emit('reLoad');
     },
 
     handleFileUpload() {
@@ -48,7 +53,7 @@ export default {
 
     async submitFile() {
       let formData = new FormData();
-      let url = `${this.$store.state.backendUrl}/profile/upload-photo/`
+      let url = `${this.$store.state.backendUrl}/upload-dialog-image/${String(this.id)}/`
       formData.append('image', this.file);
       await axios.post(url,
           formData,
@@ -60,7 +65,7 @@ export default {
           }
       ).then(() => {
         this.closeModal();
-        this.$emit('close');
+        this.$emit('reLoad');
       })
           .catch((error) => {
             if (error.request.status === 401) {
@@ -107,7 +112,7 @@ html, body {
 @media (max-width: 992px) {
   .modal {
     width: 90%;
-    height: 46%;
+    height: 47%;
   }
 }
 
@@ -133,6 +138,7 @@ html, body {
 }
 
 .modal-content {
+  color: #000000;
   margin: 20px 0 20px 0;
   padding: 10px;
 }
