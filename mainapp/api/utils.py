@@ -1,5 +1,5 @@
 from mainapp.api.serializers import ProfileSerializer
-from mainapp.models import Course, Group
+from mainapp.models import Course, Group, Lesson
 
 import os
 
@@ -26,7 +26,7 @@ def check_correct_data_for_add_in_timetable(item_profile, data):
     group_id = data['group']
 
     try:
-        course = Course.objects.get(pk=lesson_id)
+        lesson = Lesson.objects.get(pk=lesson_id)
     except Course.DoesNotExist:
         return 400
     try:
@@ -35,7 +35,7 @@ def check_correct_data_for_add_in_timetable(item_profile, data):
         return 400
 
     if item_profile.user_group == 'teacher':
-        if course.teacher.pk != item_profile.pk or group.teacher.pk != item_profile.pk:
+        if lesson.course.teacher.pk != item_profile.pk or group.teacher.pk != item_profile.pk:
             return 403
         else:
             return 202

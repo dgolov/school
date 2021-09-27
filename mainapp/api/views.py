@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
@@ -16,8 +17,11 @@ from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
 from .serializers import (
     ProfileSerializer,
     StudentDetailSerializer,
+    StudentUpdateSerializer,
     TeacherDetailSerializer,
+    TeacherUpdateSerializer,
     EducationalManagerDetailSerializer,
+    EducationalManagerUpdateSerializer,
     FriendsSerializer,
     FollowersSerializer,
     FriendsRequestInSerializer,
@@ -27,7 +31,6 @@ from .serializers import (
     GroupRetrieveSerializer,
     DialogSerializer,
     MessageViewSerializer,
-    GroupDialogUpdateSerializer,
     CategorySerializer,
     CourseSerializer,
     LessonSerializer,
@@ -37,6 +40,7 @@ from .serializers import (
     TimetableCreateSerializer,
     CertificateSerializer,
     AcademicPerformanceSerializer,
+    AcademicPerformanceCreateSerializer,
     PhotoSerializer,
     PhotoUpdateDescriptionSerializer,
     UploadPhotoSerializer,
@@ -51,7 +55,6 @@ from ..models import (
     Teacher,
     EducationalManager,
     Group,
-    Dialog,
     Message,
     Category,
     Course,
@@ -153,6 +156,12 @@ class PersonalProfileView(APIView):
         'manager': EducationalManagerDetailSerializer
     }
 
+    serializer_updated_classes = {
+        'student': StudentUpdateSerializer,
+        'teacher': TeacherUpdateSerializer,
+        'manager': EducationalManagerUpdateSerializer
+    }
+
     @staticmethod
     def get_queryset(user, *args, **kwargs):
         if user.profile.user_group == 'student':
@@ -181,16 +190,11 @@ class PersonalProfileView(APIView):
         """ Редактировать профиль """
         data = request.data
         user = self.request.user
-        if user.profile.user_group == 'student':
-            student = Student.objects.get(user=user)
-            student.hobbies = data.get('hobbies')
-            student.dream = data.get('dream')
-            student.save()
-        elif user.profile.user_group == 'teacher':
-            teacher = Teacher.objects.get(user=user)
-            teacher.education = data.get('education')
-            teacher.professional_activity = data.get('professional_activity')
-            teacher.save()
+        queryset = self.get_queryset(user)
+        if not queryset:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        serializer = self.serializer_updated_classes[user.profile.user_group]
+        serializer.update(instance=queryset, validated_data=data)
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -277,7 +281,6 @@ class FriendResponseView(APIView, AddFriendMixin):
 
     def delete(self, *args, **kwargs):
         """ Удалить из друзей """
-        print(2)
         http_status = self.delete_friend(data=self.request.data, item_profile=self.request.user.profile)
         return Response(status=http_status)
 
@@ -461,12 +464,15 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
         """ Поставить оценку """
         item_profile = request.user.profile
         if item_profile.user_group == 'teacher':
-            serializer = AcademicPerformanceSerializer(data=request.data)
+            data = request.data
+            data['teacher'] = item_profile.pk
+            data['date'] = datetime.date(datetime.now())
+            serializer = AcademicPerformanceCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
@@ -614,6 +620,8 @@ class SetAvatarView(APIView):
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
+# MESSAGES
+
 class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
     """ Эндпоинт списка диалогов
     """
@@ -637,8 +645,6 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
         serializer = MessageViewSerializer(message_list, many=True)
         return Response(serializer.data)
 
-
-# MESSAGES
 
 class CreateAGroupDialog(APIView, MessageMixin):
     """ Эндпоинт создания беседы и приглашения пользователей в беседу

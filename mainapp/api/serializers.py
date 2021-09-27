@@ -102,6 +102,7 @@ class ProfileSerializerBase(serializers.ModelSerializer):
 class AvatarSerializer(serializers.ModelSerializer):
     """ Серилизация аватарки
     """
+
     class Meta:
         model = Photo
         fields = [
@@ -126,6 +127,7 @@ class ProfileSerializer(ProfileSerializerBase):
 class ProfileCreateSerializer(serializers.ModelSerializer):
     """ Серилизатор полей модели профиля необходимых для регистрации пользователя
     """
+
     class Meta:
         model = Profile
         fields = [
@@ -146,7 +148,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 
 class PhotoUpdateDescriptionSerializer(serializers.ModelSerializer):
-    """ Серилизация модели фотографий
+    """ Серилизация обновления описания к фотографии
     """
 
     class Meta:
@@ -193,17 +195,14 @@ class CreateProfileSerializer(serializers.Serializer):
         pass
 
     def create(self, validated_data):
-        print(1)
         new_user = User.objects.create(
             username=validated_data['username'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             email=validated_data['email']
         )
-        print(2)
         new_user.set_password(validated_data['password'])
         new_user.save()
-        print(3)
         profile_data = validated_data.pop('profile')
         Student.objects.create(
             user=new_user,
@@ -212,8 +211,6 @@ class CreateProfileSerializer(serializers.Serializer):
             gender=profile_data['gender'],
             date_of_birthday=profile_data['date_of_birthday']
         )
-        print(4)
-
         return new_user
 
 
@@ -221,6 +218,7 @@ class EducationalManagerSerializer(ProfileSerializerBase):
     """ Сериализация модели менеджера учебного процесса
         Для отображения менеджера группы
     """
+
     class Meta:
         model = EducationalManager
         fields = [
@@ -231,12 +229,8 @@ class EducationalManagerSerializer(ProfileSerializerBase):
 
 class EducationalManagerDetailSerializer(ProfileSerializerBase):
     """ Сериализация детальной модели менеджера учебного процесса
-        Для отображения в друзьях
+        Для отображения страницы пользователя и в друзьях пользователей
     """
-    photos = PhotoSerializer(read_only=False, many=True)
-    friends = UserSerializer(read_only=True, many=True)
-    friend_request_in = UserSerializer(read_only=True, many=True)
-    friend_request_out = UserSerializer(read_only=True, many=True)
     avatar = PhotoSerializer()
 
     class Meta:
@@ -246,6 +240,62 @@ class EducationalManagerDetailSerializer(ProfileSerializerBase):
             'date_of_birthday', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
             'user_group', 'is_active'
         ]
+
+
+class EducationalManagerUpdateSerializer(ProfileSerializerBase):
+    """ Сериализация настроек для личного кабинета менеджера учебного процесса
+    """
+    class Meta:
+        model = EducationalManager
+        fields = [
+            'first_name', 'middle_name', 'last_name', 'email', 'phone', 'city', 'vk_slug', 'instagram_slug', 'about',
+            'date_of_birthday',
+        ]
+
+        @staticmethod
+        def update(instance, validated_data):
+            for key, value in validated_data.items():
+                setattr(instance, key, value)
+            instance.save()
+            return instance
+
+
+class LessonSerializerFromTeacher(serializers.ModelSerializer):
+    """ Серилизация модели всех уроков (для отоброажения в курсе). Для формирования рассписания и выставления оценок
+    """
+
+    class Meta:
+        model = Lesson
+        fields = [
+            'id', 'theme', 'lesson_number'
+        ]
+
+
+class CourseSerializerFromTeacher(serializers.ModelSerializer):
+    """ Серилизация моделей курсов для преподавателей (выставление оценок, формирование рассписания)
+    """
+    teacher = ProfileSerializer()
+    lessons = serializers.SerializerMethodField()
+    students = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Course
+        fields = [
+            'id', 'category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
+            'is_active', 'lessons', 'students'
+        ]
+
+    @staticmethod
+    def get_lessons(obj):
+        query_set = Lesson.objects.filter(course=obj)
+        lessons_serializer = LessonSerializerFromTeacher(query_set, many=True)
+        return lessons_serializer.data
+
+    @staticmethod
+    def get_students(obj):
+        students = obj.student_courses
+        students_serializer = ProfileSerializer(students, many=True)
+        return students_serializer.data
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -281,14 +331,11 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
 
 
 class TeacherDetailSerializer(ProfileSerializerBase):
-    """ Сериализация модели преподавателей (видят друзья)
+    """ Сериализация модели преподавателей (видит потзователь и друзья)
     """
-    photos = PhotoSerializer(read_only=False, many=True)
-    friends = UserSerializer(read_only=True, many=True)
-    friend_request_in = UserSerializer(read_only=True, many=True)
-    friend_request_out = UserSerializer(read_only=True, many=True)
-    group_list = GroupSerializer(read_only=True, many=True)
     avatar = PhotoSerializer()
+    courses = CourseSerializerFromTeacher(many=True, read_only=True)
+    group_list = GroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = Teacher
@@ -300,8 +347,27 @@ class TeacherDetailSerializer(ProfileSerializerBase):
         ]
 
 
+class TeacherUpdateSerializer(ProfileSerializerBase):
+    """ Сериализация обновления настроек личного кабинета преподавателя
+    """
+
+    class Meta:
+        model = Teacher
+        fields = [
+            'first_name', 'middle_name', 'last_name', 'email', 'phone', 'city', 'vk_slug', 'instagram_slug',
+            'date_of_birthday', 'education', 'professional_activity', 'about'
+        ]
+
+    @staticmethod
+    def update(instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
+
 class StudentDetailSerializer(ProfileSerializerBase):
-    """ Сериализация детальной модели студентов (видят друзья)
+    """ Сериализация детальной модели студентов (видит пользователь и друзья)
     """
     avatar = PhotoSerializer()
 
@@ -313,6 +379,25 @@ class StudentDetailSerializer(ProfileSerializerBase):
             'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out', 'user_group',
             'is_active'
         ]
+
+
+class StudentUpdateSerializer(ProfileSerializerBase):
+    """ Сериализация настроек личного кабинета студентов
+    """
+
+    class Meta:
+        model = Student
+        fields = [
+            'first_name', 'middle_name', 'last_name', 'email', 'phone', 'city', 'vk_slug', 'instagram_slug', 'hobbies',
+            'dream', 'about', 'date_of_birthday',
+        ]
+
+    @staticmethod
+    def update(instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
 
 
 class FriendsSerializer(serializers.ModelSerializer):
@@ -362,6 +447,7 @@ class FriendsRequestOutSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     """ Серилизация модели категирий курса
     """
+
     class Meta:
         model = Category
         fields = '__all__'
@@ -394,6 +480,7 @@ class LessonRetrieveSerializer(LessonSerializer):
     """ Серилизация модели доступных уроков
     Для открытия конкретного урока доступного пользователю
     """
+
     class Meta:
         model = Lesson
         fields = '__all__'
@@ -415,6 +502,7 @@ class TimetableSerializer(serializers.ModelSerializer):
 class TimetableCreateSerializer(serializers.ModelSerializer):
     """ Серилизация добавления урока рассписание занятий
     """
+
     class Meta:
         model = Timetable
         fields = [
@@ -439,14 +527,26 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class AcademicPerformanceSerializer(serializers.ModelSerializer):
-    """ Серилизация модели успеваемости
+    """ Серилизация отображения модели успеваемости
     """
     lesson = LessonSerializer()
+    student = StudentDetailSerializer()
 
     class Meta:
         model = AcademicPerformance
         fields = [
             'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent'
+        ]
+
+
+class AcademicPerformanceCreateSerializer(serializers.ModelSerializer):
+    """ Серилизация новой оценки поставленной преподавателем
+    """
+
+    class Meta:
+        model = AcademicPerformance
+        fields = [
+            'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent'
         ]
 
     def create(self, validated_data):
@@ -467,6 +567,7 @@ class LastMessageSerializer(serializers.ModelSerializer):
 class DialogImageSerializer(serializers.ModelSerializer):
     """ Серилизация аватара диалога
     """
+
     class Meta:
         model = DialogAttachment
         fields = [
@@ -477,6 +578,7 @@ class DialogImageSerializer(serializers.ModelSerializer):
 class DialogSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов
     """
+
     participants = ProfileSerializer(read_only=False, many=True)
     last_message = LastMessageSerializer()
     image = DialogImageSerializer()
@@ -491,6 +593,7 @@ class DialogSerializer(serializers.ModelSerializer):
 class GroupDialogUpdateSerializer(serializers.ModelSerializer):
     """ Серилизация модели диалогов для обновления названия групповой беседы
     """
+
     class Meta:
         model = Dialog
         fields = [

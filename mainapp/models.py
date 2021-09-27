@@ -382,3 +382,4 @@ class AcademicPerformance(models.Model):
     class Meta:
         verbose_name = 'Успеваемость'
         verbose_name_plural = '02. Обучение - Успеваемость'
+        ordering = ['-date']

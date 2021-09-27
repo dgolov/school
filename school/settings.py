@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mainapp.api.middleware.NoAuthorisationJWT'
+    # 'mainapp.api.middleware.NoAuthorisationJWT'
 ]
 
 ROOT_URLCONF = 'school.urls'
@@ -166,8 +166,8 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
