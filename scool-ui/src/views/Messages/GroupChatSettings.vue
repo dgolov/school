@@ -119,7 +119,7 @@
 <script>
 import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
-import SettingsChargeForm from "../../components/Profile/SettingsChargeForm";
+import SettingsChargeForm from "../../components/Settings/SettingsChargeForm";
 import SetGroupChatImageModal from "../../components/Modal/SetGroupChatImageModal";
 import {redirect} from "../../components/mixins/redirect";
 import {friendMixin} from "../../components/mixins/friendMixin";

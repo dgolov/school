@@ -22,6 +22,7 @@
                   </div>
                 </div>
               </div>
+              <h6 v-if="responseData.length === 0" class="mt-5">У вас нет доступных курсов</h6>
             </div>
           </div>
         </div>

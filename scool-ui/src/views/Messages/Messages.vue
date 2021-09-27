@@ -124,7 +124,7 @@ export default {
       if (!this.input_text) {
         return 0
       }
-      //TODO send message to server and parse now date and time
+      //TODO parse now date and time
       let now = new Date()
       let data = {
         "from_user": {
@@ -157,7 +157,7 @@ export default {
             this.scrollMessageList()
           })
           .catch((error) => {
-            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
+            if (error.request.status === 401) {
               // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');

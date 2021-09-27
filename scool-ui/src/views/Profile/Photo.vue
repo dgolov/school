@@ -9,7 +9,9 @@
             <div class="page__main">
               <div class="col-md-12">
                 <div>
-                  <button class="gray-button upload-photo-button" @click="showUploadModal">Загрузить фото</button>
+                  <button v-if="Number(id) === $store.state.authUser.id"
+                          class="gray-button upload-photo-button"
+                          @click="showUploadModal">Загрузить фото</button>
                   <upload-photo-modal ref="uploadModal"
                                       @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></upload-photo-modal>
                 </div>
@@ -18,29 +20,27 @@
                 <div v-if="responseData" v-for="photo in responseData.photos" class="mySlides">
                   <button class="photo-button" v-if="Number(id) === $store.state.authUser.id && responseData"
                           id="set-avatar" @click="setAvatar(responseData.photos[slideIndex - 1].id)">
-                    Установить как фото профиля
-                  </button>
+                    Установить как фото профиля</button>
                   <div class="number_text">{{ slideIndex }} / {{ responseData.photos.length }}</div>
                   <img :src="`http://127.0.0.1:8000${photo.image}`" class="image" @dblclick="like()">
                 </div>
                 <a class="prev" @click="plusSlides(-1)">&#10094;</a>
                 <a class="next" @click="plusSlides(1)">&#10095;</a>
                 <div class="caption-container">
-                  <a v-if="responseData.photos" @click="like()">
-                    <img :src="likeImage" class="like_image">
-                  </a>
-                  <p v-if="responseData.photos" id="like_count">
-                    {{ responseData.photos[slideIndex - 1].likes.length }}
-                  </p>
-                  <button class="photo-button" v-if="Number(id) === $store.state.authUser.id" id="delete"
+                  <a v-if="responseData.photos" @click="like()"><img :src="likeImage" class="like_image"></a>
+                  <p v-if="responseData.photos"
+                     id="like_count">
+                    {{ responseData.photos[slideIndex - 1].likes.length }}</p>
+                  <button class="photo-button"
+                          v-if="Number(id) === $store.state.authUser.id"
+                          id="delete"
                           @click="showDeleteModal()">Удалить
                   </button>
                   <delete-photo-modal v-if="responseData.photos" ref="deleteModal"
                                       :id="responseData.photos[slideIndex - 1].id"
                                       @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></delete-photo-modal>
                   <button class="photo-button" v-if="Number(id) === $store.state.authUser.id" id="edit"
-                          @click="showEditModal()">Редактировать
-                  </button>
+                          @click="showEditModal()">Редактировать</button>
                   <edit-photo-modal v-if="responseData.photos" ref="editModal"
                                     :id="responseData.photos[slideIndex - 1].id"
                                     @reLoad="createGetRequest(`/profile/${id}/gallery/`)">
