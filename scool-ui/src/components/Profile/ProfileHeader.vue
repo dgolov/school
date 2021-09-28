@@ -6,7 +6,7 @@
     <h6 v-else-if="profile.user_group === 'teacher'" class="center">Преподаватель</h6>
     <h6 v-else-if="profile.user_group === 'manager'" class="center">Менеджер учебного процесса</h6>
     <hr/>
-    <button v-if="profile.id === $store.state.authUser.id" class="gray-button">
+    <button v-if="profile.id === $store.state.authUser.id" class="gray-button" @click="goTo('Settings')">
       Редактировать профиль</button>
     <button v-if="isFriend(profile.user)" class="w-100" @click="removeFriend(profile, 'profile')">
       Удалить из друзей</button>

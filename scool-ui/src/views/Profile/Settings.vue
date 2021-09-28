@@ -39,7 +39,7 @@
               <settings-field v-else-if="userGroup === 'teacher'" :value="professionalActivity" :label="'Профессиональная деятельность'"
                               @setValue="professionalActivity = $event.value"></settings-field>
               <settings-field :value="about" :label="'О себе'" @setValue="about = $event.value"></settings-field>
-              <button class="gray-button w-100 mt-4">Применить изменения</button>
+              <button class="gray-button w-100 mt-4" @click="sendSettings">Применить изменения</button>
             </div>
           </div>
         </div>
@@ -56,6 +56,9 @@ import SettingsChargeForm from "../../components/Settings/SettingsChargeForm";
 import DatePicker from "vue2-datepicker";
 import 'vue2-datepicker/index.css';
 import SettingsField from "../../components/Settings/SettingsField";
+import axios from "axios";
+import {requestsMixin} from "../../components/mixins/requestsMixin";
+import {redirect} from "../../components/mixins/redirect";
 
 export default {
   name: "Settings",
@@ -71,22 +74,22 @@ export default {
   data() {
     return {
       header: 'Настройки',
-      userGroup: '',
-      firstName: '',
-      lastName: '',
-      middleName: '',
-      dateOfBirthDay: '',
+      userGroup: null,
+      firstName: null,
+      lastName: null,
+      middleName: null,
+      dateOfBirthDay: null,
       showDateOfBirthDay: false,
-      email: '',
-      phone: '',
-      city: '',
-      vkSlug: '',
-      instagramSlug: '',
-      hobbies: '',
-      dream: '',
-      about: '',
-      education: '',
-      professionalActivity: ''
+      email: null,
+      phone: null,
+      city: null,
+      vkSlug: null,
+      instagramSlug: null,
+      hobbies: null,
+      dream: null,
+      about: null,
+      education: null,
+      professionalActivity: null
     }
   },
 
@@ -102,7 +105,6 @@ export default {
     this.instagramSlug = this.$store.state.profileInfo.instagram_slug
     this.userGroup = this.$store.state.profileInfo.user_group
     this.about = this.$store.state.profileInfo.about
-    console.log(this.$store.state.profileInfo)
     if (this.userGroup === 'student') {
       this.hobbies = this.$store.state.profileInfo.hobbies
       this.dream = this.$store.state.profileInfo.dream
@@ -112,10 +114,56 @@ export default {
     }
   },
 
+  mixins: [requestsMixin, redirect],
+
   methods: {
     showForm() {
       this.showDateOfBirthDay = !this.showDateOfBirthDay;
     },
+
+    getData(){
+      let data = {
+        "first_name": this.firstName,
+        "middle_name": this.middleName,
+        "last_name": this.lastName,
+        "email": this.email,
+        "phone": this.phone,
+        "city": this.city,
+        "vk_slug": this.vkSlug,
+        "instagram_slug": this.instagramSlug,
+        "about": this.about,
+        "date_of_birthday": this.dateOfBirthDay
+      }
+      if (this.$store.state.profileInfo.user_group === 'student') {
+        data.hobbies = this.hobbies;
+        data.dream = this.dream;
+      }  else if (this.$store.state.profileInfo.user_group === 'teacher') {
+        data.education = this.education;
+        data.professionalActivity = this.professionalActivity;
+      }
+      return data;
+    },
+
+    async sendSettings(){
+      let data = this.getData()
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/profile/${this.$store.state.profileInfo.id}/`,
+        method: "put",
+        data: data
+      })
+          .then(() => {
+            this.goTo('Profile', {id: this.$store.state.profileInfo.id})
+          })
+          .catch((error) => {
+            if (error.request.status === 401) {
+              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+            } else {
+              console.log(error.request);
+            }
+          })
+    }
   },
 }
 </script>
