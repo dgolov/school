@@ -39,7 +39,7 @@ export default {
   },
 
   props: {
-    id: String
+    id: Number
   },
 
   mixins: [requestsMixin],
@@ -52,7 +52,7 @@ export default {
     async deletePhoto() {
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
-        url: `/profile/delete-photo/${this.id}`,
+        url: `/profile/delete-photo/${String(this.id)}`,
         method: "delete",
       })
           .then(() => {
@@ -61,7 +61,7 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.addFriend('/profile/friend-request/');
             } else {

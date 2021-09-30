@@ -2,14 +2,14 @@
   <div id="single-course">
     <navbar></navbar>
     <div class="course">
-      <course-info :course="responseData[0].course"></course-info>
+      <course-info v-if="responseData" :course="responseData[0].course"></course-info>
       <div class="course__section">
         <div class="container pb-5">
           <h2 class="my-4 system-color">Программа курса:</h2>
           <p>Здесь собраны все доступные уроки с пожизненным доступом к видео и материалам с прошедших вебинаров</p>
           <hr/>
           <ol class="lesson-list">
-            <li v-for="lesson in responseData" class="py-3">
+            <li v-if="responseData" v-for="lesson in responseData" class="py-3">
               <a v-if="lesson.is_active" href="#" @click="goToLesson(lesson.course.id, lesson.id)">{{lesson.theme}}</a>
               <p v-else class="no-active" style="margin: 0;">{{lesson.theme}} (Урок недоступен)</p>
             </li>

@@ -44,6 +44,7 @@
                   </div>
                 </div>
               </div>
+              <h6 v-if="responseData.length === 0" class="mt-5">Список сообщений пуст</h6>
             </div>
           </div>
         </div>

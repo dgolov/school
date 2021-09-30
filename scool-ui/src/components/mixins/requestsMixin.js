@@ -45,7 +45,7 @@ export const requestsMixin = {
                         }
                     }
                 })
-            if (url === `/profile/${this.$store.state.authUser.id}/`) {
+            if (url === `/profile/${String(this.$store.state.authUser.id)}/`) {
                 // Если запрос данных профиля, то сохраняем их в state
                 this.$store.commit("setProfileInfo", {profileInfo: this.responseData});
             }
@@ -66,7 +66,7 @@ export const requestsMixin = {
                 })
                 .catch((error) => {
                     if (error.request.status === 401) {
-                        // Если 403 ошибка - refresh токен просрочен, LogOut
+                        // Если 401 ошибка - refresh токен просрочен, LogOut
                         this.$store.commit("removeToken")
                         this.goTo('/')
                     }

@@ -112,7 +112,7 @@ export default {
     getAvatarPath(message){
       let path = ''
       try {
-        path = `http://127.0.0.1:8000${message.from_user.avatar.image}`;
+        path = `${this.$store.state.baseUrl}${message.from_user.avatar.image}`;
       } catch {
         path = require('../../assets/images/avatars/mike2.jpeg');
       }
@@ -158,7 +158,7 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');
             } else {

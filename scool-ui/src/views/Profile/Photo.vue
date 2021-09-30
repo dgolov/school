@@ -16,13 +16,13 @@
                                       @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></upload-photo-modal>
                 </div>
               </div>
-              <div class="image-container">
-                <div v-if="responseData" v-for="photo in responseData.photos" class="mySlides">
+              <div class="image-container" v-if="responseData.photos">
+                <div v-for="photo in responseData.photos" class="mySlides">
                   <button class="photo-button" v-if="Number(id) === $store.state.authUser.id && responseData"
                           id="set-avatar" @click="setAvatar(responseData.photos[slideIndex - 1].id)">
                     Установить как фото профиля</button>
                   <div class="number_text">{{ slideIndex }} / {{ responseData.photos.length }}</div>
-                  <img :src="`http://127.0.0.1:8000${photo.image}`" class="image" @dblclick="like()">
+                  <img :src="`${$store.state.baseUrl}${photo.image}`" class="image" @dblclick="like()">
                 </div>
                 <a class="prev" @click="plusSlides(-1)">&#10094;</a>
                 <a class="next" @click="plusSlides(1)">&#10095;</a>
@@ -51,11 +51,12 @@
                 </div>
                 <div class="row mt-2">
                   <div v-for="(photo, index) in responseData.photos" class="column">
-                    <img class="demo cursor" :src="`http://127.0.0.1:8000${photo.image}`"
+                    <img class="demo cursor" :src="`${$store.state.baseUrl}${photo.image}`"
                          @click="currentSlide(index + 1)" :alt="photo.description">
                   </div>
                 </div>
               </div>
+              <h6 v-else class="mt-5">Вы не добавили ни одной фотографии</h6>
             </div>
           </div>
         </div>
@@ -97,7 +98,7 @@ export default {
   },
 
   created() {
-    this.createGetRequest(`/profile/${String(this.id)}/gallery/`)
+    this.createGetRequest(`/profile/${this.id}/gallery/`)
   },
 
   updated() {
@@ -187,8 +188,8 @@ export default {
             }
           })
           .catch((error) => {
-            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+            if (error.request.status === 401) {
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken()
               this.addFriend('/profile/friend-response')
             } else {
@@ -229,8 +230,8 @@ export default {
             }, 20)
           })
           .catch((error) => {
-            if (error.request.status === 403 && error.request.responseText === this.errorAccessToken) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+            if (error.request.status === 401) {
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.addFriend('/profile/friend-request/');
             } else {

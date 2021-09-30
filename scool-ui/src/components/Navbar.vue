@@ -78,7 +78,7 @@ export default {
     getAvatar() {
       let path = ''
       try {
-        path = `http://127.0.0.1:8000${this.user.avatar.image}`;
+        path = `${this.$store.state.baseUrl}${this.user.avatar.image}`;
       } catch {
         path = require('../assets/images/avatars/mike2.jpeg');
       }

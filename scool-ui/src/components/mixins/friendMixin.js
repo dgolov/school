@@ -118,7 +118,7 @@ export const friendMixin = {
                 })
                 .catch((error) => {
                     if (error.request.status === 401) {
-                        // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+                        // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
                         this.addFriend('/profile/friend-response/')
                     } else {
@@ -159,7 +159,7 @@ export const friendMixin = {
                 })
                 .catch((error) => {
                     if (error.request.status === 401) {
-                        // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+                        // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
                         this.addFriend('/profile/friend-response/')
                     } else {
@@ -191,7 +191,7 @@ export const friendMixin = {
                 })
                 .catch((error) => {
                     if (error.request.status === 401) {
-                        // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+                        // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         this.refreshToken()
                         this.addFriend('/profile/friend-request/')
                     } else {

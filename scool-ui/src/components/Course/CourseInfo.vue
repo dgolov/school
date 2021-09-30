@@ -2,10 +2,10 @@
   <div class="step course__section center">
     <div class="container">
       <div class="row mt-5">
-        <div class="col-md-6">
-          <img :src="`http://127.0.0.1:8000${course.poster}`" class="course-poster my-4">
+        <div v-if="course" class="col-md-6">
+          <img :src="`${$store.state.baseUrl}${course.poster}`" class="course-poster my-4">
         </div>
-        <div class="col-md-6 mt-5">
+        <div v-if="course" class="col-md-6 mt-5">
           <p class="left-align">Курс</p>
           <h1>{{course.name}}</h1>
           <div class="left-align">

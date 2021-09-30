@@ -2,7 +2,7 @@
   <div id="lesson-single">
     <navbar></navbar>
     <div class="lesson">
-      <course-info :course="responseData.course"></course-info>
+      <course-info v-if="responseData" :course="responseData.course"></course-info>
       <div class="course__section">
         <div class="container pb-5">
           <div class="course-info">
@@ -24,7 +24,8 @@
             <hr v-if="responseData.materials && responseData.video_slug" />
             <div v-if="responseData.materials" class="mt-5 system-color">
               <img src="../../assets/images/icons/download.png" class="download-button">
-              <a href="#" download class="course-text">Скачать материал к уроку</a>
+              <a href="#" @click="responseData.materials" download class="course-text">Скачать материал к уроку</a>
+              {{responseData.materials}}
             </div>
           </div>
         </div>

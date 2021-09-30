@@ -101,8 +101,8 @@ export default {
     getImage(url) {
       // Некоторые данные приходят с сервера с абсолютным адресом, некоторые с относительным, вероятно из-за ViewSets
       // Данный метод временно решает эту проблему
-      if (url.indexOf('http://127.0.0.1:8000') === -1) {
-        return `${this.$store.getters.getServerUrl}${url}`
+      if (url.indexOf(`${this.$store.state.baseUrl}`) === -1) {
+        return `${this.$store.baseUrl}${url}`
       } else {
         return url
       }

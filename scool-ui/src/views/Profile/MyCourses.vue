@@ -7,7 +7,7 @@
           <div class="page__inner">
             <profile-menu :header="header"></profile-menu>
             <div class="page__main">
-              <div v-for="course in responseData" class="row course_container">
+              <div v-if="responseData" v-for="course in responseData" class="row course_container">
                 <div class="col-md-8">
                   <h4 class="left-align" v-if="course.is_active">
                     <a v-if="course.is_active" href="#" @click="goToCourse(course.id)">{{ course.name }}</a>
