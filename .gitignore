@@ -1,6 +1,11 @@
 conf/
 env/
+.env.db
+.env
+.env.dev
+.env.prod
 
+!media/.gitkeep
 media/*
 
 db.sqlite3

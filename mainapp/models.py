@@ -29,6 +29,7 @@ class Group(models.Model):
     manager = models.ForeignKey(
         'EducationalManager',
         on_delete=models.CASCADE,
+        related_name='manager',
         verbose_name='Менеджер учебного процесса'
     )
 
@@ -277,7 +278,7 @@ class Course(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', blank=True, null=True)
     name = models.CharField(max_length=100, verbose_name='Название курса')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель курса')
-    price = models.DecimalField(verbose_name='Цена', max_digits=3000000, decimal_places=2)
+    price = models.IntegerField(verbose_name='Цена')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
     video_presentation = models.SlugField(verbose_name='Ссылка на видеопрезентацию курса', blank=True, null=True)
