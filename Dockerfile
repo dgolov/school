@@ -36,7 +36,7 @@ RUN mkdir -p /home/app
 
 # create the app user
 RUN groupadd app
-RUN useradd -m -g app app -p PASSWORDTEST
+RUN useradd -m -g app app -p FAcademy5671313
 RUN usermod -aG app app
 
 # create the appropriate directories

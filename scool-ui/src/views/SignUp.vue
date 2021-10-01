@@ -13,7 +13,7 @@
               <li v-for="message in error.messageList">{{ message }}</li>
             </ul>
             <p>Заполните краткую анкету чтобы зарегистрироваться на сайте</p>
-            <form action="#" method="get" class="form">
+            <form action="#" class="form">
               <label>Логин</label>
               <input v-model="userName" type="text" name="email" id='login' placeholder="Введите имя пользователя">
               <label>Пароль</label>
@@ -131,15 +131,11 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
-        xhrFields: {
-          withCredentials: true,
-        },
       }
 
-      console.log(data)
       const axiosInstance = axios.create(base);
       await axiosInstance({
-        url: `/profile/create/`,
+        url: "/profile/create/",
         method: "post",
         data: data
       })

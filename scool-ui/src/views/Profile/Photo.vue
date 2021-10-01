@@ -22,7 +22,7 @@
                           id="set-avatar" @click="setAvatar(responseData.photos[slideIndex - 1].id)">
                     Установить как фото профиля</button>
                   <div class="number_text">{{ slideIndex }} / {{ responseData.photos.length }}</div>
-                  <img :src="`${$store.state.baseUrl}${photo.image}`" class="image" @dblclick="like()">
+                  <img :src="photo.image" class="image" @dblclick="like()">
                 </div>
                 <a class="prev" @click="plusSlides(-1)">&#10094;</a>
                 <a class="next" @click="plusSlides(1)">&#10095;</a>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="row mt-2">
                   <div v-for="(photo, index) in responseData.photos" class="column">
-                    <img class="demo cursor" :src="`${$store.state.baseUrl}${photo.image}`"
+                    <img class="demo cursor" :src="photo.image"
                          @click="currentSlide(index + 1)" :alt="photo.description">
                   </div>
                 </div>
