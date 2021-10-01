@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row navbar__inner">
         <div class="col-md-2" style="height: 60px; padding-top: 8px">
-          <a href="#" class="navbar__logo">
+          <a href="/" class="navbar__logo">
             <img src="../assets/images/Logo-SCHOOL-0922-07.png"
                  style="height: 80%;">
           </a>
@@ -78,7 +78,7 @@ export default {
     getAvatar() {
       let path = ''
       try {
-        path = `${this.$store.state.baseUrl}${this.user.avatar.image}`;
+        path = this.user.avatar.image;
       } catch {
         path = require('../assets/images/avatars/mike2.jpeg');
       }

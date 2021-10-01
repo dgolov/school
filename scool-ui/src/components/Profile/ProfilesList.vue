@@ -6,7 +6,7 @@
     <div v-for="profile in profiles" class="row row_list">
       <div class="col-md-3 mt-3">
         <img v-if="profile.avatar" class="center small_avatar"
-             :src="getImage(profile.avatar.image)">
+             :src="profile.avatar.image">
         <img v-else class="center small_avatar" src="../../assets/images/avatars/mike2.jpeg">
       </div>
       <div class="col-md-5">
@@ -101,8 +101,8 @@ export default {
     getImage(url) {
       // Некоторые данные приходят с сервера с абсолютным адресом, некоторые с относительным, вероятно из-за ViewSets
       // Данный метод временно решает эту проблему
-      if (url.indexOf(`${this.$store.state.baseUrl}`) === -1) {
-        return `${this.$store.baseUrl}${url}`
+      if (url.indexOf(`${this.$store.state.backendUrl}`) === -1) {
+        return `${this.$store.state.baseUrl}${url}`
       } else {
         return url
       }

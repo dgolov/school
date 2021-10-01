@@ -7,13 +7,16 @@
             <a href="#" class="footer__textLogo">Академия будущего</a>
           </div>
           <div class="footer__row">
-            Logo
+            <a href="/" class="navbar__logo">
+              <img src="../assets/images/Logo-SCHOOL-0922-07.png"
+                   style="width: 150px;">
+            </a>
           </div>
         </div>
         <div class="footer__data__item">
-          <div class="footer__row">Дзержинск Грибоедова 48</div>
-          <div class="footer__row">+7 (910) 799-15-24</div>
-          <div class="footer__row">8-800-555-35-35</div>
+          <div class="footer__row">Academy address</div>
+          <div class="footer__row">Academy phone 1</div>
+          <div class="footer__row">Academy phone 2</div>
         </div>
         <div class="footer__data__item">
           <div class="footer__row">

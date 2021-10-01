@@ -5,7 +5,7 @@
         <a href="#" @click="goTo('Profile', {id: user.id})">{{ user.first_name }} {{ user.last_name }}</a>
       </li>
       <li>
-        <img class="center avatar" :src="`${$store.state.baseUrl}${user.avatar.image}`">
+        <img class="center avatar" :src="user.avatar.image">
       </li>
     </ul>
     <ul v-else>

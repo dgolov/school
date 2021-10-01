@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row mt-5">
         <div v-if="course" class="col-md-6">
-          <img :src="`${$store.state.baseUrl}${course.poster}`" class="course-poster my-4">
+          <img :src="course.poster" class="course-poster my-4">
         </div>
         <div v-if="course" class="col-md-6 mt-5">
           <p class="left-align">Курс</p>

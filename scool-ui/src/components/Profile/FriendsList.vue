@@ -5,7 +5,7 @@
     <div v-for="profile in profiles" class="row row_list">
       <div class="col-md-3 mt-3">
         <img v-if="profile.avatar" class="center small_avatar"
-             :src="`${$store.getters.getServerUrl}${profile.avatar}`">
+             :src="profile.avatar">
         <img v-else class="center small_avatar" src="../../assets/images/avatars/mike2.jpeg">
       </div>
       <div class="col-md-5">

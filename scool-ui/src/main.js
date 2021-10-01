@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 import axios from "axios";
 import VueAxios from "vue-axios";
+import loader from "vue-ui-preloader";
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = true
 
 // Make BootstrapVue available throughout your project
 // import  'bootstrap/dist/css/bootstrap.css'
@@ -15,8 +17,10 @@ Vue.config.productionTip = false
 // Vue.use(BootstrapVue)
 // Vue.use(IconsPlugin)
 Vue.use(VueAxios, axios)
+Vue.use(loader);
 
 new Vue({
+  loader,
   router,
   store,
   axios,

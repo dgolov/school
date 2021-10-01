@@ -226,7 +226,7 @@ export default {
     getChatImage(chat) {
       let path = '';
       if (chat.image) {
-        path = `${this.$store.getters.getServerUrl}${chat.image.file}`;
+        path = chat.image.file;
       } else {
         path = require('../../assets/images/group_chat.png');
       }
@@ -265,7 +265,7 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.addFriend('/profile/friend-request/');
             } else {

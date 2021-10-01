@@ -157,7 +157,7 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
             } else {
               console.log(error.request);

@@ -6,19 +6,6 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-@font-face {
-    font-family: "AlegreyaSansSC-Light";
-    src: url("../../assets/fonts/AlegreyaSansSC-Light.ttf") format("truetype");
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "AlegreyaSansSC-Black";
-    src: url("../../assets/fonts/AlegreyaSansSC-Black.ttf") format("truetype");
-    font-style: normal;
-    font-weight: normal;
-}
 
 html {
     line-height: 1.15;

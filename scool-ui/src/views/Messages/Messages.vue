@@ -30,9 +30,6 @@
                     {{ message.from_user.first_name }} {{ message.from_user.last_name }}
                     {{ reformatDateTime(message.date_and_time) }}
                   </p>
-<!--                  <p v-else :class="setClassToMessageDate(message)">-->
-<!--                    {{ reformatDateTime(message.date_and_time) }}-->
-<!--                  </p>-->
                   <a href="#">
                     <img v-if="getMessageAvatar(message)" :src="getAvatarPath(message)" class="message_avatar">
                   </a>
@@ -112,7 +109,7 @@ export default {
     getAvatarPath(message){
       let path = ''
       try {
-        path = `${this.$store.state.baseUrl}${message.from_user.avatar.image}`;
+        path = message.from_user.avatar.image;
       } catch {
         path = require('../../assets/images/avatars/mike2.jpeg');
       }

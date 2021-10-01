@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-6">
     <img v-if="profile.avatar" class="center profile-avatar"
-         :src="`${$store.state.baseUrl}${profile.avatar.image}`">
+         :src="`${profile.avatar.image}`">
     <img v-else src="../../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
   </div>
 </template>
