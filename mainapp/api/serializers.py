@@ -360,6 +360,7 @@ class TeacherUpdateSerializer(ProfileSerializerBase):
 
     @staticmethod
     def update(instance, validated_data):
+        # TODO fix user update
         for key, value in validated_data.items():
             setattr(instance, key, value)
         instance.save()
@@ -394,8 +395,10 @@ class StudentUpdateSerializer(ProfileSerializerBase):
 
     @staticmethod
     def update(instance, validated_data):
+        user_model_fields = ['first_name', 'last_name', 'email']
         for key, value in validated_data.items():
-            setattr(instance, key, value)
+            setattr(instance.user, key, value) if key in user_model_fields else setattr(instance, key, value)
+        instance.user.save()
         instance.save()
         return instance
 
@@ -461,7 +464,10 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = [
+            'id', 'category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
+            'is_active'
+        ]
 
 
 class LessonSerializer(serializers.ModelSerializer):
