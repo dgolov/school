@@ -5,25 +5,21 @@
       <div class="hero__overlay hero__overlay--gradient"></div>
       <div class="hero__mask"></div>
       <div class="hero__inner">
-        <div class="container">
           <div class="hero__content">
             <div class="hero__content__inner" id='navConverter'>
-              <h1 class="hero__title">Мы рады приветствовать Вас в академии будущего</h1>
-              <div class="row">
-                <div class="col-md-4 main-section m-lg-4 px-3 py-2" style="border-radius: 10px;">
+              <h1 class="hero__title px-2">Мы рады приветствовать Вас в Академии будущего</h1>
+                <div class="header-block">
                   <p class="hero__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
                     Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
                 </div>
-                <div class="col-md-4 main-section m-lg-4 mx-3 px-3 py-2" style="border-radius: 10px;">
+                <div class="header-block">
                   <p class="hero__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
                     Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
                 </div>
-              </div>
               <img src="../assets/images/depositphotos_3268412-stock-illustration-wise-owl-cartoon.png"
                    class="header-image">
             </div>
           </div>
-        </div>
       </div>
     </div>
     <div class="hero__sub">
@@ -158,6 +154,25 @@ export default {
   bottom: 0;
   right: 5%;
   width: 40%
+}
+
+.header-block {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 40px;
+  background-color: #ffffff;
+  width: 30%;
+  display: inline-block;
+  float: left;
+}
+
+@media (max-width: 992px) {
+  .header-block {
+    margin: 20px;
+    background-color: #ffffff;
+    width: 90%;
+    display: block;
+  }
 }
 
 @media (min-width: 992px) {

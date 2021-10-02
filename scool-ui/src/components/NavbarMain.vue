@@ -22,14 +22,14 @@
           <nav class="navbar__menu">
             <ul class="main-nav">
               <li><a href="/">Главная</a></li>
-              <li><a href="#" @click="goTo('Education')">Обучение</a></li>
-              <li><a href="#" @click="goTo('News')">Новости</a></li>
-              <li><a href="#" @click="goTo('About')">Об академии</a></li>
-              <li><a href="#" @click="goTo('Contacts')">Контакты</a></li>
+              <li><a href="/education" @click="goTo('Education')">Обучение</a></li>
+              <li><a href="/news" @click="goTo('News')">Новости</a></li>
+              <li><a href="/about" @click="goTo('About')">Об академии</a></li>
+              <li><a href="/contacts" @click="goTo('Contacts')">Контакты</a></li>
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>
-                <a href="#" @click="goTo('Profile', {id: user.id})">
+                <a href="/profile" @click="goTo('Profile', {id: user.id})">
                   {{ user.first_name }} {{ user.last_name }}
                 </a>
               </li>
@@ -38,8 +38,8 @@
               </li>
             </ul>
             <ul v-else style="float: right;">
-              <li><a href="#" @click="goTo('SignUp')">Регистрация</a></li>
-              <li><a href="#" @click="goTo('Auth')">Вход</a></li>
+              <li><a href="/signup" @click="goTo('SignUp')">Регистрация</a></li>
+              <li><a href="/auth" @click="goTo('Auth')">Вход</a></li>
             </ul>
           </nav>
         </div>
