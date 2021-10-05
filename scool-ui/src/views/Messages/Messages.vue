@@ -87,7 +87,8 @@ export default {
       systemMessage: 'system_message',
       systemMessageText: 'system_message_text',
       containerScrollHeight: 0,
-      input_text: ""
+      input_text: "",
+      chatSocket: null
     }
   },
 
@@ -99,6 +100,7 @@ export default {
 
   created() {
     this.createGetRequest(`/dialogs/${String(this.id)}/`)
+    this.connect()
   },
 
   updated() {
@@ -106,7 +108,21 @@ export default {
   },
 
   methods: {
-    getAvatarPath(message){
+    connect() {
+      this.chatSocket = new WebSocket(
+          'ws://127.0.0.1/ws/chat/' + String(this.id) + '/'
+      );
+      this.chatSocket.onopen = () => {
+        console.log('connected')
+        this.status = "connected";
+      };
+      this.chatSocket.onmessage = ({data}) => {
+        console.log(JSON.parse(data))
+        this.responseData.push(JSON.parse(data))
+      }
+    },
+
+    getAvatarPath(message) {
       let path = ''
       try {
         path = message.from_user.avatar.image;
@@ -134,11 +150,17 @@ export default {
         "date_and_time": '2021-09-11T15:58:22.341424Z',
         "is_read": false
       }
-      this.responseData.push(data)
+      this.chatSocket.send(JSON.stringify(
+          {
+            "text": this.input_text,
+            "from_user": this.$store.state.authUser,
+          })
+      );
+      // this.responseData.push(data)
       this.sendToServer()
     },
 
-    async sendToServer(){
+    async sendToServer() {
       let data = {
         "dialog": Number(this.id),
         "text": this.input_text

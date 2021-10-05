@@ -161,6 +161,9 @@ export default {
       this.selectedCourse = false;
       this.groupId = 0;
       this.lessonId = 0;
+      this.student = 0;
+      this.grade = 0;
+      this.gradeType = '';
       this.date = ''
     },
 
