@@ -5,23 +5,19 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    # dev
-#    command: python manage.py runserver 0.0.0.0:8000
-    # prod
     command: gunicorn school.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-#    volumes:
-#      - .:/usr/src/app/
-#    ports:
-#      - 8000:8000
     expose:
       - 8000
     depends_on:
       - db
+      - redis
     env_file:
       - ./.env.prod
+    links:
+      - redis
   db:
     image: postgres:10.1-alpine
     volumes:
@@ -36,6 +32,26 @@ services:
       - vue_dist:/app/dist
     depends_on:
       - web
+  redis:
+    image: "redis:alpine"
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  daphne:
+    image: daphne
+    build: .
+    working_dir: /home/app/web
+    command: daphne -b 0.0.0.0 -p 8001 school.asgi:application
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    links:
+      - redis
   nginx:
     build: ./nginx
     ports:
@@ -47,9 +63,13 @@ services:
     depends_on:
       - web
       - vue
+      - daphne
+    links:
+      - daphne
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
   vue_dist:
+  redis_data:

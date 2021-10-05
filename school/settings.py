@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'psycopg2',
+    'channels',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -203,4 +205,19 @@ SIMPLE_JWT = {
     # 'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     # 'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     # 'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+
+# Channels
+
+ASGI_APPLICATION = "school.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            # "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('redis', 6379)],
+        },
+    },
 }

@@ -50,6 +50,7 @@ RUN apt-get update \
     && apt-get install netcat -y
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
+RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
 # copy entrypoint-prod.sh
