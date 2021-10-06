@@ -339,10 +339,10 @@ class BuyingACourseView(APIView):
     """ Эндпоинт покупки курса
     Request data: id - id курса
     """
-    def put(self, *args, **kwargs):
-        buy_manager = BuyingCourseManager()
-        http_status = buy_manager.get_buy_status(self.request)
-        return Response(status=http_status)
+    def post(self, *args, **kwargs):
+        buy_manager = BuyingCourseManager(self.request)
+        response_data, http_status = buy_manager.pay()
+        return Response(data=response_data, status=http_status)
 
 
 class LessonsDetailView(APIView):
