@@ -110,7 +110,8 @@ export default {
   methods: {
     connect() {
       this.chatSocket = new WebSocket(
-          'ws://127.0.0.1/ws/chat/' + String(this.id) + '/'
+          // 'ws://127.0.0.1/ws/chat/' + String(this.id) + '/'
+          'ws://127.0.0.1:8000/ws/chat/' + String(this.id) + '/'
       );
       this.chatSocket.onopen = () => {
         console.log('connected')

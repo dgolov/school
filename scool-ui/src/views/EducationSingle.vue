@@ -17,7 +17,7 @@
                 </a>
               </h5>
               <h4>Стоимость обучения: <span class="system-color">{{ course.price }}</span> рублей.</h4>
-              <button class="button button__accent buy_button">Записаться на курс</button>
+              <button class="button button__accent buy_button" @click="pay">Записаться на курс</button>
             </div>
           </div>
         </div>
@@ -47,6 +47,7 @@ import CourseForm from "../components/Course/CourseForm";
 import HowGoing from "../components/Course/HowGoing";
 import Lessons from "../components/Course/Lessons";
 import axios from "axios";
+import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
   name: "EducationSingle",
@@ -54,6 +55,8 @@ export default {
   props: {
     id: Number
   },
+
+  mixins: [requestsMixin],
 
   components: {Lessons, HowGoing, CourseForm, Navbar},
 
@@ -68,6 +71,30 @@ export default {
   },
 
   methods: {
+    async pay() {
+      let data = {
+        "id": this.id,
+      }
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/courses/buy/`,
+        method: "post",
+        data: data
+      })
+          .then((response) => {
+            window.open(response.data._PaymentResponse__confirmation[0][1])
+          })
+          .catch((error) => {
+            if (error.request.status === 401) {
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+              this.sendToServer('/send-message/');
+            } else {
+              console.log(error.request);
+            }
+          })
+    },
+
     async loadCourse() {
       await axios
           .get(`${this.$store.getters.getServerUrl}/courses/${this.id}`)
