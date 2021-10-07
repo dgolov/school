@@ -1,13 +1,14 @@
 from asgiref.sync import async_to_sync
+from channels.db import database_sync_to_async
 from channels.generic.websocket import WebsocketConsumer
 from datetime import datetime
-
-from .models import Profile, Dialog
 
 import json
 
 
 class ChatConsumer(WebsocketConsumer):
+    """ Отправка и прием сообщений в чатах через web сокеты
+    """
     def connect(self):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
         async_to_sync(self.channel_layer.group_add)(
@@ -23,8 +24,8 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def receive(self, text_data):
+        print(1)
         text_data_json = json.loads(text_data)
-        print(text_data_json)
         text = text_data_json['text']
         from_user = text_data_json['from_user']
 
@@ -41,10 +42,6 @@ class ChatConsumer(WebsocketConsumer):
         text = event['text']
         from_user = event['from_user']
 
-        # dialog = Dialog.objects.get(pk=int(self.chat_id))
-
-        print()
-
         self.send(text_data=json.dumps({
             'event': "Send",
             'attachment': None,
@@ -54,4 +51,43 @@ class ChatConsumer(WebsocketConsumer):
             'from_user': from_user,
             'system_message': False,
             'is_read': False,
+        }))
+
+
+class ReadMessages(WebsocketConsumer):
+    """ Отправка уведомлений о прочитанных сообщениях """
+    def connect(self):
+        self.chat = self.scope['url_route']['kwargs']['chat_id']
+        async_to_sync(self.channel_layer.group_add)(
+            str(self.chat),
+            self.channel_name
+        )
+        self.accept()
+
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(
+            self.chat,
+            self.channel_name
+        )
+
+    def receive(self, text_data):
+        print(2)
+        text_data_json = json.loads(text_data)
+        message_list = text_data_json['message_list']
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.chat,
+            {
+                'id': 'read_message',
+                'message_list': message_list
+            }
+        )
+
+    def read_message(self, event):
+        print(event)
+        message_list = event['message_list']
+
+        self.send(text_data=json.dumps({
+            'event': "Send",
+            'message_list': message_list
         }))

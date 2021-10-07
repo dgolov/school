@@ -40,7 +40,6 @@ services:
     volumes:
       - redis_data:/data
   daphne:
-    image: daphne
     build: .
     working_dir: /home/app/web
     command: daphne -b 0.0.0.0 -p 8001 school.asgi:application

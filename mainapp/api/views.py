@@ -611,7 +611,7 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         message_list = Message.objects.filter(dialog=instance)
-        self.read_messages(request, message_list=message_list)
+        # self.read_messages(request, message_list=message_list)
         serializer = serializers.MessageViewSerializer(message_list, many=True)
         return Response(serializer.data)
 

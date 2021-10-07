@@ -112,9 +112,8 @@ class MessageMixin:
     @staticmethod
     def read_messages(request, message_list):
         """ При открытии диалога непрочитанные сообщения становятся прочитанными """
-        item_profile = request.user.profile
         for message in message_list:
-            if message.from_user == item_profile:
+            if message.from_user == request.user.profile:
                 continue
             if not message.is_read:
                 message.is_read = True
