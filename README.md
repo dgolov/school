@@ -58,7 +58,7 @@
 
 Для запуска приложения в Docker в корневой директории проекта выполнить команду:
 
-` docker-compose up --build`
+` docker-compose up --build -d`
 
 ### Остановка Docker
 
