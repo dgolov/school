@@ -40,6 +40,7 @@ from .views import (
 
 
 router = routers.SimpleRouter()
+router.register('profile', PersonalProfileView, basename='profile')
 router.register('students', StudentsViewSet, basename='students')
 router.register('teachers', TeachersViewSet, basename='teachers')
 router.register('groups', GroupViewSet, basename='groups')
@@ -56,7 +57,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/', UserRetrieveView.as_view(), name='user'),
     # Profile
-    path('profile/<int:pk>/', PersonalProfileView.as_view(), name='profile'),
+    # path('profile/<int:pk>/', PersonalProfileView.as_view(), name='profile'),
     path('profile/create/', ProfileCreateView.as_view(), name='create_profile'),
     path('profile/<int:pk>/friends/', FriendsListView.as_view(), name='friends'),
     path('profile/<int:pk>/followers/', FollowersListView.as_view(), name='followers'),

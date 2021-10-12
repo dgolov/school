@@ -90,30 +90,7 @@ class ProfileCreateView(CreateAPIView):
     serializer_class = serializers.CreateProfileSerializer
 
 
-class LoginView(APIView):
-    """ Эндпоинт входа в систему
-    Request data: username, password
-    """
-    @staticmethod
-    def post(request, format=None):
-        data = request.data
-
-        username = data.get('username', None)
-        password = data.get('password', None)
-
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return Response(status=status.HTTP_201_CREATED)
-            else:
-                return Response(status=status.HTTP_403_FORBIDDEN)
-        else:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-
-
-class PersonalProfileView(APIView):
+class PersonalProfileView(viewsets.ModelViewSet):
     """ Эндпоинт личного кабинета
     Request data for students: hobbies - увлечения
                                dreams - мечта
@@ -132,39 +109,35 @@ class PersonalProfileView(APIView):
         'manager': serializers.EducationalManagerUpdateSerializer
     }
 
-    @staticmethod
-    def get_queryset(user, *args, **kwargs):
-        if user.profile.user_group == 'student':
-            return Student.objects.get(user=user)
-        elif user.profile.user_group == 'teacher':
-            return Teacher.objects.get(user=user)
-        elif user.profile.user_group == 'manager':
-            return EducationalManager.objects.get(user=user)
+    def get_queryset(self, *args, **kwargs):
+        profile = kwargs.get('profile')
+        if profile.user_group == 'student':
+            return profile.student
+        elif profile.user_group == 'teacher':
+            return profile.teacher
+        elif profile.user_group == 'manager':
+            return profile.manager
         else:
             return None
 
-    def get(self, request, *args, **kwargs):
-        item_user = self.request.user
-        user = Profile.objects.get(pk=kwargs.get('pk')).user
-        queryset = self.get_queryset(user)
+    def retrieve(self, request, *args, **kwargs):
+        profile = Profile.objects.get(pk=kwargs.get('pk'))
+        queryset = self.get_queryset(profile=profile)
         if not queryset:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        if user == item_user or user in item_user.profile.friends.all():
-            serializer = self.serializer_classes[user.profile.user_group]
-            serializer = serializer(queryset, many=False)
+        if profile.user == self.request.user or profile.user in self.request.user.profile.friends.all():
+            serializer = self.serializer_classes[profile.user_group](queryset, many=False)
         else:
             serializer = serializers.ProfileSerializer(queryset, many=False)
         return Response(serializer.data)
 
-    def put(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         """ Редактировать профиль """
-        data = request.data
-        user = self.request.user
-        queryset = self.get_queryset(user)
+        queryset = self.get_queryset(self.request.user.profile)
         if not queryset:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        serializer = self.serializer_updated_classes[user.profile.user_group]
-        serializer.update(instance=queryset, validated_data=data)
+        serializer = self.serializer_updated_classes[self.request.user.profile.user_group]
+        serializer.update(instance=queryset, validated_data=request.data)
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -176,8 +149,7 @@ class FriendsListView(ListAPIView):
 
     def list(self, request, *args, **kwargs):
         profile = self.get_queryset(pk=kwargs.get('pk'))
-        item_user = self.request.user
-        if item_user.profile != profile and item_user not in profile.friends.all():
+        if self.request.user.profile != profile and self.request.user not in profile.friends.all():
             return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = self.serializer_class(profile)
         return Response(serializer.data)
@@ -239,8 +211,7 @@ class FriendResponseView(APIView, AddFriendMixin):
     """
     def post(self, *args, **kwargs):
         """ Принять предложение дружбы (либо отказать в зависимости от ключа answer) """
-        data = self.request.data
-        answer = data.get('answer')
+        answer = self.request.data.get('answer')
         if answer == 'add':
             http_status = self.add_response_friend(data=self.request.data, item_profile=self.request.user.profile)
         elif answer == 'refuse':
@@ -302,9 +273,11 @@ class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = serializers.CourseSerializer
     permission_classes = [IsAuthenticated]
-    permission_classes_by_action = {'list': [IsAuthenticatedOrReadOnly],
-                                    'retrieve': [IsAuthenticatedOrReadOnly],
-                                    'lessons': [IsAuthenticatedOrReadOnly], }
+    permission_classes_by_action = {
+        'list': [IsAuthenticatedOrReadOnly],
+        'retrieve': [IsAuthenticatedOrReadOnly],
+        'lessons': [IsAuthenticatedOrReadOnly],
+    }
 
     @action(detail=True, renderer_classes=[JSONRenderer])
     def lessons(self, request, *args, **kwargs):
@@ -350,9 +323,7 @@ class LessonsDetailView(APIView):
     """
     def get(self, *args, **kwargs):
         item_profile = self.request.user.profile
-        course_pk = kwargs.get('course_pk')
-        lesson_pk = kwargs.get('pk')
-        course = Course.objects.get(pk=course_pk)
+        course = Course.objects.get(pk=kwargs.get('course_pk'))
 
         if item_profile.user_group == 'student':
             if course not in item_profile.student.courses.all():
@@ -362,7 +333,10 @@ class LessonsDetailView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        lesson_objects = Lesson.objects.get(pk=lesson_pk, course=course_pk)
+        lesson_objects = Lesson.objects.get(
+            pk=kwargs.get('pk'),
+            course=kwargs.get('course_pk')
+        )
         if not lesson_objects.is_active:
             return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = serializers.LessonRetrieveSerializer(lesson_objects, many=False)
@@ -389,19 +363,17 @@ class TimetableViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """ Добавить урок в рассписание """
-        item_profile = self.request.user.profile
-        if item_profile.user_group == 'teacher' or item_profile.user_group == 'manager':
-            data = request.data
-            data_check_status = check_correct_data_for_add_in_timetable(item_profile, data)
+        if request.user.profile.user_group == 'teacher' or request.user.profile.user_group == 'manager':
+            data_check_status = check_correct_data_for_add_in_timetable(request.user.profile, request.data)
             if data_check_status != 202:
                 return Response(status=data_check_status)
-            serializer = serializers.TimetableCreateSerializer(data=data)
+            serializer = serializers.TimetableCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                return Response(status=status.HTTP_204_NO_CONTENT)
-        elif item_profile.user_group == 'student':
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        elif request.user.profile.user_group == 'student':
             return Response(status=status.HTTP_403_FORBIDDEN)
 
 
@@ -432,11 +404,8 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """ Поставить оценку """
-        item_profile = request.user.profile
-        if item_profile.user_group == 'teacher':
-            data = request.data
-            data['teacher'] = item_profile.pk
-            data['date'] = datetime.date(datetime.now())
+        if request.user.profile.user_group == 'teacher':
+            request.data['teacher'] = request.user.profile.pk
             serializer = serializers.AcademicPerformanceCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -475,8 +444,7 @@ class EditPhotoDescription(APIView):
     """
     def put(self, request, *args, **kwargs):
         photo = self.get_queryset()
-        item_user = request.user.profile
-        if item_user != photo.for_profile:
+        if request.user.profile != photo.for_profile:
             return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = serializers.PhotoUpdateDescriptionSerializer(data=self.request.data)
         if serializer.is_valid():
@@ -486,9 +454,8 @@ class EditPhotoDescription(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self, *args, **kwargs):
-        data = self.request.data
         try:
-            return Photo.objects.get(pk=data.get('id'))
+            return Photo.objects.get(pk=self.request.data.get('id'))
         except Photo.DoesNotExist:
             return None
 
@@ -519,14 +486,13 @@ class DeletePhotoView(DestroyAPIView):
         return queryset
 
     def destroy(self, request, *args, **kwargs):
-        profile = self.request.user.profile
         try:
             instance = self.get_object()
         except Photo.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        if instance.for_profile == profile:
-            if instance == profile.avatar:
-                profile.avatar = None
+        if instance.for_profile == self.request.user.profile:
+            if instance == self.request.user.profile.avatar:
+                self.request.user.profile.avatar = None
             delete_file(instance.image.url)
             self.perform_destroy(instance)
             return Response(status=status.HTTP_202_ACCEPTED)
@@ -541,9 +507,7 @@ class LikePhotoView(APIView, PhotoManagerMixin):
     parser_classes = [JSONParser]
 
     def post(self, request, *args, **kwargs):
-        data = self.request.data
-        photo_id = data.get('id')
-        http_status = self.like_photo(request, photo_id)
+        http_status = self.like_photo(request, self.request.data.get('id'))
         return Response(status=http_status)
 
 
@@ -554,12 +518,11 @@ class UploadAvatarView(APIView, PhotoManagerMixin):
     parser_classes = (MultiPartParser, FileUploadParser,)
 
     def post(self, request, *args, **kwargs):
-        item_profile = request.user.profile
         file_serializer = serializers.UploadPhotoSerializer(data=request.data)
         if file_serializer.is_valid():
             new_avatar = self.add_photo(request)
-            item_profile.avatar = new_avatar
-            item_profile.save()
+            request.user.profile.avatar = new_avatar
+            request.user.profile.save()
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -570,23 +533,20 @@ class SetAvatarView(APIView):
     Request data: id - id фотографии
     """
     def put(self, *args, **kwargs):
-        data = self.request.data
-        profile = self.request.user.profile
-        photo = Photo.objects.get(pk=data['id'])
-        if photo in profile.photos.all():
-            profile.avatar = photo
-            profile.save()
+        photo = Photo.objects.get(pk=self.request.data['id'])
+        if photo in self.request.user.profile.photos.all():
+            self.request.user.profile.avatar = photo
+            self.request.user.profile.save()
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, *args, **kwargs):
         """ Удаление аватарки с сохранением фото в галереи """
-        profile = self.request.user.profile
-        if not profile.avatar:
+        if not self.request.user.profile.avatar:
             return Response(status=status.HTTP_204_NO_CONTENT)
-        profile.avatar = None
-        profile.save()
+        self.request.user.profile.avatar = None
+        self.request.user.profile.save()
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
@@ -598,8 +558,7 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
     serializer_class = serializers.DialogSerializer
 
     def get_queryset(self):
-        item_profile = self.request.user.profile
-        return item_profile.participants.all().order_by('-last_message')
+        return self.request.user.profile.participants.all().order_by('-last_message')
 
     def list(self, request, *args, **kwargs):
         dialogs_list = self.get_queryset()
