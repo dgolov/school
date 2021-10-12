@@ -80,6 +80,24 @@ export const friendMixin = {
                 .then(() => {
                     let subscriptions = this.$store.state.profileInfo.friend_request_out;
                     subscriptions.push(this.user);
+
+                    this.createNotificationSocket = new WebSocket(
+                        this.$store.state.webSocketUrl + '/ws/notifications/' + this.id + '/'
+                    );
+                    this.createNotificationSocket.onopen = () => {
+                        console.log('connected')
+                        this.status = "connected";
+                        this.createNotificationSocket.send(JSON.stringify(
+                            {
+                                'notification_type': 'ADD REQUEST',
+                                'from_user': this.$store.state.authUser.user,
+                                'message': `${this.$store.state.authUser.last_name} 
+                                ${this.$store.state.authUser.first_name} хочет добавить Вас в друзья.`
+                            })
+                        )
+                        this.createNotificationSocket.close()
+                    }
+
                     this.$emit('reLoad')
                 })
                 .catch((error) => {

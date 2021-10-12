@@ -88,7 +88,8 @@ export default {
       systemMessageText: 'system_message_text',
       containerScrollHeight: 0,
       input_text: "",
-      chatSocket: null
+      chatSocket: null,
+      readMessageSocket: null
     }
   },
 
@@ -105,22 +106,46 @@ export default {
 
   updated() {
     this.scrollMessageList()
+    // let noReadMessageList = [];
+    // for (let message of this.responseData) {
+    //   if (message.from_user.id !== this.$store.state.authUser.id && message.is_read === false) {
+    //     noReadMessageList.push(message);
+    //   }
+    //   if (noReadMessageList.length !== 0) {
+    //     this.readMessageSocket.send(JSON.stringify(
+    //         {
+    //           "message_list": noReadMessageList
+    //         })
+    //     );
+    //   }
+    // }
   },
 
   methods: {
-    connect() {
+    async connect() {
       this.chatSocket = new WebSocket(
-          // 'ws://127.0.0.1/ws/chat/' + String(this.id) + '/'
-          'ws://127.0.0.1:8000/ws/chat/' + String(this.id) + '/'
+          // 'ws://80.78.253.102:8001/ws/chat/' + String(this.id) + '/'
+          this.$store.state.webSocketUrl + '/ws/chat/' + String(this.id) + '/'
       );
       this.chatSocket.onopen = () => {
         console.log('connected')
         this.status = "connected";
       };
       this.chatSocket.onmessage = ({data}) => {
-        console.log(JSON.parse(data))
+        console.log('messages')
         this.responseData.push(JSON.parse(data))
       }
+
+      // this.readMessageSocket = new WebSocket(
+      //     // 'ws://80.78.253.102:8001/ws/chat/' + String(this.id) + '/'
+      //     'ws://127.0.0.1:8000/ws/read-message/' + String(this.id) + '/'
+      // );
+      // this.readMessageSocket.onopen = () => {
+      //   this.status = "connected 2";
+      // };
+      // this.readMessageSocket.onmessage = ({data}) => {
+      //   console.log(data)
+      // }
     },
 
     getAvatarPath(message) {
@@ -137,19 +162,6 @@ export default {
     sendMessage() {
       if (!this.input_text) {
         return 0
-      }
-      //TODO parse now date and time
-      let now = new Date()
-      let data = {
-        "from_user": {
-          "id": this.$store.state.authUser.id,
-          "first_name": this.$store.state.authUser.first_name,
-          "last_name": this.$store.state.authUser.last_name,
-        },
-        "attachment": null,
-        "text": this.input_text,
-        "date_and_time": '2021-09-11T15:58:22.341424Z',
-        "is_read": false
       }
       this.chatSocket.send(JSON.stringify(
           {
@@ -286,7 +298,7 @@ export default {
   width: 100%;
   display: block;
   float: right;
-  background-color: #e5ebf1;
+  /*background-color: #e5ebf1;*/
 }
 
 .in_message_didnt_read {
@@ -294,7 +306,7 @@ export default {
   width: 100%;
   display: block;
   float: left;
-  background-color: #e5ebf1;
+  /*background-color: #e5ebf1;*/
 }
 
 .system_message {

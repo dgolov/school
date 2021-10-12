@@ -141,6 +141,7 @@ export default {
   components: {
     NavbarMain,
   },
+
   data() {
     return {}
   },
