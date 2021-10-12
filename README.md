@@ -32,6 +32,7 @@
 #### Front-end:
 - JavaScript
 - Vue JS
+- Axios
 
 #### Database:
 - Postgres
