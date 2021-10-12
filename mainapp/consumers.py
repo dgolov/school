@@ -24,7 +24,6 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def receive(self, text_data):
-        print(1)
         text_data_json = json.loads(text_data)
         text = text_data_json['text']
         from_user = text_data_json['from_user']
@@ -55,7 +54,8 @@ class ChatConsumer(WebsocketConsumer):
 
 
 class ReadMessages(WebsocketConsumer):
-    """ Отправка уведомлений о прочитанных сообщениях """
+    """ Отчет о прочитанных сообщениях
+    """
     def connect(self):
         self.chat = self.scope['url_route']['kwargs']['chat_id']
         async_to_sync(self.channel_layer.group_add)(
@@ -71,23 +71,68 @@ class ReadMessages(WebsocketConsumer):
         )
 
     def receive(self, text_data):
-        print(2)
         text_data_json = json.loads(text_data)
         message_list = text_data_json['message_list']
 
         async_to_sync(self.channel_layer.group_send)(
             self.chat,
             {
-                'id': 'read_message',
+                'type': 'read_message',
                 'message_list': message_list
             }
         )
 
     def read_message(self, event):
-        print(event)
         message_list = event['message_list']
 
         self.send(text_data=json.dumps({
             'event': "Send",
             'message_list': message_list
+        }))
+
+
+class Notifications(WebsocketConsumer):
+    """ Уведомления
+    """
+    def connect(self):
+        self.profile = self.scope['url_route']['kwargs']['user_id']
+        async_to_sync(self.channel_layer.group_add)(
+            str(self.profile),
+            self.channel_name
+        )
+        self.accept()
+
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(
+            self.profile,
+            self.channel_name
+        )
+
+    def receive(self, text_data):
+        print(text_data)
+        text_data_json = json.loads(text_data)
+        notification_type = text_data_json['notification_type']
+        from_user = text_data_json['from_user']
+        message = text_data_json['message']
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.profile,
+            {
+                'type': 'new_notification',
+                'notification_type': notification_type,
+                'from_user': from_user,
+                'message': message
+            }
+        )
+
+    def new_notification(self, event):
+        notification_type = event['notification_type']
+        message = event['message']
+        from_user = event['from_user']
+
+        self.send(text_data=json.dumps({
+            'event': "Send",
+            'notification_type': notification_type,
+            'from_user': from_user,
+            'message': message
         }))
