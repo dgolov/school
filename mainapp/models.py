@@ -371,7 +371,7 @@ class AcademicPerformance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Обучающийся')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
-    date = models.DateField(verbose_name='Дата оценки')
+    date = models.DateField(auto_now_add=True, verbose_name='Дата оценки')
     type_grade = models.CharField(max_length=50, verbose_name='Тип оценки', choices=TYPE_CHOICES)
     grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка')
     late = models.BooleanField(default=False, verbose_name='Опоздание')

@@ -1,11 +1,14 @@
 from django.contrib import admin
 
-from .models import Client, Contract
+from .models import Client, Contract, Order
 
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ['fio', 'phone', 'email']
+    """ Отображение клиентов в админке
+    """
+    list_display = ['id', 'fio', 'phone', 'email']
+    list_display_links = ['fio']
     search_fields = ['last_name', 'first_name', 'middle_name']
     fieldsets = (
         ('Клиент', {
@@ -24,5 +27,17 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ['number', 'client', 'date']
+    """ Отображение договоров в админке
+    """
+    list_display = ['id', 'number', 'client', 'date']
+    list_display_links = ['number']
     search_fields = ['client__last_name', 'client__first_name', 'client__middle_name', 'number']
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    """ Отображение заказов в админке
+    """
+    list_display = ['id', 'client', 'payed', 'course', 'date_and_time']
+    list_filter = ['payed']
+    search_fields = ['client', 'course']

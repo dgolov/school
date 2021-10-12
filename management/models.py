@@ -5,6 +5,8 @@ from mainapp.models import Course
 
 
 class Client(models.Model):
+    """ Модель клиента
+    """
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     middle_name = models.CharField(max_length=50, verbose_name='Отчество')
@@ -23,6 +25,8 @@ class Client(models.Model):
 
 
 class Contract(models.Model):
+    """ Модель договора
+    """
     number = models.PositiveIntegerField(verbose_name='Номер договора')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
@@ -35,3 +39,16 @@ class Contract(models.Model):
     class Meta:
         verbose_name = 'Договор'
         verbose_name_plural = 'Договоры'
+
+
+class Order(models.Model):
+    """ Модель заказа
+    """
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    payed = models.BooleanField(default=False, verbose_name='Оплачено')
+    date_and_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время заказа')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс')
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
