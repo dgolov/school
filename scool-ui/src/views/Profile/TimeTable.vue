@@ -100,7 +100,6 @@ export default {
       this.courseList = this.$store.state.profileInfo.courses
       this.groupList = this.$store.state.profileInfo.group_list
     }
-    console.log(this.$store.state.profileInfo)
   },
 
   methods: {

@@ -65,6 +65,23 @@ export const friendMixin = {
             return false;
         },
 
+        connect(notification_type, message) {
+            this.createNotificationSocket = new WebSocket(
+                this.$store.state.webSocketUrl + '/ws/notifications/' + this.id + '/'
+            );
+            this.createNotificationSocket.onopen = () => {
+                this.status = "connected";
+                this.createNotificationSocket.send(JSON.stringify(
+                    {
+                        'notification_type': notification_type,
+                        'from_user': this.$store.state.authUser.user,
+                        'message': message
+                    })
+                )
+                this.createNotificationSocket.close()
+            }
+        },
+
         async addFriend(profile, mode) {
             // Отправить заявку на добавление в друзья
             this.setUserData(profile, mode)
@@ -78,26 +95,12 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let subscriptions = this.$store.state.profileInfo.friend_request_out;
-                    subscriptions.push(this.user);
-
-                    this.createNotificationSocket = new WebSocket(
-                        this.$store.state.webSocketUrl + '/ws/notifications/' + this.id + '/'
-                    );
-                    this.createNotificationSocket.onopen = () => {
-                        console.log('connected')
-                        this.status = "connected";
-                        this.createNotificationSocket.send(JSON.stringify(
-                            {
-                                'notification_type': 'ADD REQUEST',
-                                'from_user': this.$store.state.authUser.user,
-                                'message': `${this.$store.state.authUser.last_name} 
+                    this.$store.state.profileInfo.friend_request_out.push(this.user);
+                    this.connect(
+                        'ADD REQUEST',
+                        `${this.$store.state.authUser.last_name} 
                                 ${this.$store.state.authUser.first_name} хочет добавить Вас в друзья.`
-                            })
                         )
-                        this.createNotificationSocket.close()
-                    }
-
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
@@ -124,14 +127,16 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let followers = this.$store.state.profileInfo.followers
-                    followers.push(this.user)
-                    let friends = this.$store.state.profileInfo.friends
-                    for(let i = 0; i < friends.length; i++) {
-                        if (friends[i] === this.user) {
-                            friends.splice(i, 1);
+                    this.$store.state.profileInfo.followers.push(this.user)
+                    for(let i = 0; i < this.$store.state.profileInfo.friends.length; i++) {
+                        if (this.$store.state.profileInfo.friends[i] === this.user) {
+                            this.$store.state.profileInfo.friends.splice(i, 1);
                         }
                     }
+                    this.connect(
+                        'REMOVE FRIEND',
+                        null
+                    )
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
@@ -159,20 +164,18 @@ export const friendMixin = {
                 data: body,
             })
                 .then(() => {
-                    let friends = this.$store.state.profileInfo.friends;
-                    friends.push(this.user);
-                    let followers = this.$store.state.profileInfo.followers;
-                    for(let i = 0; i < friends.length; i++) {
-                        if (followers[i] === this.user) {
-                            followers.splice(i, 1);
+                    this.$store.state.profileInfo.friends.push(this.user);
+                    for(let i = 0; i < this.$store.state.profileInfo.followers.length; i++) {
+                        if (this.$store.state.profileInfo.followers[i] === this.user) {
+                            this.$store.state.profileInfo.followers.splice(i, 1);
                         }
                     }
-                    let requests = this.$store.state.profileInfo.friend_request_in
-                    for(let i = 0; i < requests.length; i++) {
-                        if (requests[i] === this.user) {
-                            requests.splice(i, 1);
+                    for(let i = 0; i < this.$store.state.profileInfo.friend_request_in.length; i++) {
+                        if (this.$store.state.profileInfo.friend_request_in[i] === this.user) {
+                            this.$store.state.profileInfo.friend_request_in.splice(i, 1);
                         }
                     }
+                    this.connect('ACCEPT REQUEST', null)
                     this.$emit('reLoad')
                 })
                 .catch((error) => {
@@ -205,6 +208,7 @@ export const friendMixin = {
                             subscriptions.splice(i, 1);
                         }
                     }
+                    this.connect('UNSUBSCRIBE', null)
                     this.$emit('reLoad')
                 })
                 .catch((error) => {

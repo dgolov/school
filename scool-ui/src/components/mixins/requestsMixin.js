@@ -33,7 +33,7 @@ export const requestsMixin = {
                 .then((response) => this.responseData = response.data)
                 .catch((error) => {
                     if (error.request.status === 401) {
-                        // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+                        // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
                         if (!this.$store.getters.getRefreshStatus) {
                             // Повторный запрос выполнится при статусе обновления токена false
                             this.$store.commit('setRefreshStatus', true);   // Ставим статус обновления токена
