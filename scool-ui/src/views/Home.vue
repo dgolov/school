@@ -7,7 +7,7 @@
             <div class="hero__content__inner" id=''>
               <div style="position: absolute; width: 55%; padding: 4.5% 11%; text-align: left; color: #ffffff">
                 <h4 style="color: #ffffff; margin: 0; width: 60%">Образовательная платформа ХОД Future Academy</h4>
-                <h2 class="hero__title my-4">Смените профессию Научитель новому Найдите себя</h2>
+                <h2 class="hero__title my-4">Смените профессию Научитесь новому Найдите себя</h2>
               </div>
               <img src="../assets/images/bg_test.png">
             </div>
