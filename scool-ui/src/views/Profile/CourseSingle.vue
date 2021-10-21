@@ -4,7 +4,7 @@
     <div class="course">
       <course-info v-if="responseData" :course="responseData[0].course"></course-info>
       <div class="course__section">
-        <div class="container pb-5">
+        <div class="container pb-1">
           <h2 class="my-4 system-color">Программа курса:</h2>
           <p>Здесь собраны все доступные уроки с пожизненным доступом к видео и материалам с прошедших вебинаров</p>
           <hr/>

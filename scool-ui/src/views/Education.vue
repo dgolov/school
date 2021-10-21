@@ -3,8 +3,8 @@
     <navbar></navbar>
     <div class="step landing__section landing__section_white">
       <div class="page">
-        <div class="container mt-4">
-          <h1 class="center my-5">Программы обучения</h1>
+        <div class="container mt-1">
+          <h1 class="center mb-4">Программы обучения</h1>
           <div class="page__inner">
             <div class="page__menu">
               <h3>Направления</h3>

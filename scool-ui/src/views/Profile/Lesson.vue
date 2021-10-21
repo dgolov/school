@@ -4,7 +4,7 @@
     <div class="lesson">
       <course-info v-if="responseData" :course="responseData.course"></course-info>
       <div class="course__section">
-        <div class="container pb-5">
+        <div class="container pb-1">
           <div class="course-info">
             <h2 class="my-4 system-color">{{responseData.theme}}</h2>
             <p class="course-text">{{responseData.description}}</p>

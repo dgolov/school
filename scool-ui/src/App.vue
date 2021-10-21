@@ -14,6 +14,10 @@
   background-color: #f7f7f7;
 }
 
+.bold {
+  font-weight: 800;
+}
+
 .no-active {
   color: gray;
 }
@@ -1329,6 +1333,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 export default {
   components: {
+    Navbar,
     Footer
   },
 

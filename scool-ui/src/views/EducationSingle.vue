@@ -4,7 +4,7 @@
     <div class="first-section">
       <div class="step course__section center">
         <div class="container">
-          <div class="row mt-5">
+          <div class="row mt-1">
             <div class="col-md-6">
               <img :src="course.poster" class="my-4 poster">
             </div>
