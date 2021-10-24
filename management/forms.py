@@ -7,12 +7,12 @@ class AuthForm(forms.Form):
     username = forms.CharField(
         label='Логин',
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'Логин, телефон или email...', 'style': 'width: 96%;'}
+            attrs={'class': 'form-control', 'placeholder': 'Логин, телефон или email...'}
         )
     )
     password = forms.CharField(
         label='Пароль',
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'Пароль...', 'style': 'width: 96%;'}
+            attrs={'class': 'form-control', 'placeholder': 'Пароль...'}
         )
     )

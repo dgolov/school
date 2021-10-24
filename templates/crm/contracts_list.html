@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'crm/base.html' %}
+{% block content %}
     {% for contract in contracts_list %}
     <p>{{ contract }}</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

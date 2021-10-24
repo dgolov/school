@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>CRM | {{ title }}</title>
+    <link rel="icon" href="{% static 'assets/images/favicon-32x32.png' %}" type="image/png"/>
+    <link href="{% static 'assets/plugins/vectormap/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/css/pace.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'assets/js/pace.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/dark-sidebar.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/dark-theme.css' %}"/>
+</head>
+
+<body>
+<div class="wrapper">
+    {% block sidebar %}
+        {% include 'crm/inc/sitebar.html' %}
+    {% endblock %}
+    {% block header %}
+        {% include 'crm/inc/top-header.html' %}
+    {% endblock %}
+    <div class="page-wrapper">
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div class="overlay toggle-btn-mobile"></div>
+    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+    {% block footer %}
+        {% include 'crm/inc/footer.html' %}
+    {% endblock %}
+</div>
+{% block switcher %}
+    {% include 'crm/inc/switcher.html' %}
+{% endblock %}
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/simplebar/js/simplebar.min.js' %}"></script>
+<script src="{% static 'assets/plugins/metismenu/js/metisMenu.min.js' %}"></script>
+<script src="{% static 'assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-in-mill.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-us-aea-en.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-uk-mill-en.js' %}"></script>
+<script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-au-mill.js' %}"></script>
+<script src="{% static 'assets/plugins/apexcharts-bundle/js/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/js/index2.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+</body>
+</html>

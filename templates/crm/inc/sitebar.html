@@ -1,0 +1,160 @@
+{% load static %}
+<div class="sidebar-wrapper" data-simplebar="true">
+    <div class="sidebar-header">
+        <div class="">
+            <img src="{% static 'assets/images/logo-icon.png' %}" class="logo-icon-2" alt=""/>
+        </div>
+        <div>
+            <h4 class="logo-text">CRM ХОД</h4>
+        </div>
+        <a href="javascript:;" class="toggle-btn ml-auto"> <i class="bx bx-menu"></i></a>
+    </div>
+    <ul class="metismenu" id="menu">
+        <li>
+            <a href="{% url 'home' %}">
+                <div class="parent-icon icon-color-1"><i class="bx bx-home-alt"></i>
+                </div>
+                <div class="menu-title">Главная</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon icon-color-8"><i class="bx bx-diamond"></i>
+                </div>
+                <div class="menu-title">Dashboard</div>
+            </a>
+            <ul>
+                <li><a href="#"><i class="bx bx-right-arrow-alt"></i>Статистика</a>
+                </li>
+                <li><a href="#"><i class="bx bx-right-arrow-alt"></i>Продажи</a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-label">Продажи</li>
+        <li>
+            <a href="#">
+                <div class="parent-icon icon-color-4"><i class="bx bx-archive"></i>
+                </div>
+                <div class="menu-title">Файлы</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'clients' %}">
+                <div class="parent-icon icon-color-5"><i class="bx bx-group"></i>
+                </div>
+                <div class="menu-title">Клиенты</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'requests' %}">
+                <div class="parent-icon icon-color-6"><i class="bx bx-task"></i>
+                </div>
+                <div class="menu-title">Заявки</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'contracts' %}">
+                <div class="parent-icon icon-color-7"><i class="bx bx-file"></i>
+                </div>
+                <div class="menu-title">Договора</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'orders' %}">
+                <div class="parent-icon icon-color-8"><i class="bx bx-calendar-check"></i>
+                </div>
+                <div class="menu-title">Заказы</div>
+            </a>
+        </li>
+        <li class="menu-label">HR</li>
+        <li>
+            <a href="#">
+                <div class="parent-icon icon-color-9"><i class="bx bx-group"></i>
+                </div>
+                <div class="menu-title">Сотрудники</div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div class="parent-icon icon-color-10"><i class="bx bx-spa"></i>
+                </div>
+                <div class="menu-title">Вакансии</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'interview' %}">
+                <div class="parent-icon icon-color-11"><i class="bx bx-repeat"></i>
+                </div>
+                <div class="menu-title">Собеседования</div>
+            </a>
+        </li>
+        <li class="menu-label">Контроль затрат</li>
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon icon-color-2"><i class="bx bx-grid-alt"></i>
+                </div>
+                <div class="menu-title">Категории затрат</div>
+            </a>
+            <ul>
+                <li><a href="table-basic-table.html"><i class="bx bx-right-arrow-alt"></i>Basic Table</a>
+                </li>
+                <li><a href="table-datatable.html"><i class="bx bx-right-arrow-alt"></i>Data Table</a>
+                </li>
+                <li><a href="table-editable.html"><i class="bx bx-right-arrow-alt"></i>Editable Table</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon icon-color-12"><i class="bx bx-donate-blood"></i>
+                </div>
+                <div class="menu-title">Затраты</div>
+            </a>
+            <ul>
+                <li><a href="icons-line-icons.html"><i class="bx bx-right-arrow-alt"></i>Line Icons</a>
+                </li>
+                <li><a href="icons-boxicons.html"><i class="bx bx-right-arrow-alt"></i>Boxicons</a>
+                </li>
+                <li><a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-label">Страницы</li>
+        <li>
+            <a href="user-profile.html">
+                <div class="parent-icon icon-color-4"><i class="bx bx-user-circle"></i>
+                </div>
+                <div class="menu-title">Профиль</div>
+            </a>
+        </li>
+        <li>
+            <a href="timeline.html">
+                <div class="parent-icon icon-color-5"><i class="bx bx-video-recording"></i>
+                </div>
+                <div class="menu-title">Обучение</div>
+            </a>
+        </li>
+        <li>
+            <a href="faq.html">
+                <div class="parent-icon icon-color-7"><i class="bx bx-help-circle"></i>
+                </div>
+                <div class="menu-title">FAQ</div>
+            </a>
+        </li>
+        <li class="menu-label">Другое</li>
+        <li>
+            <a href="https://codervent.com/syndash/documentation/index.html" target="_blank">
+                <div class="parent-icon icon-color-12"><i class="bx bx-folder"></i>
+                </div>
+                <div class="menu-title">Документация</div>
+            </a>
+        </li>
+        <li>
+            <a href="https://themeforest.net/user/codervent" target="_blank">
+                <div class="parent-icon"><i class="bx bx-support"></i>
+                </div>
+                <div class="menu-title">Поддержка</div>
+            </a>
+        </li>
+    </ul>
+</div>

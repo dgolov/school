@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'crm/base.html' %}
+{% block content %}
     {% for client in client_list %}
     <p>{{ client }}</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
