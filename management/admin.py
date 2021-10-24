@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Client, Contract, Order
+from .models import Client, Contract, Order, Interview, Request, CostCategory, Cost, Vacancy
 
 
 @admin.register(Client)
@@ -45,3 +45,50 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'client', 'payed', 'course', 'date_and_time']
     list_filter = ['payed']
     search_fields = ['client', 'course']
+
+
+@admin.register(Vacancy)
+class VacancyAdmin(admin.ModelAdmin):
+    """ Отображение вакансий в админке
+    """
+    list_display = ['name', 'salary', 'active', 'date']
+    list_editable = ['salary', 'active']
+    list_filter = ['active']
+
+
+@admin.register(Interview)
+class InterviewAdmin(admin.ModelAdmin):
+    """ Отображение собеседований в админке
+    """
+    list_display = ['fio', 'vacancy', 'phone', 'result']
+    list_filter = ['vacancy', 'result']
+    list_editable = ['result']
+
+    def fio(self, obj):
+        return f'{obj.last_name} {obj.first_name} {obj.middle_name}'
+
+    fio.short_description = 'ФИО'
+
+
+@admin.register(Request)
+class RequestAdmin(admin.ModelAdmin):
+    """ Отоборажение заявок в админке
+    """
+    list_display = ['client', 'type_request', 'status', 'course', 'purpose', 'result']
+    list_filter = ['result', 'purpose', 'type_request', 'status']
+    list_editable = ['result']
+
+
+@admin.register(CostCategory)
+class CostCategoryAdmin(admin.ModelAdmin):
+    """ Отображение категорий затрат в админке
+    """
+    list_display = ['name']
+
+
+@admin.register(Cost)
+class CostAdmin(admin.ModelAdmin):
+    """ Отображение затрат в админке
+    """
+    list_display = ['id', 'category', 'date', 'amount']
+    list_filter = ['category']
