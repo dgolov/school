@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -79,6 +80,7 @@ class Request(models.Model):
     )
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 
+    manager = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Менеджер', blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
     type_request = models.CharField(max_length=50, verbose_name='Тип заявки', choices=TYPE_CHOICES)
     status = models.CharField(max_length=50, verbose_name='Статус заявки', choices=STATUS_CHOICES, default='new')
@@ -113,6 +115,7 @@ class Interview(models.Model):
     RESULT_CHOICES_RUS = ('Заключен договор', 'Сдал', 'Не сдал', 'Рекомендованы курсы')
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Рекрутер', blank=True, null=True)
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     middle_name = models.CharField(max_length=50, verbose_name='Отчество')
@@ -132,6 +135,7 @@ class Interview(models.Model):
 class Cost(models.Model):
     """ Модель регастрации затрат
     """
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Автор записи', blank=True, null=True)
     date = models.DateTimeField(verbose_name='Дата и время затраты', auto_now_add=True)
     amount = models.IntegerField(verbose_name='Сумма затрат')
 
