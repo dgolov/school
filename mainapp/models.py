@@ -3,8 +3,20 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-USER_GROUP_CHOICES = ('admin', 'manager', 'teacher', 'student')
-USER_GROUP_CHOICES_RUS = ('Администратор', 'Менеджер учебного процесса', 'Преподаватель', 'Студент')
+USER_GROUP_CHOICES = (
+    'admin',
+    'manager',
+    'sales_manager',
+    'teacher',
+    'student'
+)
+USER_GROUP_CHOICES_RUS = (
+    'Администратор',
+    'Менеджер учебного процесса',
+    'Менеджер по продажам',
+    'Преподаватель',
+    'Студент'
+)
 USER_GROUP_CHOICES = list(zip(USER_GROUP_CHOICES, USER_GROUP_CHOICES_RUS))
 
 
