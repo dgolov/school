@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import ListView
 
 from management.forms import AuthForm
-from management.models import Client, Contract
+from management.models import Client, Contract, Order, Interview, Request, Cost
 
 
 class MainView(View):
@@ -86,3 +86,23 @@ class ContractListView(ListView):
 
     def get_queryset(self):
         return Contract.objects.all() if self.request.user.is_staff else None
+
+
+class InterviewView(ListView):
+    """ Список соеседований
+    """
+    model = Interview
+    template_name = 'crm/interview.html'
+    context_object_name = 'interview_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(InterviewView, self).get_context_data(**kwargs)
+        context['title'] = 'Собеседования'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Interview.objects.all()
+        else:
+            return Interview.objects.filter(user=self.request.user)
