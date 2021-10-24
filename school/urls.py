@@ -7,7 +7,7 @@ from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),
-    # path('', include('mainapp.urls')),
+    path('crm/', include('management.urls')),
     path('api/', include('mainapp.api.urls')),
     path('api/management/', include('management.api.urls')),
     path('api/api-auth/', include('rest_framework.urls')),
