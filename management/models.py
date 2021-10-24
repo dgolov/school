@@ -32,6 +32,7 @@ class Contract(models.Model):
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Приобретенный курс')
     date = models.DateField(verbose_name='Дата')
+    comment = models.TextField(verbose_name='Комментарий рекрутера')
 
     def __str__(self):
         return f'Договор {self.number} от {self.date}'
@@ -52,3 +53,88 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+
+class Request(models.Model):
+    """ Модель заявки на покупку курсов
+    """
+    TYPE_CHOICES = ('incoming_call', 'outgoing_call', 'online', 'visit')
+    TYPE_CHOICES_RUS = ('Входящий звонок', 'Исходящий звонок', 'Онлайн', 'Визит')
+    TYPE_CHOICES = list(zip(TYPE_CHOICES, TYPE_CHOICES_RUS))
+
+    STATUS_CHOICES = ('new', 'processed', 'deleted')
+    STATUS_CHOICES_RUS = ('Новая', 'Обработанная', 'Удаленная')
+    STATUS_CHOICES = list(zip(STATUS_CHOICES, STATUS_CHOICES_RUS))
+
+    PURPOSE_CHOICES = ('price', 'meeting', 'info', 'details', 'repeat')
+    PURPOSE_CHOICES_RUS = (
+        'Узнать цену', 'Договориться о встрече', 'Получить общую информацию',
+        'Уточнить детали перед заключением договора', 'Повторная консультация'
+    )
+    PURPOSE_CHOICES = list(zip(PURPOSE_CHOICES, PURPOSE_CHOICES_RUS))
+
+    RESULT_CHOICES = ('contract', 'meeting', 'waiting_call', 'will_think', 'refusal', 'dissatisfied')
+    RESULT_CHOICES_RUS = (
+        'Заключен договор', 'Назначена встреча', 'Ждет звонка', 'Будет думать', 'Отказ', 'Недовольный клиент',
+    )
+    RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
+
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    type_request = models.CharField(max_length=50, verbose_name='Тип заявки', choices=TYPE_CHOICES)
+    status = models.CharField(max_length=50, verbose_name='Статус заявки', choices=STATUS_CHOICES, default='new')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс', blank=True, null=True)
+    purpose = models.CharField(
+        max_length=50,
+        verbose_name='Цель заявки',
+        choices=PURPOSE_CHOICES,
+        blank=True,
+        null=True
+    )
+    result = models.CharField(
+        max_length=50,
+        verbose_name='Результат заявки',
+        choices=RESULT_CHOICES,
+        blank=True,
+        null=True
+    )
+    remind = models.DateField(verbose_name='Перезвонить / напомнить', blank=True, null=True)
+    date = models.DateTimeField(verbose_name='Дата и время заявки', auto_now_add=True)
+    comment = models.TextField(verbose_name='Комментарий менеджера')
+
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+
+
+class Interview(models.Model):
+    """ Модель собеседования
+    """
+    RESULT_CHOICES = ('contract', 'passed', 'not_pass', 'course')
+    RESULT_CHOICES_RUS = ('Заключен договор', 'Сдал', 'Не сдал', 'Рекомендованы курсы')
+    RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
+
+    last_name = models.CharField(max_length=50, verbose_name='Фамилия')
+    first_name = models.CharField(max_length=50, verbose_name='Имя')
+    middle_name = models.CharField(max_length=50, verbose_name='Отчество')
+    age = models.IntegerField(verbose_name='Возраст')
+    place_of_study = models.CharField(max_length=50, verbose_name='Место учебы')
+    place_of_work = models.CharField(max_length=50, verbose_name='Место работы')
+    phone = PhoneNumberField(verbose_name='Номер телефона')
+    email = models.EmailField(verbose_name='Электронная почта', blank=True, null=True)
+    result = models.CharField(max_length=50, verbose_name='Результат собеседования', choices=RESULT_CHOICES)
+    comment = models.TextField(verbose_name='Комментарий рекрутера')
+
+    class Meta:
+        verbose_name = 'Собеседование'
+        verbose_name_plural = 'Собеседования'
+
+
+class Cost(models.Model):
+    """ Модель регастрации затрат
+    """
+    date = models.DateTimeField(verbose_name='Дата и время затраты', auto_now_add=True)
+    amount = models.IntegerField(verbose_name='Сумма затрат')
+
+    class Meta:
+        verbose_name = 'Затрата'
+        verbose_name_plural = 'Затраты'
