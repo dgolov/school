@@ -55,7 +55,7 @@ class ClientsListView(ListView):
     """ Список клиентов академии
     """
     model = Client
-    template_name = 'crm/clients.html'
+    template_name = 'crm/clients_list.html'
     context_object_name = 'client_list'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -75,7 +75,7 @@ class ContractListView(ListView):
     """ Список договоров
     """
     model = Contract
-    template_name = 'crm/contracts.html'
+    template_name = 'crm/contracts_list.html'
     context_object_name = 'contracts_list'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -88,15 +88,15 @@ class ContractListView(ListView):
         return Contract.objects.all() if self.request.user.is_staff else None
 
 
-class InterviewView(ListView):
+class InterviewListView(ListView):
     """ Список соеседований
     """
     model = Interview
-    template_name = 'crm/interview.html'
+    template_name = 'crm/interview_list.html'
     context_object_name = 'interview_list'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(InterviewView, self).get_context_data(**kwargs)
+        context = super(InterviewListView, self).get_context_data(**kwargs)
         context['title'] = 'Собеседования'
         context['user'] = self.request.user
         return context
@@ -106,3 +106,21 @@ class InterviewView(ListView):
             return Interview.objects.all()
         else:
             return Interview.objects.filter(user=self.request.user)
+
+
+class OrderListView(ListView):
+    """ Список заказов
+    """
+    model = Order
+    template_name = 'crm/order_list.html'
+    context_object_name = 'order_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(OrderListView, self).get_context_data(**kwargs)
+        context['title'] = 'Заказы'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Order.objects.all() if self.request.user.is_staff else None
