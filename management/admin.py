@@ -7,10 +7,14 @@ from .models import Client, Contract, Order
 class ClientAdmin(admin.ModelAdmin):
     """ Отображение клиентов в админке
     """
-    list_display = ['id', 'fio', 'phone', 'email']
+    list_display = ['id', 'fio', 'phone', 'email', 'manager']
+    list_filter = ['manager']
     list_display_links = ['fio']
     search_fields = ['last_name', 'first_name', 'middle_name']
     fieldsets = (
+        ('Менеджер', {
+            'fields': ('manager',)
+        }),
         ('Клиент', {
             'fields': ('first_name', 'last_name', 'middle_name', 'phone', 'email',),
         }),

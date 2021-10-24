@@ -8,6 +8,7 @@ from mainapp.models import Course
 class Client(models.Model):
     """ Модель клиента
     """
+    manager = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Менеджер клиента', blank=True, null=True)
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     middle_name = models.CharField(max_length=50, verbose_name='Отчество')
