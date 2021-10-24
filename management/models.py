@@ -110,6 +110,8 @@ class Request(models.Model):
 
 
 class Vacancy(models.Model):
+    """ Модель вакансии
+    """
     name = models.CharField(max_length=50, verbose_name='Название вакансии')
     salary = models.IntegerField(verbose_name='Зарплата', blank=True, null=True)
     requirements = models.TextField(verbose_name='Требования к кандидату')

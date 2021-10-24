@@ -28,7 +28,7 @@ class ProfileLoginView(View):
             'title': "Вход в систему",
             'form': auth_form
         }
-        return render(request, 'crm/auth.html', context)
+        return render(request, 'crm/authentication-login.html', context)
 
     def post(self, request, *args, **kwargs):
         auth_form = AuthForm(request.POST)
@@ -48,7 +48,7 @@ class ProfileLoginView(View):
             'title': "Вход в систему",
             'form': auth_form
         }
-        return render(request, 'crm/auth.html', context)
+        return render(request, 'crm/authentication-login.html', context)
 
 
 class ClientsListView(ListView):
