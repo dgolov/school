@@ -60,7 +60,7 @@ export default {
           }
       ).then(() => {
         this.closeModal();
-        this.$emit('close');
+        this.$emit('reLoad');
       })
           .catch((error) => {
             if (error.request.status === 401) {
