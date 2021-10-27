@@ -12,7 +12,7 @@
                   <button v-if="Number(id) === $store.state.authUser.id"
                           class="gray-button upload-photo-button"
                           @click="showUploadModal">Загрузить фото</button>
-                  <upload-photo-modal ref="uploadModal"
+                  <upload-photo-modal ref="uploadModal" :mode="'gallery'"
                                       @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></upload-photo-modal>
                 </div>
               </div>

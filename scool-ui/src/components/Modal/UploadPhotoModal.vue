@@ -35,6 +35,11 @@ export default {
     }
   },
 
+  props: {
+    // Режим загрузки фото в галерею либо на аватар
+    mode: String
+  },
+
   mixins: [requestsMixin],
 
   methods: {
@@ -48,7 +53,13 @@ export default {
 
     async submitFile() {
       let formData = new FormData();
-      let url = `${this.$store.state.backendUrl}/profile/upload-photo/`
+      let url = null;
+      // Определяем урл в зависимости от режима загрузки фото
+      if (this.mode === "avatar") {
+        url = `${this.$store.state.backendUrl}/profile/upload-avatar/`
+      } else {
+        url = `${this.$store.state.backendUrl}/profile/upload-photo/`
+      }
       formData.append('image', this.file);
       await axios.post(url,
           formData,

@@ -7,6 +7,11 @@
           <div class="page__inner">
             <profile-menu :header="header"></profile-menu>
             <div class="container page__main">
+              <p class="bold" style="color: gray">
+                Для сохранения изменений данных профиля нажмите кнопку "Применить изменения внизу страницы"</p>
+              <p class="bold" style="color: green">{{ successMessage }}</p>
+              <button class="gray-button upload-photo-button" @click="showUploadModal">Изменить фото профиля</button>
+              <upload-photo-modal ref="uploadModal" :mode="'avatar'" @reLoad="setSuccessMessage"></upload-photo-modal>
               <h3 class="system-color">Основные настройки</h3>
               <hr/>
               <settings-field :value="lastName" :label="'Фамилия'" @setValue="lastName = $event.value"></settings-field>
@@ -59,6 +64,7 @@ import SettingsField from "../../components/Settings/SettingsField";
 import axios from "axios";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
 
 export default {
   name: "Settings",
@@ -69,6 +75,7 @@ export default {
     ProfileMenu,
     Navbar,
     DatePicker,
+    UploadPhotoModal
   },
 
   data() {
@@ -89,7 +96,8 @@ export default {
       dream: null,
       about: null,
       education: null,
-      professionalActivity: null
+      professionalActivity: null,
+      successMessage: ''
     }
   },
 
@@ -119,6 +127,11 @@ export default {
   methods: {
     showForm() {
       this.showDateOfBirthDay = !this.showDateOfBirthDay;
+    },
+
+    showUploadModal() {
+      // Показать окно загрузки изображения
+      this.$refs.uploadModal.show = true
     },
 
     getData(){
@@ -163,6 +176,10 @@ export default {
               console.log(error.request);
             }
           })
+    },
+
+    setSuccessMessage() {
+      this.successMessage = 'Фото профиля успешно изменено'
     }
   },
 }
