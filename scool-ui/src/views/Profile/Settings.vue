@@ -7,11 +7,19 @@
           <div class="page__inner">
             <profile-menu :header="header"></profile-menu>
             <div class="container page__main">
-              <p class="bold" style="color: gray">
-                Для сохранения изменений данных профиля нажмите кнопку "Применить изменения внизу страницы"</p>
+              <p class="bold center" style="color: gray">
+                Для сохранения изменений данных профиля нажмите кнопку "Применить изменения" внизу страницы</p>
               <p class="bold" style="color: green">{{ successMessage }}</p>
-              <button class="gray-button upload-photo-button" @click="showUploadModal">Изменить фото профиля</button>
-              <upload-photo-modal ref="uploadModal" :mode="'avatar'" @reLoad="setSuccessMessage"></upload-photo-modal>
+              <div class="row">
+                <div class="col-md-8 px-5 py-5">
+                  <button class="gray-button upload-photo-button" @click="showUploadModal">Изменить фото профиля</button>
+                  <button class="red-button upload-photo-button" @click="deleteAvatar">Удалить фото профиля</button>
+                  <upload-photo-modal ref="uploadModal" :mode="'avatar'" @reLoad="setSuccessMessage"></upload-photo-modal>
+                </div>
+                <div class="col-md-4">
+                  <profile-avatar :profile="$store.state.profileInfo"></profile-avatar>
+                </div>
+              </div>
               <h3 class="system-color">Основные настройки</h3>
               <hr/>
               <settings-field :value="lastName" :label="'Фамилия'" @setValue="lastName = $event.value"></settings-field>
@@ -65,6 +73,7 @@ import axios from "axios";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
+import ProfileAvatar from "../../components/Profile/ProfileAvatar";
 
 export default {
   name: "Settings",
@@ -75,7 +84,8 @@ export default {
     ProfileMenu,
     Navbar,
     DatePicker,
-    UploadPhotoModal
+    UploadPhotoModal,
+    ProfileAvatar
   },
 
   data() {
@@ -180,7 +190,30 @@ export default {
 
     setSuccessMessage() {
       this.successMessage = 'Фото профиля успешно изменено'
-    }
+    },
+
+    async deleteAvatar() {
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/profile/set-avatar/`,
+        method: "delete",
+      })
+          .then(() => {
+            this.createGetRequest(`/profile/${this.$store.state.authUser.id}`)
+            setTimeout(() => {
+              window.location.reload()
+            }, 0)
+          })
+          .catch((error) => {
+            if (error.request.status === 401) {
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+              this.deleteAvatar();
+            } else {
+              console.log(error.request);
+            }
+          })
+    },
   },
 }
 </script>
