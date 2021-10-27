@@ -133,7 +133,7 @@ class PersonalProfileView(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """ Редактировать профиль """
-        queryset = self.get_queryset(self.request.user.profile)
+        queryset = self.get_queryset(profile=self.request.user.profile)
         if not queryset:
             return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = self.serializer_updated_classes[self.request.user.profile.user_group]
