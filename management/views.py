@@ -95,7 +95,9 @@ class CreateClientView(View):
     def post(request, *args, **kwargs):
         form = CreateClientForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_client = form.save()
+            new_client.manager = request.user
+            new_client.save()
         return HttpResponseRedirect('/api/crm/clients')
 
 
