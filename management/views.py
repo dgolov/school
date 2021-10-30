@@ -14,7 +14,7 @@ class MainView(View):
     """
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
-            return HttpResponseRedirect('/crm/auth')
+            return HttpResponseRedirect('/api/crm/auth')
         context = {'user': request.user, 'title': "Академия будущего"}
         return render(request, 'crm/index.html', context)
 
@@ -39,7 +39,7 @@ class ProfileLoginView(View):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/crm/')
+                    return HttpResponseRedirect('/api/crm/')
                 else:
                     auth_form.add_error('__all__', 'Ошибка! Учетная запись пользователя не активна')
             else:
