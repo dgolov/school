@@ -9,32 +9,12 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
-                        <i class="bx bx-user mr-1"></i>Добавить клиента
-                    </button>
+                    <a type="button" href="{% url 'create_client' %}" class="btn btn-outline-primary m-1 px-5"
+                            style="float: right;"><i class="bx bx-user mr-1"></i>Добавить клиента</a>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ФИО</th>
-                        <th scope="col">Телефон</th>
-                        <th scope="col">Email</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for client in client_list %}
-                        <tr>
-                            <th scope="row"><a href="/api/crm/clients/{{ client.pk }}">{{ client.id }}</a></th>
-                            <td><a href="/api/crm/clients/{{ client.pk }}">{{ client }}</a></td>
-                            <td>{{ client.phone }}</td>
-                            <td>{{ client.email }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% include 'crm/inc/client_table.html' %}
             </div>
         </div>
     </div>

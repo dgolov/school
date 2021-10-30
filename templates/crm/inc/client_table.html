@@ -1,0 +1,20 @@
+<table class="table mb-0">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">ФИО</th>
+        <th scope="col">Телефон</th>
+        <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for client in client_list %}
+        <tr>
+            <th scope="row"><a href="/api/crm/clients/{{ client.pk }}">{{ client.id }}</a></th>
+            <td><a href="/api/crm/clients/{{ client.pk }}">{{ client }}</a></td>
+            <td>{{ client.phone }}</td>
+            <td>{{ client.email }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
