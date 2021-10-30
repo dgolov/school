@@ -155,9 +155,11 @@
                         <div class="card shadow-none border mb-0 radius-15">
                             <div class="card-body">
                                 <h3>Паспортные данные клиента</h3>
-                                <h5 class="mt-5">Серия и номер паспорта</h5>
+                                <h5 class="mt-5">Серия и номер паспорта:</h5>
                                 <p>{{ client.passport }}</p>
-                                <h5 class="mt-5">Адрес прописки</h5>
+                                <h5 class="mt-5">Кем выдан:</h5>
+                                <p>{{ client.passport_issued_by }}</p>
+                                <h5 class="mt-5">Адрес прописки:</h5>
                                 <p>{{ client.address }}</p>
                             </div>
                         </div>
