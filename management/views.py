@@ -5,20 +5,18 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from management.forms import AuthForm
+from management.forms import AuthForm, CreateClientForm
 from management.models import Client, Contract, Order, Interview, Request, Cost
 
 
 class MainView(View):
     """ Представление главной страницы CRM
     """
-
     @staticmethod
     def get(request, *args, **kwargs):
         if request.user.is_anonymous:
             return HttpResponseRedirect('/api/crm/auth')
-        context = {'user': request.user, 'title': "Академия будущего"}
-        return render(request, 'crm/index.html', context)
+        return render(request, 'crm/index.html', {'user': request.user, 'title': "Академия будущего"})
 
 
 class ProfileLoginView(View):
@@ -27,19 +25,16 @@ class ProfileLoginView(View):
     @staticmethod
     def get(request, *args, **kwargs):
         auth_form = AuthForm
-        context = {
-            'title': "Вход в систему",
-            'form': auth_form
-        }
-        return render(request, 'crm/authentication-login.html', context)
+        return render(request, 'crm/authentication-login.html', {'title': "Вход в систему", 'form': auth_form})
 
     @staticmethod
     def post(request, *args, **kwargs):
         auth_form = AuthForm(request.POST)
         if auth_form.is_valid():
-            username = auth_form.cleaned_data['username']
-            password = auth_form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(
+                username=auth_form.cleaned_data['username'],
+                password=auth_form.cleaned_data['password']
+            )
             if user:
                 if user.is_active:
                     login(request, user)
@@ -48,11 +43,7 @@ class ProfileLoginView(View):
                     auth_form.add_error('__all__', 'Ошибка! Учетная запись пользователя не активна')
             else:
                 auth_form.add_error('__all__', 'Ошибка! Проверьте правильность ввода данных')
-        context = {
-            'title': "Вход в систему",
-            'form': auth_form
-        }
-        return render(request, 'crm/authentication-login.html', context)
+        return render(request, 'crm/authentication-login.html', {'title': "Вход в систему", 'form': auth_form})
 
 
 class ClientsListView(ListView):
@@ -76,6 +67,8 @@ class ClientsListView(ListView):
 
 
 class ClientDetailView(DetailView):
+    """ Детальное представление клиента в CRM
+    """
     model = Client
     template_name = 'crm/client_detail.html'
     context_object_name = 'client'
@@ -88,6 +81,22 @@ class ClientDetailView(DetailView):
         context['orders'] = Order.objects.filter(client=self.get_object())
         context['requests'] = Request.objects.filter(client=self.get_object())
         return context
+
+
+class CreateClientView(View):
+    """ Регистрация нового клиента в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateClientForm()
+        return render(request, 'crm/create_client.html', {'form': form, 'title': 'Регистрация нового клиента'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/clients')
 
 
 class ContractListView(ListView):
