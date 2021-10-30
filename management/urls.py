@@ -5,8 +5,11 @@ from management.views import (
     MainView,
     ProfileLoginView,
     ClientsListView,
+    ClientDetailView,
     ContractListView,
-    InterviewListView
+    InterviewListView,
+    OrderListView,
+    RequestListView
 )
 
 
@@ -15,8 +18,9 @@ urlpatterns = [
     path('auth/', ProfileLoginView.as_view(), name='auth'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('clients/', ClientsListView.as_view(), name='clients'),
-    path('contracts/', ContractListView.as_view(), name='requests'),
+    path('clients/<int:pk>', ClientDetailView.as_view(), name='client_detail'),
+    path('requests/', RequestListView.as_view(), name='requests'),
     path('contracts/', ContractListView.as_view(), name='contracts'),
-    path('contracts/', ContractListView.as_view(), name='orders'),
+    path('orders/', OrderListView.as_view(), name='orders'),
     path('interview/', InterviewListView.as_view(), name='interview'),
 ]

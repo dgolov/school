@@ -1,0 +1,169 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-4 flex-grow-1">
+                                <div class="d-flex align-items-center mb-1">
+                                    <h4 class="mb-0">{{ client }}</h4>
+                                </div>
+                                <p class="mb-0 text-muted">Клиент</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Контакты</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ client.phone }}">{{ client.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td><a href="mailto: {{ client.email }}">{{ client.email }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Город:</th>
+                                <td>{{ client.city }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Contracts"><span
+                            class="p-tab-name">Договоры</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Orders"><span
+                            class="p-tab-name">Заказы</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Requests"><span
+                            class="p-tab-name">Заявки</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Profile"><span
+                            class="p-tab-name">Данные клиента</span><i
+                            class="bx bx-message-edit font-24 d-sm-none"></i></a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="Contracts">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Договоры</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Клиент</th>
+                                        <th scope="col">Курс</th>
+                                        <th scope="col">Цена</th>
+                                        <th scope="col">Дата</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for contract in contracts %}
+                                        <tr>
+                                            <th scope="row">{{ contract.id }}</th>
+                                            <td>{{ contract.client }}</td>
+                                            <td>{{ contract.course }}</td>
+                                            <td>{{ contract.course.price }}</td>
+                                            <td>{{ contract.date }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Orders">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Договоры</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Клиент</th>
+                                        <th scope="col">Курс</th>
+                                        <th scope="col">Цена</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Оплачено</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <th scope="row">{{ order.id }}</th>
+                                            <td>{{ order.client }}</td>
+                                            <td>{{ order.course }}</td>
+                                            <td>{{ order.course.price }}</td>
+                                            <td>{{ order.date }}</td>
+                                            <td>{{ order.payed }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Requests">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Заявки</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Клиент</th>
+                                        <th scope="col">Тип заявки</th>
+                                        <th scope="col">Статус</th>
+                                        <th scope="col">Курс</th>
+                                        <th scope="col">Результат</th>
+                                        <th scope="col">Дата заявки</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for request in requests %}
+                                        <tr>
+                                            <th scope="row">{{ request.id }}</th>
+                                            <td>{{ request.client }}</td>
+                                            <td>{{ request.type_request }}</td>
+                                            <td>{{ request.status }}</td>
+                                            <td>{{ request.course }}</td>
+                                            <td>{{ request.result }}</td>
+                                            <td>{{ request.date }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Profile">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <h3>Паспортные данные клиента</h3>
+                                <h5 class="mt-5">Серия и номер паспорта</h5>
+                                <p>{{ client.passport }}</p>
+                                <h5 class="mt-5">Адрес прописки</h5>
+                                <p>{{ client.address }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

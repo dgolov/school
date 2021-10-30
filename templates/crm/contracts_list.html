@@ -1,6 +1,41 @@
 {% extends 'crm/base.html' %}
 {% block content %}
-    {% for contract in contracts_list %}
-    <p>{{ contract }}</p>
-    {% endfor %}
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="card-title">
+                        <h4>Список договоров</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
+                        Добавить договор
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Клиент</th>
+                        <th scope="col">Курс</th>
+                        <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contract in contracts_list %}
+                        <tr>
+                            <th scope="row">{{ contract.id }}</th>
+                            <td>{{ contract.client }}</td>
+                            <td>{{ contract.course }}</td>
+                            <td>{{ contract.date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

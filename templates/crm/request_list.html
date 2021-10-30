@@ -5,12 +5,12 @@
             <div class="row mb-4">
                 <div class="col-md-8">
                     <div class="card-title">
-                        <h4>Список заказов</h4>
+                        <h4>Список заявок</h4>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
-                        Добавить заказ
+                        Добавить заявку
                     </button>
                 </div>
             </div>
@@ -20,21 +20,23 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Клиент</th>
+                        <th scope="col">Тип заявки</th>
+                        <th scope="col">Статус</th>
                         <th scope="col">Курс</th>
-                        <th scope="col">Цена</th>
-                        <th scope="col">Дата</th>
-                        <th scope="col">Оплачено</th>
+                        <th scope="col">Результат</th>
+                        <th scope="col">Дата заявки</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for order in order_list %}
+                    {% for request in request_list %}
                         <tr>
-                            <th scope="row">{{ order.id }}</th>
-                            <td>{{ order.client }}</td>
-                            <td>{{ order.course }}</td>
-                            <td>{{ order.course.price }}</td>
-                            <td>{{ order.date }}</td>
-                            <td>{{ order.payed }}</td>
+                            <th scope="row">{{ request.id }}</th>
+                            <td>{{ request.client }}</td>
+                            <td>{{ request.type_request }}</td>
+                            <td>{{ request.status }}</td>
+                            <td>{{ request.course }}</td>
+                            <td>{{ request.result }}</td>
+                            <td>{{ request.date }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

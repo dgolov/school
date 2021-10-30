@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from management.forms import AuthForm
 from management.models import Client, Contract, Order, Interview, Request, Cost
@@ -12,7 +12,9 @@ from management.models import Client, Contract, Order, Interview, Request, Cost
 class MainView(View):
     """ Представление главной страницы CRM
     """
-    def get(self, request, *args, **kwargs):
+
+    @staticmethod
+    def get(request, *args, **kwargs):
         if request.user.is_anonymous:
             return HttpResponseRedirect('/api/crm/auth')
         context = {'user': request.user, 'title': "Академия будущего"}
@@ -20,9 +22,10 @@ class MainView(View):
 
 
 class ProfileLoginView(View):
-    """Идентификация и аутентификация пользователя по логину и паролю
+    """Идентификация и аутентификация пользователя по логину и паролю в CRM
     """
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         auth_form = AuthForm
         context = {
             'title': "Вход в систему",
@@ -30,7 +33,8 @@ class ProfileLoginView(View):
         }
         return render(request, 'crm/authentication-login.html', context)
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         auth_form = AuthForm(request.POST)
         if auth_form.is_valid():
             username = auth_form.cleaned_data['username']
@@ -52,7 +56,7 @@ class ProfileLoginView(View):
 
 
 class ClientsListView(ListView):
-    """ Список клиентов академии
+    """ Список клиентов академии в CRM
     """
     model = Client
     template_name = 'crm/clients_list.html'
@@ -71,8 +75,23 @@ class ClientsListView(ListView):
             return Client.objects.filter(manager=self.request.user)
 
 
+class ClientDetailView(DetailView):
+    model = Client
+    template_name = 'crm/client_detail.html'
+    context_object_name = 'client'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ClientDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        context['contracts'] = Contract.objects.filter(client=self.get_object())
+        context['orders'] = Order.objects.filter(client=self.get_object())
+        context['requests'] = Request.objects.filter(client=self.get_object())
+        return context
+
+
 class ContractListView(ListView):
-    """ Список договоров
+    """ Список договоров в CRM
     """
     model = Contract
     template_name = 'crm/contracts_list.html'
@@ -89,7 +108,7 @@ class ContractListView(ListView):
 
 
 class InterviewListView(ListView):
-    """ Список соеседований
+    """ Список соеседований в CRM
     """
     model = Interview
     template_name = 'crm/interview_list.html'
@@ -109,7 +128,7 @@ class InterviewListView(ListView):
 
 
 class OrderListView(ListView):
-    """ Список заказов
+    """ Список заказов в CRM
     """
     model = Order
     template_name = 'crm/order_list.html'
@@ -124,3 +143,21 @@ class OrderListView(ListView):
     def get_queryset(self):
         if self.request.user.is_staff:
             return Order.objects.all() if self.request.user.is_staff else None
+
+
+class RequestListView(ListView):
+    """ Список заявок в CRM
+    """
+    model = Request
+    template_name = 'crm/request_list.html'
+    context_object_name = 'request_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(RequestListView, self).get_context_data(**kwargs)
+        context['title'] = 'Заявки'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Request.objects.all() if self.request.user.is_staff else None

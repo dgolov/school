@@ -16,7 +16,7 @@ class ClientAdmin(admin.ModelAdmin):
             'fields': ('manager',)
         }),
         ('Клиент', {
-            'fields': ('first_name', 'last_name', 'middle_name', 'phone', 'email',),
+            'fields': ('first_name', 'last_name', 'middle_name', 'phone', 'email', 'city'),
         }),
         ('Паспортные данные', {
             'fields': ('passport', 'passport_issued_by', 'address',),
