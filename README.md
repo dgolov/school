@@ -37,6 +37,8 @@
 - JavaScript
 - Vue JS
 - Axios
+- HTML
+- CSS
 
 #### Database:
 - Postgres
