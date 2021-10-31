@@ -118,6 +118,23 @@ class ContractListView(ListView):
         return Contract.objects.all() if self.request.user.is_staff else None
 
 
+class ContractDetailView(DetailView):
+    """ Детальное представление договора в CRM
+    """
+    model = Contract
+    template_name = 'crm/contract_detail.html'
+    context_object_name = 'contract'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ContractDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        # context['contracts'] = Contract.objects.filter(client=self.get_object())
+        # context['orders'] = Order.objects.filter(client=self.get_object())
+        # context['requests'] = Request.objects.filter(client=self.get_object())
+        return context
+
+
 class InterviewListView(ListView):
     """ Список соеседований в CRM
     """

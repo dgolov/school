@@ -1,0 +1,63 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Договор номер {{ contract.number }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Дата:</th>
+                                        <td>{{ contract.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Курс:</th>
+                                        <td><a href="#">{{ contract.course }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Файл</th>
+                                        <td><a href="#">{{ contract.file }}</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Клиент</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>ФИО:</th>
+                                <td><a href="/api/crm/clients/{{ contract.client.id }}">{{ contract.client }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ contract.client.phone }}">{{ contract.client.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>email:</th>
+                                <td><a href="mailto: {{ client.email }}">{{ contract.client.email }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Комментарий</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <p class="mx-4 my-2">{{ contract.comment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
