@@ -1,0 +1,79 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Заявка {{ request.id }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Дата:</th>
+                                        <td>{{ request.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Курс:</th>
+                                        <td><a href="#">{{ request.course }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Тип заявки</th>
+                                        <td><a href="#">{{ request.type_request }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Статус заявки</th>
+                                        <td><a href="#">{{ request.status }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Цель заявки</th>
+                                        <td><a href="#">{{ request.purpose }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Результат заявки</th>
+                                        <td><a href="#">{{ request.result }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Перезвонить / напомнить</th>
+                                        <td><a href="#">{{ request.remind }}</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Клиент</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>ФИО:</th>
+                                <td><a href="/api/crm/clients/{{ request.client.id }}">{{ request.client }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ request.client.phone }}">{{ request.client.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>email:</th>
+                                <td><a href="mailto: {{ client.email }}">{{ request.client.email }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Комментарий</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <p class="mx-4 my-2">{{ request.comment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

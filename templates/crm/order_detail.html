@@ -1,0 +1,59 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Заказ {{ order.id }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Дата:</th>
+                                        <td>{{ order.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Курс:</th>
+                                        <td><a href="#">{{ order.course }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Цена:</th>
+                                        <td><a href="#">{{ order.course.price }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Оплачено</th>
+                                        <td><a href="#">{{ order.payed }}</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Клиент</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>ФИО:</th>
+                                <td><a href="/api/crm/clients/{{ order.client.id }}">{{ order.client }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ order.client.phone }}">{{ order.client.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>email:</th>
+                                <td><a href="mailto: {{ client.email }}">{{ order.client.email }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -129,9 +129,6 @@ class ContractDetailView(DetailView):
         context = super(ContractDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        # context['contracts'] = Contract.objects.filter(client=self.get_object())
-        # context['orders'] = Order.objects.filter(client=self.get_object())
-        # context['requests'] = Request.objects.filter(client=self.get_object())
         return context
 
 
@@ -173,6 +170,20 @@ class OrderListView(ListView):
             return Order.objects.all() if self.request.user.is_staff else None
 
 
+class OrderDetailView(DetailView):
+    """ Детальное представление заказа в CRM
+    """
+    model = Order
+    template_name = 'crm/order_detail.html'
+    context_object_name = 'order'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
 class RequestListView(ListView):
     """ Список заявок в CRM
     """
@@ -189,3 +200,17 @@ class RequestListView(ListView):
     def get_queryset(self):
         if self.request.user.is_staff:
             return Request.objects.all() if self.request.user.is_staff else None
+
+
+class RequestDetailView(DetailView):
+    """ Детальное представление заявки в CRM
+    """
+    model = Request
+    template_name = 'crm/request_detail.html'
+    context_object_name = 'request'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(RequestDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context

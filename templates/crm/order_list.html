@@ -42,8 +42,8 @@
                     <tbody>
                     {% for order in order_list %}
                         <tr>
-                            <th scope="row">{{ order.id }}</th>
-                            <td>{{ order.client }}</td>
+                            <th scope="row"><a href="/api/crm/orders/{{ order.pk }}">{{ order.id }}</a></th>
+                            <td><a href="/api/crm/orders/{{ order.pk }}">{{ order.client }}</a></td>
                             <td>{{ order.course }}</td>
                             <td>{{ order.course.price }}</td>
                             <td>{{ order.date }}</td>

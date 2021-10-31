@@ -43,8 +43,8 @@
                     <tbody>
                     {% for request in request_list %}
                         <tr>
-                            <th scope="row">{{ request.id }}</th>
-                            <td>{{ request.client }}</td>
+                            <th scope="row"><a href="/api/crm/requests/{{ request.pk }}">{{ request.id }}</a></th>
+                            <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
                             <td>{{ request.type_request }}</td>
                             <td>{{ request.status }}</td>
                             <td>{{ request.course }}</td>
