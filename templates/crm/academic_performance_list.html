@@ -1,7 +1,7 @@
 {% extends 'crm/base.html' %}
 {% block content %}
     <div class="card-title mb-4">
-        <h4>Список собеседований</h4>
+        <h4>Успеваемость</h4>
     </div>
     <div class="card radius-15">
         <div class="card-body">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
-                        Добавить собеседование
+                        Добавить оценку
                     </button>
                 </div>
             </div>
@@ -32,24 +32,28 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Кандидат</th>
-                        <th scope="col">Должность</th>
-                        <th scope="col">Зарплата</th>
-                        <th scope="col">Результат</th>
+                        <th scope="col">Студент</th>
+                        <th scope="col">Урок</th>
+                        <th scope="col">Тип оценки</th>
+                        <th scope="col">Оценка</th>
                         <th scope="col">Дата</th>
+                        <th scope="col">Преподаватель</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for interview in interview_list %}
+                    {% for academic_performance in academic_performance_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/vacancy/{{ interview.id }}">{{ interview.id }}</a></th>
-                            <td><a href="/api/crm/vacancy/{{ interview.id }}">
-                                    {{ interview.last_name }} {{ interview.first_name }}</a>
+                            <th scope="row"><a href="/api/crm/vacancy/{{ academic_performance.id }}">
+                                {{ academic_performance.id }}</a>
+                            </th>
+                            <td><a href="/api/crm/vacancy/{{ academic_performance.id }}">
+                                    {{ academic_performance.student }}</a>
                             </td>
-                            <td>{{ interview.vacancy }}</td>
-                            <td>{{ interview.vacancy.salary }}</td>
-                            <td>{{ interview.result }}</td>
-                            <td>{{ interview.date }}</td>
+                            <td>{{ academic_performance.lesson }}</td>
+                            <td>{{ academic_performance.type_grade }}</td>
+                            <td>{{ academic_performance.grade }}</td>
+                            <td>{{ academic_performance.date }}</td>
+                            <td>{{ academic_performance.teacher }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

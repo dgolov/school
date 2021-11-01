@@ -1,7 +1,7 @@
 {% extends 'crm/base.html' %}
 {% block content %}
     <div class="card-title mb-4">
-        <h4>Список собеседований</h4>
+        <h4>Рассписание занятий</h4>
     </div>
     <div class="card radius-15">
         <div class="card-body">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
-                        Добавить собеседование
+                        Добавить запись
                     </button>
                 </div>
             </div>
@@ -32,24 +32,20 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Кандидат</th>
-                        <th scope="col">Должность</th>
-                        <th scope="col">Зарплата</th>
-                        <th scope="col">Результат</th>
+                        <th scope="col">Урок</th>
+                        <th scope="col">Группа</th>
                         <th scope="col">Дата</th>
+                        <th scope="col">Завершен</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for interview in interview_list %}
+                    {% for time_table in time_table_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/vacancy/{{ interview.id }}">{{ interview.id }}</a></th>
-                            <td><a href="/api/crm/vacancy/{{ interview.id }}">
-                                    {{ interview.last_name }} {{ interview.first_name }}</a>
-                            </td>
-                            <td>{{ interview.vacancy }}</td>
-                            <td>{{ interview.vacancy.salary }}</td>
-                            <td>{{ interview.result }}</td>
-                            <td>{{ interview.date }}</td>
+                            <th scope="row"><a href="/api/crm/vacancy/{{ time_table.id }}">{{ time_table.id }}</a></th>
+                            <td><a href="/api/crm/vacancy/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
+                            <td>{{ time_table.group }}</td>
+                            <td>{{ time_table.date }}</td>
+                            <td>{{ time_table.is_finished }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
