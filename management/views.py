@@ -1,12 +1,13 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
 from management.forms import AuthForm, CreateClientForm
-from management.models import Client, Contract, Order, Interview, Request, Cost
+from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost
+
+from mainapp.models import Course, Lesson, Timetable, AcademicPerformance
 
 
 class MainView(View):
@@ -132,26 +133,6 @@ class ContractDetailView(DetailView):
         return context
 
 
-class InterviewListView(ListView):
-    """ Список соеседований в CRM
-    """
-    model = Interview
-    template_name = 'crm/interview_list.html'
-    context_object_name = 'interview_list'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(InterviewListView, self).get_context_data(**kwargs)
-        context['title'] = 'Собеседования'
-        context['user'] = self.request.user
-        return context
-
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            return Interview.objects.all()
-        else:
-            return Interview.objects.filter(user=self.request.user)
-
-
 class OrderListView(ListView):
     """ Список заказов в CRM
     """
@@ -214,3 +195,137 @@ class RequestDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+
+class VacancyListView(ListView):
+    """ Список вакансий в CRM
+    """
+    model = Vacancy
+    template_name = 'crm/vacancy_list.html'
+    context_object_name = 'vacancy_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(VacancyListView, self).get_context_data(**kwargs)
+        context['title'] = 'Вакансии'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Vacancy.objects.all() if self.request.user.is_staff else None
+
+
+class VacancyDetailView(DetailView):
+    """ Детальное представление вакансии в CRM
+    """
+    model = Vacancy
+    template_name = 'crm/vacancy_detail.html'
+    context_object_name = 'vacancy'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(VacancyDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class InterviewListView(ListView):
+    """ Список соеседований в CRM
+    """
+    model = Interview
+    template_name = 'crm/interview_list.html'
+    context_object_name = 'interview_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(InterviewListView, self).get_context_data(**kwargs)
+        context['title'] = 'Собеседования'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Interview.objects.all()
+        else:
+            return Interview.objects.filter(user=self.request.user)
+
+
+class InterviewDetailView(DetailView):
+    """ Детальное представление вакансии в CRM
+    """
+    model = Interview
+    template_name = 'crm/interview_detail.html'
+    context_object_name = 'interview'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(InterviewDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class CourseListView(ListView):
+    """ Список курсов в CRM
+    """
+    model = Course
+    template_name = 'crm/course_list.html'
+    context_object_name = 'course_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CourseListView, self).get_context_data(**kwargs)
+        context['title'] = 'Курсы'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Course.objects.all() if self.request.user.is_staff else None
+
+
+class CourseDetailView(DetailView):
+    """ Детальное представление курса в CRM
+    """
+    model = Course
+    template_name = 'crm/course_detail.html'
+    context_object_name = 'course'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class TimeTableListView(ListView):
+    """ Рассписание в CRM
+    """
+    model = Timetable
+    template_name = 'crm/time_table_list.html'
+    context_object_name = 'time_table_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TimeTableListView, self).get_context_data(**kwargs)
+        context['title'] = 'Рассписание'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Timetable.objects.all() if self.request.user.is_staff else None
+
+
+class AcademicPerformanceListView(ListView):
+    """ Успевоемость в CRM
+    """
+    model = AcademicPerformance
+    template_name = 'crm/academic_performance_list.html'
+    context_object_name = 'academic_performance_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AcademicPerformanceListView, self).get_context_data(**kwargs)
+        context['title'] = 'Успеваемость'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return AcademicPerformance.objects.all() if self.request.user.is_staff else None

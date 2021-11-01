@@ -9,11 +9,18 @@ from management.views import (
     CreateClientView,
     ContractListView,
     ContractDetailView,
+    VacancyListView,
+    VacancyDetailView,
     InterviewListView,
+    InterviewDetailView,
     OrderListView,
     OrderDetailView,
     RequestListView,
     RequestDetailView,
+    CourseListView,
+    CourseDetailView,
+    TimeTableListView,
+    AcademicPerformanceListView,
 )
 
 
@@ -30,5 +37,12 @@ urlpatterns = [
     path('contracts/<int:pk>/', ContractDetailView.as_view(), name='contracts_detail'),
     path('orders/', OrderListView.as_view(), name='orders'),
     path('orders/<int:pk>/', OrderDetailView.as_view(), name='orders_detail'),
+    path('vacancy/', VacancyListView.as_view(), name='vacancy'),
+    path('vacancy/<int:pk>/', VacancyDetailView.as_view(), name='vacancy_detail'),
     path('interview/', InterviewListView.as_view(), name='interview'),
+    path('interview/<int:pk>/', InterviewDetailView.as_view(), name='interview_detail'),
+    path('courses/', CourseListView.as_view(), name='courses'),
+    path('courses/<int:pk>/', CourseDetailView.as_view(), name='course_detail'),
+    path('academic-performance/', AcademicPerformanceListView.as_view(), name='academic_performance'),
+    path('timetable/', TimeTableListView.as_view(), name='timetable'),
 ]
