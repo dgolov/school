@@ -1,0 +1,53 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">{{ course }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Категория:</th>
+                                        <td>{{ course.category }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Преподаватель:</th>
+                                        <td><a href="#">{{ course.teacher }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Цена:</th>
+                                        <td><a href="#">{{ course.price }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Доступный:</th>
+                                        <td><a href="#">{{ course.is_active }}</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        {% if course.poster %}
+                            <img src="{{ course.poster.url }}" style="width: 250px; padding: 20px">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Описание</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <p class="mx-4 my-2">{{ course.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
