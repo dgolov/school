@@ -42,8 +42,8 @@
                     <tbody>
                     {% for interview in interview_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/vacancy/{{ interview.id }}">{{ interview.id }}</a></th>
-                            <td><a href="/api/crm/vacancy/{{ interview.id }}">
+                            <th scope="row"><a href="/api/crm/interview/{{ interview.id }}">{{ interview.id }}</a></th>
+                            <td><a href="/api/crm/interview/{{ interview.id }}">
                                     {{ interview.last_name }} {{ interview.first_name }}</a>
                             </td>
                             <td>{{ interview.vacancy }}</td>

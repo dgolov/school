@@ -1,0 +1,79 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Собеседование №{{ interview.id }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Вакансия:</th>
+                                        <td>{{ interview.vacancy }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Зарплата:</th>
+                                        <td><a href="#">{{ interview.vacancy.salary }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Результат</th>
+                                        <td><a href="#">{{ interview.result }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <td><a href="#">{{ interview.date }}</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Кандидат</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>ФИО:</th>
+                                <td>{{ interview.last_name }} {{ interview.first_name }} {{ interview.middle_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Возраст:</th>
+                                <td>{{ interview.age }}</td>
+                            </tr>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ interview.phone }}">{{ interview.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>email:</th>
+                                <td><a href="mailto: {{ interview.email }}">{{ interview.email }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Место учебы:</th>
+                                <td>{{ interview.place_of_study }}</td>
+                            </tr>
+                            <tr>
+                                <th>Место работы:</th>
+                                <td>{{ interview.place_of_work }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Комментарий</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <p class="mx-4 my-2">{{ interview.comment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
