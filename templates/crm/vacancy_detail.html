@@ -1,0 +1,64 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-12 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-7 flex-grow-1">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Вакансия №{{ vacancy.id }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Вакансия:</th>
+                                        <td>{{ vacancy.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Зарплата:</th>
+                                        <td>{{ vacancy.salary }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата размещения:</th>
+                                        <td>{{ vacancy.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Активная вакансия:</th>
+                                        <td>{{ vacancy.active }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 col-lg-5">
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Требования:</th>
+                                        <td>{{ vacancy.requirements }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Условия работы:</th>
+                                        <td>{{ vacancy.conditions }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if vacancy.comment %}
+            <h4>Комментарий</h4>
+            <div class="card radius-15">
+                <div class="card-body">
+                    <div class="row">
+                        <p class="mx-4 my-2">{{ vacancy.comment }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

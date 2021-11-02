@@ -14,19 +14,23 @@
                                     <tbody>
                                     <tr>
                                         <th>Вакансия:</th>
-                                        <td>{{ interview.vacancy }}</td>
+                                        <td>
+                                            <a href="/api/crm/vacancy/{{ interview.vacancy.id }}">
+                                                {{ interview.vacancy }}
+                                            </a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Зарплата:</th>
-                                        <td><a href="#">{{ interview.vacancy.salary }}</a></td>
+                                        <td>{{ interview.vacancy.salary }}</td>
                                     </tr>
                                     <tr>
                                         <th>Результат</th>
-                                        <td><a href="#">{{ interview.result }}</a></td>
+                                        <td>{{ interview.result }}</td>
                                     </tr>
                                     <tr>
                                         <th>Дата</th>
-                                        <td><a href="#">{{ interview.date }}</a></td>
+                                        <td>{{ interview.date }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
