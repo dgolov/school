@@ -257,7 +257,7 @@ export default {
 <style scoped>
 #messenger {
   text-align: left;
-  height: 70vh;
+  height: 50vh;
   overflow: scroll;
   padding-bottom: 30px;
   margin: 0;

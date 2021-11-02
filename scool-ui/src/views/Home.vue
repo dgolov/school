@@ -12,6 +12,17 @@
               <img src="../assets/images/bg_test.png">
             </div>
           </div>
+        <div class="hero__content__mobile">
+          <div class="hero__content__inner">
+            <img src="../assets/images/bg_test_mobile.png">
+            <div class="cta cta--reverse left-align" style="padding-left: 20px;">
+              <h4 style="color: #ffffff; margin: 0; width: 80%;">Образовательная платформа ХОД Future Academy</h4>
+              <h2 class="hero__title my-2 bold" style="font-size: 26px; width: 95%">
+                Смените профессию <br/>Научитесь новому<br/> Найдите себя
+              </h2>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="steps white-section mt-0 pt-0">
@@ -166,6 +177,19 @@ export default {
 
 
 <style scoped>
+.hero__content__mobile {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .hero__content {
+    display: none;
+  }
+  .hero__content__mobile {
+    display: block;
+  }
+}
+
 .header-image {
   position: absolute;
   bottom: 0;
