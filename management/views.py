@@ -292,6 +292,7 @@ class CourseDetailView(DetailView):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
+        context['lesson_list'] = Lesson.objects.filter(course=self.get_object())
         return context
 
 

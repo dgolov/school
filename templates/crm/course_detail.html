@@ -14,7 +14,7 @@
                                     <tbody>
                                     <tr>
                                         <th>Категория:</th>
-                                        <td>{{ course.category }}</td>
+                                        <td><a href="#">{{ course.category }}</a></td>
                                     </tr>
                                     <tr>
                                         <th>Преподаватель:</th>
@@ -22,11 +22,11 @@
                                     </tr>
                                     <tr>
                                         <th>Цена:</th>
-                                        <td><a href="#">{{ course.price }}</a></td>
+                                        <td>{{ course.price }}</td>
                                     </tr>
                                     <tr>
                                         <th>Доступный:</th>
-                                        <td><a href="#">{{ course.is_active }}</a></td>
+                                        <td>{{ course.is_active }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -39,13 +39,58 @@
                         {% endif %}
                     </div>
                 </div>
-            </div>
-        </div>
-        <h4>Описание</h4>
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row">
-                    <p class="mx-4 my-2">{{ course.description }}</p>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Description"><span
+                            class="p-tab-name">Описание</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Lessons"><span
+                            class="p-tab-name">Уроки</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="Description">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Описание курса</h4>
+                                </div>
+                                <div class="row">
+                                    <p class="mx-4 my-2">{{ course.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="Lessons">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Уроки курса</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Курс</th>
+                                        <th scope="col">Номер урока</th>
+                                        <th scope="col">Тема</th>
+                                        <th scope="col">Доступный</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for lesson in lesson_list %}
+                                        <tr>
+                                            <th scope="row">{{ lesson.id }}</th>
+                                            <td>{{ lesson.course }}</td>
+                                            <td>{{ lesson.lesson_number }}</td>
+                                            <td>{{ lesson.theme }}</td>
+                                            <td>{{ lesson.is_active }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
