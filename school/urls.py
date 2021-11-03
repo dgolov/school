@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/crm/', include('management.urls')),
     path('api/management/', include('management.api.urls')),
     path('api/api-auth/', include('rest_framework.urls')),
+    path('auth/', include('rest_framework_social_oauth2.urls')),
 ]
 
 urlpatterns += doc_urls
