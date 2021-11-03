@@ -78,13 +78,13 @@ class Profile(models.Model):
     GENDER_CHOICES = list(zip(GENDER_CHOICES, GENDER_CHOICES_RUS))
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
-    middle_name = models.CharField(max_length=50, verbose_name='Отчество')
+    middle_name = models.CharField(max_length=50, verbose_name='Отчество', blank=True, null=True)
     gender = models.CharField(max_length=50, verbose_name='Пол', choices=GENDER_CHOICES)
     phone = PhoneNumberField(verbose_name='Номер телефона', unique=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
     vk_slug = models.CharField(max_length=50, verbose_name='Ссылка на профиль vk.com', blank=True, null=True)
     instagram_slug = models.CharField(max_length=50, verbose_name='Ссылка на профиль instagram', blank=True, null=True)
-    date_of_birthday = models.DateField(verbose_name='Дата рождения')
+    date_of_birthday = models.DateField(verbose_name='Дата рождения', blank=True, null=True)
     about = models.TextField(verbose_name='О себе', blank=True, null=True)
     avatar = models.ForeignKey(
         Photo,

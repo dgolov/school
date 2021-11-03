@@ -18,6 +18,9 @@ from .models import (
 )
 
 
+admin.site.site_header = 'Администрирование Future Academy'
+
+
 class ProfileAdmin(admin.ModelAdmin):
     """ Родительский класс профиля в админке
     """

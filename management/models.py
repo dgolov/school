@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-from mainapp.models import Course
+from mainapp.models import Course, Profile
 
 
 class Client(models.Model):
@@ -155,6 +155,14 @@ class Interview(models.Model):
         verbose_name_plural = '06. Собеседования'
 
 
+class Staff(Profile):
+    """
+    """
+    class Meta:
+        verbose_name = 'Сотрудник'
+        verbose_name_plural = '07. Сотрудники'
+
+
 class CostCategory(models.Model):
     """ Модель категории затрат
     """
@@ -162,7 +170,7 @@ class CostCategory(models.Model):
 
     class Meta:
         verbose_name = 'Категория затрат'
-        verbose_name_plural = '07. Категории затрат'
+        verbose_name_plural = '08. Категории затрат'
 
     def __str__(self):
         return self.name
@@ -179,4 +187,4 @@ class Cost(models.Model):
 
     class Meta:
         verbose_name = 'Затрата'
-        verbose_name_plural = '08. Затраты'
+        verbose_name_plural = '09. Затраты'
