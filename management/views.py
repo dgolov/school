@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from management.forms import AuthForm, CreateClientForm
+from management.forms import AuthForm, CreateClientForm, CreateContractForm
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost
 
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance
@@ -131,6 +131,22 @@ class ContractDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+
+class CreateContractView(View):
+    """ Регистрация нового договора в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateContractForm()
+        return render(request, 'crm/create_contract.html', {'form': form, 'title': 'Добавление нового договора'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateContractForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/contracts')
 
 
 class OrderListView(ListView):

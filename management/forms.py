@@ -1,6 +1,7 @@
 from django import forms
 
-from management.models import Client
+from mainapp.models import Course
+from management.models import Client, Contract, Order, Request, Vacancy, Interview
 
 
 class AuthForm(forms.Form):
@@ -85,3 +86,36 @@ class CreateClientForm(forms.ModelForm):
             'phone', 'email', 'city',
             'passport', 'passport_issued_by', 'address'
         )
+
+
+class CreateContractForm(forms.ModelForm):
+    """ Форма регистрации нового контракта в CRM
+    """
+    number = forms.CharField(
+        label='Номер договора',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите номер договора...'}
+        )
+    )
+    client = forms.ModelChoiceField(
+        queryset=Client.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    course = forms.ModelChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    comment = forms.CharField(
+        label='Комментарий',
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'placeholder': 'Введите комментарий менеджера...'}
+        )
+    )
+
+    class Meta:
+        model = Contract
+        fields = ('number', 'client', 'course', 'comment')

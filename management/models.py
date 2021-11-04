@@ -34,7 +34,7 @@ class Contract(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Приобретенный курс')
-    date = models.DateField(verbose_name='Дата')
+    date = models.DateField(auto_now_add=True, verbose_name='Дата')
     comment = models.TextField(verbose_name='Комментарий рекрутера')
 
     def __str__(self):
