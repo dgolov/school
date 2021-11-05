@@ -4,7 +4,19 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from management.forms import AuthForm, CreateClientForm, CreateContractForm
+from management.forms import (
+    AuthForm,
+    CreateClientForm,
+    CreateContractForm,
+    CreateOrderForm,
+    CreateRequestForm,
+    CreateVacancyForm,
+    CreateInterviewForm,
+    CreateCourseForm,
+    CreateLessonForm,
+    CreateTimeTableForm,
+    CreateAcademicPerformanceForm,
+)
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost
 
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance
@@ -181,6 +193,22 @@ class OrderDetailView(DetailView):
         return context
 
 
+class CreateOrderView(View):
+    """ Регистрация нового заказа в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateOrderForm()
+        return render(request, 'crm/create_order.html', {'form': form, 'title': 'Добавление нового заказа'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateOrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/orders')
+
+
 class RequestListView(ListView):
     """ Список заявок в CRM
     """
@@ -213,6 +241,22 @@ class RequestDetailView(DetailView):
         return context
 
 
+class CreateRequestView(View):
+    """ Регистрация новой заявки в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateRequestForm()
+        return render(request, 'crm/create_request.html', {'form': form, 'title': 'Добавление новой заявки'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/requests')
+
+
 class VacancyListView(ListView):
     """ Список вакансий в CRM
     """
@@ -243,6 +287,22 @@ class VacancyDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+
+class CreateVacancyView(View):
+    """ Регистрация новой вакансии в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateVacancyForm()
+        return render(request, 'crm/create_vacancy.html', {'form': form, 'title': 'Добавление новой вакансии'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateVacancyForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/vacancy')
 
 
 class InterviewListView(ListView):
@@ -279,6 +339,22 @@ class InterviewDetailView(DetailView):
         return context
 
 
+class CreateInterviewView(View):
+    """ Регистрация новго собеседования в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateInterviewForm()
+        return render(request, 'crm/create_interview.html', {'form': form, 'title': 'Добавление нового собеседования'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateInterviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/interview')
+
+
 class CourseListView(ListView):
     """ Список курсов в CRM
     """
@@ -312,6 +388,38 @@ class CourseDetailView(DetailView):
         return context
 
 
+class CreateCourseView(View):
+    """ Регистрация новго курса в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateCourseForm()
+        return render(request, 'crm/create_course.html', {'form': form, 'title': 'Добавление нового курса'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateCourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/courses')
+
+
+class CreateLessonView(View):
+    """ Регистрация новго урока в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateLessonForm()
+        return render(request, 'crm/create_lesson.html', {'form': form, 'title': 'Добавление нового урока'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateLessonForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/courses')
+
+
 class TimeTableListView(ListView):
     """ Рассписание в CRM
     """
@@ -330,6 +438,25 @@ class TimeTableListView(ListView):
             return Timetable.objects.all() if self.request.user.is_staff else None
 
 
+class CreateTimeTableView(View):
+    """ Регистрация новой записи в рассписание в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateTimeTableForm()
+        return render(request, 'crm/create_timetable.html', {
+            'form': form,
+            'title': 'Добавление новой записи в рассписание'
+        })
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateTimeTableForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/timetable')
+
+
 class AcademicPerformanceListView(ListView):
     """ Успевоемость в CRM
     """
@@ -346,3 +473,22 @@ class AcademicPerformanceListView(ListView):
     def get_queryset(self):
         if self.request.user.is_staff:
             return AcademicPerformance.objects.all() if self.request.user.is_staff else None
+
+
+class CreateAcademicPerformanceView(View):
+    """ Регистрация новой оценки в системе успеваемости в CRM в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateAcademicPerformanceForm()
+        return render(request, 'crm/create_academic_performance.html', {
+            'form': form,
+            'title': 'Добавление новой оценки'
+        })
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateAcademicPerformanceForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/academic-performance')

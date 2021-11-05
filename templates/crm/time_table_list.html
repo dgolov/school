@@ -22,9 +22,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-primary m-1 px-5" style="float: right;">
-                        Добавить запись
-                    </button>
+                    <a type="button" href="{% url 'create_timetable' %}" class="btn btn-outline-primary m-1 px-5"
+                       style="float: right;">Добавить запись</a>
                 </div>
             </div>
             <div class="table-responsive">
@@ -41,8 +40,10 @@
                     <tbody>
                     {% for time_table in time_table_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/vacancy/{{ time_table.id }}">{{ time_table.id }}</a></th>
-                            <td><a href="/api/crm/vacancy/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
+                            <th scope="row">
+                                <a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.id }}</a>
+                            </th>
+                            <td><a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
                             <td>{{ time_table.group }}</td>
                             <td>{{ time_table.date }}</td>
                             <td>{{ time_table.is_finished }}</td>

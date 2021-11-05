@@ -1,0 +1,74 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-4">Добавление новой заявки</h4>
+                <hr/>
+            </div>
+            {{ form.media }}
+            <form method="POST" action="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Общее</h3>
+                        <div class="form-group mt-4">
+                            <label>Вакансия:</label>
+                            {{ form.vacancy }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Дата собеседования:</label>
+                            {{ form.date }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Результат собеседования:</label>
+                            {{ form.result }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Кандидат</h3>
+                        <div class="form-group mt-4">
+                            <label>Фамилия:</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Имя:</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Отчество:</label>
+                            {{ form.middle_name }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Возраст:</label>
+                            {{ form.age }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Место учебы:</label>
+                            {{ form.place_of_study }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Место работы:</label>
+                            {{ form.place_of_work }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Номер телефона:</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Email:</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <h3>Комментарий</h3>
+                        <div class="form-group mt-4">
+                            {{ form.comment }}
+                        </div>
+                    </div>
+                </div>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Добавить собеседование</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
