@@ -1,0 +1,48 @@
+<form method="POST" action="">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Даные:</h3>
+            <div class="form-group mt-4">
+                <label>Логин:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Пароль:</label>
+                {{ form.password }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Фамилия:</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Имя:</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Отчество:</label>
+                {{ form.middle_name }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Пол:</label>
+                {{ form.gender }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Группа:</label>
+                {{ form.user_group }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Контактные данные</h3>
+            <div class="form-group mt-4">
+                <label>Номер телефона</label>
+                {{ form.phone }}
+            </div>
+            <div class="form-group mt-4">
+                <label>Электронная почта *</label>
+                {{ form.email }}
+            </div>
+        </div>
+    </div>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Зарегистрировать</button>
+</form>

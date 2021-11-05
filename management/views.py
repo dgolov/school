@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from management.forms import (
     AuthForm,
@@ -16,10 +17,11 @@ from management.forms import (
     CreateLessonForm,
     CreateTimeTableForm,
     CreateAcademicPerformanceForm,
+    CreateStaffForm,
+    CreateTeacherForm,
 )
-from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost
-
-from mainapp.models import Course, Lesson, Timetable, AcademicPerformance
+from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, Staff
+from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 
 class MainView(View):
@@ -109,7 +111,7 @@ class CreateClientView(View):
         form = CreateClientForm(request.POST)
         if form.is_valid():
             new_client = form.save()
-            new_client.manager = request.user
+            new_client.manager = request.user.staff
             new_client.save()
         return HttpResponseRedirect('/api/crm/clients')
 
@@ -254,6 +256,8 @@ class CreateRequestView(View):
         form = CreateRequestForm(request.POST)
         if form.is_valid():
             form.save()
+            form.instance.manager = request.user.staff
+            form.instance.save()
         return HttpResponseRedirect('/api/crm/requests')
 
 
@@ -352,6 +356,8 @@ class CreateInterviewView(View):
         form = CreateInterviewForm(request.POST)
         if form.is_valid():
             form.save()
+            form.instance.manager = request.user.staff
+            form.instance.save()
         return HttpResponseRedirect('/api/crm/interview')
 
 
@@ -492,3 +498,136 @@ class CreateAcademicPerformanceView(View):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/academic-performance')
+
+
+class TeacherListView(ListView):
+    """ Список преподавателей в CRM
+    """
+    model = Teacher
+    template_name = 'crm/teacher_list.html'
+    context_object_name = 'teacher_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TeacherListView, self).get_context_data(**kwargs)
+        context['title'] = 'Преподаватели'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Teacher.objects.all() if self.request.user.is_staff else None
+
+
+class TeacherDetailView(DetailView):
+    """ Детальное представление преподавателя в CRM
+    """
+    model = Teacher
+    template_name = 'crm/teacher_detail.html'
+    context_object_name = 'teacher'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TeacherDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class CreateTeacherView(View):
+    """ Регистрация новго преподавателя в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateTeacherForm()
+        return render(request, 'crm/create_teacher.html', {'form': form, 'title': 'Регистрация нового преподавателя'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateTeacherForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email']
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Teacher.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group='teacher'
+            )
+        return HttpResponseRedirect('/api/crm/teachers')
+
+
+class StaffListView(ListView):
+    """ Список сотрудников в CRM
+    """
+    model = Staff
+    template_name = 'crm/staff_list.html'
+    context_object_name = 'staff_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StaffListView, self).get_context_data(**kwargs)
+        context['title'] = 'Сотрудники'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Staff.objects.all() if self.request.user.is_staff else None
+
+
+class StaffDetailView(DetailView):
+    """ Детальное представление сотрудника в CRM
+    """
+    model = Staff
+    template_name = 'crm/staff_detail.html'
+    context_object_name = 'staff'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StaffDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        if self.get_object().user_group == 'sale_manager':
+            context['client_list'] = Client.objects.filter(manager=self.get_object())
+            context['request_list'] = Request.objects.filter(manager=self.get_object())
+        elif self.get_object().user_group == 'education_manager':
+            context['group_list'] = Group.objects.filter(manager=self.get_object())
+        elif self.get_object().user_group == 'hr':
+            context['interview_list'] = Interview.objects.filter(manager=self.get_object())
+        return context
+
+
+class CreateStaffView(View):
+    """ Регистрация новго сотрудника в CRM
+    """
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = CreateStaffForm()
+        return render(request, 'crm/create_staff.html', {'form': form, 'title': 'Регистрация нового сотрудника'})
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = CreateStaffForm(request.POST)
+        if form.is_valid():
+            if form.is_valid():
+                new_user = User.objects.create(
+                    username=form.cleaned_data['username'],
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    email=form.cleaned_data['email'],
+                    is_staff=True
+                )
+                new_user.set_password(form.cleaned_data['password'])
+                new_user.save()
+                Staff.objects.create(
+                    user=new_user,
+                    middle_name=form.cleaned_data['middle_name'],
+                    phone=form.cleaned_data['phone'],
+                    gender=form.cleaned_data['gender'],
+                    user_group=form.cleaned_data['user_group']
+                )
+        return HttpResponseRedirect('/api/crm/staffs')

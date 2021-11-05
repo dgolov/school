@@ -1,0 +1,143 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <h5 class="mb-4">Преподаватель</h5>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-4 flex-grow-1">
+                                <div class="d-flex align-items-center mb-1">
+                                    <h4>{{ teacher.get_fio }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Профессиональная деятельность:</th>
+                                        <td>{{ teacher.professional_activity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Образование:</th>
+                                        <td>{{ teacher.education }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата рождения:</th>
+                                        <td>{{ teacher.date_of_birthday }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Контакты</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ teacher.phone }}">{{ teacher.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td><a href="mailto: {{ teacher.email }}">{{ teacher.email }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Город:</th>
+                                <td>{{ teacher.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>Профиль vk:</th>
+                                <td><a href="{{ teacher.vk_slug }}">{{ teacher.vk_slug }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Профиль instagram:</th>
+                                <td><a href="{{ teacher.instagram_slug }}">{{ teacher.instagram_slug }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#About"><span
+                            class="p-tab-name">О себе</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses"><span
+                            class="p-tab-name">Курсы</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Groups"><span
+                            class="p-tab-name">Группы</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="About">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">О себе:</h4>
+                                </div>
+                                <p>{{ teacher.about }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Courses">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Курсы:</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Цена</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for course in teacher.courses.all %}
+                                        <tr>
+                                            <th scope="row">{{ course.id }}</th>
+                                            <td>{{ course }}</td>
+                                            <td>{{ course.price }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Groups">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Группы:</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Менедженр</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for group in teacher.group_list.all %}
+                                        <tr>
+                                            <th scope="row">{{ group.id }}</th>
+                                            <td>{{ group.name }}</td>
+                                            <td>{{ group.manager }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

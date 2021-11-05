@@ -1,0 +1,26 @@
+<table class="table mb-0">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Клиент</th>
+        <th scope="col">Тип заявки</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Курс</th>
+        <th scope="col">Результат</th>
+        <th scope="col">Дата заявки</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for request in request_list %}
+        <tr>
+            <th scope="row"><a href="/api/crm/requests/{{ request.pk }}">{{ request.id }}</a></th>
+            <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
+            <td>{{ request.type_request }}</td>
+            <td>{{ request.status }}</td>
+            <td>{{ request.course }}</td>
+            <td>{{ request.result }}</td>
+            <td>{{ request.date }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

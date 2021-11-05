@@ -26,34 +26,7 @@
                        style="float: right;">Добавить собеседование</a>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Кандидат</th>
-                        <th scope="col">Должность</th>
-                        <th scope="col">Зарплата</th>
-                        <th scope="col">Результат</th>
-                        <th scope="col">Дата</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for interview in interview_list %}
-                        <tr>
-                            <th scope="row"><a href="/api/crm/interview/{{ interview.id }}">{{ interview.id }}</a></th>
-                            <td><a href="/api/crm/interview/{{ interview.id }}">
-                                    {{ interview.last_name }} {{ interview.first_name }}</a>
-                            </td>
-                            <td>{{ interview.vacancy }}</td>
-                            <td>{{ interview.vacancy.salary }}</td>
-                            <td>{{ interview.result }}</td>
-                            <td>{{ interview.date }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% include 'crm/inc/interview_table.html' %}
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <h5 class="mb-4">Сотрудник</h5>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-4 flex-grow-1">
+                                <div class="d-flex align-items-center mb-1">
+                                    <h4 class="mb-4">{{ staff.get_fio }}</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Группа:</th>
+                                        <td>{{ staff.user_group }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата рождения:</th>
+                                        <td>{{ staff.date_of_birthday }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h3>Контакты</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td><a href="tel: {{ staff.phone }}">{{ staff.phone }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td><a href="mailto: {{ staff.email }}">{{ staff.email }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Город:</th>
+                                <td>{{ staff.city }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% if user.staff.user_group == 'admin' or user.is_superuser %}
+                    <ul class="nav nav-pills">
+                        {% if staff.user_group == 'sale_manager' %}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#Clients">
+                                    <span class="p-tab-name">Клиенты</span>
+                                    <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Requests">
+                                    <span class="p-tab-name">Обработанные заявки</span>
+                                    <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    {% if staff.user_group == 'sale_manager' %}
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="Clients">
+                                <div class="card shadow-none border mb-0 radius-15">
+                                    <div class="card-body">
+                                        <div class="d-sm-flex align-items-center mb-3">
+                                            <h4 class="mb-0">Клиенты:</h4>
+                                        </div>
+                                        {% include 'crm/inc/client_table.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="Requests">
+                            <div class="card shadow-none border mb-0 radius-15">
+                                <div class="card-body">
+                                    <div class="d-sm-flex align-items-center mb-3">
+                                        <h4 class="mb-0">Заявки:</h4>
+                                    </div>
+                                    {% include 'crm/inc/request_table.html' %}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    {% elif staff.user_group == 'education_manager' %}
+                        <h4 class="mt-3 mb-4">Группы менеджера</h4>
+                        {% include 'crm/inc/group_table.html' %}
+                    {% elif staff.user_group == 'hr' %}
+                        <h4 class="mt-3 mb-4">Собеседования менеджера</h4>
+                        {% include 'crm/inc/interview_table.html' %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

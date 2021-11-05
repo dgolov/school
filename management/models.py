@@ -6,7 +6,13 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Client(models.Model):
     """ Модель клиента
     """
-    manager = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Менеджер клиента', blank=True, null=True)
+    manager = models.ForeignKey(
+        'Staff',
+        on_delete=models.SET_NULL,
+        verbose_name='Менеджер клиента',
+        blank=True,
+        null=True
+    )
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     middle_name = models.CharField(max_length=50, verbose_name='Отчество')
@@ -33,7 +39,7 @@ class Contract(models.Model):
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Приобретенный курс')
     date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    comment = models.TextField(verbose_name='Комментарий рекрутера', blank=True, null=True)
+    comment = models.TextField(verbose_name='Комментарий менеджера', blank=True, null=True)
 
     def __str__(self):
         return f'Договор {self.number} от {self.date}'
@@ -80,7 +86,7 @@ class Request(models.Model):
     )
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 
-    manager = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Менеджер', blank=True, null=True)
+    manager = models.ForeignKey('Staff', on_delete=models.SET_NULL, verbose_name='Менеджер', blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
     type_request = models.CharField(max_length=50, verbose_name='Тип заявки', choices=TYPE_CHOICES)
     status = models.CharField(max_length=50, verbose_name='Статус заявки', choices=STATUS_CHOICES, default='new')
@@ -134,7 +140,7 @@ class Interview(models.Model):
     RESULT_CHOICES_RUS = ('Назначено', 'Заключен договор', 'Сдал', 'Не сдал', 'Рекомендованы курсы')
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Рекрутер', blank=True, null=True)
+    manager = models.ForeignKey('Staff', on_delete=models.SET_NULL, verbose_name='HR', blank=True, null=True)
     vacancy = models.ForeignKey(Vacancy, on_delete=models.SET_NULL, verbose_name='Вакансия', blank=True, null=True)
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     first_name = models.CharField(max_length=50, verbose_name='Имя')

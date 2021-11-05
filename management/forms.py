@@ -422,7 +422,7 @@ class CreateTimeTableForm(forms.ModelForm):
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
-    """ Форма регистрации новой оценки в системе успеваемости  в CRM
+    """ Форма регистрации новой оценки в системе успеваемости в CRM
     """
     student = forms.ModelChoiceField(
         queryset=Student.objects.all(),
@@ -457,3 +457,62 @@ class CreateAcademicPerformanceForm(forms.ModelForm):
     class Meta:
         model = AcademicPerformance
         fields = ('student', 'teacher', 'lesson', 'type_grade', 'grade')
+
+
+class CreateTeacherForm(forms.Form):
+    """ Форма регистрации преподавателя в CRM
+    """
+    username = forms.CharField(
+        label='Логин',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Логин...'}
+        )
+    )
+    password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Пароль...'}
+        )
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите фамилию...'}
+        )
+    )
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите имя...'}
+        )
+    )
+    middle_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите отчество...'}
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите номер телефона...'}
+        )
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите электронную почту...'}
+        )
+    )
+    gender = forms.CharField(
+        widget=forms.Select(
+            choices=Teacher.GENDER_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+
+
+class CreateStaffForm(CreateTeacherForm):
+    """ Форма регистрации сотрудника в CRM
+    """
+    user_group = forms.CharField(
+        widget=forms.Select(
+            choices=Staff.USER_GROUP_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )

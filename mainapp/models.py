@@ -34,9 +34,11 @@ class Group(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Преподаватель')
     manager = models.ForeignKey(
         'management.Staff',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='manager',
-        verbose_name='Менеджер учебного процесса'
+        verbose_name='Менеджер учебного процесса',
+        blank=True,
+        null=True
     )
 
     def __str__(self):
