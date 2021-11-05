@@ -3,7 +3,6 @@ from django.contrib import admin
 from .models import (
     Student,
     Teacher,
-    EducationalManager,
     Dialog,
     DialogAttachment,
     Message,
@@ -38,7 +37,7 @@ class ProfileAdmin(admin.ModelAdmin):
 class GroupAdmin(admin.ModelAdmin):
     """ Отображение списка групп в админке
     """
-    list_display = ['id', 'name', 'teacher', 'manager']
+    list_display = ['id', 'name', 'teacher']
     list_display_links = ['name']
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
@@ -81,15 +80,6 @@ class TeacherAdmin(ProfileAdmin):
     list_display = ['id', 'full_name', 'username', 'professional_activity', 'user_group']
     list_display_links = ['full_name']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name', 'professional_activity']
-
-
-@admin.register(EducationalManager)
-class ManagerAdmin(ProfileAdmin):
-    """ Отображение списка преподователей в админке
-    """
-    list_display = ['id', 'full_name', 'username', 'user_group']
-    list_display_links = ['full_name']
-    search_fields = ['user__last_name', 'user__first_name', 'middle_name']
 
 
 @admin.register(Dialog)

@@ -4,16 +4,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 USER_GROUP_CHOICES = (
-    'admin',
-    'manager',
-    'sales_manager',
     'teacher',
     'student'
 )
 USER_GROUP_CHOICES_RUS = (
-    'Администратор',
-    'Менеджер учебного процесса',
-    'Менеджер по продажам',
     'Преподаватель',
     'Студент'
 )
@@ -39,7 +33,7 @@ class Group(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название группы')
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Преподаватель')
     manager = models.ForeignKey(
-        'EducationalManager',
+        'management.Staff',
         on_delete=models.CASCADE,
         related_name='manager',
         verbose_name='Менеджер учебного процесса'
@@ -162,14 +156,6 @@ class Teacher(Profile):
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = '01. Пользователи - Преподаватели'
-
-
-class EducationalManager(Profile):
-    """ Модель менеджера учебного процесса
-    """
-    class Meta:
-        verbose_name = 'Менеджер учебного процесса'
-        verbose_name_plural = '01. Пользователи - Менеджеры учебного процесса'
 
 
 class Dialog(models.Model):

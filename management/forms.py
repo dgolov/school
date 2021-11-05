@@ -9,10 +9,9 @@ from mainapp.models import (
     Timetable,
     AcademicPerformance,
     Student,
-    Teacher,
-    EducationalManager
+    Teacher
 )
-from management.models import Client, Contract, Order, Request, Vacancy, Interview
+from management.models import Client, Contract, Order, Request, Vacancy, Interview, Staff
 
 
 class AuthForm(forms.Form):

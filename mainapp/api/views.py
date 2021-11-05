@@ -23,7 +23,6 @@ from ..models import (
     Profile,
     Student,
     Teacher,
-    EducationalManager,
     Group,
     Message,
     Category,
@@ -34,6 +33,8 @@ from ..models import (
     AcademicPerformance,
     Photo,
 )
+
+from management.models import Staff
 
 
 # USERS
@@ -79,7 +80,7 @@ class EducationalManagerViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех менеджеров учебного процесса
     """
     permission_classes = [IsAdminUser]
-    queryset = EducationalManager.objects.all()
+    queryset = Staff.objects.filter(user_group='education_manager')
     detail_serializer_class = serializers.ProfileSerializer
 
 
@@ -100,13 +101,11 @@ class PersonalProfileView(viewsets.ModelViewSet):
     serializer_classes = {
         'student': serializers.StudentDetailSerializer,
         'teacher': serializers.TeacherDetailSerializer,
-        'manager': serializers.EducationalManagerDetailSerializer
     }
 
     serializer_updated_classes = {
         'student': serializers.StudentUpdateSerializer,
         'teacher': serializers.TeacherUpdateSerializer,
-        'manager': serializers.EducationalManagerUpdateSerializer
     }
 
     def get_queryset(self, *args, **kwargs):
@@ -115,8 +114,6 @@ class PersonalProfileView(viewsets.ModelViewSet):
             return profile.student
         elif profile.user_group == 'teacher':
             return profile.teacher
-        elif profile.user_group == 'manager':
-            return profile.manager
         else:
             return None
 

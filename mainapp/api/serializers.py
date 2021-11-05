@@ -6,7 +6,6 @@ from ..models import (
     Photo,
     Student,
     Teacher,
-    EducationalManager,
     Group,
     Dialog,
     DialogAttachment,
@@ -18,6 +17,8 @@ from ..models import (
     Certificate,
     AcademicPerformance,
 )
+
+from management.models import Staff
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -220,44 +221,10 @@ class EducationalManagerSerializer(ProfileSerializerBase):
     """
 
     class Meta:
-        model = EducationalManager
+        model = Staff
         fields = [
             'id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'user_group',
-            'is_active'
         ]
-
-
-class EducationalManagerDetailSerializer(ProfileSerializerBase):
-    """ Сериализация детальной модели менеджера учебного процесса
-        Для отображения страницы пользователя и в друзьях пользователей
-    """
-    avatar = PhotoSerializer()
-
-    class Meta:
-        model = EducationalManager
-        fields = [
-            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
-            'date_of_birthday', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
-            'user_group', 'is_active'
-        ]
-
-
-class EducationalManagerUpdateSerializer(ProfileSerializerBase):
-    """ Сериализация настроек для личного кабинета менеджера учебного процесса
-    """
-    class Meta:
-        model = EducationalManager
-        fields = [
-            'first_name', 'middle_name', 'last_name', 'email', 'phone', 'city', 'vk_slug', 'instagram_slug', 'about',
-            'date_of_birthday',
-        ]
-
-        @staticmethod
-        def update(instance, validated_data):
-            for key, value in validated_data.items():
-                setattr(instance, key, value)
-            instance.save()
-            return instance
 
 
 class LessonSerializerFromTeacher(serializers.ModelSerializer):

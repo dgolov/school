@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Client, Contract, Order, Interview, Request, CostCategory, Cost, Vacancy
+from .models import Client, Contract, Order, Interview, Request, CostCategory, Cost, Vacancy, Staff
 
 
 @admin.register(Client)
@@ -92,3 +92,20 @@ class CostAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'category', 'date', 'amount']
     list_filter = ['category']
+
+
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    """ Отображение затрат в админке
+    """
+    list_display = ['id', 'username', 'full_name', 'gender', 'phone', 'user_group']
+    list_filter = ['user_group']
+
+    def full_name(self, obj):
+        return obj.__str__()
+
+    def username(self, obj):
+        return obj.user.username
+
+    full_name.short_description = 'ФИО'
+    username.short_description = 'Имя пользователя'
