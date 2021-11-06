@@ -41,9 +41,8 @@
               <div class="gender-field">
                 <input type="radio" id="two" value="f" v-model="gender">
                 <label for="two">Женский</label>
-                <label>Дата рождения</label>
               </div>
-              <date-picker v-model="dateOfBirthDay" valueType="format" class="date-of-birthday-field"></date-picker>
+              <hr/>
               <button type="button" class="button button__accent mt-4" @click="singUp">Зарегистрироваться</button>
               <h6 class="left-align mb-5">
                 Уже зарегистрированы? <a href="#" @click="goTo('Auth')">Войти</a>
@@ -83,7 +82,6 @@ export default {
       middleName: '',
       phone: '',
       gender: '',
-      dateOfBirthDay: '',
       error: {
         status: false,
         messageList: []
@@ -103,7 +101,7 @@ export default {
         this.error.messageList.push('Пароли не совпадают');
       }
       if (!this.userName || !this.password || !this.password2 || !this.lastName || !this.firstName
-          || !this.middleName || !this.email || !this.gender || !this.dateOfBirthDay || !this.phone) {
+          || !this.middleName || !this.email || !this.gender || !this.phone) {
         this.error.status = true;
         this.error.messageList.push('Пожалуйста заполните все поля');
       }
@@ -122,7 +120,6 @@ export default {
           "middle_name": this.middleName,
           "gender": this.gender,
           "phone": this.phone,
-          "date_of_birthday": this.dateOfBirthDay
         }
       }
 

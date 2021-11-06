@@ -132,7 +132,7 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
-            'middle_name', 'gender', 'phone', 'date_of_birthday',
+            'middle_name', 'gender', 'phone',
         ]
 
 
@@ -210,7 +210,6 @@ class CreateProfileSerializer(serializers.Serializer):
             middle_name=profile_data['middle_name'],
             phone=profile_data['phone'],
             gender=profile_data['gender'],
-            date_of_birthday=profile_data['date_of_birthday']
         )
         return new_user
 
