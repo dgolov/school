@@ -1,0 +1,20 @@
+<table class="table mb-0">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">ФИО</th>
+        <th scope="col">Телефон</th>
+        <th scope="col">Город</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for student in student_list %}
+        <tr>
+            <th scope="row">{{ student.id }}</th>
+            <td><a href="/api/crm/students/{{ student.id }}">{{ student }}</a></td>
+            <td><a href="tel: {{ student.phone }}">{{ student.phone }}</a></td>
+            <td>{{ student.city }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

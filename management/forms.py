@@ -507,3 +507,23 @@ class CreateStaffForm(CreateTeacherForm):
             attrs={'class': 'form-control'}
         )
     )
+
+
+class CreateGroupForm(forms.ModelForm):
+    """ Форма добавления новой учебной группы в CRM
+    """
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
+        )
+    )
+    teacher = forms.ModelChoiceField(
+        queryset=Teacher.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    class Meta:
+        model = Group
+        fields = ('name', 'teacher')

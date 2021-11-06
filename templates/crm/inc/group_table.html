@@ -1,0 +1,20 @@
+<table class="table mb-0">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название</th>
+        <th scope="col">Преподаватель</th>
+        <th scope="col">Менеджер</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for group in group_list %}
+        <tr>
+            <th scope="row">{{ group.id }}</th>
+            <td><a href="/api/crm/groups/{{ group.id }}">{{ group.name }}</a></td>
+            <td><a href="/api/crm/teachers/{{ group.teacher.id }}">{{ group.teacher }}</a></td>
+            <td><a href="/api/crm/staffs/{{ group.manager.id }}">{{ group.manager }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

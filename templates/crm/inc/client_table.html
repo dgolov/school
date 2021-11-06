@@ -12,7 +12,7 @@
         <tr>
             <th scope="row"><a href="/api/crm/clients/{{ client.pk }}">{{ client.id }}</a></th>
             <td><a href="/api/crm/clients/{{ client.pk }}">{{ client }}</a></td>
-            <td>{{ client.phone }}</td>
+            <td><a href="tel: {{ client.phone }}">{{ client.phone }}</a></td>
             <td>{{ client.email }}</td>
         </tr>
     {% endfor %}

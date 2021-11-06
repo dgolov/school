@@ -19,6 +19,7 @@ from management.forms import (
     CreateAcademicPerformanceForm,
     CreateStaffForm,
     CreateTeacherForm,
+    CreateGroupForm,
 )
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, Staff
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
@@ -666,16 +667,60 @@ class CreateStaffView(CreateView):
 class GroupListView(ListView):
     """ Список учебных групп в CRM
     """
-    pass
+    model = Group
+    template_name = 'crm/group_list.html'
+    context_object_name = 'group_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(GroupListView, self).get_context_data(**kwargs)
+        context['title'] = 'Группы'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Group.objects.all() if self.request.user.is_staff else None
 
 
 class GroupDetailView(DetailView):
     """ Детальное представление учебной группы  в CRM
     """
-    pass
+    model = Group
+    template_name = 'crm/group_detail.html'
+    context_object_name = 'group'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(GroupDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        context['student_list'] = self.get_object().student_groups.all()
+        return context
 
 
 class CreateGroupView(CreateView):
     """ Создание новой учебной группы в CRM
     """
-    pass
+    template_name = 'crm/create_group.html'
+    form_class = CreateGroupForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateGroupView, self).get_context_data()
+        context['title'] = 'Добавление новой группы'
+        context['student_list'] = Student.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CreateGroupForm(request.POST)
+        if form.is_valid():
+            new_group = form.save()
+            new_group.manager = request.user.staff
+            new_group.save()
+            self.update_students_group(new_group, request)
+        return HttpResponseRedirect('/api/crm/groups')
+
+    @staticmethod
+    def update_students_group(new_group, request):
+        students_id_list = request.POST.getlist('students')
+        for student_id in students_id_list:
+            student = Student.objects.get(pk=int(student_id))
+            student.group_list.add(new_group)

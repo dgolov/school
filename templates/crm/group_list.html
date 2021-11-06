@@ -1,0 +1,34 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card-title mb-4">
+        <h4>Список учебных групп</h4>
+    </div>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="flex-grow-1 search-bar">
+                        <div class="input-group">
+                            <div class="input-group-prepend search-arrow-back">
+                                <button class="btn btn-search-back" type="button"><i class="bx bx-arrow-back"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control" placeholder="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-search" type="button"><i class="lni lni-search-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a type="button" href="{% url 'create_group' %}" class="btn btn-outline-primary m-1 px-5"
+                       style="float: right;">Добавить группу</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                {% include 'crm/inc/group_table.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

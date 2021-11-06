@@ -44,4 +44,7 @@ urlpatterns = [
     path('staffs/', management.StaffListView.as_view(), name='staffs'),
     path('staffs/<int:pk>/', management.StaffDetailView.as_view(), name='staff_detail'),
     path('staffs/create/', management.CreateStaffView.as_view(), name='create_staff'),
+    path('groups/', management.GroupListView.as_view(), name='groups'),
+    path('groups/<int:pk>/', management.GroupDetailView.as_view(), name='group_detail'),
+    path('groups/create/', management.CreateGroupView.as_view(), name='create_group'),
 ]
