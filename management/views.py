@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from management.forms import (
     AuthForm,
@@ -98,13 +98,16 @@ class ClientDetailView(DetailView):
         return context
 
 
-class CreateClientView(View):
+class CreateClientView(CreateView):
     """ Регистрация нового клиента в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateClientForm()
-        return render(request, 'crm/create_client.html', {'form': form, 'title': 'Регистрация нового клиента'})
+    template_name = 'crm/create_client.html'
+    form_class = CreateClientForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateClientView, self).get_context_data()
+        context['title'] = 'Регистрация нового клиента'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -147,13 +150,16 @@ class ContractDetailView(DetailView):
         return context
 
 
-class CreateContractView(View):
+class CreateContractView(CreateView):
     """ Регистрация нового договора в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateContractForm()
-        return render(request, 'crm/create_contract.html', {'form': form, 'title': 'Добавление нового договора'})
+    template_name = 'crm/create_contract.html'
+    form_class = CreateContractForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateContractView, self).get_context_data()
+        context['title'] = 'Добавление нового договора'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -195,13 +201,16 @@ class OrderDetailView(DetailView):
         return context
 
 
-class CreateOrderView(View):
+class CreateOrderView(CreateView):
     """ Регистрация нового заказа в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateOrderForm()
-        return render(request, 'crm/create_order.html', {'form': form, 'title': 'Добавление нового заказа'})
+    template_name = 'crm/create_order.html'
+    form_class = CreateOrderForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateOrderView, self).get_context_data()
+        context['title'] = 'Добавление нового заказа'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -243,13 +252,16 @@ class RequestDetailView(DetailView):
         return context
 
 
-class CreateRequestView(View):
+class CreateRequestView(CreateView):
     """ Регистрация новой заявки в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateRequestForm()
-        return render(request, 'crm/create_request.html', {'form': form, 'title': 'Добавление новой заявки'})
+    template_name = 'crm/create_request.html'
+    form_class = CreateRequestForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateRequestView, self).get_context_data()
+        context['title'] = 'Добавление новой заявки'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -293,13 +305,16 @@ class VacancyDetailView(DetailView):
         return context
 
 
-class CreateVacancyView(View):
+class CreateVacancyView(CreateView):
     """ Регистрация новой вакансии в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateVacancyForm()
-        return render(request, 'crm/create_vacancy.html', {'form': form, 'title': 'Добавление новой вакансии'})
+    template_name = 'crm/create_vacancy.html'
+    form_class = CreateVacancyForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateVacancyView, self).get_context_data()
+        context['title'] = 'Добавление новой вакансии'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -343,13 +358,16 @@ class InterviewDetailView(DetailView):
         return context
 
 
-class CreateInterviewView(View):
+class CreateInterviewView(CreateView):
     """ Регистрация новго собеседования в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateInterviewForm()
-        return render(request, 'crm/create_interview.html', {'form': form, 'title': 'Добавление нового собеседования'})
+    template_name = 'crm/create_interview.html'
+    form_class = CreateInterviewForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateInterviewView, self).get_context_data()
+        context['title'] = 'Добавление нового собеседования'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -394,13 +412,16 @@ class CourseDetailView(DetailView):
         return context
 
 
-class CreateCourseView(View):
+class CreateCourseView(CreateView):
     """ Регистрация новго курса в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateCourseForm()
-        return render(request, 'crm/create_course.html', {'form': form, 'title': 'Добавление нового курса'})
+    template_name = 'crm/create_course.html'
+    form_class = CreateCourseForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCourseView, self).get_context_data()
+        context['title'] = 'Добавление нового курса'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -410,13 +431,16 @@ class CreateCourseView(View):
         return HttpResponseRedirect('/api/crm/courses')
 
 
-class CreateLessonView(View):
+class CreateLessonView(CreateView):
     """ Регистрация новго урока в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateLessonForm()
-        return render(request, 'crm/create_lesson.html', {'form': form, 'title': 'Добавление нового урока'})
+    template_name = 'crm/create_lesson.html'
+    form_class = CreateLessonForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateLessonView, self).get_context_data()
+        context['title'] = 'Добавление нового урока'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -444,16 +468,16 @@ class TimeTableListView(ListView):
             return Timetable.objects.all() if self.request.user.is_staff else None
 
 
-class CreateTimeTableView(View):
+class CreateTimeTableView(CreateView):
     """ Регистрация новой записи в рассписание в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateTimeTableForm()
-        return render(request, 'crm/create_timetable.html', {
-            'form': form,
-            'title': 'Добавление новой записи в рассписание'
-        })
+    template_name = 'crm/create_timetable.html'
+    form_class = CreateTimeTableForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateTimeTableView, self).get_context_data()
+        context['title'] = 'Добавление новой записи в рассписание'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -481,16 +505,16 @@ class AcademicPerformanceListView(ListView):
             return AcademicPerformance.objects.all() if self.request.user.is_staff else None
 
 
-class CreateAcademicPerformanceView(View):
+class CreateAcademicPerformanceView(CreateView):
     """ Регистрация новой оценки в системе успеваемости в CRM в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateAcademicPerformanceForm()
-        return render(request, 'crm/create_academic_performance.html', {
-            'form': form,
-            'title': 'Добавление новой оценки'
-        })
+    template_name = 'crm/create_academic_performance.html'
+    form_class = CreateAcademicPerformanceForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateAcademicPerformanceView, self).get_context_data()
+        context['title'] = 'Добавление новой оценки'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -532,13 +556,16 @@ class TeacherDetailView(DetailView):
         return context
 
 
-class CreateTeacherView(View):
+class CreateTeacherView(CreateView):
     """ Регистрация новго преподавателя в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateTeacherForm()
-        return render(request, 'crm/create_teacher.html', {'form': form, 'title': 'Регистрация нового преподавателя'})
+    template_name = 'crm/create_teacher.html'
+    form_class = CreateTeacherForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateTeacherView, self).get_context_data()
+        context['title'] = 'Регистрация нового преподавателя'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -601,13 +628,16 @@ class StaffDetailView(DetailView):
         return context
 
 
-class CreateStaffView(View):
+class CreateStaffView(CreateView):
     """ Регистрация новго сотрудника в CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
-        form = CreateStaffForm()
-        return render(request, 'crm/create_staff.html', {'form': form, 'title': 'Регистрация нового сотрудника'})
+    template_name = 'crm/create_staff.html'
+    form_class = CreateStaffForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateStaffView, self).get_context_data()
+        context['title'] = 'Регистрация нового сотрудника'
+        return context
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -631,3 +661,21 @@ class CreateStaffView(View):
                     user_group=form.cleaned_data['user_group']
                 )
         return HttpResponseRedirect('/api/crm/staffs')
+
+
+class GroupListView(ListView):
+    """ Список учебных групп в CRM
+    """
+    pass
+
+
+class GroupDetailView(DetailView):
+    """ Детальное представление учебной группы  в CRM
+    """
+    pass
+
+
+class CreateGroupView(CreateView):
+    """ Создание новой учебной группы в CRM
+    """
+    pass
