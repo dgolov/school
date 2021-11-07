@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 
 from management.forms import (
     AuthForm,
@@ -557,7 +557,7 @@ class TeacherDetailView(DetailView):
         return context
 
 
-class CreateTeacherView(CreateView):
+class CreateTeacherView(FormView):
     """ Регистрация новго преподавателя в CRM
     """
     template_name = 'crm/create_teacher.html'
@@ -629,7 +629,7 @@ class StaffDetailView(DetailView):
         return context
 
 
-class CreateStaffView(CreateView):
+class CreateStaffView(FormView):
     """ Регистрация новго сотрудника в CRM
     """
     template_name = 'crm/create_staff.html'
