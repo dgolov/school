@@ -17,158 +17,169 @@
                 <div class="menu-title">Главная</div>
             </a>
         </li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon icon-color-8"><i class="bx bx-diamond"></i>
-                </div>
-                <div class="menu-title">Dashboard</div>
-            </a>
-            <ul>
-                <li><a href="#"><i class="bx bx-right-arrow-alt"></i>Статистика</a>
+        {% if user.staff.user_group == 'admin' or user.staff.user_group == 'sale_manager' %}
+            <li class="menu-label">Продажи</li>
+            <li>
+                <a href="#">
+                    <div class="parent-icon icon-color-4"><i class="bx bx-archive"></i>
+                    </div>
+                    <div class="menu-title">Файлы</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'clients' %}">
+                    <div class="parent-icon icon-color-5"><i class="bx bx-group"></i>
+                    </div>
+                    <div class="menu-title">Клиенты</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'out_calls' %}">
+                    <div class="parent-icon icon-color-3"><i class="bx bx-phone-outgoing"></i>
+                    </div>
+                    <div class="menu-title">Входящие звонки</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'in_calls' %}">
+                    <div class="parent-icon icon-color-2"><i class="bx bx-phone-incoming"></i>
+                    </div>
+                    <div class="menu-title">Исходящие звонки</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'visits' %}">
+                    <div class="parent-icon icon-color-9"><i class="bx bx-store"></i>
+                    </div>
+                    <div class="menu-title">Визиты</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'requests' %}">
+                    <div class="parent-icon icon-color-6"><i class="bx bx-task"></i>
+                    </div>
+                    <div class="menu-title">Онлайн заявки</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'contracts' %}">
+                    <div class="parent-icon icon-color-7"><i class="bx bx-file"></i>
+                    </div>
+                    <div class="menu-title">Договора</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'orders' %}">
+                    <div class="parent-icon icon-color-8"><i class="bx bx-calendar-check"></i>
+                    </div>
+                    <div class="menu-title">Заказы</div>
+                </a>
+            </li>
+        {% endif %}
+        {% if user.staff.user_group == 'admin' or user.staff.user_group == 'education_manager' or user.staff.user_group == 'hr' %}
+            <li class="menu-label">Учебный процесс</li>
+            <li>
+                <a href="{% url 'teachers' %}">
+                    <div class="parent-icon icon-color-9"><i class="bx bx-user-voice"></i>
+                    </div>
+                    <div class="menu-title">Преподаватели</div>
+                </a>
+            </li>
+            {% if user.staff.user_group == 'admin' or user.staff.user_group == 'education_manager'%}
+                <li>
+                    <a href="{% url 'groups' %}">
+                        <div class="parent-icon icon-color-11"><i class="bx bx-group"></i>
+                        </div>
+                        <div class="menu-title">Группы</div>
+                    </a>
                 </li>
-                <li><a href="#"><i class="bx bx-right-arrow-alt"></i>Продажи</a>
+                <li>
+                    <a href="{% url 'courses' %}">
+                        <div class="parent-icon icon-color-5"><i class="bx bx-atom"></i>
+                        </div>
+                        <div class="menu-title">Курсы</div>
+                    </a>
                 </li>
-            </ul>
-        </li>
-        <li class="menu-label">Продажи</li>
-        <li>
-            <a href="#">
-                <div class="parent-icon icon-color-4"><i class="bx bx-archive"></i>
-                </div>
-                <div class="menu-title">Файлы</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'clients' %}">
-                <div class="parent-icon icon-color-5"><i class="bx bx-group"></i>
-                </div>
-                <div class="menu-title">Клиенты</div>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="parent-icon icon-color-3"><i class="bx bx-phone-outgoing"></i>
-                </div>
-                <div class="menu-title">Звонки</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'requests' %}">
-                <div class="parent-icon icon-color-6"><i class="bx bx-task"></i>
-                </div>
-                <div class="menu-title">Заявки</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'contracts' %}">
-                <div class="parent-icon icon-color-7"><i class="bx bx-file"></i>
-                </div>
-                <div class="menu-title">Договора</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'orders' %}">
-                <div class="parent-icon icon-color-8"><i class="bx bx-calendar-check"></i>
-                </div>
-                <div class="menu-title">Заказы</div>
-            </a>
-        </li>
-        <li class="menu-label">Учебный процесс</li>
-        <li>
-            <a href="{% url 'teachers' %}">
-                <div class="parent-icon icon-color-9"><i class="bx bx-user-voice"></i>
-                </div>
-                <div class="menu-title">Преподаватели</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'groups' %}">
-                <div class="parent-icon icon-color-11"><i class="bx bx-group"></i>
-                </div>
-                <div class="menu-title">Группы</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'courses' %}">
-                <div class="parent-icon icon-color-5"><i class="bx bx-atom"></i>
-                </div>
-                <div class="menu-title">Курсы</div>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="parent-icon icon-color-1"><i class="bx bx-meteor"></i>
-                </div>
-                <div class="menu-title">Мероприятия</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'timetable' %}">
-                <div class="parent-icon icon-color-4"><i class="bx bx-calendar"></i>
-                </div>
-                <div class="menu-title">Рассписание</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'academic_performance' %}">
-                <div class="parent-icon icon-color-3"><i class="bx bx-trending-up"></i>
-                </div>
-                <div class="menu-title">Успеваемость</div>
-            </a>
-        </li>
-        <li class="menu-label">HR</li>
-        <li>
-            <a href="{% url 'staffs' %}">
-                <div class="parent-icon icon-color-9"><i class="bx bx-group"></i>
-                </div>
-                <div class="menu-title">Сотрудники</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'vacancy' %}">
-                <div class="parent-icon icon-color-10"><i class="bx bx-spa"></i>
-                </div>
-                <div class="menu-title">Вакансии</div>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'interview' %}">
-                <div class="parent-icon icon-color-11"><i class="bx bx-repeat"></i>
-                </div>
-                <div class="menu-title">Собеседования</div>
-            </a>
-        </li>
-        <li class="menu-label">Контроль затрат</li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon icon-color-2"><i class="bx bx-grid-alt"></i>
-                </div>
-                <div class="menu-title">Категории затрат</div>
-            </a>
-            <ul>
-                <li><a href="table-basic-table.html"><i class="bx bx-right-arrow-alt"></i>Basic Table</a>
+                <li>
+                    <a href="#">
+                        <div class="parent-icon icon-color-1"><i class="bx bx-meteor"></i>
+                        </div>
+                        <div class="menu-title">Мероприятия</div>
+                    </a>
                 </li>
-                <li><a href="table-datatable.html"><i class="bx bx-right-arrow-alt"></i>Data Table</a>
+                <li>
+                    <a href="{% url 'timetable' %}">
+                        <div class="parent-icon icon-color-4"><i class="bx bx-calendar"></i>
+                        </div>
+                        <div class="menu-title">Рассписание</div>
+                    </a>
                 </li>
-                <li><a href="table-editable.html"><i class="bx bx-right-arrow-alt"></i>Editable Table</a>
+                <li>
+                    <a href="{% url 'academic_performance' %}">
+                        <div class="parent-icon icon-color-3"><i class="bx bx-trending-up"></i>
+                        </div>
+                        <div class="menu-title">Успеваемость</div>
+                    </a>
                 </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon icon-color-12"><i class="bx bx-donate-blood"></i>
-                </div>
-                <div class="menu-title">Затраты</div>
-            </a>
-            <ul>
-                <li><a href="icons-line-icons.html"><i class="bx bx-right-arrow-alt"></i>Line Icons</a>
-                </li>
-                <li><a href="icons-boxicons.html"><i class="bx bx-right-arrow-alt"></i>Boxicons</a>
-                </li>
-                <li><a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
-                </li>
-            </ul>
-        </li>
+            {% endif %}
+        {% endif %}
+        {% if user.staff.user_group == 'admin' or user.staff.user_group == 'hr' %}
+            <li class="menu-label">HR</li>
+            <li>
+                <a href="{% url 'staffs' %}">
+                    <div class="parent-icon icon-color-9"><i class="bx bx-group"></i>
+                    </div>
+                    <div class="menu-title">Сотрудники</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'vacancy' %}">
+                    <div class="parent-icon icon-color-10"><i class="bx bx-spa"></i>
+                    </div>
+                    <div class="menu-title">Вакансии</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'interview' %}">
+                    <div class="parent-icon icon-color-11"><i class="bx bx-repeat"></i>
+                    </div>
+                    <div class="menu-title">Собеседования</div>
+                </a>
+            </li>
+        {% endif %}
+        {% if user.staff.user_group == 'admin'%}
+            <li class="menu-label">Контроль затрат</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon icon-color-2"><i class="bx bx-grid-alt"></i>
+                    </div>
+                    <div class="menu-title">Категории затрат</div>
+                </a>
+                <ul>
+                    <li><a href="table-basic-table.html"><i class="bx bx-right-arrow-alt"></i>Basic Table</a>
+                    </li>
+                    <li><a href="table-datatable.html"><i class="bx bx-right-arrow-alt"></i>Data Table</a>
+                    </li>
+                    <li><a href="table-editable.html"><i class="bx bx-right-arrow-alt"></i>Editable Table</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon icon-color-12"><i class="bx bx-donate-blood"></i>
+                    </div>
+                    <div class="menu-title">Затраты</div>
+                </a>
+                <ul>
+                    <li><a href="icons-line-icons.html"><i class="bx bx-right-arrow-alt"></i>Line Icons</a>
+                    </li>
+                    <li><a href="icons-boxicons.html"><i class="bx bx-right-arrow-alt"></i>Boxicons</a>
+                    </li>
+                    <li><a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
         <li class="menu-label">Страницы</li>
         <li>
             <a href="user-profile.html">

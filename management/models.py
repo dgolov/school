@@ -80,9 +80,10 @@ class Request(models.Model):
     )
     PURPOSE_CHOICES = list(zip(PURPOSE_CHOICES, PURPOSE_CHOICES_RUS))
 
-    RESULT_CHOICES = ('contract', 'meeting', 'waiting_call', 'will_think', 'refusal', 'dissatisfied')
+    RESULT_CHOICES = ('contract', 'meeting', 'waiting_call', 'will_think', 'refusal', 'dissatisfied', 'no_connection')
     RESULT_CHOICES_RUS = (
         'Заключен договор', 'Назначена встреча', 'Ждет звонка', 'Будет думать', 'Отказ', 'Недовольный клиент',
+        'Нет ответа'
     )
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
@@ -52,6 +53,8 @@ class ProfileLoginView(View):
                 password=auth_form.cleaned_data['password']
             )
             if user:
+                if not user.is_staff:
+                    return HttpResponse('Нет доступа', status=403)
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect('/api/crm/')
@@ -76,10 +79,12 @@ class ClientsListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.staff.user_group == 'admin':
             return Client.objects.all()
+        elif self.request.user.staff.user_group == 'sale_manager':
+            return Client.objects.filter(manager=self.request.user.staff)
         else:
-            return Client.objects.filter(manager=self.request.user)
+            return None
 
 
 class ClientDetailView(DetailView):
@@ -134,7 +139,10 @@ class ContractListView(ListView):
         return context
 
     def get_queryset(self):
-        return Contract.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'sale_manager':
+            return Contract.objects.all()
+        else:
+            return None
 
 
 class ContractDetailView(DetailView):
@@ -184,8 +192,10 @@ class OrderListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Order.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'sale_manager':
+            return Order.objects.all()
+        else:
+            return None
 
 
 class OrderDetailView(DetailView):
@@ -222,7 +232,7 @@ class CreateOrderView(CreateView):
 
 
 class RequestListView(ListView):
-    """ Список заявок в CRM
+    """ Список онлайн заявок в CRM
     """
     model = Request
     template_name = 'crm/request_list.html'
@@ -235,12 +245,68 @@ class RequestListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Request.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin':
+            return Request.objects.filter(type_request='online')
+        elif self.request.user.staff.user_group == 'sale_manager':
+            return Request.objects.filter(
+                Q(manager=self.request.user.staff) | Q(status='new')).filter(type_request='online')
+        else:
+            return None
+
+
+class OutCallListView(RequestListView):
+    """ Список исходящих звонков в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(OutCallListView, self).get_context_data(**kwargs)
+        context['title'] = 'Исходящие звонки'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            return Request.objects.filter(type_request='outgoing_call')
+        elif self.request.user.staff.user_group == 'sale_manager':
+            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
+        else:
+            return None
+
+
+class InCallListView(RequestListView):
+    """ Список входящих звонков в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(InCallListView, self).get_context_data(**kwargs)
+        context['title'] = 'Входящие звонки'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            return Request.objects.filter(type_request='incoming_call')
+        elif self.request.user.staff.user_group == 'sale_manager':
+            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
+        else:
+            return None
+
+
+class VisitListView(RequestListView):
+    """ Список визитов в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(VisitListView, self).get_context_data(**kwargs)
+        context['title'] = 'Визиты'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            return Request.objects.filter(type_request='visit')
+        elif self.request.user.staff.user_group == 'sale_manager':
+            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
+        else:
+            return None
 
 
 class RequestDetailView(DetailView):
-    """ Детальное представление заявки в CRM
+    """ Детальное представление онлайн заявки в CRM
     """
     model = Request
     template_name = 'crm/request_detail.html'
@@ -288,8 +354,10 @@ class VacancyListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Vacancy.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'hr':
+            return Vacancy.objects.all()
+        else:
+            return None
 
 
 class VacancyDetailView(DetailView):
@@ -339,10 +407,12 @@ class InterviewListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.staff.user_group == 'admin':
             return Interview.objects.all()
+        elif self.request.user.staff.user_group == 'hr':
+            return Interview.objects.filter(manager=self.request.user.staff)
         else:
-            return Interview.objects.filter(user=self.request.user)
+            return None
 
 
 class InterviewDetailView(DetailView):
@@ -394,8 +464,10 @@ class CourseListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Course.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager':
+            return Course.objects.all()
+        else:
+            return None
 
 
 class CourseDetailView(DetailView):
@@ -465,8 +537,10 @@ class TimeTableListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Timetable.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager':
+            return Timetable.objects.all()
+        else:
+            return None
 
 
 class CreateTimeTableView(CreateView):
@@ -502,8 +576,10 @@ class AcademicPerformanceListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return AcademicPerformance.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager':
+            return AcademicPerformance.objects.all()
+        else:
+            return None
 
 
 class CreateAcademicPerformanceView(CreateView):
@@ -539,8 +615,11 @@ class TeacherListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Teacher.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager' \
+                or self.request.user.staff.user_group == 'hr':
+            return Teacher.objects.all()
+        else:
+            return None
 
 
 class TeacherDetailView(DetailView):
@@ -604,8 +683,10 @@ class StaffListView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Staff.objects.all() if self.request.user.is_staff else None
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'hr':
+            return Staff.objects.all()
+        else:
+            return None
 
 
 class StaffDetailView(DetailView):
