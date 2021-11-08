@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 
 from management import forms
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, Staff
+from management.mixins import GroupMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 
@@ -122,14 +123,6 @@ class UpdateClientView(UpdateView):
         context = super(UpdateClientView, self).get_context_data()
         context['title'] = 'Редактирование клиента'
         return context
-
-    @staticmethod
-    def put(request, *args, **kwargs):
-        form = forms.ClientForm(request.PUT)
-        if form.is_valid():
-            form.save()
-            form.instance.manager = request.user.staff
-            form.instance.save()
 
     def get_success_url(self):
         return f'/api/crm/clients/{self.get_object().pk}'
@@ -363,16 +356,12 @@ class UpdateRequestView(UpdateView):
         context['title'] = 'Редактирование заявки'
         return context
 
-    @staticmethod
-    def put(request, *args, **kwargs):
-        form = forms.UpdateRequestForm(request.PUT)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
-            form.instance.manager = request.user.staff
+            form.instance.manager = self.request.user.staff
             form.instance.save()
-
-    def get_success_url(self):
-        return f'/api/crm/requests/{self.get_object().pk}'
+            return HttpResponseRedirect(f'/api/crm/requests/{self.get_object().pk}')
 
 
 class VacancyListView(ListView):
@@ -413,7 +402,7 @@ class CreateVacancyView(CreateView):
     """ Регистрация новой вакансии в CRM
     """
     template_name = 'crm/create_vacancy.html'
-    form_class = forms.CreateVacancyForm
+    form_class = forms.VacancyForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateVacancyView, self).get_context_data()
@@ -422,10 +411,27 @@ class CreateVacancyView(CreateView):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        form = forms.CreateVacancyForm(request.POST)
+        form = forms.VacancyForm(request.POST)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/vacancy')
+
+
+class UpdateVacancyView(UpdateView):
+    """ Редактирование вакансии в CRM
+    """
+    model = Vacancy
+    template_name = 'crm/update_vacancy.html'
+    form_class = forms.VacancyForm
+    context_object_name = 'vacancy'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateVacancyView, self).get_context_data()
+        context['title'] = 'Редактирование вакансии'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/vacancy/{self.get_object().pk}'
 
 
 class InterviewListView(ListView):
@@ -524,7 +530,7 @@ class CreateCourseView(CreateView):
     """ Регистрация новго курса в CRM
     """
     template_name = 'crm/create_course.html'
-    form_class = forms.CreateCourseForm
+    form_class = forms.CourseForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateCourseView, self).get_context_data()
@@ -533,10 +539,27 @@ class CreateCourseView(CreateView):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        form = forms.CreateCourseForm(request.POST)
+        form = forms.CourseForm(request.POST)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/courses')
+
+
+class UpdateCourseView(UpdateView):
+    """ Редактирование курса в CRM
+    """
+    model = Course
+    template_name = 'crm/update_course.html'
+    form_class = forms.CourseForm
+    context_object_name = 'course'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateCourseView, self).get_context_data()
+        context['title'] = 'Редактирование курса'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/courses/{self.get_object().pk}'
 
 
 class CreateLessonView(CreateView):
@@ -578,11 +601,25 @@ class TimeTableListView(ListView):
             return None
 
 
+class TimeTableDetailView(DetailView):
+    """ Детальное представление записи рассписания в CRM
+    """
+    model = Timetable
+    template_name = 'crm/timetable_detail.html'
+    context_object_name = 'timetable'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TimeTableDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
 class CreateTimeTableView(CreateView):
     """ Регистрация новой записи в рассписание в CRM
     """
     template_name = 'crm/create_timetable.html'
-    form_class = forms.CreateTimeTableForm
+    form_class = forms.TimeTableForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
@@ -591,10 +628,27 @@ class CreateTimeTableView(CreateView):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        form = forms.CreateTimeTableForm(request.POST)
+        form = forms.TimeTableForm(request.POST)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/timetable')
+
+
+class UpdateTimeTableView(UpdateView):
+    """ Редактирование записа рассписания в CRM
+    """
+    model = Timetable
+    template_name = 'crm/update_timetable.html'
+    form_class = forms.TimeTableForm
+    context_object_name = 'timetable'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateTimeTableView, self).get_context_data()
+        context['title'] = 'Редактирование рассписания'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/timetable/{self.get_object().pk}'
 
 
 class AcademicPerformanceListView(ListView):
@@ -813,11 +867,11 @@ class GroupDetailView(DetailView):
         return context
 
 
-class CreateGroupView(CreateView):
+class CreateGroupView(CreateView, GroupMixin):
     """ Создание новой учебной группы в CRM
     """
     template_name = 'crm/create_group.html'
-    form_class = forms.CreateGroupForm
+    form_class = forms.GroupForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateGroupView, self).get_context_data()
@@ -826,7 +880,7 @@ class CreateGroupView(CreateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = forms.CreateGroupForm(request.POST)
+        form = forms.GroupForm(request.POST)
         if form.is_valid():
             new_group = form.save()
             new_group.manager = request.user.staff
@@ -834,9 +888,23 @@ class CreateGroupView(CreateView):
             self.update_students_group(new_group, request)
         return HttpResponseRedirect('/api/crm/groups')
 
-    @staticmethod
-    def update_students_group(new_group, request):
-        students_id_list = request.POST.getlist('students')
-        for student_id in students_id_list:
-            student = Student.objects.get(pk=int(student_id))
-            student.group_list.add(new_group)
+
+class UpdateGroupView(UpdateView, GroupMixin):
+    """ Редактирование группы в CRM
+    """
+    model = Group
+    template_name = 'crm/update_group.html'
+    form_class = forms.GroupForm
+    context_object_name = 'group'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateGroupView, self).get_context_data()
+        context['title'] = 'Редактирование группы'
+        context['student_list'] = Student.objects.all()
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            group = form.save()
+            self.update_students_group(group, self.request)
+            return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')

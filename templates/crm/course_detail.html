@@ -3,20 +3,25 @@
     <div class="user-profile-page">
         <div class="card radius-15">
             <div class="card-body">
-            <div class="row mb-4">
-                <div class="col-md-8"></div>
-                <div class="col-md-4">
-                    <a type="button" href="{% url 'create_lesson' %}" class="btn btn-outline-primary m-1 px-5"
-                       style="float: right;">Добавить урок</a>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <h4 class="mb-0">{{ course }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'update_course' pk=course.pk %}"
+                           class="btn btn-outline-primary px-5" style="float: right;">Редактировать</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'create_lesson' %}" class="btn btn-outline-primary px-5"
+                           style="float: right;">Добавить урок</a>
+                    </div>
                 </div>
-            </div>
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
                             <div class="ml-md-12 flex-grow-1">
-                                <div class="d-flex align-items-center mb-3">
-                                    <h4 class="mb-0">{{ course }}</h4>
-                                </div>
                                 <table class="table table-sm table-borderless mt-md-0 mt-3">
                                     <tbody>
                                     <tr>

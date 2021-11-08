@@ -259,8 +259,8 @@ class UpdateRequestForm(forms.ModelForm):
         fields = ('type_request', 'status', 'course', 'purpose', 'result', 'remind', 'comment')
 
 
-class CreateVacancyForm(forms.ModelForm):
-    """ Форма регистрации новой вакансии в CRN
+class VacancyForm(forms.ModelForm):
+    """ Форма регистрации и редактирования вакансии в CRN
     """
     name = forms.CharField(
         widget=forms.TextInput(
@@ -370,8 +370,8 @@ class CreateInterviewForm(forms.ModelForm):
         )
 
 
-class CreateCourseForm(forms.ModelForm):
-    """ Форма регистрации нового курса в CRM
+class CourseForm(forms.ModelForm):
+    """ Форма регистрации и редактирования курса в CRM
     """
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
@@ -438,8 +438,8 @@ class CreateLessonForm(forms.ModelForm):
         fields = ('course', 'theme', 'lesson_number', 'description')
 
 
-class CreateTimeTableForm(forms.ModelForm):
-    """ Форма регистрации новой записи в рассписании в CRM
+class TimeTableForm(forms.ModelForm):
+    """ Форма регистрации и редактирования записи в рассписании в CRM
     """
     date = forms.DateTimeField(
         widget=AdminDateWidget(
@@ -561,8 +561,8 @@ class CreateStaffForm(CreateTeacherForm):
     )
 
 
-class CreateGroupForm(forms.ModelForm):
-    """ Форма добавления новой учебной группы в CRM
+class GroupForm(forms.ModelForm):
+    """ Форма добавления и редактирования учебной группы в CRM
     """
     name = forms.CharField(
         widget=forms.TextInput(

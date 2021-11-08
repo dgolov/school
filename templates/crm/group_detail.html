@@ -3,13 +3,21 @@
     <div class="user-profile-page">
         <div class="card radius-15">
             <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3">
+                            <h5 class="mb-0">{{ group}}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <a type="button" href="{% url 'update_group' pk=group.pk %}"
+                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
                             <div class="ml-md-12 flex-grow-1">
-                                <div class="d-flex align-items-center mb-3">
-                                    <h4 class="mb-0">{{ group }}</h4>
-                                </div>
                                 <table class="table table-sm table-borderless mt-md-0 mt-3">
                                     <tbody>
                                     <tr>
