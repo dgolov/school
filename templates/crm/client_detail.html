@@ -3,6 +3,17 @@
     <div class="user-profile-page">
         <div class="card radius-15">
             <div class="card-body">
+            <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3">
+                            <h5 class="mb-0">Клиент {{ client.id }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <a type="button" href="{% url 'update_client' pk=client.pk %}"
+                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
@@ -71,9 +82,15 @@
                                     <tbody>
                                     {% for contract in contracts %}
                                         <tr>
-                                            <th scope="row">{{ contract.id }}</th>
-                                            <td>{{ contract.client }}</td>
-                                            <td>{{ contract.course }}</td>
+                                            <th scope="row">
+                                                <a href="/api/crm/contracts/{{ contract.id }}/">{{ contract.id }}</a>
+                                            </th>
+                                            <td>
+                                                <a href="/api/crm/contracts/{{ contract.id }}/">{{ contract.client }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="/api/crm/courses/{{ contract.course.id }}/">{{ contract.course }}</a>
+                                            </td>
                                             <td>{{ contract.course.price }}</td>
                                             <td>{{ contract.date }}</td>
                                         </tr>
@@ -103,9 +120,15 @@
                                     <tbody>
                                     {% for order in orders %}
                                         <tr>
-                                            <th scope="row">{{ order.id }}</th>
-                                            <td>{{ order.client }}</td>
-                                            <td>{{ order.course }}</td>
+                                            <th scope="row">
+                                                <a href="/api/crm/orders/{{ order.id }}/">{{ order.id }}</a>
+                                            </th>
+                                            <td>
+                                                <a href="/api/crm/orders/{{ order.id }}/">{{ order.client }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="/api/crm/courses/{{ order.course.id }}/">{{ order.course }}</a>
+                                            </td>
                                             <td>{{ order.course.price }}</td>
                                             <td>{{ order.date }}</td>
                                             <td>{{ order.payed }}</td>
@@ -137,11 +160,17 @@
                                     <tbody>
                                     {% for request in requests %}
                                         <tr>
-                                            <th scope="row">{{ request.id }}</th>
-                                            <td>{{ request.client }}</td>
+                                            <th scope="row">
+                                                <a href="/api/crm/requests/{{ request.id }}/">{{ request.id }}</a>
+                                            </th>
+                                            <td>
+                                                <a href="/api/crm/requests/{{ request.id }}/">{{ request.client }}</a>
+                                            </td>
                                             <td>{{ request.type_request }}</td>
                                             <td>{{ request.status }}</td>
-                                            <td>{{ request.course }}</td>
+                                            <td>
+                                                <a href="/api/crm/courses/{{ request.course.id }}/">{{ request.course }}</a>
+                                            </td>
                                             <td>{{ request.result }}</td>
                                             <td>{{ request.date }}</td>
                                         </tr>

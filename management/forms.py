@@ -29,8 +29,8 @@ class AuthForm(forms.Form):
     )
 
 
-class CreateClientForm(forms.ModelForm):
-    """ Форма регистрации нового клиента в CRM
+class ClientForm(forms.ModelForm):
+    """ Форма регистрации и обновления клиента в CRM
     """
     last_name = forms.CharField(
         widget=forms.TextInput(
@@ -205,6 +205,58 @@ class CreateRequestForm(forms.ModelForm):
     class Meta:
         model = Request
         fields = ('client', 'type_request', 'status', 'course', 'purpose', 'result', 'remind', 'comment')
+
+
+class UpdateRequestForm(forms.ModelForm):
+    """ Форма регистрации новой заявки в CRM
+    """
+    type_request = forms.CharField(
+        widget=forms.Select(
+            choices=Request.TYPE_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    status = forms.CharField(
+        widget=forms.Select(
+            choices=Request.STATUS_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    course = forms.ModelChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    purpose = forms.CharField(
+        widget=forms.Select(
+            choices=Request.PURPOSE_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    result = forms.CharField(
+        widget=forms.Select(
+            choices=Request.RESULT_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    remind = forms.DateField(
+        required=False,
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
+    comment = forms.CharField(
+        required=False,
+        label='Комментарий',
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'value': "PUT"}
+        )
+    )
+
+    class Meta:
+        model = Request
+        fields = ('type_request', 'status', 'course', 'purpose', 'result', 'remind', 'comment')
 
 
 class CreateVacancyForm(forms.ModelForm):

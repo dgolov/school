@@ -3,13 +3,13 @@
     <div class="card radius-15">
         <div class="card-body">
             <div class="card-title">
-                <h4 class="mb-4">Регистрация нового клиента</h4>
+                <h4 class="mb-4">Изменение данных клиента</h4>
                 <hr/>
             </div>
             <form method="POST" action="">
                 {% include 'crm/inc/client_form.html' %}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Зарегистрировать</button>
+                <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Изменить</button>
             </form>
         </div>
     </div>
