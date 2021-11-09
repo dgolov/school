@@ -101,12 +101,10 @@ class CreateClientView(CreateView):
         context['title'] = 'Регистрация нового клиента'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.ClientForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             new_client = form.save()
-            new_client.manager = request.user.staff
+            new_client.manager = self.request.user.staff
             new_client.save()
         return HttpResponseRedirect('/api/crm/clients')
 
@@ -173,9 +171,7 @@ class CreateContractView(CreateView):
         context['title'] = 'Добавление нового договора'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateContractForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/contracts')
@@ -226,9 +222,7 @@ class CreateOrderView(CreateView):
         context['title'] = 'Добавление нового заказа'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateOrderForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/orders')
@@ -339,11 +333,10 @@ class CreateRequestView(CreateView):
         context['title'] = 'Добавление новой заявки'
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = forms.CreateRequestForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
-            form.instance.manager = request.user.staff
+            form.instance.manager = self.request.user.staff
             form.instance.save()
             return HttpResponseRedirect(self.success_urls[form.instance.type_request])
 
@@ -414,9 +407,7 @@ class CreateVacancyView(CreateView):
         context['title'] = 'Добавление новой вакансии'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.VacancyForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/vacancy')
@@ -486,12 +477,10 @@ class CreateInterviewView(CreateView):
         context['title'] = 'Добавление нового собеседования'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateInterviewForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
-            form.instance.manager = request.user.staff
+            form.instance.manager = self.request.user.staff
             form.instance.save()
         return HttpResponseRedirect('/api/crm/interview')
 
@@ -542,9 +531,7 @@ class CreateCourseView(CreateView):
         context['title'] = 'Добавление нового курса'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CourseForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/courses')
@@ -578,9 +565,7 @@ class CreateLessonView(CreateView):
         context['title'] = 'Добавление нового урока'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateLessonForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/courses')
@@ -631,9 +616,7 @@ class CreateTimeTableView(CreateView):
         context['title'] = 'Добавление новой записи в рассписание'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.TimeTableForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/timetable')
@@ -687,9 +670,7 @@ class CreateAcademicPerformanceView(CreateView):
         context['title'] = 'Добавление новой оценки'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateAcademicPerformanceForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/academic-performance')
@@ -741,9 +722,7 @@ class CreateTeacherView(FormView):
         context['title'] = 'Регистрация нового преподавателя'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateTeacherForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             new_user = User.objects.create(
                 username=form.cleaned_data['username'],
@@ -815,9 +794,7 @@ class CreateStaffView(FormView):
         context['title'] = 'Регистрация нового сотрудника'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        form = forms.CreateStaffForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             if form.is_valid():
                 new_user = User.objects.create(
@@ -884,13 +861,12 @@ class CreateGroupView(CreateView, GroupMixin):
         context['student_list'] = Student.objects.all()
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = forms.GroupForm(request.POST)
+    def form_valid(self, form):
         if form.is_valid():
             new_group = form.save()
-            new_group.manager = request.user.staff
+            new_group.manager = self.request.user.staff
             new_group.save()
-            self.update_students_group(new_group, request)
+            self.update_students_group(new_group, self.request)
         return HttpResponseRedirect('/api/crm/groups')
 
 
