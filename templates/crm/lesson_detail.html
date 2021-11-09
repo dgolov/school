@@ -1,0 +1,103 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3">
+                            <h4 class="mb-0">Урок {{ lesson.id }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <a type="button" href="{% url 'update_lesson' pk=lesson.pk %}"
+                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать урок</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Тема урока:</th>
+                                        <td>{{ lesson.theme }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Категория:</th>
+                                        <td>
+                                            <a href="/api/crm/courses/{{ lesson.course.pk }}">{{ lesson.course.category }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Курс:</th>
+                                        <td>
+                                            <a href="/api/crm/courses/{{ lesson.course.pk }}">{{ lesson.course }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Номер урока в курсе</th>
+                                        <td>{{ lesson.lesson_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ссылка на видео урока</th>
+                                        <td><a href="#">{{ lesson.video_slug }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Материалы урока</th>
+                                        <td><a href="#">{{ lesson.materials }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Доступный урок</th>
+                                        <td>{{ lesson.is_active }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <h4 class="mb-3">Преподаватель</h4>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>ФИО:</th>
+                                <td>
+                                    <a href="/api/crm/teachers/{{ lesson.course.teacher.id }}">
+                                        {{ lesson.course.teacher.get_fio }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Номер телефона:</th>
+                                <td>
+                                    <a href="tel: {{ lesson.course.teacher.phone }}">
+                                        {{ lesson.course.teacher.phone }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>email:</th>
+                                <td>
+                                    <a href="mailto: {{ lesson.course.teacher.user.email }}">
+                                        {{ lesson.course.teacher.user.email }}
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Описание урока</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <p class="mx-4 my-2">{{ lesson.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

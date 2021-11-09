@@ -94,7 +94,9 @@
                                             <th scope="row">{{ lesson.id }}</th>
                                             <td>{{ lesson.course }}</td>
                                             <td>{{ lesson.lesson_number }}</td>
-                                            <td>{{ lesson.theme }}</td>
+                                            <td>
+                                                <a href="/api/crm/courses/lessons/{{ lesson.pk }}">{{ lesson.theme }}</a>
+                                            </td>
                                             <td>{{ lesson.is_active }}</td>
                                         </tr>
                                     {% endfor %}

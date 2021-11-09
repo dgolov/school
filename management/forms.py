@@ -407,8 +407,8 @@ class CourseForm(forms.ModelForm):
         fields = ('category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation')
 
 
-class CreateLessonForm(forms.ModelForm):
-    """ Форма регистрации нового урока в CRM
+class LessonForm(forms.ModelForm):
+    """ Форма добавления и редактирования урока в CRM
     """
     course = forms.ModelChoiceField(
         queryset=Course.objects.all(),
@@ -426,6 +426,12 @@ class CreateLessonForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите номер урока в курсе...'}
         )
     )
+    video_slug = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на видео урока...'}
+        )
+    )
     description = forms.CharField(
         required=False,
         widget=forms.Textarea(
@@ -435,7 +441,7 @@ class CreateLessonForm(forms.ModelForm):
 
     class Meta:
         model = Lesson
-        fields = ('course', 'theme', 'lesson_number', 'description')
+        fields = ('course', 'theme', 'lesson_number', 'video_slug', 'description')
 
 
 class TimeTableForm(forms.ModelForm):

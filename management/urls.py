@@ -36,7 +36,9 @@ urlpatterns = [
     path('courses/<int:pk>/', management.CourseDetailView.as_view(), name='course_detail'),
     path('courses/create/', management.CreateCourseView.as_view(), name='create_course'),
     path('courses/update/<int:pk>/', management.UpdateCourseView.as_view(), name='update_course'),
+    path('courses/lessons/<int:pk>/', management.LessonDetailView.as_view(), name='lesson_detail'),
     path('courses/lessons/create/', management.CreateLessonView.as_view(), name='create_lesson'),
+    path('courses/lessons/update/<int:pk>/', management.UpdateLessonView.as_view(), name='update_lesson'),
     path('academic-performance/', management.AcademicPerformanceListView.as_view(), name='academic_performance'),
     path(
         route='academic-performance/create/',

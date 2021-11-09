@@ -520,6 +520,20 @@ class CourseDetailView(DetailView):
         return context
 
 
+class LessonDetailView(DetailView):
+    """ Детальное представление урока в CRM
+    """
+    model = Lesson
+    template_name = 'crm/lesson_detail.html'
+    context_object_name = 'lesson'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(LessonDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
 class CreateCourseView(CreateView):
     """ Регистрация новго курса в CRM
     """
@@ -558,7 +572,7 @@ class CreateLessonView(CreateView):
     """ Регистрация новго урока в CRM
     """
     template_name = 'crm/create_lesson.html'
-    form_class = forms.CreateLessonForm
+    form_class = forms.LessonForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateLessonView, self).get_context_data()
@@ -569,6 +583,23 @@ class CreateLessonView(CreateView):
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/api/crm/courses')
+
+
+class UpdateLessonView(UpdateView):
+    """ Редактирование урока в CRM
+    """
+    model = Lesson
+    template_name = 'crm/update_lesson.html'
+    form_class = forms.LessonForm
+    context_object_name = 'lesson'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateLessonView, self).get_context_data()
+        context['title'] = 'Редактирование урока'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/courses/lessons/{self.get_object().pk}'
 
 
 class TimeTableListView(ListView):
