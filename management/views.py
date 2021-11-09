@@ -327,20 +327,25 @@ class CreateRequestView(CreateView):
     """
     template_name = 'crm/create_request.html'
     form_class = forms.CreateRequestForm
+    success_urls = {
+        'incoming_call': '/api/crm/in-calls',
+        'outgoing_call': '/api/crm/out-calls/',
+        'online': '/api/crm/online-requests',
+        'visit': '/api/crm/visits'
+    }
 
     def get_context_data(self, **kwargs):
         context = super(CreateRequestView, self).get_context_data()
         context['title'] = 'Добавление новой заявки'
         return context
 
-    @staticmethod
-    def post(request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         form = forms.CreateRequestForm(request.POST)
         if form.is_valid():
             form.save()
             form.instance.manager = request.user.staff
             form.instance.save()
-        return HttpResponseRedirect('/api/crm/requests')
+            return HttpResponseRedirect(self.success_urls[form.instance.type_request])
 
 
 class UpdateRequestView(UpdateView):
