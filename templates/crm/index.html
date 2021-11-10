@@ -1,108 +1,8 @@
 {% extends 'crm/base.html' %}
+{% load static %}
 {% block content %}
-    <div class="row">
-        <div class="col-12 col-lg-3">
-            <div class="card radius-15 bg-voilet">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h2 class="mb-0 text-white">649 <i
-                                    class='bx bxs-up-arrow-alt font-14 text-white'></i></h2>
-                        </div>
-                        <div class="ml-auto font-35 text-white"><i class="bx bx-cart-alt"></i>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-white">Item Delivered</p>
-                        </div>
-                        <div class="ml-auto font-14 text-white">+23.4%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-3">
-            <div class="card radius-15 bg-primary-blue">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h2 class="mb-0 text-white">114 <i
-                                    class='bx bxs-down-arrow-alt font-14 text-white'></i></h2>
-                        </div>
-                        <div class="ml-auto font-35 text-white"><i class="bx bx-support"></i>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-white">Refund Requests</p>
-                        </div>
-                        <div class="ml-auto font-14 text-white">+14.7%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-3">
-            <div class="card radius-15 bg-rose">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h2 class="mb-0 text-white">98 <i
-                                    class='bx bxs-up-arrow-alt font-14 text-white'></i></h2>
-                        </div>
-                        <div class="ml-auto font-35 text-white"><i class="bx bx-tachometer"></i>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-white">Orders Cancelled</p>
-                        </div>
-                        <div class="ml-auto font-14 text-white">-12.9%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-3">
-            <div class="card radius-15 bg-sunset">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h2 class="mb-0 text-white">208 <i
-                                    class='bx bxs-up-arrow-alt font-14 text-white'></i></h2>
-                        </div>
-                        <div class="ml-auto font-35 text-white"><i class="bx bx-user"></i>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-white">New Users</p>
-                        </div>
-                        <div class="ml-auto font-14 text-white">+13.6%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card radius-15">
-        <div class="card-header border-bottom-0">
-            <div class="d-lg-flex align-items-center">
-                <div>
-                    <h5 class="mb-2 mb-lg-0">Sales Update</h5>
-                </div>
-                <div class="ml-lg-auto mb-2 mb-lg-0">
-                    <div class="btn-group-round">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-white">Daiiy</button>
-                            <button type="button" class="btn btn-white">Weekly</button>
-                            <button type="button" class="btn btn-white">Monthly</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div id="chart1"></div>
-        </div>
-    </div>
+    {% include 'crm/inc/dachboard/top_statistics.html' %}
+    {% include 'crm/inc/dachboard/sale_statistic.html' %}
     <div class="card-deck">
         <div class="card radius-15">
             <div class="card-body">
@@ -485,88 +385,25 @@
             </div>
         </div>
     </div>
-    <div class="card radius-15">
-        <div class="card-header border-bottom-0">
-            <div class="d-flex align-items-center">
-                <div>
-                    <h5 class="mb-0">Recent Orders</h5>
-                </div>
-                <div class="ml-auto">
-                    <button type="button" class="btn btn-white radius-15">View More</button>
-                </div>
-            </div>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th>Photo</th>
-                        <th>Product Name</th>
-                        <th>Customer</th>
-                        <th>Product id</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="product-img bg-transparent border">
-                                <img src="assets/images/icons/smartphone.png" width="35" alt="">
-                            </div>
-                        </td>
-                        <td>Honor Mobile 7x</td>
-                        <td>Mitchell Daniel</td>
-                        <td>#835478</td>
-                        <td>$54.68</td>
-                        <td><a href="javascript:;"
-                               class="btn btn-sm btn-light-success btn-block radius-30">Delivered</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="product-img bg-transparent border">
-                                <img src="assets/images/icons/watch.png" width="35" alt="">
-                            </div>
-                        </td>
-                        <td>Hand Watch</td>
-                        <td>Milona Burke</td>
-                        <td>#987546</td>
-                        <td>$43.78</td>
-                        <td><a href="javascript:;" class="btn btn-sm btn-light-warning btn-block radius-30">Pending</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="product-img bg-transparent border">
-                                <img src="assets/images/icons/laptop.png" width="35" alt="">
-                            </div>
-                        </td>
-                        <td>Mini Laptop</td>
-                        <td>Craig Clayton</td>
-                        <td>#325687</td>
-                        <td>$62.21</td>
-                        <td><a href="javascript:;"
-                               class="btn btn-sm btn-light-success btn-block radius-30">Delivered</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="product-img bg-transparent border">
-                                <img src="assets/images/icons/shirt.png" width="35" alt="">
-                            </div>
-                        </td>
-                        <td>Slim-T-Shirt</td>
-                        <td>Clark Andola</td>
-                        <td>#658972</td>
-                        <td>$75.68</td>
-                        <td><a href="javascript:;" class="btn btn-sm btn-light-danger btn-block radius-30">Cancelled</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    let ordersData = {}
+        let ordersCountList = []
+        const monthNamesList = [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ]
+        let montList = []
+
+        {% for instance in orders_groups %}
+            ordersData["{{ instance.date.month }}"] = Number("{{ instance.total_price }}")
+        {% endfor %}
+
+        for (let order in ordersData) {
+            ordersCountList.push(ordersData[order])
+            montList.push(monthNamesList[Number(order) - 1])
+        }
+</script>
 {% endblock %}
