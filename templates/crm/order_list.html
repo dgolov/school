@@ -44,8 +44,8 @@
                             <th scope="row"><a href="/api/crm/orders/{{ order.pk }}">{{ order.id }}</a></th>
                             <td><a href="/api/crm/orders/{{ order.pk }}">{{ order.client }}</a></td>
                             <td>{{ order.course }}</td>
-                            <td>{{ order.course.price }}</td>
-                            <td>{{ order.date }}</td>
+                            <td>{{ order.price }}</td>
+                            <td>{{ order.date_and_time }}</td>
                             <td>{{ order.payed }}</td>
                         </tr>
                     {% endfor %}

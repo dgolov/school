@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Count, Sum
+from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
@@ -11,15 +12,29 @@ from management.models import Client, Contract, Order, Vacancy, Interview, Reque
 from management.mixins import GroupMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
+from datetime import datetime
+
 
 class MainView(View):
     """ Представление главной страницы CRM
     """
-    @staticmethod
-    def get(request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return HttpResponseRedirect('/api/crm/auth')
-        return render(request, 'crm/index.html', {'user': request.user, 'title': "Академия будущего"})
+        context = self.get_context_data()
+        return render(request, 'crm/index.html', context)
+
+    def get_context_data(self):
+        return {
+            'user': self.request.user,
+            'title': "Академия будущего",
+            'orders_count': Order.objects.filter(payed=True).count(),
+            'students_count': Student.objects.all().count(),
+            'requests_count': Request.objects.all().count(),
+            'contracts_count': Contract.objects.all().count(),
+            'orders_groups': Order.objects.filter(payed=True, date_and_time__year=datetime.now().year).annotate(
+                date=TruncMonth('date_and_time')).values('date').annotate(total_price=Sum('price')),
+        }
 
 
 class ProfileLoginView(View):
@@ -224,6 +239,7 @@ class CreateOrderView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
+            form.instance.price = form.instance.course.price
             form.save()
         return HttpResponseRedirect('/api/crm/orders')
 
