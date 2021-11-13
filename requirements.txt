@@ -26,12 +26,15 @@ Deprecated==1.2.13
 distro==1.6.0
 Django==3.2.7
 django-braces==1.14.0
+django-celery-beat==2.2.1
+django-celery-results==2.2.0
 django-cors-headers==3.8.0
 django-filter==21.1
 django-oauth-toolkit==1.5.0
 django-phonenumber-field==5.2.0
 django-rest-framework-social-oauth2==1.1.0
 django-templated-mail==1.1.1
+django-timezone-field==4.2.1
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.8.0
 drf-yasg==1.20.0
@@ -62,6 +65,8 @@ pycparser==2.20
 PyJWT==2.1.0
 pyOpenSSL==21.0.0
 pyparsing==2.4.7
+python-crontab==2.6.0
+python-dateutil==2.8.2
 python-dotenv==0.19.0
 python3-openid==3.2.0
 pytz==2021.1
