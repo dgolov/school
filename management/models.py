@@ -52,7 +52,15 @@ class Contract(models.Model):
 class Order(models.Model):
     """ Модель заказа
     """
+    payment_response_id = models.CharField(max_length=50, verbose_name='id оплаты', blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    student = models.ForeignKey(
+        'mainapp.Student',
+        on_delete=models.SET_NULL,
+        verbose_name='Студент',
+        blank=True,
+        null=True
+    )
     payed = models.BooleanField(default=False, verbose_name='Оплачено')
     date_and_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время заказа')
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Курс')
