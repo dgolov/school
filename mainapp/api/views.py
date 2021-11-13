@@ -1,7 +1,3 @@
-import json
-from datetime import datetime
-
-from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, decorators
 from rest_framework.decorators import action
@@ -19,20 +15,7 @@ from .utils import (
     get_serializer_to_display_the_profile,
     check_correct_data_for_add_in_timetable, delete_file,
 )
-from ..models import (
-    Profile,
-    Student,
-    Teacher,
-    Group,
-    Message,
-    Category,
-    Course,
-    Lesson,
-    Timetable,
-    Certificate,
-    AcademicPerformance,
-    Photo,
-)
+from mainapp import models
 
 from management.models import Staff
 
@@ -57,7 +40,7 @@ class UserRetrieveView(APIView):
     """ Эндпоинт получения данных о текущем пользователе
     """
     def get(self, *args, **kwargs):
-        item_profile = Profile.objects.get(user=self.request.user)
+        item_profile = models.Profile.objects.get(user=self.request.user)
         serializer = serializers.ProfileSerializer(item_profile, many=False)
         return Response(serializer.data)
 
@@ -65,14 +48,14 @@ class UserRetrieveView(APIView):
 class StudentsViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех обучающихся
     """
-    queryset = Student.objects.all()
+    queryset = models.Student.objects.all()
     detail_serializer_class = serializers.ProfileSerializer
 
 
 class TeachersViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех преподавателей
     """
-    queryset = Teacher.objects.all()
+    queryset = models.Teacher.objects.all()
     detail_serializer_class = serializers.ProfileSerializer
 
 
@@ -118,7 +101,7 @@ class PersonalProfileView(viewsets.ModelViewSet):
             return None
 
     def retrieve(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=kwargs.get('pk'))
+        profile = models.Profile.objects.get(pk=kwargs.get('pk'))
         queryset = self.get_queryset(profile=profile)
         if not queryset:
             return Response(status=status.HTTP_403_FORBIDDEN)
@@ -153,8 +136,8 @@ class FriendsListView(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         try:
-            return Profile.objects.get(pk=kwargs.get('pk'))
-        except Profile.DoesNotExist:
+            return models.Profile.objects.get(pk=kwargs.get('pk'))
+        except models.Profile.DoesNotExist:
             return None
 
 
@@ -180,7 +163,7 @@ class InRequestsListView(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         try:
             return self.request.user.profile
-        except Profile.DoesNotExist:
+        except models.Profile.DoesNotExist:
             return None
 
 
@@ -239,10 +222,10 @@ class GroupViewSet(viewsets.ModelViewSet):
             queryset = item_profile.student.group_list.all()
         elif item_profile.user_group == 'teacher':
             teacher = item_profile.teacher
-            queryset = Group.objects.filter(teacher=teacher)
+            queryset = models.Group.objects.filter(teacher=teacher)
         elif item_profile.user_group == 'manager':
             manager = item_profile.educationalmanager
-            queryset = Group.objects.filter(manager=manager)
+            queryset = models.Group.objects.filter(manager=manager)
         else:
             return None
         return queryset
@@ -259,7 +242,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 class CategoryListView(ListAPIView):
     """ Эндпоинт списка категорий курсов
     """
-    queryset = Category.objects.all()
+    queryset = models.Category.objects.all()
     serializer_class = serializers.CategorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -267,7 +250,7 @@ class CategoryListView(ListAPIView):
 class CoursesViewSet(viewsets.ModelViewSet):
     """ Эндпоинт списка всех курсов
     """
-    queryset = Course.objects.all()
+    queryset = models.Course.objects.all()
     serializer_class = serializers.CourseSerializer
     permission_classes = [IsAuthenticated]
     permission_classes_by_action = {
@@ -280,7 +263,7 @@ class CoursesViewSet(viewsets.ModelViewSet):
     def lessons(self, request, *args, **kwargs):
         """ Уроки в курсе """
         course = self.get_object()
-        lesson_objects = Lesson.objects.filter(course=course.pk).order_by('lesson_number')
+        lesson_objects = models.Lesson.objects.filter(course=course.pk).order_by('lesson_number')
         serializer = serializers.LessonSerializer(lesson_objects, many=True)
         return Response(serializer.data)
 
@@ -320,7 +303,7 @@ class LessonsDetailView(APIView):
     """
     def get(self, *args, **kwargs):
         item_profile = self.request.user.profile
-        course = Course.objects.get(pk=kwargs.get('course_pk'))
+        course = models.Course.objects.get(pk=kwargs.get('course_pk'))
 
         if item_profile.user_group == 'student':
             if course not in item_profile.student.courses.all():
@@ -330,7 +313,7 @@ class LessonsDetailView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        lesson_objects = Lesson.objects.get(
+        lesson_objects = models.Lesson.objects.get(
             pk=kwargs.get('pk'),
             course=kwargs.get('course_pk')
         )
@@ -354,9 +337,9 @@ class TimetableViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         item_profile = self.request.user.profile
         if item_profile.user_group == 'student':
-            return Timetable.objects.filter(group__in=item_profile.student.group_list.all())
+            return models.Timetable.objects.filter(group__in=item_profile.student.group_list.all())
         elif item_profile.user_group == 'teacher':
-            return Timetable.objects.filter(group__in=item_profile.teacher.group_list.all())
+            return models.Timetable.objects.filter(group__in=item_profile.teacher.group_list.all())
 
     def create(self, request, *args, **kwargs):
         """ Добавить урок в рассписание """
@@ -393,11 +376,11 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         item_profile = self.request.user.profile
         if item_profile.user_group == 'student':
-            return AcademicPerformance.objects.filter(student=item_profile)
+            return models.AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
-            teacher_groups = Group.objects.filter(teacher=item_profile)
-            teacher_students = Student.objects.filter(group_list__in=teacher_groups)
-            return AcademicPerformance.objects.filter(student__in=teacher_students)
+            teacher_groups = models.Group.objects.filter(teacher=item_profile)
+            teacher_students = models.Student.objects.filter(group_list__in=teacher_groups)
+            return models.AcademicPerformance.objects.filter(student__in=teacher_students)
 
     def create(self, request, *args, **kwargs):
         """ Поставить оценку """
@@ -423,7 +406,7 @@ class CertificateViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         item_profile = self.request.user.profile
-        return Certificate.objects.filter(profile=item_profile)
+        return models.Certificate.objects.filter(profile=item_profile)
 
 
 # PHOTOS
@@ -452,8 +435,8 @@ class EditPhotoDescription(APIView):
 
     def get_queryset(self, *args, **kwargs):
         try:
-            return Photo.objects.get(pk=self.request.data.get('id'))
-        except Photo.DoesNotExist:
+            return models.Photo.objects.get(pk=self.request.data.get('id'))
+        except models.Photo.DoesNotExist:
             return None
 
 
@@ -479,13 +462,13 @@ class DeletePhotoView(DestroyAPIView):
     serializer_class = serializers.PhotoSerializer
 
     def get_queryset(self):
-        queryset = Photo.objects.filter(pk=self.kwargs.get('pk'))
+        queryset = models.Photo.objects.filter(pk=self.kwargs.get('pk'))
         return queryset
 
     def destroy(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
-        except Photo.DoesNotExist:
+        except models.Photo.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         if instance.for_profile == self.request.user.profile:
             if instance == self.request.user.profile.avatar:
@@ -530,7 +513,7 @@ class SetAvatarView(APIView):
     Request data: id - id фотографии
     """
     def put(self, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.request.data['id'])
+        photo = models.Photo.objects.get(pk=self.request.data['id'])
         if photo in self.request.user.profile.photos.all():
             self.request.user.profile.avatar = photo
             self.request.user.profile.save()
@@ -566,7 +549,7 @@ class DialogViewSet(viewsets.ModelViewSet, MessageMixin):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        message_list = Message.objects.filter(dialog=instance)
+        message_list = models.Message.objects.filter(dialog=instance)
         # self.read_messages(request, message_list=message_list)
         serializer = serializers.MessageViewSerializer(message_list, many=True)
         return Response(serializer.data)
