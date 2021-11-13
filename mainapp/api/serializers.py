@@ -19,6 +19,7 @@ from ..models import (
 )
 
 from management.models import Staff
+from ..tasks import send_mail_task
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -210,6 +211,11 @@ class CreateProfileSerializer(serializers.Serializer):
             middle_name=profile_data['middle_name'],
             phone=profile_data['phone'],
             gender=profile_data['gender'],
+        )
+        send_mail_task.delay(
+            theme='Регистрация на Future Academy',
+            message='Благодарим за регистрацию',
+            email_to=new_user.email,
         )
         return new_user
 

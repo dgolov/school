@@ -1,11 +1,12 @@
-import json
 import os
 import uuid
 
 from decimal import Decimal
-from mainapp.models import Course
+from mainapp.models import Course, Student
 from rest_framework import status
 from yookassa import Configuration, Refund, Payment
+
+from management.models import Client, Order
 
 
 class BuyingCourseManager:
@@ -15,24 +16,22 @@ class BuyingCourseManager:
 
     def __init__(self, request):
         self.profile = request.user.profile
+        self.course = None
         self.data = request.data
-        self._return_url = None
-        self._price = None
 
     def pay(self):
         """ Проверяет является ли пользователь студентом и существует ли данный курс """
         if self.profile.user_group != "student":
             return status.HTTP_403_FORBIDDEN  # Покупают курсы только с аккаунтов студентов
         try:
-            course = Course.objects.get(pk=self.data.get('id'))
+            self.course = Course.objects.get(pk=self.data.get('id'))
         except Course.DoesNotExist:
             return {"message": "Bad request"}, status.HTTP_400_BAD_REQUEST
-        if course in self.profile.student.courses.all():
+        if self.course in self.profile.student.courses.all():
             return {"message": "Already reported"}, status.HTTP_208_ALREADY_REPORTED
-        self._return_url = f"http://127.0.0.1:8080/education/{course.id}"
-        self._price = Decimal(course.price).quantize(Decimal('.01'))
-        print(self._price)
         response = self.get_paid_status_from_yookassa()
+        print(response)
+        # add_order.delay(self.profile.id, course.id, response)
         # student.courses.add(course)
         return response, status.HTTP_201_CREATED
 
@@ -40,19 +39,37 @@ class BuyingCourseManager:
         """ Реализация взаимодействия с платежной системой YOOKASSA
         :return: объект платежа от YOOKASSA
         """
+        order = self.create_order()
         Configuration.account_id = self.YOKASSA_SHOP_ID
         Configuration.secret_key = self.YOKASSA_API_KEY
         idempotence_key = str(uuid.uuid4())
         payment = Payment.create({
             "amount": {
-                "value": self._price,
+                "value": Decimal(self.course.price).quantize(Decimal('.01')),
                 "currency": "RUB"
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": self._return_url
+                "return_url": f"http://127.0.0.1:8080/education/{self.course.id}"
             },
             "capture": True,
-            "description": "Заказ №1"
+            "description": f"Заказ №{order.id}"
         }, idempotence_key)
+        order.payment_response_id = payment.id
+        order.student = self.profile.student
+        order.save()
         return payment.__dict__
+
+    def create_order(self):
+        """ Создание заказа в CRM
+        :return: объект заказа
+        """
+        client = Client.objects.get_or_create(
+            first_name=self.profile.user.first_name,
+            last_name=self.profile.user.last_name,
+            middle_name=self.profile.middle_name,
+            phone=self.profile.phone,
+            email=self.profile.user.email
+        )
+        order = Order.objects.get_or_create(client=client[0], course=self.course, price=self.course.price)
+        return order[0]
