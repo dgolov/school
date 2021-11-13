@@ -119,15 +119,6 @@ class Profile(models.Model):
     def get_fio(self):
         return f'{self.user.last_name} {self.user.first_name} {self.middle_name}'
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        send_mail(
-            'Регистрация на f-academy.ru',
-            'Спасибо за регистрацию',
-            'facademy52@gmail.com',
-            [self.user.email],
-            fail_silently=False,
-        )
-
 
 class Student(Profile):
     """ Модель обучающихся
