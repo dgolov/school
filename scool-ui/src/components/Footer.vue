@@ -3,14 +3,17 @@
     <div class="container">
       <div class="footer__inner">
         <div class="footer__data__item">
-          <div class="footer__row">
-            <a href="#" class="footer__textLogo">Академия будущего</a>
+          <div class="footer__row mb-5">
+            <a href="/" class="navbar__logo">
+              <img src="../assets/images/logo_white.svg"
+                   style="width: 83px;">
+            </a>
           </div>
           <div class="footer__row">
-            <a href="/" class="navbar__logo">
-              <img src="../assets/images/Logo-SCHOOL-0922-07.png"
-                   style="width: 150px;">
-            </a>
+            <p style="font-size: 18px;">8 800 950-33-98</p>
+            <p style="font-size: 14px;">г. Москва, ул. Ленина, д. 50</p>
+            <p style="font-size: 14px;">info@hodfutureacademy.ru</p>
+            <p style="font-size: 14px; color: gray">© ХОД, Future Academy</p>
           </div>
         </div>
         <div class="footer__data__item">
