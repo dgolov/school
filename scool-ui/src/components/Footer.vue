@@ -60,7 +60,6 @@
             <div class="footer__row"><p>Об академии</p></div>
             <div class="footer__row"><p>Мероприятия</p></div>
             <div class="footer__row"><p>Новости</p></div>
-            <div class="footer__row"><p>База знаний</p></div>
             <div class="footer__row"><p>Карьера</p></div>
             <div class="footer__row"><p>Контакты</p></div>
           </div>
@@ -94,7 +93,7 @@ export default {
     },
 
     goTo(id) {
-      this.$router.push({name: 'EducationSingle', params: {'id': id}})
+      this.$router.push({name: 'Education', params: {'category': id}})
     },
   },
 }

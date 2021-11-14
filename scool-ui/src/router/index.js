@@ -174,7 +174,8 @@ const routes = [
   {
     path: '/education',
     name: 'Education',
-    component: Education
+    component: Education,
+    props: true
   },
   {
     path: '/education/:id',
