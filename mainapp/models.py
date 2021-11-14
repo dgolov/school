@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -261,8 +260,13 @@ class Message(models.Model):
 class Category(models.Model):
     """ Модель категории курса
     """
+    AGE_GROUP_CHOICES = ('children', 'teens', 'adults')
+    AGE_GROUP_CHOICES_RUS = ('Дети', 'Подростки', 'Взрослые')
+    AGE_GROUP_CHOICES = list(zip(AGE_GROUP_CHOICES, AGE_GROUP_CHOICES_RUS))
+
     name = models.CharField(max_length=100, verbose_name='Название Категории')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    age_group = models.CharField(max_length=50, verbose_name='Возрастная категория', choices=AGE_GROUP_CHOICES)
 
     def __str__(self):
         return self.name
@@ -276,7 +280,23 @@ class Category(models.Model):
 class Course(models.Model):
     """ Модель курса
     """
+    TYPE_CHOICES = ('course', 'profession')
+    TYPE_CHOICES_RUS = ('Курс', 'Профессия')
+    TYPE_CHOICES = list(zip(TYPE_CHOICES, TYPE_CHOICES_RUS))
+
+    COMPLEXITY_CHOICES = ('newbie', 'user', 'professional', 'cheater')
+    COMPLEXITY_CHOICES_RUS = ('Новичок', 'Пользователь', 'Профессионал', 'Читер')
+    COMPLEXITY_CHOICES = list(zip(COMPLEXITY_CHOICES, COMPLEXITY_CHOICES_RUS))
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', blank=True, null=True)
+    education_type = models.CharField(
+        max_length=50,
+        verbose_name='Тип обучения',
+        choices=TYPE_CHOICES,
+        default='course'
+    )
+    duration = models.IntegerField(verbose_name='Длительность обучения')
+    complexity = models.CharField(max_length=50, verbose_name='Сложность', choices=TYPE_CHOICES, default='newbie')
     name = models.CharField(max_length=100, verbose_name='Название курса')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель курса')
     price = models.IntegerField(verbose_name='Цена')
