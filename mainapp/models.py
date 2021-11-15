@@ -296,7 +296,7 @@ class Course(models.Model):
         default='course'
     )
     duration = models.IntegerField(verbose_name='Длительность обучения')
-    complexity = models.CharField(max_length=50, verbose_name='Сложность', choices=TYPE_CHOICES, default='newbie')
+    complexity = models.CharField(max_length=50, verbose_name='Сложность', choices=COMPLEXITY_CHOICES, default='newbie')
     name = models.CharField(max_length=100, verbose_name='Название курса')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель курса')
     price = models.IntegerField(verbose_name='Цена')
