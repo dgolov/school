@@ -3,15 +3,15 @@
     <navbar></navbar>
     <div class="hero">
       <div class="hero__inner">
-          <div class="hero__content">
-            <div class="hero__content__inner" id=''>
-              <div style="position: absolute; width: 55%; padding: 4.5% 11%; text-align: left; color: #ffffff">
-                <h4 style="color: #ffffff; margin: 0; width: 60%">Образовательная платформа ХОД Future Academy</h4>
-                <h2 class="hero__title my-4">Смените профессию Научитесь новому Найдите себя</h2>
-              </div>
-              <img src="../assets/images/bg_test.png">
+        <div class="hero__content">
+          <div class="hero__content__inner" id=''>
+            <div style="position: absolute; width: 55%; padding: 4.5% 11%; text-align: left; color: #ffffff">
+              <h4 style="color: #ffffff; margin: 0; width: 60%">Образовательная платформа ХОД Future Academy</h4>
+              <h2 class="hero__title my-4">Смените профессию Научитесь новому Найдите себя</h2>
             </div>
+            <img src="../assets/images/bg_test.png">
           </div>
+        </div>
         <div class="hero__content__mobile">
           <div class="hero__content__inner">
             <img src="../assets/images/bg_test_mobile.png">
@@ -26,35 +26,64 @@
       </div>
     </div>
     <div class="steps white-section mt-0 pt-0">
+      <div class="container mb-4">
+        <div class="row groups">
+          <div class="col-md-4 group-active" id="children">
+            <img src="../assets/images/children.svg" class="group-image">
+            <div class="group-text">
+              <button @click="setAgeGroup('children')">Дети</button>
+            </div>
+          </div>
+          <div class="col-md-4" id="teens">
+            <img src="../assets/images/teens.svg" class="group-image">
+            <div class="group-text">
+              <button @click="setAgeGroup('teens')">Подростки</button>
+            </div>
+          </div>
+          <div class="col-md-4" id="adults">
+            <img src="../assets/images/adults.svg" class="group-image">
+            <div class="group-text">
+              <button @click="setAgeGroup('adults')">Взрослые</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="container mb-5">
-        <h2 class="bold left-align">Направления</h2>
-        <p class="left-align">8 востребованных направлений, а также программы для школьников и целых компаний</p>
+        <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
+          <button class="category-button">
+            {{ category.name }}
+          </button>
+        </div>
       </div>
       <div class="container">
         <div class="row">
+          <h3 class="mt-3 bold mb-3">Популярные направления</h3>
           <div class="col-md-4">
             <div class="step__media">
               <img src="../assets/images/chess.jpg" class="step__image">
             </div>
             <h4 class="bold">Шахматы</h4>
-            <p class="step__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem
-              Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
+            <p class="step__text">Занятия шахматами значительно расширяют горизонты мышления и сознания у ребенка,
+              развивают фантазию, аналитическое и логическое мышление, обучают принимать решения и просчитывать возмжный
+              ход соперника.</p>
           </div>
           <div class="col-md-4">
             <div class="step__media">
               <img src="../assets/images/design.jpg" class="step__image">
             </div>
             <h4 class="bold">Дизайн</h4>
-            <p class="step__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem
-              Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
+            <p class="step__text">Дизайн и рисование сопособствуют развитию зрительной координации, помогают
+              развивать интеллектуальные, и физические способности. Хорошо развитая мелкая моторика будет полезна
+              во многих сферах деятельности.</p>
           </div>
           <div class="col-md-4">
             <div class="step__media">
               <img src="../assets/images/coding.jpg" class="step__image ">
             </div>
             <h4 class="bold">Программирование</h4>
-            <p class="step__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem
-              Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
+            <p class="step__text">Изучая программирование у ребенка развивается вычислительное мышление. Вычислительное
+              мышление помогает развиватию навыков решения сложных задач, креативного мышления, умения учиться и навыков
+              работы в команде.</p>
           </div>
         </div>
       </div>
@@ -90,39 +119,63 @@
     <div class="white-section mt-3 mb-5">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <div class="news-block py-4 mb-4" style="background-color: #eb934f;">
-              <img src="../assets/images/block-pressa.svg" class="w-50" style="max-height: 250px;">
-              <h2 class="bold">Пресса</h2>
-              <p class="news-block-text">Школа ХОД давно себя зарекомендовала как заведение №1 для получения базы
-                знаний и смены профориентации</p>
-              <button class="button news-block-button w-50 mt-4">Читать</button>
+          <div class="col-md-12">
+            <div class="container news-block py-4 mb-4" style="background-color: #F7BC75;">
+              <div class="row">
+                <div class="col-md-2">
+                  <h2 class="bold" style="font-size: 72px; margin: 0; font-weight: bold;">25</h2>
+                  <p style="font-size: 22px; font-weight: bold;">ноября</p>
+                </div>
+                <div class="col-md-7 px-5">
+                  <h3 class="left-align bold" style="font-size: 34px; margin: 20px 0 20px 0">День открытых дверей </h3>
+                  <p class="news-block-text">Приглашаем всех желающих на бесплатную экскурсию
+                    в мир востребованных профессий и полезных навыков</p>
+                </div>
+                <div class="col-md-3">
+                  <button class="button news-block-button w-75" style="margin-top: 20%">Записаться</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="news-block py-4 mb-4" style="background-color: #63a9da;">
-              <img src="../assets/images/block-liders.svg" class="w-50" style="max-height: 250px;">
-              <h2 class="bold">Лидеры мнений</h2>
-              <p class="news-block-text">Школа ХОД давно себя зарекомендовала как заведение №1 для получения базы
-                знаний и смены профориентации</p>
-              <button class="button news-block-button w-50 mt-4">Подробнее</button>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="news-block py-4 mb-4" style="background-color: #C5DDFF; height: 412px;">
+              <img src="../assets/images/education.svg">
+              <h2 class="bold mb-4">Программы обучения</h2>
+              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
+                профессию и занятие по душе, изучить
+                новое и получить практические знания, которые помогут получить работу мечты.</p>
+              <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="news-block py-4 mb-4 white-text" style="background-color: #67599f;">
-              <img src="../assets/images/block-liders.svg" class="w-50" style="max-height: 250px;">
-              <h2 class="bold white-text">14 курсов</h2>
-              <p class="news-block-text">Школа ХОД давно себя зарекомендовала как заведение №1 для получения базы
-                знаний и смены профориентации</p>
-              <button class="button news-block-button w-50 mt-4">Выбрать</button>
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="news-block py-4 mb-4" style="background-color: #B8EFCF;">
+                  <img src="../assets/images/news-main.svg">
+                  <h2 class="bold">Новости академии</h2>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="news-block py-4 mb-4 white-text" style="background-color: #FFEEF6;">
+                  <img src="../assets/images/it-world.svg">
+                  <h2 class="bold">Мир IT</h2>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="news-block py-4 mb-4 white-text" style="background-color: #000934;">
-              <h2 class="bold white-text pt-2" style="font-size: 105px; margin: 0;">25</h2>
-              <h2 class="bold white-text" style="font-size: 45px; margin: 0; padding: 0;">ноября</h2>
-              <h2 class="bold white-text" style="font-size: 40px; padding: 0 23%;">День открытых дверей</h2>
-              <button class="button news-block-button w-50 mt-5">Посетить</button>
+            <div class="col-md-12">
+              <div class="news-block py-4 mb-4 tests" style="background-color: #FFE38E;">
+                <div class="row">
+                  <div class="col-md-4 news-image-block">
+                    <img src="../assets/images/tests.svg">
+                  </div>
+                  <div class="col-md-8">
+                    <h2 class="left-align bold px-3">Попробуй</h2>
+                    <p class="news-block-text px-3">Пройдите тест и узнайте свои способности в сфере информационных технологий</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -156,12 +209,40 @@
         </div>
       </div>
     </div>
+    <div class="white-section mt-3 mb-5">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <h2 class="center bold">Добро пожаловать в Академию будущего ХОД</h2>
+          </div>
+        </div>
+        <div class="row center">
+          <div class="col-md-3 welcome-block">
+            <img src="../assets/images/main-icon1.svg">
+            <p>Передовой подход к образовательному процессу</p>
+          </div>
+          <div class="col-md-3 welcome-block">
+            <img src="../assets/images/main-icon2.svg">
+            <p>Непрерывное усовершенствование и пополнение базы курсов</p>
+          </div>
+          <div class="col-md-3 welcome-block">
+            <img src="../assets/images/main-icon3.svg">
+            <p>Только практикующие преподаватели</p>
+          </div>
+          <div class="col-md-3 welcome-block">
+            <img src="../assets/images/main-icon4.svg">
+            <p>Сопровождение на всех этапах. От начала обучения до трудоустройства</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarMain";
+import axios from "axios";
 
 export default {
   name: 'Home',
@@ -170,7 +251,39 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      age_group: 'children',
+      categoryList: []
+    }
+  },
+
+  created() {
+    this.loadCategoryList()
+  },
+
+  methods: {
+    async loadCategoryList() {
+      await axios
+          .get(`${this.$store.getters.getServerUrl}/categories/`)
+          .then(response => (this.categoryList = response.data));
+    },
+
+    goTo(id) {
+      this.$router.push({name: 'Education', params: {'category': id}})
+    },
+
+    setAgeGroup(group) {
+      let groups = ['children', 'teens', 'adults'];
+      for (let item_group of groups) {
+        let item_div = document.getElementById(item_group)
+        if (item_group !== group) {
+          item_div.classList.remove('group-active')
+        } else {
+          item_div.classList.add('group-active');
+        }
+      }
+      this.age_group = group;
+    },
   },
 }
 </script>
@@ -185,6 +298,7 @@ export default {
   .hero__content {
     display: none;
   }
+
   .hero__content__mobile {
     display: block;
   }
@@ -245,24 +359,99 @@ export default {
 }
 
 .news-block-text {
-  padding: 0 23%;
+  text-align: left;
+}
+
+.news-image-block {
+  position: relative;
+}
+
+.news-image-block img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+@media (max-width: 992px) {
+  .news-image-block {
+    position: relative;
+  }
+
+  .news-image-block img {
+    position: relative;
+  }
 }
 
 .news-block-button {
-  border-radius: 0;
+  border-radius: 10px;
   background-color: #ffffff;
   border-color: #ffffff;
-  color: #000000
-}
-
-@media (min-width: 992px) {
-  .news-block {
-    height: 600px;
-  }
+  color: #000000;
 }
 
 .white-text {
   color: #ffffff;
 }
 
+.groups {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.group-image {
+  margin-right: 15px;
+}
+
+.group-text {
+  display: inline-block;
+}
+
+.group-text button {
+  border: none;
+  color: #000000;
+  font-weight: bold;
+}
+
+.group-text button:hover {
+  background: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.group-active {
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
+}
+
+.category-area {
+  display: inline;
+  margin: 10px;
+}
+
+.category-button {
+  background-color: #ffffff;
+  border: 0.5px solid;
+  border-image: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
+  border-image-slice: 1;
+  color: #000000;
+  border-radius: 5%;
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.category-button:hover {
+  box-shadow: -5px 0 8px 1px rgba(235, 147, 79, 0.6),
+  5px 0 8px 1px rgba(99, 169, 218, 0.6);
+}
+
+.welcome-block {
+  padding: 30px;
+}
+
+.welcome-block img {
+  height: 60px;
+  margin-bottom: 40px;
+}
 </style>
