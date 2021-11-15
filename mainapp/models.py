@@ -269,7 +269,7 @@ class Category(models.Model):
     age_group = models.CharField(max_length=50, verbose_name='Возрастная категория', choices=AGE_GROUP_CHOICES)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.age_group})'
 
     class Meta:
         verbose_name = 'Категория'
@@ -303,6 +303,7 @@ class Course(models.Model):
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
     video_presentation = models.SlugField(verbose_name='Ссылка на видеопрезентацию курса', blank=True, null=True)
+    color_hex = models.CharField(max_length=10, verbose_name='Цвет блока курса (hex)', blank=True, null=True)
     is_finished = models.ManyToManyField(
         Student,
         blank=True,

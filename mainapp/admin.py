@@ -110,7 +110,7 @@ class MessageAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     """ Отображение списка категорий в адмике
     """
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'age_group']
     list_display_links = ['id', 'name']
     search_fields = ['name']
 
