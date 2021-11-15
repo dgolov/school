@@ -34,13 +34,13 @@
               <button @click="setAgeGroup('children')">Дети</button>
             </div>
           </div>
-          <div class="col-md-4" id="teens">
+          <div class="col-md-4 center" id="teens">
             <img src="../assets/images/teens.svg" class="group-image">
             <div class="group-text">
               <button @click="setAgeGroup('teens')">Подростки</button>
             </div>
           </div>
-          <div class="col-md-4" id="adults">
+          <div class="col-md-4 center" id="adults">
             <img src="../assets/images/adults.svg" class="group-image">
             <div class="group-text">
               <button @click="setAgeGroup('adults')">Взрослые</button>
@@ -50,7 +50,7 @@
       </div>
       <div class="container mb-5">
         <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
-          <button class="category-button">
+          <button class="category-button" @click="goTo(category.name)">
             {{ category.name }}
           </button>
         </div>
@@ -268,8 +268,8 @@ export default {
           .then(response => (this.categoryList = response.data));
     },
 
-    goTo(id) {
-      this.$router.push({name: 'Education', params: {'category': id}})
+    goTo(name) {
+      this.$router.push({name: 'Education', params: {'category': name, 'ageGroup': this.age_group}})
     },
 
     setAgeGroup(group) {
@@ -394,56 +394,6 @@ export default {
 
 .white-text {
   color: #ffffff;
-}
-
-.groups {
-  border-bottom: 1px solid #ebebeb;
-}
-
-.group-image {
-  margin-right: 15px;
-}
-
-.group-text {
-  display: inline-block;
-}
-
-.group-text button {
-  border: none;
-  color: #000000;
-  font-weight: bold;
-}
-
-.group-text button:hover {
-  background: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.group-active {
-  border-bottom: 3px solid;
-  border-image: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
-}
-
-.category-area {
-  display: inline;
-  margin: 10px;
-}
-
-.category-button {
-  background-color: #ffffff;
-  border: 0.5px solid;
-  border-image: linear-gradient(to right, #eb934f, #63a9da) 47% 0;
-  border-image-slice: 1;
-  color: #000000;
-  border-radius: 5%;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.category-button:hover {
-  box-shadow: -5px 0 8px 1px rgba(235, 147, 79, 0.6),
-  5px 0 8px 1px rgba(99, 169, 218, 0.6);
 }
 
 .welcome-block {
