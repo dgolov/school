@@ -12,11 +12,33 @@
             <label>Цена</label>
             {{ form.price }}
         </div>
+        <div class="form-group mt-4">
+            <label>Тип обучения</label>
+            {{ form.education_type }}
+        </div>
+        <div class="form-group mt-4">
+            <label>Сложность</label>
+            {{ form.complexity }}
+        </div>
+        <div class="form-group mt-4">
+            <label>Длительность обучения</label>
+            {{ form.duration }}
+        </div>
+        <div class="form-group mt-4">
+            <label>Цвет блока курса</label>
+            {{ form.color_hex }}
+        </div>
     </div>
     <div class="col-md-6">
         <div class="form-group mt-4">
-            <label>Преподаватель</label>
-            {{ form.teacher }}
+            <label>Преподаватели</label>
+            {% for teacher in teachers %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{ teacher.id }}"
+                           id="{{ teacher.id }}" name="teachers">
+                    <label class="form-check-label" for="defaultCheck1">{{ teacher }}</label>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <div class="col-md-12 mt-3">

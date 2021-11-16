@@ -122,7 +122,7 @@ class ProfileSerializer(ProfileSerializerBase):
         model = Profile
         fields = [
             'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
-            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active'
+            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about'
         ]
 
 
@@ -246,14 +246,14 @@ class LessonSerializerFromTeacher(serializers.ModelSerializer):
 class CourseSerializerFromTeacher(serializers.ModelSerializer):
     """ Серилизация моделей курсов для преподавателей (выставление оценок, формирование рассписания)
     """
-    teacher = ProfileSerializer()
+    teachers = ProfileSerializer(many=True)
     lessons = serializers.SerializerMethodField()
     students = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = [
-            'id', 'category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
+            'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'lessons', 'students'
         ]
 
@@ -432,13 +432,13 @@ class CourseSerializer(serializers.ModelSerializer):
     """ Серилизация моделей курсов
     """
     category = CategorySerializer()
-    teacher = ProfileSerializer()
+    teachers = ProfileSerializer(many=True)
 
     class Meta:
         model = Course
         fields = [
-            'id', 'category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
-            'is_active'
+            'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
+            'is_active', 'education_type', 'duration', 'complexity', 'color_hex'
         ]
 
 

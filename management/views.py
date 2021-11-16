@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 
 from management import forms
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, Staff
-from management.mixins import GroupMixin
+from management.mixins import GroupMixin, CourseMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 from datetime import datetime
@@ -550,7 +550,7 @@ class LessonDetailView(DetailView):
         return context
 
 
-class CreateCourseView(CreateView):
+class CreateCourseView(CreateView, CourseMixin):
     """ Регистрация новго курса в CRM
     """
     template_name = 'crm/create_course.html'
@@ -559,15 +559,17 @@ class CreateCourseView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateCourseView, self).get_context_data()
         context['title'] = 'Добавление нового курса'
+        context['teachers'] = Teacher.objects.all()
         return context
 
     def form_valid(self, form):
         if form.is_valid():
-            form.save()
+            course = form.save()
+            self.update_teachers(course, self.request)
         return HttpResponseRedirect('/api/crm/courses')
 
 
-class UpdateCourseView(UpdateView):
+class UpdateCourseView(UpdateView, CourseMixin):
     """ Редактирование курса в CRM
     """
     model = Course
@@ -578,10 +580,17 @@ class UpdateCourseView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateCourseView, self).get_context_data()
         context['title'] = 'Редактирование курса'
+        context['teachers'] = Teacher.objects.all()
         return context
 
     def get_success_url(self):
         return f'/api/crm/courses/{self.get_object().pk}'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            group = form.save()
+            self.update_students_group(group, self.request)
+            return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
 
 
 class CreateLessonView(CreateView):

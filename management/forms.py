@@ -384,15 +384,32 @@ class CourseForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
-    teacher = forms.ModelChoiceField(
-        queryset=Teacher.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
-        )
-    )
     price = forms.IntegerField(
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'placeholder': 'Введите цену курса...'}
+        )
+    )
+    duration = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    education_type = forms.CharField(
+        widget=forms.Select(
+            choices=Course.TYPE_CHOICES,
+            attrs={'class': 'form-control single-select select2-hidden-accessible'}
+        )
+    )
+    color_hex = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    complexity = forms.CharField(
+        widget=forms.Select(
+            choices=Course.COMPLEXITY_CHOICES,
+            attrs={'class': 'form-control single-select select2-hidden-accessible'}
         )
     )
     description = forms.CharField(
@@ -404,7 +421,10 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ('category', 'name', 'teacher', 'price', 'description', 'poster', 'video_presentation')
+        fields = (
+            'category', 'name', 'price', 'duration', 'education_type', 'description', 'poster', 'video_presentation',
+            'complexity', 'color_hex'
+        )
 
 
 class LessonForm(forms.ModelForm):

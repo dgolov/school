@@ -29,10 +29,6 @@
                                         <td><a href="#">{{ course.category }}</a></td>
                                     </tr>
                                     <tr>
-                                        <th>Преподаватель:</th>
-                                        <td><a href="#">{{ course.teacher }}</a></td>
-                                    </tr>
-                                    <tr>
                                         <th>Цена:</th>
                                         <td>{{ course.price }}</td>
                                     </tr>
@@ -57,6 +53,9 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Lessons"><span
                             class="p-tab-name">Уроки</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Teachers"><span
+                            class="p-tab-name">Преподаватели</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
                     </li>
                 </ul>
                 <div class="tab-content mt-3">
@@ -98,6 +97,38 @@
                                                 <a href="/api/crm/courses/lessons/{{ lesson.pk }}">{{ lesson.theme }}</a>
                                             </td>
                                             <td>{{ lesson.is_active }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="Teachers">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Уроки курса</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ФИО</th>
+                                        <th scope="col">Телефон</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Профессиональная деятельность</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for teacher in course.teachers.all %}
+                                        <tr>
+                                            <th scope="row"><a
+                                                    href="/api/crm/teachers/{{ teacher.pk }}">{{ teacher.id }}</a></th>
+                                            <td><a href="/api/crm/teachers/{{ teacher.pk }}">{{ teacher }}</a></td>
+                                            <td>{{ teacher.phone }}</td>
+                                            <td>{{ teacher.user.email }}</td>
+                                            <td>{{ teacher.professional_activity }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
