@@ -34,7 +34,7 @@
               </form>
               <h6 class="left-align"><a href="#">Забыли пароль?</a></h6>
               <h6 class="left-align">У вас еще нет аккаунта?
-                <a href="#" @click="goTo('SignUp')">Зарегистрироваться</a>
+                <a href="#" @click="setAuthMode('signUp')">Зарегистрироваться</a>
               </h6>
             </div>
             <div id="signOutForm" v-if="signOut">
@@ -75,7 +75,7 @@
                 <hr/>
                 <button type="button" class="button button__accent mt-4" @click="singUp">Зарегистрироваться</button>
                 <h6 class="left-align mb-5">
-                  Уже зарегистрированы? <a href="#" @click="goTo('Auth')">Войти</a>
+                  Уже зарегистрированы? <a href="#" @click="setAuthMode('signIn')">Войти</a>
                 </h6>
               </form>
             </div>

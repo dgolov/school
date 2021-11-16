@@ -26,36 +26,41 @@
       </div>
     </div>
     <div class="steps white-section mt-0 pt-0">
-      <div class="container mb-4">
-        <div class="row groups">
-          <div class="col-md-4 group-active" id="children">
-            <img src="../assets/images/children.svg" class="group-image">
-            <div class="group-text">
-              <button @click="setAgeGroup('children')">Дети</button>
-            </div>
-          </div>
-          <div class="col-md-4 center" id="teens">
-            <img src="../assets/images/teens.svg" class="group-image">
-            <div class="group-text">
-              <button @click="setAgeGroup('teens')">Подростки</button>
-            </div>
-          </div>
-          <div class="col-md-4 center" id="adults">
-            <img src="../assets/images/adults.svg" class="group-image">
-            <div class="group-text">
-              <button @click="setAgeGroup('adults')">Взрослые</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container mb-5">
-        <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
-          <button class="category-button" @click="goTo(category.name)">
-            {{ category.name }}
-          </button>
-        </div>
-      </div>
       <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="../assets/images/owl-main.svg">
+          </div>
+          <div class="col-md-9">
+            <div class="row groups mb-4">
+              <div class="col-md-4 group-active" id="children">
+                <img src="../assets/images/children.svg" class="group-image">
+                <div class="group-text">
+                  <button @click="setAgeGroup('children')">Дети</button>
+                </div>
+              </div>
+              <div class="col-md-4 center" id="teens">
+                <img src="../assets/images/teens.svg" class="group-image">
+                <div class="group-text">
+                  <button @click="setAgeGroup('teens')">Подростки</button>
+                </div>
+              </div>
+              <div class="col-md-4 center" id="adults">
+                <img src="../assets/images/adults.svg" class="group-image">
+                <div class="group-text">
+                  <button @click="setAgeGroup('adults')">Взрослые</button>
+                </div>
+              </div>
+            </div>
+            <div class="mb-5">
+              <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
+                <button class="category-button" @click="goTo(category.name)">
+                  {{ category.name }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <h3 class="mt-3 bold mb-3">Популярные направления</h3>
           <div class="col-md-4">
@@ -64,7 +69,8 @@
             </div>
             <h4 class="bold">Шахматы</h4>
             <p class="step__text">Занятия шахматами значительно расширяют горизонты мышления и сознания у ребенка,
-              развивают фантазию, аналитическое и логическое мышление, обучают принимать решения и просчитывать возмжный
+              развивают фантазию, аналитическое и логическое мышление, обучают принимать решения и просчитывать
+              возмжный
               ход соперника.</p>
           </div>
           <div class="col-md-4">
@@ -81,8 +87,10 @@
               <img src="../assets/images/coding.jpg" class="step__image ">
             </div>
             <h4 class="bold">Программирование</h4>
-            <p class="step__text">Изучая программирование у ребенка развивается вычислительное мышление. Вычислительное
-              мышление помогает развиватию навыков решения сложных задач, креативного мышления, умения учиться и навыков
+            <p class="step__text">Изучая программирование у ребенка развивается вычислительное мышление.
+              Вычислительное
+              мышление помогает развиватию навыков решения сложных задач, креативного мышления, умения учиться и
+              навыков
               работы в команде.</p>
           </div>
         </div>
@@ -127,7 +135,8 @@
                   <p style="font-size: 22px; font-weight: bold;">ноября</p>
                 </div>
                 <div class="col-md-7 px-5">
-                  <h3 class="left-align bold" style="font-size: 34px; margin: 20px 0 20px 0">День открытых дверей </h3>
+                  <h3 class="left-align bold" style="font-size: 34px; margin: 20px 0 20px 0">День открытых
+                    дверей </h3>
                   <p class="news-block-text">Приглашаем всех желающих на бесплатную экскурсию
                     в мир востребованных профессий и полезных навыков</p>
                 </div>
@@ -172,7 +181,8 @@
                   </div>
                   <div class="col-md-8">
                     <h2 class="left-align bold px-3">Попробуй</h2>
-                    <p class="news-block-text px-3">Пройдите тест и узнайте свои способности в сфере информационных технологий</p>
+                    <p class="news-block-text px-3">Пройдите тест и узнайте свои способности в сфере информационных
+                      технологий</p>
                   </div>
                 </div>
               </div>
