@@ -51,7 +51,9 @@
                   <!--                  <h4 class="bold">Длительность</h4>-->
                 </div>
                 <div class="col-md-9 mt-4">
-                  <button class="category-button" @click="category_name='all'">Все категории</button>
+                  <div class="category-area">
+                    <button class="category-button" @click="category_name='all'">Все категории</button>
+                  </div>
                   <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
                     <button class="category-button" @click="category_name=category.name">{{ category.name }}</button>
                   </div>
