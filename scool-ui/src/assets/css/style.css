@@ -504,7 +504,7 @@ button, .button {
     white-space: nowrap;
     cursor: pointer;
     background-color: transparent;
-    border-radius: 30px;
+    border-radius: 5px;
     margin-bottom: 1.3em;
     transition: 0.7s;
     text-align: center;
@@ -616,7 +616,7 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
     font-family: "Lato", sans-serif;
     font-weight: 400;
     padding: 10pt 20pt;
-    border-radius: 30px;
+    border-radius: 5px;
     background-color: #f7f7f7;
     margin-bottom: 1.4em;
     display: block;
@@ -1457,6 +1457,7 @@ ul.main-nav {
     .auth__media {
         width: 50%;
         flex-shrink: 0;
+        margin-left: 0;
     }
 }
 
@@ -1474,6 +1475,7 @@ ul.main-nav {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-left: 15%;
 }
 
 @media (min-width: 600px) {

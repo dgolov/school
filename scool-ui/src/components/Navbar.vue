@@ -20,28 +20,28 @@
         <div class="col-md-10" style="height: 60px; padding-top: 15px">
           <nav class="navbar__menu">
             <ul class="main-nav">
-              <li><a href="/education" @click="goTo('Education')">
+              <li><a href="/education" @click="goTo('Education')" class="bold">
                 <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg" style="padding-bottom: 3px;">
                   <rect x="1" y="1.51392" width="18" height="4.99717" rx="1" stroke="#ffffff" stroke-width="2"/>
                   <rect x="1" y="10.4858" width="18" height="5" rx="1" stroke="#ffffff" stroke-width="2"/>
                 </svg>
                 Все курсы
               </a></li>
-              <li><a href="#" @click="goTo('Education')">Мероприятия</a></li>
-              <li><a href="/about" @click="goTo('About')">Об академии</a></li>
+              <li><a href="#" @click="goTo('Education')" class="bold">Мероприятия</a></li>
+              <li><a href="/about" @click="goTo('About')" class="bold">Об академии</a></li>
               <li>
                 <svg width="14" height="17" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="padding-bottom: 3px;">
                   <path d="M16 8.5C16 11.3282 14.13 13.9545 12.0535 15.9699C11.036 16.9575 10.0146 17.754 9.24613 18.304C8.95504 18.5123 8.70155 18.6843 8.5 18.8171C8.29845 18.6843 8.04496 18.5123 7.75387 18.304C6.98537 17.754 5.96395 16.9575 4.94648 15.9699C2.86999 13.9545 1 11.3282 1 8.5C1 4.35786 4.35786 1 8.5 1C12.6421 1 16 4.35786 16 8.5Z" stroke="#ffffff" stroke-width="2"/>
                   <circle cx="8.5" cy="7.5" r="2.5" fill="#ffffff"/>
                 </svg>
-                Нижний Новгород
-                <a href="#">
+                <a href="#" class="bold">
+                  Нижний Новгород
                   <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1L5 5L9 1" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
                   </svg>
                 </a>
               </li>
-              <li><a href="#">8 800 950-33-98</a></li>
+              <li><a href="#" class="bold">8 800 950-33-98</a></li>
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>
@@ -54,8 +54,13 @@
               </li>
             </ul>
             <ul v-else style="float: right;">
-              <li><a href="/signup" @click="goTo('SignUp')" class="border-gradient">Регистрация</a></li>
-              <li><a href="/auth" @click="goTo('Auth')" class="border-gradient">Вход</a></li>
+              <li>
+                <svg width="15" height="15" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px;">
+                  <rect x="5.18018" y="1" width="6.63833" height="8.41108" rx="3.31917" stroke="white" stroke-width="2"/>
+                  <path d="M1 15.4111C1 13.7543 2.34315 12.4111 4 12.4111H13.2795C14.9364 12.4111 16.2795 13.7543 16.2795 15.4111V16.3229C16.2795 16.8752 15.8318 17.3229 15.2795 17.3229H2C1.44772 17.3229 1 16.8752 1 16.3229V15.4111Z" stroke="white" stroke-width="2"/>
+                </svg>
+                <a href="/auth" @click="goTo('Auth')" class="bold">Вход</a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -118,18 +123,6 @@ export default {
   border-radius: 50%;
   margin: auto;
   text-align: right;
-}
-
-.nav_bottom {
-  border: 1px solid;
-}
-
-.border-gradient {
-  /*display: inline;*/
-  /*padding: 4px;*/
-  /*border: 1px solid;*/
-  /*border-image: linear-gradient(20deg, #eb934f 38%, #63a9da 65%);*/
-  /*border-image-slice: 1;*/
 }
 
 .navbar__menu a {
