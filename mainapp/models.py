@@ -298,7 +298,12 @@ class Course(models.Model):
     duration = models.IntegerField(verbose_name='Длительность обучения')
     complexity = models.CharField(max_length=50, verbose_name='Сложность', choices=COMPLEXITY_CHOICES, default='newbie')
     name = models.CharField(max_length=100, verbose_name='Название курса')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель курса')
+    teachers = models.ManyToManyField(
+        Teacher,
+        verbose_name='Преподаватели курса',
+        blank=True,
+        related_name='course_teachers'
+    )
     price = models.IntegerField(verbose_name='Цена')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)

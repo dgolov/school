@@ -119,9 +119,9 @@ class CategoryAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     """ Отображение списка курсов в админке
     """
-    list_display = ['id', 'name', 'teacher']
+    list_display = ['id', 'name', 'category']
     list_display_links = ['name']
-    list_filter = ['teacher']
+    list_filter = ['category']
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
 
