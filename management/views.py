@@ -588,9 +588,9 @@ class UpdateCourseView(UpdateView, CourseMixin):
 
     def form_valid(self, form):
         if form.is_valid():
-            group = form.save()
-            self.update_students_group(group, self.request)
-            return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
+            course = form.save()
+            self.update_teachers(course, self.request)
+            return HttpResponseRedirect(f'/api/crm/courses/{self.get_object().pk}')
 
 
 class CreateLessonView(CreateView):
