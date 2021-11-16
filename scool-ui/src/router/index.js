@@ -6,7 +6,6 @@ import Auth from "../views/Auth";
 import Profile from "../views/Profile/Profile";
 import Education from "../views/Education";
 import EducationSingle from "../views/EducationSingle";
-import SignUp from "../views/SignUp";
 import About from "../views/About";
 import News from "../views/News";
 import Contacts from "../views/Contacts";
@@ -49,11 +48,6 @@ const routes = [
     path: '/auth',
     name: "Auth",
     component: Auth
-  },
-  {
-    path: '/signup',
-    name: 'SignUp',
-    component: SignUp
   },
   {
     path: '/profile',
