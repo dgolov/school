@@ -6,6 +6,7 @@ import Auth from "../views/Auth";
 import Profile from "../views/Profile/Profile";
 import Education from "../views/Education";
 import EducationSingle from "../views/EducationSingle";
+import ChessSingleCourse from "../views/ChessSingleCourse";
 import About from "../views/About";
 import News from "../views/News";
 import Contacts from "../views/Contacts";
@@ -175,6 +176,12 @@ const routes = [
     path: '/education/:id',
     name: 'EducationSingle',
     component: EducationSingle,
+    props: true
+  },
+  {
+    path: '/chess/:id',
+    name: 'ChessSingle',
+    component: ChessSingleCourse,
     props: true
   },
   {

@@ -70,7 +70,7 @@
                           <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
                           <div class="course-title mt-5">
                             <h3 class="left-align bold mt-3 mb-1">
-                              <a href="#" @click="goTo(course.id)">{{ course.name }}</a>
+                              <a href="#" @click="goTo(course)">{{ course.name }}</a>
                             </h3>
                           </div>
                           <div class="course-desc">
@@ -157,8 +157,12 @@ export default {
           .then(response => (this.listCourses = response.data));
     },
 
-    goTo(id) {
-      this.$router.push({name: 'EducationSingle', params: {'id': id}})
+    goTo(course) {
+      if (course.category.name !== 'Шахматы'){
+        this.$router.push({name: 'EducationSingle', params: {'id': course.id}})
+      } else {
+        this.$router.push({name: 'ChessSingle', params: {'id': course.id}})
+      }
     },
 
     setAgeGroup(group) {
