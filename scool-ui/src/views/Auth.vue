@@ -209,6 +209,7 @@ export default {
         baseURL: this.$store.state.backendUrl,
         headers: {
           "Content-Type": "application/json",
+          "X-CSRFToken": '{{csrf_token}}'
         },
         xhrFields: {
           withCredentials: true,
