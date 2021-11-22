@@ -210,6 +210,9 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
+        xhrFields: {
+          withCredentials: true,
+        },
       }
 
       const axiosInstance = axios.create(base);
