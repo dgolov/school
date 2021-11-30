@@ -55,6 +55,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'school.urls'
 
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -122,8 +124,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
-STATIC_URL = '/' + os.environ.get('STATIC_URL', 'static') + '/'
-STATIC_ROOT = BASE_DIR / os.environ.get('STATIC_URL', 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(SETTINGS_PATH, 'static')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR]
 
