@@ -11,7 +11,7 @@ SECRET_KEY = str(os.environ.get("SECRET_KEY"))
 
 DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '80.78.253.102', '109.172.27.159']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '80.78.253.102', '109.172.27.159', 'www.f-academy.ru', 'f-academy.ru']
 
 
 # Application definition
@@ -124,8 +124,8 @@ USE_TZ = True
 
 STATIC_URL = '/' + os.environ.get('STATIC_URL', 'static') + '/'
 STATIC_ROOT = BASE_DIR / os.environ.get('STATIC_URL', 'static')
-# STATIC_DIR = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [STATIC_DIR]
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -149,6 +149,10 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:1337',
     'http://80.78.253.102',
     'http://109.172.27.159',
+    'http://www.f-academy.ru/',
+    'http://f-academy.ru/',
+    'https://www.f-academy.ru/',
+    'https://f-academy.ru/',
 ]
 
 
