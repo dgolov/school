@@ -165,6 +165,11 @@
               <h3 class="mt-0">от {{ course.price }} в месяц</h3>
             </div>
           </div>
+          <div class="mt-4">
+            <button type="button" class="button button__accent mt-2" style="width: auto" @click="pay()">
+              Записаться на курс
+            </button>
+          </div>
         </div>
         <div class="col-md-6">
           <img src="../assets/images/owl-free.svg">
@@ -185,7 +190,7 @@
         </div>
       </div>
     </div>
-    <div class="container mb-5">
+    <div class="container mt-5 mb-5">
       <div class="row">
         <div class="faq" id="question1">
           <p class="question">Кому подойдет этот курс?</p>
