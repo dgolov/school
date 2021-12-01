@@ -5,13 +5,15 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2">
-            <img src="../assets/images/horse-figure.svg" class="figure">
+            <img src="../assets/images/x_figure.svg" class="figure">
             <img src="../assets/images/lines/chess-line1.svg" class="line">
           </div>
           <div class="col-md-5 chess-content">
             <div class="container">
-              <h2 class="title mt-5">Шахматная школа</h2>
-              <h3>Развитие мышления и логики</h3>
+              <h2 class="title mt-5">{{ course.name }}</h2>
+              <p>Программа для тех кто...Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo. In scelerisque pulvinar sem,
+                et gravida mi tincidunt nec.</p>
               <div class="row mt-3">
                 <div class="info-section" style="width: 30%">
                   <p class="mb-0 mt-0">Срок обучения: </p>
@@ -24,102 +26,52 @@
                 <div class="info-section mt-4" style="width: 60%">
                   <h3 class="mt-0">от {{ course.price }} в месяц</h3>
                 </div>
-                <h3 class="mb-0">1 занятие бесплатное</h3>
-                <p class="mt-2">Прежде чем начать обучение советуем записаться на пробное заниятие</p>
-                <button type="button" class="button button__accent mt-2" style="width: auto" @click="">
-                  Записаться на пробное занятие
-                </button>
               </div>
             </div>
           </div>
-          <div class="col-md-5">
-            <img src="../assets/images/chess-course.png" style="height: 100%;">
-          </div>
+<!--          <div class="col-md-5">-->
+<!--            <img src="../assets/images/course_image.svg" style="height: 100%;">-->
+<!--          </div>-->
         </div>
       </div>
     </div>
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-3" style="padding-right: 20px;">
-          <img src="../assets/images/owl-chess.svg">
+          <img src="../assets/images/owl-course.svg">
         </div>
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="step__media">
-                <img src="../assets/images/chess/step1.svg" class="step__image">
+                <img src="../assets/images/course/step1.svg" class="step__image">
               </div>
               <h3 class="bold mt-4">Цель 1</h3>
-              <p class="left-align">Привить любовь и интерес к шахматам</p>
+              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
+                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="step__media">
-                <img src="../assets/images/chess/step2.svg" class="step__image">
+                <img src="../assets/images/course/step2.svg" class="step__image">
               </div>
               <h3 class="bold mt-4">Цель 2</h3>
-              <p class="left-align">Получить удовольствие от процесса игры, от факта победы в партии, от спасения</p>
+              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
+                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="step__media">
-                <img src="../assets/images/chess/step3.svg" class="step__image">
+                <img src="../assets/images/course/step3.svg" class="step__image">
               </div>
               <h3 class="bold mt-4">Цель 3</h3>
-              <p class="left-align">Научить анализировать свои и чужие ошибки, учиться на них с помощью GM мирового уровня</p>
-            </div>
-            <div class="col-md-3">
-              <div class="step__media">
-                <img src="../assets/images/chess/step4.svg" class="step__image">
-              </div>
-              <h3 class="bold mt-4">Цель 4</h3>
-              <p class="left-align">Получить удовольствие от процесса игры, от факта победы в партии, от спасения</p>
+              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
+                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
             </div>
           </div>
         </div>
       </div>
       <div class="row mt-5" style="padding-right: 30%">
-        <h1 class="bold">Школа шахмат</h1>
-        <p>Шахматы - это отличная идея для времяпрепровождения с родителями, детьми и друзьями.
-          Игра дает полезные в жизни навыки: учит побеждать и проигрывать, развивает
-          творческие способности, вырабатывает стрессо-устойчивость, терпение, помогает сосредоточиться,
-          а так же помогает осознать последствия своих действий.</p>
-      </div>
-      <div class="row mt-5">
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon1.svg" class="step__image">
-          </div>
-          <p class="mt-3">Интересные уроки по шахматам</p>
-        </div>
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon2.svg" class="step__image">
-          </div>
-          <p class="mt-3">Шахматы для взрослых и детей</p>
-        </div>
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon3.svg" class="step__image">
-          </div>
-          <p class="mt-3">Обучение шахматам онлайн</p>
-        </div>
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon4.svg" class="step__image">
-          </div>
-          <p class="mt-3">Профессиональное обучение шахматам</p>
-        </div>
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon5.svg" class="step__image">
-          </div>
-          <p class="mt-3">Шахматные турниры</p>
-        </div>
-        <div class="col-md-2">
-          <div class="step__media">
-            <img src="../assets/images/chess/icon6.svg" class="step__image">
-          </div>
-          <p class="mt-3">Сеанс одновременной игры с GM</p>
-        </div>
+        <h1 class="bold">Кто такой веб-разработчик</h1>
+        <p>{{ course.description }}</p>
       </div>
     </div>
   </div>
