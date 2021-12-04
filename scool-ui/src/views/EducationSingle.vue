@@ -11,9 +11,7 @@
           <div class="col-md-5 chess-content">
             <div class="container">
               <h2 class="title mt-5">{{ course.name }}</h2>
-              <p>Программа для тех кто...Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo. In scelerisque pulvinar sem,
-                et gravida mi tincidunt nec.</p>
+              <p>{{ course.description }}</p>
               <div class="row mt-3">
                 <div class="info-section" style="width: 30%">
                   <p class="mb-0 mt-0">Срок обучения: </p>
@@ -21,7 +19,7 @@
                 </div>
                 <div class="info-section" style="width: 60%">
                   <p class="mb-0 mt-0">Режим занятий: </p>
-                  <p class="mb-0 mt-0">2 раза в неделю по 2 академических часа</p>
+                  <p class="mb-0 mt-0">{{ course.activity_mode }}</p>
                 </div>
                 <div class="info-section mt-4" style="width: 60%">
                   <h3 class="mt-0">от {{ course.price }} в месяц</h3>
@@ -53,32 +51,26 @@
               <div class="step__media">
                 <img src="../assets/images/course/step1.svg" class="step__image">
               </div>
-              <h3 class="bold mt-4">Цель 1</h3>
-              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
-                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+              <h3 class="bold mt-4">Актуальные программы</h3>
             </div>
             <div class="col-md-4">
               <div class="step__media">
                 <img src="../assets/images/course/step2.svg" class="step__image">
               </div>
-              <h3 class="bold mt-4">Цель 2</h3>
-              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
-                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+              <h3 class="bold mt-4">Удобный для вас формат обучения</h3>
             </div>
             <div class="col-md-4">
               <div class="step__media">
                 <img src="../assets/images/course/step3.svg" class="step__image">
               </div>
-              <h3 class="bold mt-4">Цель 3</h3>
-              <p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut
-                feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+              <h3 class="bold mt-4">Помощь в трудоустройстве</h3>
             </div>
           </div>
         </div>
       </div>
       <div class="row mt-5" style="padding-right: 30%">
-        <h1 class="bold">Кто такой веб-разработчик</h1>
-        <p>{{ course.description }}</p>
+        <h1 class="bold">Кто такой {{ course.profession }}</h1>
+        <p>{{ course.who_is }}</p>
       </div>
     </div>
     <div class="lead_step mt-5">
