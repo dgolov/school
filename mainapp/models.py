@@ -306,6 +306,10 @@ class Course(models.Model):
     )
     price = models.IntegerField(verbose_name='Цена')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    activity_mode = models.CharField(max_length=50, verbose_name='Режим заниятий', blank=True, null=True)
+    profession = models.CharField(max_length=50, verbose_name='Профессия', blank=True, null=True)
+    who_is = models.TextField(verbose_name='Блок кто такой', blank=True, null=True)
+    skills = models.ManyToManyField('Skill', blank=True, verbose_name='Вы научитесь', related_name='skills')
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
     video_presentation = models.SlugField(verbose_name='Ссылка на видеопрезентацию курса', blank=True, null=True)
     color_hex = models.CharField(max_length=10, verbose_name='Цвет блока курса (hex)', blank=True, null=True)
@@ -323,6 +327,19 @@ class Course(models.Model):
     class Meta:
         verbose_name = 'Курс'
         verbose_name_plural = '02. Обучение - Курсы'
+
+
+class Skill(models.Model):
+    """ Модель скиллов (Блок "Вы научитесь в курсе")
+    """
+    text = models.TextField(verbose_name='Текс навыка')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Навык'
+        verbose_name_plural = '02. Обучение - Навыки'
 
 
 class Lesson(models.Model):
