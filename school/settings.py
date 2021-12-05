@@ -152,10 +152,10 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:1337',
     'http://80.78.253.102',
     'http://109.172.27.159',
-    'http://www.f-academy.ru',
-    'http://f-academy.ru',
-    'https://www.f-academy.ru',
-    'https://f-academy.ru',
+    'http://www.f-academy.ru/',
+    'http://f-academy.ru/',
+    'https://www.f-academy.ru/',
+    'https://f-academy.ru/',
 ]
 
 
