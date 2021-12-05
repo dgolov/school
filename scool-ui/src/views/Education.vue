@@ -65,7 +65,8 @@
                              (course.complexity === complexity || complexity === 'complexityAll') &&
                              (course.education_type === education_type || education_type === 'all') &&
                              (course.category.name === category_name || category_name === 'all')"
-                             :style="{ 'background-color': '#' + course.color_hex }">
+                             :style="{ 'background-color': '#' + course.color_hex }"
+                             @click="goTo(course)">
                           <h6 class="left-align my-1" style="display: inline; float: left;">{{ typesRus[course.education_type] }}</h6>
                           <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
                           <div class="course-title mt-5">
