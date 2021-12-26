@@ -428,3 +428,40 @@ class AcademicPerformance(models.Model):
         verbose_name = 'Успеваемость'
         verbose_name_plural = '02. Обучение - Успеваемость'
         ordering = ['-date']
+
+
+class Event(models.Model):
+    """ Модель мероприятия
+    """
+    SIZE_CHOICES = ('small', 'medium', 'big')
+    SIZE_CHOICES_RUS = ('Маленький', 'Средний', 'Большой')
+    SIZE_CHOICES = list(zip(SIZE_CHOICES, SIZE_CHOICES_RUS))
+
+    name = models.CharField(max_length=100, verbose_name='Название')
+    signature = models.CharField(max_length=100, verbose_name='Подпись к мероприятию')
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    date = models.DateTimeField(verbose_name='Дата и время')
+    speakers = models.ManyToManyField(Teacher, verbose_name='Спикеры', blank=True, related_name='event_speakers')
+    image = models.ImageField(upload_to='images/events', verbose_name='Изображение', blank=True, null=True)
+    program = models.ManyToManyField(
+        'EventDay',
+        verbose_name='Программа мероприятия',
+        blank=True,
+        related_name='evert_days'
+    )
+    block_size = models.CharField(max_length=20, verbose_name='Размер блока', choices=SIZE_CHOICES)
+
+
+class EventDay(models.Model):
+    """ Модель дня мероприятия
+    """
+    description = models.TextField(verbose_name='Описание', blank=True, null=True)
+
+
+class News(models.Model):
+    """ Модель новостей
+    """
+    name = models.CharField(max_length=100, verbose_name='Название')
+    text = models.TextField(verbose_name='Текст новости', blank=True, null=True)
+    date = models.DateField(verbose_name='Дата публикации')
+    image = models.ImageField(upload_to='images/events', verbose_name='Изображение', blank=True, null=True)

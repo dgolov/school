@@ -611,3 +611,21 @@ class SendMessageView(APIView, MessageMixin):
     def post(self, request, *args, **kwargs):
         message, http_status = self.send_message(self.request)
         return Response(data={"message": message}, status=http_status)
+
+
+# EVENTS
+
+class EventViewSet(viewsets.ModelViewSet):
+    """ Эндпоинт списка мероприятий
+    """
+    serializer_class = serializers.EventSerializer
+    permission_classes = [AllowAny]
+
+
+# NEWS
+
+class NewsViewSet(viewsets.ModelViewSet):
+    """ Эндпоинт списка новостей
+    """
+    serializer_class = serializers.NewsSerializer
+    permission_classes = [AllowAny]

@@ -620,3 +620,30 @@ class MessageViewSerializer(MessageSerializer):
         fields = [
             'id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read', 'system_message'
         ]
+
+
+class EventDaySerializer(serializers.ModelSerializer):
+    """ Серилизация дней мероприятий
+    """
+    class Meta:
+        model = models.EventDay
+        fields = '__all__'
+
+
+class EventSerializer(serializers.ModelSerializer):
+    """ Серилизация мероприятий
+    """
+    speakers = ProfileSerializer(many=True)
+    program = EventDaySerializer(many=True)
+
+    class Meta:
+        model = models.Event
+        fields = '__all__'
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    """ Серилизация новостей
+    """
+    class Meta:
+        model = models.News
+        fields = '__all__'
