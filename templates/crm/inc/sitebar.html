@@ -20,20 +20,6 @@
         {% if user.staff.user_group == 'admin' or user.staff.user_group == 'sale_manager' %}
             <li class="menu-label">Продажи</li>
             <li>
-                <a href="#">
-                    <div class="parent-icon icon-color-4"><i class="bx bx-archive"></i>
-                    </div>
-                    <div class="menu-title">Файлы</div>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'clients' %}">
-                    <div class="parent-icon icon-color-5"><i class="bx bx-group"></i>
-                    </div>
-                    <div class="menu-title">Клиенты</div>
-                </a>
-            </li>
-            <li>
                 <a href="{% url 'out_calls' %}">
                     <div class="parent-icon icon-color-3"><i class="bx bx-phone-outgoing"></i>
                     </div>
@@ -48,17 +34,31 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'visits' %}">
-                    <div class="parent-icon icon-color-9"><i class="bx bx-store"></i>
-                    </div>
-                    <div class="menu-title">Визиты</div>
-                </a>
-            </li>
-            <li>
                 <a href="{% url 'requests' %}">
                     <div class="parent-icon icon-color-6"><i class="bx bx-task"></i>
                     </div>
                     <div class="menu-title">Онлайн заявки</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="parent-icon icon-color-4"><i class="bx bx-archive"></i>
+                    </div>
+                    <div class="menu-title">Файлы</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'clients' %}">
+                    <div class="parent-icon icon-color-5"><i class="bx bx-group"></i>
+                    </div>
+                    <div class="menu-title">Клиенты</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'visits' %}">
+                    <div class="parent-icon icon-color-9"><i class="bx bx-store"></i>
+                    </div>
+                    <div class="menu-title">Визиты</div>
                 </a>
             </li>
             <li>
