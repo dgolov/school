@@ -1,25 +1,20 @@
 <template>
   <div class="home">
     <navbar></navbar>
-    <div class="hero">
-      <div class="hero__inner">
-        <div class="hero__content">
-          <div class="hero__content__inner" id=''>
-            <div style="position: absolute; width: 55%; padding: 4.5% 11%; text-align: left; color: #ffffff">
-              <h4 style="color: #ffffff; margin: 0; width: 60%">Образовательная платформа ХОД Future Academy</h4>
-              <h2 class="hero__title my-4">Смените профессию Научитесь новому Найдите себя</h2>
-            </div>
-            <img src="../assets/images/bg_test.png">
-          </div>
-        </div>
-        <div class="hero__content__mobile">
-          <div class="hero__content__inner">
-            <img src="../assets/images/bg_test_mobile.png">
-            <div class="cta cta--reverse left-align" style="padding-left: 20px;">
-              <h4 style="color: #ffffff; margin: 0; width: 80%;">Образовательная платформа ХОД Future Academy</h4>
-              <h2 class="hero__title my-2 bold" style="font-size: 26px; width: 95%">
-                Смените профессию <br/>Научитесь новому<br/> Найдите себя
-              </h2>
+    <div class="header-wrapper d-none d-lg-block">
+      <div class="header">
+        <h1 class="header-title">Образовательная платформа ХОД Future Academy</h1>
+        <p class="header-title__desc">Актуальные знания для новичков и профессионалов</p>
+      </div>
+    </div>
+    <div class="header-mobi d-none">
+      <img src="../assets/img/header/header-mobi.jpg" alt="" class="header-mobi__img">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="header-mobi-title">
+              <h1 class="header-title">Образовательная платформа ХОД Future Academy</h1>
+              <p class="header-title__desc">Актуальные знания для новичков и профессионалов</p>
             </div>
           </div>
         </div>
@@ -29,7 +24,15 @@
       <div class="container">
         <div class="row">
           <div class="col-md-3 mb-3">
-            <img src="../assets/images/owl-main.svg">
+            <div class="owl">
+              <img src="../assets/img/owl/owl-main.png" class="owl__main">
+              <span class="owl__frame"></span>
+              <div class="owl-text">
+                <h5 class="owl-title">Кем вы хотите стать?</h5>
+                <p class="owl-desc"> Пора найти себя
+                  и выбрать подходящий курс :) <span class="owl-desc-span">Удачи!</span></p>
+              </div>
+            </div>
           </div>
           <div class="col-md-9">
             <div class="row groups mb-4">
@@ -61,41 +64,37 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <h3 class="mt-3 bold mb-3">Популярные направления</h3>
-          <div class="col-md-4">
-            <div class="step__media">
-              <img src="../assets/images/chess.jpg" class="step__image">
+      </div>
+    </div>
+    <section class="video">
+      <div class="container">
+        <div class="row justify-content-center" style="position:relative;z-index: 1;">
+          <div class="col-md-12 col-lg-8">
+            <div class="video-wrapper">
+              <div class="video__link" id="video__link">
+                            <span class="video__circle">
+                                <img src="../assets/img/video/play.svg" alt="" class="video__play">
+                            </span>
+              </div>
+              <span class="video-content__triangle video-content-position"></span>
+              <span class="video-content__line-left video-content-position"></span>
+              <span class="video-content__line-right video-content-position"></span>
+              <span class="video-content__cross video-content-position"></span>
             </div>
-            <h4 class="bold">Шахматы</h4>
-            <p class="step__text">Занятия шахматами значительно расширяют горизонты мышления и сознания у ребенка,
-              развивают фантазию, аналитическое и логическое мышление, обучают принимать решения и просчитывать
-              возмжный
-              ход соперника.</p>
-          </div>
-          <div class="col-md-4">
-            <div class="step__media">
-              <img src="../assets/images/design.jpg" class="step__image">
+            <div class="wrapper-modal" id="wrapper-modal">
+              <div class="overlay" id="overlay"></div>
+              <!--noindex-->
+              <iframe class="iframe eff-h" width="560" height="315" src="https://www.youtube.com/embed/wfMvlFZ99RM"
+                      rel="nofollow noopener noreferrer" target="_blank" title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <!--/noindex-->
             </div>
-            <h4 class="bold">Дизайн</h4>
-            <p class="step__text">Дизайн и рисование сопособствуют развитию зрительной координации, помогают
-              развивать интеллектуальные, и физические способности. Хорошо развитая мелкая моторика будет полезна
-              во многих сферах деятельности.</p>
-          </div>
-          <div class="col-md-4">
-            <div class="step__media">
-              <img src="../assets/images/coding.jpg" class="step__image ">
-            </div>
-            <h4 class="bold">Программирование</h4>
-            <p class="step__text">Изучая программирование у ребенка развивается вычислительное мышление.
-              Вычислительное
-              мышление помогает развиватию навыков решения сложных задач, креативного мышления, умения учиться и
-              навыков
-              работы в команде.</p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
     <div class="white-section">
       <div class="container">
         <div class="row">
@@ -109,81 +108,99 @@
     <div class="white-section">
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
-            <h3 class="text-gradient mt-4 mb-0">600</h3>
-            <p class="expanded__text bold px-1">Курсов</p>
-          </div>
-          <div class="col-md-4">
-            <h3 class="text-gradient mt-4 mb-0">82</h3>
-            <p class="expanded__text bold px-1">Ведущих преподователей</p>
-          </div>
-          <div class="col-md-4">
-            <h3 class="text-gradient mt-4 mb-0">14795</h3>
-            <p class="expanded__text bold px-1">Выпускников</p>
+          <div class="text-gradient-wrapper">
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">600</h3>
+              <p class="expanded__text bold px-1">Курсов</p>
+            </div>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">82</h3>
+              <p class="expanded__text bold px-1">Ведущих преподователей</p>
+            </div>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">14795</h3>
+              <p class="expanded__text bold px-1">Выпускников</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="white-section mt-3 mb-5">
       <div class="container">
-        <div class="row">
+        <div class="row ">
           <div class="col-md-12">
             <div class="container news-block py-4 mb-4" style="background-color: #F7BC75;">
               <div class="row">
-                <div class="col-md-2">
-                  <h2 class="bold" style="font-size: 72px; margin: 0; font-weight: bold;">25</h2>
-                  <p style="font-size: 22px; font-weight: bold;">ноября</p>
-                </div>
-                <div class="col-md-7 px-5">
-                  <h3 class="left-align bold" style="font-size: 34px; margin: 20px 0 20px 0">День открытых
-                    дверей </h3>
-                  <p class="news-block-text">Приглашаем всех желающих на бесплатную экскурсию
-                    в мир востребованных профессий и полезных навыков</p>
-                </div>
-                <div class="col-md-3">
-                  <button class="button news-block-button w-75" style="margin-top: 20%">Записаться</button>
+                <div class="open-day open-day_home d-flex">
+                  <div class="open-day__inner d-flex">
+                    <div class="date">
+                      <span class="date__numder">25</span>
+                      <span class="date__month">ноября</span>
+                    </div>
+                    <div class="excursion">
+                      <h2 class="excursion__open-day excursion__open-day_home">День открытых дверей</h2>
+                      <p class="excursion__desc excursion__desc_home">
+                        Приглашаем всех желающих на бесплатную экскурсию в мир
+                        востребованных профессий и полезных навыков
+                      </p>
+                    </div>
+                  </div>
+                  <button type="button" class="button-open-day">Записаться</button>
+                  <!-- Если кнопка отправляет данные тогда type="submit, если нет то type="button"-->
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-5">
-            <div class="news-block py-4 mb-4" style="background-color: #C5DDFF; height: 412px;">
-              <img src="../assets/images/education.svg">
+            <div class="news-block news-block-programs py-4 mb-4 eff-h-one" style="background-color: #C5DDFF; ">
+              <img src="../assets/img/cart/education.svg">
               <h2 class="bold mb-4">Программы обучения</h2>
               <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
                 профессию и занятие по душе, изучить
                 новое и получить практические знания, которые помогут получить работу мечты.</p>
-              <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button>
+              <!-- Кнопку меняю на свою -->
+              <button type="button" class="button-open-day button-open-day_home">Подробнее</button>
+              <!-- <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button> -->
             </div>
           </div>
           <div class="col-md-7">
             <div class="row">
               <div class="col-md-6">
-                <div class="news-block py-4 mb-4" style="background-color: #B8EFCF;">
-                  <img src="../assets/images/news-main.svg">
-                  <h2 class="bold">Новости академии</h2>
-                </div>
+                <a href="">
+                  <div class="news-block py-4 mb-4 eff-h-two" style="background-color: #B8EFCF;">
+                    <img src="../assets/img/cart/news-main.svg">
+                    <h2 class="bold">Новости академии</h2>
+                  </div>
+                </a>
               </div>
               <div class="col-md-6">
-                <div class="news-block py-4 mb-4 white-text" style="background-color: #FFEEF6;">
-                  <img src="../assets/images/it-world.svg">
-                  <h2 class="bold">Мир IT</h2>
-                </div>
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
+                    <img src="../assets/img/cart/it-world.svg">
+                    <h2 class="bold">Мир IT</h2>
+                  </div>
+                </a>
               </div>
             </div>
             <div class="col-md-12">
-              <div class="news-block py-4 mb-4 tests" style="background-color: #FFE38E;">
+              <div class="news-block py-4 mb-4 tests eff-h-two" style="background-color: #FFE38E;">
                 <div class="row">
-                  <div class="col-md-4 news-image-block">
-                    <img src="../assets/images/tests.svg">
-                  </div>
-                  <div class="col-md-8">
-                    <h2 class="left-align bold px-3">Попробуй</h2>
-                    <p class="news-block-text px-3">Пройдите тест и узнайте свои способности в сфере информационных
-                      технологий</p>
-                  </div>
+                  <a href="">
+                    <div class="news-block-wrapp">
+                      <div class="col-md-4 news-block-img">
+                        <img src="../assets/img/cart/tests.svg" class="test-img-md">
+                      </div>
+                      <div class="col-md-8">
+                        <h2 class="left-align  bold px-3 title-test-md">Попробуй!</h2>
+                        <p class="news-block-text px-3 text-test-md">Пройдите тест и узнайте свои способности в сфере информационных
+                          технологий</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -191,35 +208,135 @@
         </div>
       </div>
     </div>
-    <div class="cta cta--reverse">
+
+    <section class="reviews">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <h2 class="white-text bold">Оставьте заявку на обучение</h2>
-            <p class="white-text pt-1">Мы свяжемся с вами в течении дня и отправим презентацию
-              интересующего вас курса. Если у вас возникли вопросы о формате обучения, или вы не знаете что
-              выбрать, мы позвоним, чтобы ответить на все ваши вопросы, произведем расчет финальной стоимости
-              учитывая все возможные льготы, скидки и выбранного вами пакета.
-            </p>
-          </div>
-          <div class="col-md-6 pt-4">
-            <form>
-              <input type='text' placeholder="ФИО...">
-              <div class="double">
-                <div class="half">
-                  <input type="text" id="first" placeholder="Телефон...">
-                </div>
-                <div class="half">
-                  <input type="text" id="second" placeholder="Электронная почта...">
-                </div>
-              </div>
-              <button class="button button__accent w-100"> Отправить</button>
-            </form>
+          <div class="col-12">
+            <h2 class="reviews-title">Отзывы наших студентов</h2>
           </div>
         </div>
       </div>
-    </div>
-    <div class="white-section mt-3 mb-5">
+      <div class="row">
+        <div class="col-12">
+          <div class="slider-wrapper d-flex justify-content-center">
+            <div class="slide">
+              <!-- Контент 1 слайда -->
+              <div class="col-3">
+                <div class="reviews-student">
+                  <div class="reviews-inner d-flex">
+                    <div class="reviews-inner__userpic">
+                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
+                    </div>
+                    <div class="userpic-about">
+                      <h5 class="userpic-about__name">Имя Фамилия</h5>
+                      <p class="userpic-about__course">Студент курса
+                        <span class="course-name">«WEB-разработчик»</span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                    feugiat nisl
+                    at augue dapibus, id tristique lorem placerat. <span></span> Curabitur
+                    pellentesque est
+                    bibendum urna facilisis varius. In hac habitasse platea dictumst. In ut dui
+                    sodales.</p>
+                  <div class="rating d-flex align-items-center">
+                    <span class="rating__star"></span>
+                    <span class="rating__number">4,87</span>
+                    <p class="rating__number">/</p>
+                    <span class="rating__number">5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide">
+              <!-- Контент 2 слайда -->
+              <div class="col-3">
+                <div class="reviews-student">
+                  <div class="reviews-inner d-flex">
+                    <div class="reviews-inner__userpic">
+                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
+                    </div>
+                    <div class="userpic-about">
+                      <h5 class="userpic-about__name">Имя Фамилия</h5>
+                      <p class="userpic-about__course">Студент курса
+                        <span class="course-name">«WEB-разработчик»</span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                    feugiat nisl at augue dapibus, id tristique lorem placerat.
+                    <span></span>Curabitur pellentesque est bibendum urna facilisis varius.</p>
+                  <div class="rating d-flex align-items-center">
+                    <span class="rating__star"></span>
+                    <span class="rating__number">4,87</span>
+                    <p class="rating__number">/</p>
+                    <span class="rating__number">5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide ">
+              <!-- Контент 3 слайда -->
+              <div class="col-3">
+                <div class="reviews-student">
+                  <div class="reviews-inner d-flex">
+                    <div class="reviews-inner__userpic">
+                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
+                    </div>
+                    <div class="userpic-about">
+                      <h5 class="userpic-about__name">Имя Фамилия</h5>
+                      <p class="userpic-about__course">Студент курса
+                        <span class="course-name">«WEB-разработчик»</span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                    feugiat nisl at augue dapibus, id tristique lorem placerat.<span></span>
+                    Curabitur pellentesque est bibendum urna facilisis varius. In hac habitasse
+                    platea dictumst. In ut dui sodales, scelerisque eros non, ultrices magna.</p>
+                  <div class="rating d-flex align-items-center">
+                    <span class="rating__star"></span>
+                    <span class="rating__number">4,87</span>
+                    <p class="rating__number">/</p>
+                    <span class="rating__number">5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide ">
+              <!-- Контент 4 слайда -->
+              <div class="col-3">
+                <div class="reviews-student">
+                  <div class="reviews-inner d-flex">
+                    <div class="reviews-inner__userpic">
+                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
+                    </div>
+                    <div class="userpic-about">
+                      <h5 class="userpic-about__name">Имя Фамилия</h5>
+                      <p class="userpic-about__course">Студент курса
+                        <span class="course-name">«WEB-разработчик»</span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                    feugiat nisl at augue dapibus, id tristique lorem placerat!</p>
+                  <div class="rating d-flex align-items-center">
+                    <span class="rating__star"></span>
+                    <span class="rating__number">4,87</span>
+                    <p class="rating__number">/</p>
+                    <span class="rating__number">5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="white-section mt-3 mb-5 white-section-welcome">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12">
@@ -300,67 +417,6 @@ export default {
 
 
 <style scoped>
-.hero__content__mobile {
-  display: none;
-}
-
-@media (max-width: 992px) {
-  .hero__content {
-    display: none;
-  }
-
-  .hero__content__mobile {
-    display: block;
-  }
-}
-
-.header-image {
-  position: absolute;
-  bottom: 0;
-  right: 5%;
-  width: 40%
-}
-
-.white-section {
-  background-color: #ffffff;
-}
-
-.header-block {
-  border-radius: 10px;
-  padding: 10px;
-  margin: 40px;
-  background-color: #ffffff;
-  width: 30%;
-  display: inline-block;
-  float: left;
-}
-
-@media (max-width: 992px) {
-  .header-block {
-    margin: 20px;
-    background-color: #ffffff;
-    width: 90%;
-    display: block;
-  }
-}
-
-@media (min-width: 992px) {
-  .header-image {
-    position: absolute;
-    bottom: 0;
-    right: 5%;
-    width: 20%
-  }
-}
-
-.text-gradient {
-  font-size: 5em;
-  font-weight: 1000;
-  background: linear-gradient(135deg, #eb934f 20%, #63a9da 70%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-}
 
 .news-block {
   border: none;
@@ -370,40 +426,6 @@ export default {
 
 .news-block-text {
   text-align: left;
-}
-
-.news-image-block {
-  position: relative;
-}
-
-.news-image-block img {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
-}
-
-@media (max-width: 992px) {
-  .news-image-block {
-    position: relative;
-  }
-
-  .news-image-block img {
-    position: relative;
-  }
-}
-
-.news-block-button {
-  border-radius: 10px;
-  background-color: #ffffff;
-  border-color: #ffffff;
-  color: #000000;
-}
-
-.white-text {
-  color: #ffffff;
 }
 
 .welcome-block {

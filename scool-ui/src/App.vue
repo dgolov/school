@@ -9,6 +9,7 @@
 <style>
 @import "./assets/bootstrap/css/bootstrap.css";
 @import "./assets/css/style.css";
+@import "./assets/css/main.css";
 
 .main-section {
   background-color: #f7f7f7;
