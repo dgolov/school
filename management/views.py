@@ -8,7 +8,19 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 
 from management import forms
-from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, Staff
+from management.models import (
+    Client,
+    Contract,
+    Order,
+    Vacancy,
+    Interview,
+    Request,
+    AdvertisingActivityCategory,
+    AdvertisingActivity,
+    Cost,
+    CostCategory,
+    Staff
+)
 from management.mixins import GroupMixin, CourseMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
@@ -970,3 +982,138 @@ class UpdateGroupView(UpdateView, GroupMixin):
             group = form.save()
             self.update_students_group(group, self.request)
             return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
+
+
+class CostCategoryListView(ListView):
+    """ Список категорий затрат в CRM
+    """
+    model = CostCategory
+    template_name = 'crm/cost_categories_list.html'
+    context_object_name = 'category_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CostCategoryListView, self).get_context_data(**kwargs)
+        context['title'] = 'Категории затрат'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return CostCategory.objects.all() if self.request.user.is_staff else None
+
+
+class CostCategoryDetailView(DetailView):
+    """ Детальное представление категории затрат в CRM
+    """
+    model = CostCategory
+    template_name = 'crm/cost_categories_detail.html'
+    context_object_name = 'category'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CostCategoryDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        context['cost_list'] = Cost.objects.filter(category=self.get_object())
+        return context
+
+
+class CreateCostCategoryView(CreateView):
+    """ Добавление новой категории затрат в CRM
+    """
+    template_name = 'crm/create_cost_category.html'
+    form_class = forms.CostCategoryForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCostCategoryView, self).get_context_data()
+        context['title'] = 'Добавление новой категории затрат'
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/api/crm/cost-categories')
+
+
+class UpdateCostCategoryView(UpdateView):
+    """ Редактирование категории затрат в CRM
+    """
+    model = CostCategory
+    template_name = 'crm/update_cost_category.html'
+    form_class = forms.CostCategoryForm
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateCostCategoryView, self).get_context_data()
+        context['title'] = 'Редактирование категории затрат'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/cost-categories/{self.get_object().pk}'
+
+
+class CostListView(ListView):
+    """ Список категорий затрат в CRM
+    """
+    model = Cost
+    template_name = 'crm/cost_list.html'
+    context_object_name = 'cost_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CostListView, self).get_context_data(**kwargs)
+        context['title'] = 'Категории затрат'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Cost.objects.all() if self.request.user.is_staff else None
+
+
+class CostDetailView(DetailView):
+    """ Детальное представление затрат в CRM
+    """
+    model = Cost
+    template_name = 'crm/cost_detail.html'
+    context_object_name = 'cost'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CostDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class CreateCostView(CreateView):
+    """ Добавление затрат в CRM
+    """
+    template_name = 'crm/create_cost.html'
+    form_class = forms.CostForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCostView, self).get_context_data()
+        context['title'] = 'Добавление затрат'
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_cost = form.save()
+            new_cost.user = self.request.user
+            new_cost.save()
+        return HttpResponseRedirect('/api/crm/costs')
+
+
+class UpdateCostView(UpdateView):
+    """ Редактирование затрат в CRM
+    """
+    model = Cost
+    template_name = 'crm/update_cost.html'
+    form_class = forms.CostForm
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateCostView, self).get_context_data()
+        context['title'] = 'Редактирование затрат'
+        return context
+
+    def get_success_url(self):
+        return f'/api/crm/costs/{self.get_object().pk}'

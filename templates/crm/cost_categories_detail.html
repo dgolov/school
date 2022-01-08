@@ -1,0 +1,39 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <h4 class="mb-0">{{ category }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'update_cost_categories' pk=category.pk %}"
+                           class="btn btn-outline-primary px-5" style="float: right;">Редактировать</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'create_cost_categories' %}" class="btn btn-outline-primary px-5"
+                           style="float: right;">Новая категория</a>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="d-flex align-items-center mb-3">
+                            {% include 'crm/inc/cost_table.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4>Комментарий</h4>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row">
+                <p class="mx-4 my-2">{{ category.comment }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

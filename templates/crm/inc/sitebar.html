@@ -150,34 +150,18 @@
         {% if user.staff.user_group == 'admin'%}
             <li class="menu-label">Контроль затрат</li>
             <li>
-                <a class="has-arrow" href="javascript:;">
+                <a href="{% url 'cost_categories' %}">
                     <div class="parent-icon icon-color-2"><i class="bx bx-grid-alt"></i>
                     </div>
                     <div class="menu-title">Категории затрат</div>
                 </a>
-                <ul>
-                    <li><a href="table-basic-table.html"><i class="bx bx-right-arrow-alt"></i>Basic Table</a>
-                    </li>
-                    <li><a href="table-datatable.html"><i class="bx bx-right-arrow-alt"></i>Data Table</a>
-                    </li>
-                    <li><a href="table-editable.html"><i class="bx bx-right-arrow-alt"></i>Editable Table</a>
-                    </li>
-                </ul>
             </li>
             <li>
-                <a class="has-arrow" href="javascript:;">
+                <a href="{% url 'cost' %}">
                     <div class="parent-icon icon-color-12"><i class="bx bx-donate-blood"></i>
                     </div>
                     <div class="menu-title">Затраты</div>
                 </a>
-                <ul>
-                    <li><a href="icons-line-icons.html"><i class="bx bx-right-arrow-alt"></i>Line Icons</a>
-                    </li>
-                    <li><a href="icons-boxicons.html"><i class="bx bx-right-arrow-alt"></i>Boxicons</a>
-                    </li>
-                    <li><a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
-                    </li>
-                </ul>
             </li>
         {% endif %}
         <li class="menu-label">Страницы</li>

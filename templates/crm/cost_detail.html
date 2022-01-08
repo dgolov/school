@@ -1,0 +1,82 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="user-profile-page">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <h4 class="mb-0">{{ cost }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'update_cost' pk=cost.pk %}"
+                           class="btn btn-outline-primary px-5" style="float: right;">Редактировать</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a type="button" href="{% url 'create_cost' %}" class="btn btn-outline-primary px-5"
+                           style="float: right;">Добавить затрату</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-7 border-right">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Категория:</th>
+                                        <td><a href="#">{{ cost.category }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Сумма затраты:</th>
+                                        <td>{{ cost.amount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Рекламная активность:</th>
+                                        <td>{{ cost.advertising_activity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Период затрат с:</th>
+                                        <td>{{ cost.date_to }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Период затрат по:</th>
+                                        <td>{{ cost.date_from }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="d-md-flex align-items-center">
+                            <div class="ml-md-12 flex-grow-1">
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Автор записи:</th>
+                                        <td><a href="#">{{ cost.user }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата записи:</th>
+                                        <td>{{ cost.date }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4>Комментарий</h4>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row">
+                <p class="mx-4 my-2">{{ cost.comment }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

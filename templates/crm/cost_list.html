@@ -1,0 +1,19 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card-title mb-4">
+        <h4>Список затрат</h4>
+    </div>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                    <a type="button" href="{% url 'create_cost' %}" class="btn btn-outline-primary m-1 px-5"
+                       style="float: right;">Добавить затрату</a>
+                </div>
+            </div>
+            {% include 'crm/inc/cost_table.html' %}
+        </div>
+    </div>
+{% endblock %}
