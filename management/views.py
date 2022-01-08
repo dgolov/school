@@ -259,12 +259,35 @@ class RequestListView(ListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            return Request.objects.filter(type_request='online')
+            queryset = Request.objects.filter(type_request='online')
         elif self.request.user.staff.user_group == 'sale_manager':
-            return Request.objects.filter(
-                Q(manager=self.request.user.staff) | Q(status='new')).filter(type_request='online')
+            queryset = Request.objects.filter(
+                Q(manager=self.request.user.staff) |
+                Q(status='new')).filter(type_request='online')
         else:
             return None
+        return self.check_request_data(queryset=queryset)
+
+    @staticmethod
+    def get_status():
+        """ Получает статусы заявок для фильтрации """
+        return Request.objects.all().values('status').distinct()
+
+    def check_request_data(self, queryset):
+        """ Проверяет параметры фильтрации """
+        if self.request.GET.getlist("status"):
+            queryset = queryset.filter(status__in=self.request.GET.getlist("status"))
+        if self.request.GET.get("date_from") and self.request.GET.get("date_to"):
+            if len(self.request.GET.get("date_from")) == 0:
+                date_from = '2021-01-01'
+            else:
+                date_from = self.request.GET.get("date_from")
+            if len(self.request.GET.get("date_to")) == 0:
+                date_to = datetime.now()
+            else:
+                date_to = self.request.GET.get("date_to")
+            queryset = queryset.filter(Q(date__range=[date_from, date_to]))
+        return queryset
 
 
 class OutCallListView(RequestListView):
@@ -277,11 +300,12 @@ class OutCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            return Request.objects.filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(type_request='outgoing_call')
         elif self.request.user.staff.user_group == 'sale_manager':
-            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
         else:
             return None
+        return self.check_request_data(queryset=queryset)
 
 
 class InCallListView(RequestListView):
@@ -294,11 +318,12 @@ class InCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            return Request.objects.filter(type_request='incoming_call')
+            queryset = Request.objects.filter(type_request='incoming_call')
         elif self.request.user.staff.user_group == 'sale_manager':
-            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
         else:
             return None
+        return self.check_request_data(queryset=queryset)
 
 
 class VisitListView(RequestListView):
