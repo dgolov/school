@@ -84,7 +84,7 @@ class RequestAdmin(admin.ModelAdmin):
 class CostCategoryAdmin(admin.ModelAdmin):
     """ Отображение категорий затрат в админке
     """
-    list_display = ['name']
+    list_display = ['id', 'name']
 
 
 @admin.register(models.Cost)
