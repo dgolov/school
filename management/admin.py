@@ -90,7 +90,7 @@ class CostCategoryAdmin(admin.ModelAdmin):
 class CostAdmin(admin.ModelAdmin):
     """ Отображение затрат в админке
     """
-    list_display = ['id', 'category', 'date', 'amount']
+    list_display = ['id', 'name', 'category', 'date', 'amount']
     list_filter = ['category']
 
 

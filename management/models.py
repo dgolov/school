@@ -241,9 +241,16 @@ class CostCategory(models.Model):
 class Cost(models.Model):
     """ Модель регастрации затрат
     """
+    name = models.CharField(max_length=50, verbose_name='Наименование затраты', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Автор записи', blank=True, null=True)
     category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True)
-    advertising_activity = models.ForeignKey(AdvertisingActivity, on_delete=models.SET_NULL, blank=True, null=True)
+    advertising_activity = models.ForeignKey(
+        AdvertisingActivity,
+        on_delete=models.SET_NULL,
+        verbose_name='Рекламная активность',
+        blank=True,
+        null=True
+    )
     date = models.DateTimeField(verbose_name='Дата и время записи', auto_now_add=True)
     date_to = models.DateTimeField(verbose_name='Период затрат с', blank=True, null=True)
     date_from = models.DateTimeField(verbose_name='Период затрат по', blank=True, null=True)
