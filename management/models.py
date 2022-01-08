@@ -252,8 +252,8 @@ class Cost(models.Model):
         null=True
     )
     date = models.DateTimeField(verbose_name='Дата и время записи', auto_now_add=True)
-    date_to = models.DateTimeField(verbose_name='Период затрат с', blank=True, null=True)
-    date_from = models.DateTimeField(verbose_name='Период затрат по', blank=True, null=True)
+    date_to = models.DateField(verbose_name='Период затрат с', blank=True, null=True)
+    date_from = models.DateField(verbose_name='Период затрат по', blank=True, null=True)
     amount = models.IntegerField(verbose_name='Сумма затрат')
     comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
