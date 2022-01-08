@@ -11,9 +11,10 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = ['manager']
     list_display_links = ['fio']
     search_fields = ['last_name', 'first_name', 'middle_name']
+    readonly_fields = ['data']
     fieldsets = (
         ('Менеджер', {
-            'fields': ('manager',)
+            'fields': ('manager', 'data')
         }),
         ('Клиент', {
             'fields': ('first_name', 'last_name', 'middle_name', 'phone', 'email', 'city'),

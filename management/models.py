@@ -22,6 +22,8 @@ class Client(models.Model):
     phone = PhoneNumberField(verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Электронная почта', blank=True, null=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
+    data = models.DateField(verbose_name='Дата занесения в базу', auto_now_add=True, blank=True, null=True)
+    last_status = models.CharField(max_length=50, verbose_name='Последний статус по заявкам', blank=True, null=True)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
@@ -36,6 +38,7 @@ class Contract(models.Model):
     """
     number = models.PositiveIntegerField(verbose_name='Номер договора')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    student = models.ForeignKey('mainapp.Student', on_delete=models.SET_NULL, verbose_name='Слушатель', blank=True, null=True)
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Приобретенный курс')
     date = models.DateField(auto_now_add=True, verbose_name='Дата')
