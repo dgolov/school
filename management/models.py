@@ -229,6 +229,7 @@ class CostCategory(models.Model):
     """ Модель категории затрат
     """
     name = models.CharField(max_length=50, verbose_name='Название категории')
+    comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Категория затрат'
@@ -260,3 +261,6 @@ class Cost(models.Model):
     class Meta:
         verbose_name = 'Затрата'
         verbose_name_plural = '11. Затраты'
+
+    def __str__(self):
+        return self.name
