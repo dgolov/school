@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Client, Contract, Order, Interview, Request, CostCategory, Cost, Vacancy, Staff
+from . import models
 
 
-@admin.register(Client)
+@admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):
     """ Отображение клиентов в админке
     """
@@ -29,7 +29,7 @@ class ClientAdmin(admin.ModelAdmin):
     fio.short_description = 'ФИО'
 
 
-@admin.register(Contract)
+@admin.register(models.Contract)
 class ContractAdmin(admin.ModelAdmin):
     """ Отображение договоров в админке
     """
@@ -38,7 +38,7 @@ class ContractAdmin(admin.ModelAdmin):
     search_fields = ['client__last_name', 'client__first_name', 'client__middle_name', 'number']
 
 
-@admin.register(Order)
+@admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     """ Отображение заказов в админке
     """
@@ -47,7 +47,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['client', 'course']
 
 
-@admin.register(Vacancy)
+@admin.register(models.Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     """ Отображение вакансий в админке
     """
@@ -56,7 +56,7 @@ class VacancyAdmin(admin.ModelAdmin):
     list_filter = ['active']
 
 
-@admin.register(Interview)
+@admin.register(models.Interview)
 class InterviewAdmin(admin.ModelAdmin):
     """ Отображение собеседований в админке
     """
@@ -70,7 +70,7 @@ class InterviewAdmin(admin.ModelAdmin):
     fio.short_description = 'ФИО'
 
 
-@admin.register(Request)
+@admin.register(models.Request)
 class RequestAdmin(admin.ModelAdmin):
     """ Отоборажение заявок в админке
     """
@@ -79,14 +79,14 @@ class RequestAdmin(admin.ModelAdmin):
     list_editable = ['result']
 
 
-@admin.register(CostCategory)
+@admin.register(models.CostCategory)
 class CostCategoryAdmin(admin.ModelAdmin):
     """ Отображение категорий затрат в админке
     """
     list_display = ['name']
 
 
-@admin.register(Cost)
+@admin.register(models.Cost)
 class CostAdmin(admin.ModelAdmin):
     """ Отображение затрат в админке
     """
@@ -94,7 +94,7 @@ class CostAdmin(admin.ModelAdmin):
     list_filter = ['category']
 
 
-@admin.register(Staff)
+@admin.register(models.Staff)
 class StaffAdmin(admin.ModelAdmin):
     """ Отображение затрат в админке
     """
@@ -109,3 +109,19 @@ class StaffAdmin(admin.ModelAdmin):
 
     full_name.short_description = 'ФИО'
     username.short_description = 'Имя пользователя'
+
+
+@admin.register(models.AdvertisingActivityCategory)
+class AdvertisingActivityCategoryAdmin(admin.ModelAdmin):
+    """ Отображение категорий рекламной активности в админке
+    """
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
+
+
+@admin.register(models.AdvertisingActivity)
+class AdvertisingActivityAdmin(admin.ModelAdmin):
+    """ Отображение рекламной активности в админке
+    """
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']

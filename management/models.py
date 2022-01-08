@@ -170,7 +170,7 @@ class Interview(models.Model):
 
 
 class Staff(models.Model):
-    """
+    """ Модель сотрудника
     """
     USER_GROUP_CHOICES = ('admin', 'sale_manager', 'education_manager', 'hr')
     USER_GROUP_CHOICES_RUS = ('Администратор', 'Менеджер по продажам', 'Менеджер учебного процесса', 'HR менеджер')
@@ -199,6 +199,32 @@ class Staff(models.Model):
         verbose_name_plural = '07. Сотрудники'
 
 
+class AdvertisingActivityCategory(models.Model):
+    """ Модель категории рекламной активности
+    """
+    name = models.CharField(max_length=50, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория рекламной активности'
+        verbose_name_plural = '08. Категории рекламной активности'
+
+
+class AdvertisingActivity(models.Model):
+    """ Модель рекламной активности
+    """
+    name = models.CharField(max_length=50, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Рекламная активность'
+        verbose_name_plural = '09. Рекламная активность'
+
+
 class CostCategory(models.Model):
     """ Модель категории затрат
     """
@@ -206,7 +232,7 @@ class CostCategory(models.Model):
 
     class Meta:
         verbose_name = 'Категория затрат'
-        verbose_name_plural = '08. Категории затрат'
+        verbose_name_plural = '10. Категории затрат'
 
     def __str__(self):
         return self.name
@@ -217,10 +243,13 @@ class Cost(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Автор записи', blank=True, null=True)
     category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True)
-    date = models.DateTimeField(verbose_name='Дата и время затраты', auto_now_add=True)
+    advertising_activity = models.ForeignKey(AdvertisingActivity, on_delete=models.SET_NULL, blank=True, null=True)
+    date = models.DateTimeField(verbose_name='Дата и время записи', auto_now_add=True)
+    date_to = models.DateTimeField(verbose_name='Период затрат с', blank=True, null=True)
+    date_from = models.DateTimeField(verbose_name='Период затрат по', blank=True, null=True)
     amount = models.IntegerField(verbose_name='Сумма затрат')
     comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Затрата'
-        verbose_name_plural = '09. Затраты'
+        verbose_name_plural = '11. Затраты'
