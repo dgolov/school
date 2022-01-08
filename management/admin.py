@@ -124,5 +124,5 @@ class AdvertisingActivityCategoryAdmin(admin.ModelAdmin):
 class AdvertisingActivityAdmin(admin.ModelAdmin):
     """ Отображение рекламной активности в админке
     """
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'category']
     list_display_links = ['id', 'name']
