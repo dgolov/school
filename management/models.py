@@ -218,6 +218,7 @@ class AdvertisingActivityCategory(models.Model):
 class AdvertisingActivity(models.Model):
     """ Модель рекламной активности
     """
+    category = models.ForeignKey(AdvertisingActivityCategory, on_delete=models.CASCADE, verbose_name='Категория')
     name = models.CharField(max_length=50, verbose_name='Название')
 
     def __str__(self):
