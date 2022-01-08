@@ -243,7 +243,7 @@ class Cost(models.Model):
     """
     name = models.CharField(max_length=50, verbose_name='Наименование затраты', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Автор записи', blank=True, null=True)
-    category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True, verbose_name='Категория')
     advertising_activity = models.ForeignKey(
         AdvertisingActivity,
         on_delete=models.SET_NULL,
