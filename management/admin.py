@@ -85,6 +85,7 @@ class CostCategoryAdmin(admin.ModelAdmin):
     """ Отображение категорий затрат в админке
     """
     list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
 
 
 @admin.register(models.Cost)
@@ -92,6 +93,7 @@ class CostAdmin(admin.ModelAdmin):
     """ Отображение затрат в админке
     """
     list_display = ['id', 'name', 'category', 'date', 'amount']
+    list_display_links = ['id', 'name']
     list_filter = ['category']
 
 
