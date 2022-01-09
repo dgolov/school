@@ -119,12 +119,36 @@ class Profile(models.Model):
         return f'{self.user.last_name} {self.user.first_name} {self.middle_name}'
 
 
+class StudentAgeGroup(models.Model):
+    """ Модель возрастных категорий студентов
+    """
+    AGE_GROUP_CHOICES = ('children', 'teens', 'adults')
+    AGE_GROUP_CHOICES_RUS = ('Дети', 'Подростки', 'Взрослые')
+    AGE_GROUP_CHOICES = list(zip(AGE_GROUP_CHOICES, AGE_GROUP_CHOICES_RUS))
+
+    age_group = models.CharField(max_length=50, verbose_name='Возрастная категория', choices=AGE_GROUP_CHOICES)
+
+    def __str__(self):
+        return self.age_group
+
+    class Meta:
+        verbose_name = 'Возрастные группы студентов'
+        verbose_name_plural = '01. Пользователи - Возрастные группы'
+
+
 class Student(Profile):
     """ Модель обучающихся
     """
     group_list = models.ManyToManyField(Group, verbose_name='Группы', blank=True, related_name='student_groups')
     hobbies = models.TextField(verbose_name='Увлечения', blank=True, null=True)
     dream = models.TextField(verbose_name='Мечта', blank=True, null=True)
+    verification = models.BooleanField(default=False, verbose_name='Верификация пройдена')
+    age_group_access = models.ManyToManyField(
+        StudentAgeGroup,
+        blank=True,
+        verbose_name='Доступы по возрастным категориям',
+        related_name='student_age_group_access'
+    )
     courses = models.ManyToManyField(
         'Course',
         blank=True,
@@ -443,26 +467,47 @@ class Event(models.Model):
     date = models.DateTimeField(verbose_name='Дата и время')
     speakers = models.ManyToManyField(Teacher, verbose_name='Спикеры', blank=True, related_name='event_speakers')
     image = models.ImageField(upload_to='images/events', verbose_name='Изображение', blank=True, null=True)
-    program = models.ManyToManyField(
-        'EventDay',
-        verbose_name='Программа мероприятия',
-        blank=True,
-        related_name='evert_days'
-    )
-    block_size = models.CharField(max_length=20, verbose_name='Размер блока', choices=SIZE_CHOICES)
+    block_size = models.CharField(max_length=20, verbose_name='Размер блока', choices=SIZE_CHOICES, default='small')
+    color_hex = models.CharField(max_length=10, verbose_name='Цвет блока мероприятия (hex)', blank=True, null=True)
+    block_image = models.BooleanField(default=False, verbose_name='Обложка блока картинкой')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Мероприятия'
+        verbose_name_plural = '05. Мероприятия'
+        ordering = ['-date']
 
 
 class EventDay(models.Model):
     """ Модель дня мероприятия
     """
+    number = models.IntegerField(verbose_name='День мероприятия')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Мероприятие')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.event} - день {self.number}'
+
+    class Meta:
+        verbose_name = 'Дни мероприятий'
+        verbose_name_plural = '05. Мероприятия - Дни'
 
 
 class News(models.Model):
-    """ Модель новостей
+    """ Модель новости
     """
     name = models.CharField(max_length=100, verbose_name='Название')
     introduction = models.TextField(verbose_name='Вступление новости', blank=True, null=True)
     text = models.TextField(verbose_name='Текст новости', blank=True, null=True)
     date = models.DateField(verbose_name='Дата публикации')
     image = models.ImageField(upload_to='images/news', verbose_name='Изображение', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Новости'
+        verbose_name_plural = '06. Новости'
+        ordering = ['-date']
