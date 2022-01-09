@@ -1,29 +1,67 @@
 {% extends 'crm/base.html' %}
 {% block content %}
     <div class="card-title mb-4">
-        <h4>Список клиентов</h4>
+        <h4 style="display: inline;">Список клиентов</h4>
+        <a type="button" href="{% url 'create_client' %}" class="btn btn-outline-primary m-1 px-5"
+           style="float: right">Добавить клиента</a>
     </div>
     <div class="card radius-15">
         <div class="card-body">
             <div class="row mb-4">
-                <div class="col-md-8">
-                    <div class="flex-grow-1 search-bar">
-                        <div class="input-group">
-                            <div class="input-group-prepend search-arrow-back">
-                                <button class="btn btn-search-back" type="button"><i class="bx bx-arrow-back"></i>
-                                </button>
+                <div class="col-md-12">
+                    <form action="" method="get">
+                        <div class="row ml-2">
+                            <input type="date" class="form-control" name="date_from" style="width: 20%; margin: 8px;">
+                            <input type="date" class="form-control" name="date_to" style="width: 20%; margin: 8px;">
+                            <input class="form-control form-control-lg" type="text" placeholder="ФИО" name="fio"
+                                   style="width: 50%; margin: 8px; height: 38px">
+                            <div class="mx-1 my-2">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="None">
+                                    <label class="form-check-label">Нет</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="contract">
+                                    <label class="form-check-label">Заключен договор</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="meeting">
+                                    <label class="form-check-label">Назначена встреча</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="waiting_call">
+                                    <label class="form-check-label">Ждет звонка</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="will_think">
+                                    <label class="form-check-label">Будет думать</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="refusal">
+                                    <label class="form-check-label">Отказ</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="dissatisfied">
+                                    <label class="form-check-label">Недовольный клиент</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="last_status"
+                                           value="no_connection">
+                                    <label class="form-check-label">Нет ответа</label>
+                                </div>
                             </div>
-                            <input type="text" class="form-control" placeholder="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="button"><i class="lni lni-search-alt"></i>
-                                </button>
-                            </div>
+                            <button class="btn btn-light m-1 px-5" type="submit" style="display: inline; float: right;">
+                                Применить фильтры
+                            </button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <a type="button" href="{% url 'create_client' %}" class="btn btn-outline-primary m-1 px-5"
-                       style="float: right;"><i class="bx bx-user mr-1"></i>Добавить клиента</a>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">

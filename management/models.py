@@ -6,6 +6,13 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Client(models.Model):
     """ Модель клиента
     """
+    RESULT_CHOICES = ('contract', 'meeting', 'waiting_call', 'will_think', 'refusal', 'dissatisfied', 'no_connection')
+    RESULT_CHOICES_RUS = (
+        'Заключен договор', 'Назначена встреча', 'Ждет звонка', 'Будет думать', 'Отказ', 'Недовольный клиент',
+        'Нет ответа'
+    )
+    RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
+
     manager = models.ForeignKey(
         'Staff',
         on_delete=models.SET_NULL,
@@ -22,8 +29,15 @@ class Client(models.Model):
     phone = PhoneNumberField(verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Электронная почта', blank=True, null=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
-    data = models.DateField(verbose_name='Дата занесения в базу', auto_now_add=True, blank=True, null=True)
-    last_status = models.CharField(max_length=50, verbose_name='Последний статус по заявкам', blank=True, null=True)
+    date = models.DateField(verbose_name='Дата занесения в базу', auto_now_add=True, blank=True, null=True)
+    # contract = models.BooleanField(verbose_name='Заключен договор', default=False)
+    last_status = models.CharField(
+        max_length=50,
+        verbose_name='Последний статус по заявкам',
+        blank=True,
+        null=True,
+        choices=RESULT_CHOICES,
+    )
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
@@ -37,8 +51,14 @@ class Contract(models.Model):
     """ Модель договор
     """
     number = models.PositiveIntegerField(verbose_name='Номер договора')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
-    student = models.ForeignKey('mainapp.Student', on_delete=models.SET_NULL, verbose_name='Слушатель', blank=True, null=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент', related_name='client_contract')
+    student = models.ForeignKey(
+        'mainapp.Student',
+        on_delete=models.SET_NULL,
+        verbose_name='Слушатель',
+        blank=True,
+        null=True
+    )
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Приобретенный курс')
     date = models.DateField(auto_now_add=True, verbose_name='Дата')

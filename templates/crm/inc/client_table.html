@@ -2,18 +2,28 @@
     <thead>
     <tr>
         <th scope="col">#</th>
+        <th scope="col">Дата</th>
         <th scope="col">ФИО</th>
         <th scope="col">Телефон</th>
         <th scope="col">Email</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Договор</th>
     </tr>
     </thead>
     <tbody>
     {% for client in client_list %}
         <tr>
             <th scope="row"><a href="/api/crm/clients/{{ client.pk }}">{{ client.id }}</a></th>
+            <th scope="row">{{ client.date }}</th>
             <td><a href="/api/crm/clients/{{ client.pk }}">{{ client }}</a></td>
             <td><a href="tel: {{ client.phone }}">{{ client.phone }}</a></td>
             <td>{{ client.email }}</td>
+            <td>{{ client.last_status }}</td>
+            {% if client.client_contract.all %}
+                <td>Заключен</td>
+            {% else %}
+                <td>Не заключен</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
