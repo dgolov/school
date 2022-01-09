@@ -21,7 +21,7 @@ from management.models import (
     CostCategory,
     Staff
 )
-from management.mixins import GroupMixin, CourseMixin
+from management.mixins import GroupMixin, CourseMixin, FilterMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 from datetime import datetime
@@ -78,7 +78,7 @@ class ProfileLoginView(View):
         return render(request, 'crm/authentication-login.html', {'title': "Вход в систему", 'form': auth_form})
 
 
-class ClientsListView(ListView):
+class ClientsListView(FilterMixin, ListView):
     """ Список клиентов академии в CRM
     """
     model = Client
@@ -93,11 +93,12 @@ class ClientsListView(ListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            return Client.objects.all()
+            queryset = Client.objects.all()
         elif self.request.user.staff.user_group == 'sale_manager':
-            return Client.objects.filter(manager=self.request.user.staff)
+            queryset = Client.objects.filter(manager=self.request.user.staff)
         else:
             return None
+        return self.check_request_data(request=self.request, queryset=queryset)
 
 
 class ClientDetailView(DetailView):
@@ -111,7 +112,7 @@ class ClientDetailView(DetailView):
         context = super(ClientDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        context['contracts'] = Contract.objects.filter(client=self.get_object())
+        context['contracts'] = self.get_object().client_contract.all()
         context['orders'] = Order.objects.filter(client=self.get_object())
         context['requests'] = Request.objects.filter(client=self.get_object())
         return context
@@ -256,7 +257,7 @@ class CreateOrderView(CreateView):
         return HttpResponseRedirect('/api/crm/orders')
 
 
-class RequestListView(ListView):
+class RequestListView(FilterMixin, ListView):
     """ Список онлайн заявок в CRM
     """
     model = Request
@@ -278,28 +279,12 @@ class RequestListView(ListView):
                 Q(status='new')).filter(type_request='online')
         else:
             return None
-        return self.check_request_data(queryset=queryset)
+        return self.check_request_data(request=self.request, queryset=queryset)
 
     @staticmethod
     def get_status():
         """ Получает статусы заявок для фильтрации """
         return Request.objects.all().values('status').distinct()
-
-    def check_request_data(self, queryset):
-        """ Проверяет параметры фильтрации """
-        if self.request.GET.getlist("status"):
-            queryset = queryset.filter(status__in=self.request.GET.getlist("status"))
-        if self.request.GET.get("date_from") and self.request.GET.get("date_to"):
-            if len(self.request.GET.get("date_from")) == 0:
-                date_from = '2021-01-01'
-            else:
-                date_from = self.request.GET.get("date_from")
-            if len(self.request.GET.get("date_to")) == 0:
-                date_to = datetime.now()
-            else:
-                date_to = self.request.GET.get("date_to")
-            queryset = queryset.filter(Q(date__range=[date_from, date_to]))
-        return queryset
 
 
 class OutCallListView(RequestListView):
@@ -317,7 +302,7 @@ class OutCallListView(RequestListView):
             queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
         else:
             return None
-        return self.check_request_data(queryset=queryset)
+        return self.check_request_data(request=self.request, queryset=queryset)
 
 
 class InCallListView(RequestListView):
@@ -335,7 +320,7 @@ class InCallListView(RequestListView):
             queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
         else:
             return None
-        return self.check_request_data(queryset=queryset)
+        return self.check_request_data(request=self.request, queryset=queryset)
 
 
 class VisitListView(RequestListView):
@@ -348,11 +333,12 @@ class VisitListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            return Request.objects.filter(type_request='visit')
+            queryset = Request.objects.filter(type_request='visit')
         elif self.request.user.staff.user_group == 'sale_manager':
-            return Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
         else:
             return None
+        return self.check_request_data(request=self.request, queryset=queryset)
 
 
 class RequestDetailView(DetailView):
@@ -388,9 +374,11 @@ class CreateRequestView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            form.save()
-            form.instance.manager = self.request.user.staff
-            form.instance.save()
+            new_request = form.save()
+            new_request.manager = self.request.user.staff
+            new_request.save()
+            new_request.client.last_status = new_request.result
+            new_request.client.save()
             return HttpResponseRedirect(self.success_urls[form.instance.type_request])
 
 
