@@ -462,6 +462,7 @@ class News(models.Model):
     """ Модель новостей
     """
     name = models.CharField(max_length=100, verbose_name='Название')
+    introduction = models.TextField(verbose_name='Вступление новости', blank=True, null=True)
     text = models.TextField(verbose_name='Текст новости', blank=True, null=True)
     date = models.DateField(verbose_name='Дата публикации')
-    image = models.ImageField(upload_to='images/events', verbose_name='Изображение', blank=True, null=True)
+    image = models.ImageField(upload_to='images/news', verbose_name='Изображение', blank=True, null=True)
