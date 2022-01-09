@@ -196,11 +196,11 @@ class CreateProfileSerializer(serializers.Serializer):
             phone=profile_data['phone'],
             gender=profile_data['gender'],
         )
-        send_mail_task.delay(
-            theme='Регистрация на Future Academy',
-            message='Благодарим за регистрацию',
-            email_to=new_user.email,
-        )
+        # send_mail_task.delay(
+        #     theme='Регистрация на Future Academy',
+        #     message='Благодарим за регистрацию',
+        #     email_to=new_user.email,
+        # )
         return new_user
 
 
