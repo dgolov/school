@@ -621,6 +621,9 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EventSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        return models.Event.objects.all()
+
 
 # NEWS
 
@@ -629,3 +632,6 @@ class NewsViewSet(viewsets.ModelViewSet):
     """
     serializer_class = serializers.NewsSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return models.News.objects.all()

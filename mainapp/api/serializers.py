@@ -634,11 +634,20 @@ class EventSerializer(serializers.ModelSerializer):
     """ Серилизация мероприятий
     """
     speakers = ProfileSerializer(many=True)
-    program = EventDaySerializer(many=True)
+    days = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Event
-        fields = '__all__'
+        fields = [
+            'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 'block_image',
+            'days'
+        ]
+
+    @staticmethod
+    def get_days(obj):
+        days = obj.event_days.all()
+        serializer = EventDaySerializer(days, many=True)
+        return serializer.data
 
 
 class NewsSerializer(serializers.ModelSerializer):

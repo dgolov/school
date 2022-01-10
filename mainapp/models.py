@@ -484,7 +484,7 @@ class EventDay(models.Model):
     """ Модель дня мероприятия
     """
     number = models.IntegerField(verbose_name='День мероприятия')
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Мероприятие')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Мероприятие', related_name='event_days')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
 
     def __str__(self):
