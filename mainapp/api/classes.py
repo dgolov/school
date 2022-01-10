@@ -22,13 +22,17 @@ class BuyingCourseManager:
     def pay(self):
         """ Проверяет является ли пользователь студентом и существует ли данный курс """
         if self.profile.user_group != "student":
-            return status.HTTP_403_FORBIDDEN  # Покупают курсы только с аккаунтов студентов
+            # Покупают курсы только с аккаунтов студентов
+            return {"message": "User is not a student"}, status.HTTP_403_FORBIDDEN
         try:
             self.course = Course.objects.get(pk=self.data.get('id'))
         except Course.DoesNotExist:
             return {"message": "Bad request"}, status.HTTP_400_BAD_REQUEST
         if self.course in self.profile.student.courses.all():
             return {"message": "Already reported"}, status.HTTP_208_ALREADY_REPORTED
+        if not self.check_age_group():
+            # Покупать курсы можно только с правами соответствующими возрастной категории студента
+            return {"message": "Not suitable age category"}, status.HTTP_403_FORBIDDEN
         response = self.get_paid_status_from_yookassa()
         print(response)
         # add_order.delay(self.profile.id, course.id, response)
@@ -73,3 +77,11 @@ class BuyingCourseManager:
         )
         order = Order.objects.get_or_create(client=client[0], course=self.course, price=self.course.price)
         return order[0]
+
+    def check_age_group(self):
+        """ Проверяет соответствие возрастной группы студента с возрастной группой приобретаемого курса
+        """
+        for age_group_access in self.profile.student.age_group_access.all():
+            if self.course.category.age_group in age_group_access.age_group:
+                return True
+        return False

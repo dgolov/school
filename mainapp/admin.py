@@ -28,6 +28,14 @@ class GroupAdmin(admin.ModelAdmin):
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
 
+@admin.register(models.StudentAgeGroup)
+class StudentAgeGroupAdmin(admin.ModelAdmin):
+    """ Отображение возрастных групп учеников в админке
+    """
+    list_display = ['id', 'age_group']
+    list_display_links = ['age_group']
+
+
 @admin.register(models.Student)
 class StudentAdmin(ProfileAdmin):
     """ Отображение списка учеников в админке
@@ -35,7 +43,7 @@ class StudentAdmin(ProfileAdmin):
     # readonly_fields = ('user', 'first_name', 'last_name', 'email')
     list_display = ['id', 'full_name', 'username', 'user_group']
     list_display_links = ['full_name']
-    list_filter = ['group_list']
+    list_filter = ['group_list', 'age_group_access']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
     # fieldsets = (
     #     ('Обучающийся', {
@@ -167,13 +175,15 @@ class EventAdmin(admin.ModelAdmin):
     """ Отображение списка мероприятий в админке
     """
     list_display = ['id', 'name', 'date']
+    list_display_links = ['name']
 
 
 @admin.register(models.EventDay)
 class EventDayAdmin(admin.ModelAdmin):
     """ Отображение дней (программы) пероприятий в админке
     """
-    list_display = ['id', 'description']
+    list_display = ['id', 'number', 'event', 'description']
+    list_display_links = ['number']
 
 
 @admin.register(models.News)
@@ -181,3 +191,4 @@ class NewsAdmin(admin.ModelAdmin):
     """ Отображение списка новостей в админке
     """
     list_display = ['id', 'name', 'date']
+    list_display_links = ['name']
