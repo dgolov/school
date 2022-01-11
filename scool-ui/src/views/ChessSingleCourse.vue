@@ -442,8 +442,12 @@ export default {
 }
 
 .faq_active {
-  box-shadow: -5px 0 8px 2px rgba(235, 147, 79, 0.6),
-  5px 0 8px 2px rgba(99, 169, 218, 0.6);
+  box-shadow:
+      42px -37px 20px -31px rgb(39 170 237 / 35%),
+      55px 56px 20px -47px rgb(39 170 225 / 35%),
+      -41px 40px 20px -34px rgb(247 148 29 / 40%),
+      -57px -54px 20px -50px rgb(247 148 29 / 40%);
+  transition: box-shadow 0.8s ease;
 }
 
 .faq-open-button {
@@ -460,6 +464,12 @@ export default {
   font-size: 18px;
   align-items: center;
   line-height: 46px;
+  border: none;
+  box-shadow: 18px 14px 20px -13px rgb(39 170 237 / 35%),
+  26px -18px 20px -21px rgb(39 170 225 / 35%),
+  -18px 7px 20px -12px rgb(247 148 29 / 40%),
+  -28px -22px 20px -22px rgb(247 148 29 / 40%);
+  transition: box-shadow 0.8s ease;
 }
 
 h2 {
