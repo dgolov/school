@@ -8,7 +8,6 @@
       </div>
     </div>
 
-    <!-- Блок после шапки H1 c 992px -->
     <div class="header-mobi d-none">
       <img src="../assets/img/header/header-mobi.jpg" alt="" class="header-mobi__img">
       <div class="container">
@@ -23,7 +22,6 @@
       </div>
     </div>
 
-    <!-- Сова -->
     <div class="steps white-section mt-3 pt-0 st">
       <div class="container">
         <div class="row">
@@ -39,8 +37,6 @@
               </div>
             </div>
 
-            <!-- Заголовки -->
-            <!-- Измение 10.01 в css 3588 строке  .events-title__circle (width-39 height-39) -->
             <div class="col-12 col-md-9 col-lg-8">
               <div class="events-title-wrapp">
                 <div class="events-title__inner">
@@ -68,8 +64,6 @@
       </div>
     </div>
 
-
-    <!-- Блок видео на страницу об академии -->
     <section class="video v-a-a">
       <div class="container">
         <div class="row justify-content-center" style="position:relative;z-index: 1;">
@@ -99,7 +93,6 @@
       </div>
     </section>
 
-    <!-- Блок об основателе -->
     <section class="founder">
       <div class="container">
         <div class="row">
@@ -133,7 +126,6 @@
       </div>
     </section>
 
-    <!-- Блок наши ценности -->
     <section class="our-values">
       <div class="container">
         <div class="row">
@@ -167,15 +159,6 @@
         </div>
       </div>
     </section>
-
-
-    <!-- Мероприятие проводят(стр мероприятия), Блок наши люди -->
-
-    <!--
-        Изменение 09.01
-        нужно в css к классу  .teacher__photo добавить border-radius: 50%;
-        CSS на 3720 строке
-    -->
 
     <section class="teachers">
       <div class="row">
@@ -267,7 +250,6 @@
     </section>
 
 
-    <!-- Блок наши программы -->
     <section class="our-programs">
       <div class="container">
         <div class="row">
@@ -284,7 +266,6 @@
               <p class="programs-info">Актуальны и фундаментальны</p>
             </div>
           </div>
-          <!-- Я здесь добавлю класс "o-p" чтобы изменить размер -->
           <div class="text-gradient-wrapper">
             <div class="col-md-3">
               <h3 class="text-gradient mt-4 mb-0">600</h3>
@@ -303,14 +284,6 @@
       </div>
     </section>
 
-
-    <!--
-        Измнение 09.01
-        добавила новую тень для карточек
-        css на 257 строке .eff-h-three
-     -->
-
-    <!--  Блок наши партнеры -->
     <section class="our-partners">
       <div class="container">
         <div class="row">
@@ -385,13 +358,6 @@
       </div>
     </section>
 
-
-    <!--
-        Измнение 09.01
-        добавила новую тень для карточек
-        css на 291 строке .eff-h-four
-     -->
-    <!-- Блок нажми, если это о тебе -->
     <section class="click-on">
       <div class="container">
         <div class="row">

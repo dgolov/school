@@ -4,7 +4,7 @@
     <section class="breadcrumbs">
       <div class="container">
         <div class="row">
-          <div class="col-12"> <!-- d-none d-lg-block  Если нужно убрать крошки на 992 -->
+          <div class="col-12">
 
             <ul class="breadcrumb">
               <li class="breadcrumb__list">
