@@ -31,6 +31,7 @@ import CreateGroupChat from "../views/Messages/CreateGroupChat";
 import Settings from "../views/Profile/Settings";
 import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
+import EventSingle from "../views/EventSingle";
 
 
 Vue.use(VueRouter)
@@ -189,6 +190,12 @@ const routes = [
     path: '/events',
     name: 'Events',
     component: Events
+  },
+  {
+    path: '/events/:id',
+    name: 'EventSingle',
+    component: EventSingle,
+    props: true
   },
   {
     path: '/news',
