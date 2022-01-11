@@ -125,8 +125,6 @@ export default {
   components: {Navbar},
 
   created() {
-    console.log(this.category)
-    console.log(this.ageGroup)
     if (!this.category) {
       this.category_name = 'all'
     } else {
