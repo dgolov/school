@@ -639,8 +639,8 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = [
-            'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 'block_image',
-            'days'
+            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 
+            'block_image', 'days'
         ]
 
     @staticmethod
