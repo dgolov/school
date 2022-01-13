@@ -1,7 +1,7 @@
 <template>
   <div id="education">
     <navbar></navbar>
-    <div class="step landing__section landing__section_white">
+    <div class="step landing__section landing__section_white past-events">
       <div class="page">
         <div class="container mt-1">
           <h1 class="mb-5 bold">Все программы обучения</h1>

@@ -1,5 +1,5 @@
 <template>
-  <div id="event">
+  <div>
     <navbar></navbar>
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="header-page">
