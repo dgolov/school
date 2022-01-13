@@ -5799,5 +5799,2347 @@ a.events {
         max-width: 175;
     }
 }
-
 /*                                                                                     */
+
+
+/*
+Изменения 10.01
+стр курса шахматы
+*/
+
+/* Блок шапки H1
+Пришлось почти все менять(
+*/
+@media (max-width: 2000px){
+    .chess-course{
+        position: relative;
+        background: #00093C;
+        height: 530px;
+    }
+    .chess-course::before {
+    content: '';
+    background:
+        url(../img/header/figures-header-horse.svg) 143px 48px no-repeat,
+        url(../img/header/figures-header-eight-one.svg) 40px 323px  no-repeat,
+        url(../img/header/figures-header-two.svg) 610px 425px no-repeat,
+         url(../img/header/figures-header-three-two.svg) 98% 431px no-repeat,
+         url(../img/header/figures-header-three-ten.svg) 50% 228px no-repeat,
+        url(../img/header/figures-header-three.svg) 96% 36px no-repeat;
+    color: #fff;
+    background-size: 6%, 7%, 18%, 18%, 23%, 7%;
+    position: absolute;
+    height: 115%;
+    width: 100%;
+    z-index: 5;
+    }
+    .chess-course-img-wrapp {
+    position: relative;
+    }
+    .chess-course-img-wrapp::before {
+        content: '';
+        background: url(../img/header/figures-header-one.svg) 79% 179px  no-repeat,
+        url(../img/header/figures-header-three.svg) 65% 16px no-repeat,
+        url(../img/header/figures-header-four.svg) 62% 336px no-repeat;
+        background-size: 96px, 117px, 130px;
+        position: absolute;
+        width: 100%;
+        height: 500px;
+        z-index: 8;
+    }
+    .chess-course__img {
+        position: relative;
+        left: 56%;
+        height: 530px;
+    }
+    .chess-course-title {
+        font-size: 42px;
+        font-weight: 700;
+        max-width: 550px;
+        margin: 0;
+    }
+    .chess-course-text {
+        font-weight: 500;
+        font-size: 24px;
+        max-width: 440px;
+        margin: 11px 0 0 0;
+    }
+    .chess-course-title, .chess-course-text{
+        position: relative;
+        color: #fff;
+        bottom: 490px;
+    }
+    .chess-course-wrapp {
+        display: flex;
+        position: relative;
+        color: #fff;
+        bottom: 455px;
+    }
+    .chess-course-wrapp_bottom{
+        bottom: 445px;
+    }
+    .chess-course-info{
+        font-weight: 500;
+        font-size: 14px;
+    }
+    .chess-course-info_small{
+        max-width: 120px;
+    }
+    .chess-course-info_big{
+        max-width: 310px;
+    }
+    .chess-course-info_price{
+        font-weight: 700;
+        font-size: 28px;
+        max-width: 450px;
+    }
+    .hd-m{
+        margin-left: 50px;
+    }
+    .hb-chess{
+        bottom: 455px;
+    }
+    .hb-chess-desc{
+        position: relative;
+        font-size: 16px;
+        color: #fff;
+        bottom: 480px;
+        max-width: 580px;
+    }
+    .button-chess{
+        bottom: 480px;
+    }
+    .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc ,.button-chess{
+        left: 17%;
+    }
+}
+@media (max-width: 1760px){
+    .chess-course::before{
+         background-position: 63px 48px,0px 323px,506px 442px, 97% 446px, 47% 228px,93% 36px;
+    }
+    .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc, .button-chess {
+        left: 13%;
+    }
+    .chess-course__img {
+        left: 52%;
+    }
+    .chess-course-img-wrapp::before {
+        background-position:  78% 179px, 63% 25px,59% 336px;
+    }
+}
+@media (max-width: 1660px){
+    .chess-course::before{
+         background-position: 63px 48px,0px 323px,506px 442px, 97% 446px, 47% 228px,95% 36px;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 81% 179px, 62% 25px,59% 336px;
+    }
+}
+@media (max-width: 1560px){
+    .chess-course::before{
+         background-position: 63px 48px,0px 323px,506px 442px, 100% 446px, 49% 228px,99% 36px;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 83% 179px, 65% 25px,60% 338px;
+    }
+}
+@media (max-width: 1441px){
+    .chess-course::before{
+         background-position: 26px 48px,-32px 367px,443px 456px, 99% 449px, 46% 228px,99% 36px;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 83% 179px, 65% 25px,60% 338px;
+    }
+    .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc, .button-chess {
+        left: 10%;
+    }
+    .chess-course__img {
+        left: 51%;
+    }
+}
+@media (max-width: 1401px){
+    .chess-course::before{
+         background-position: 26px 48px,-32px 367px,443px 456px, 99% 449px, 46% 228px,99% 36px;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 85% 175px, 65% 25px,61% 338px;
+    }
+}
+@media (max-width: 1375px){
+    .chess-course-img-wrapp::before {
+        background-position: 86% 175px, 66% 25px,61% 338px;
+    }
+    .chess-course-title{
+        font-size: 38px;
+    }
+    .chess-course-text{
+        font-size: 23px;
+    }
+    .chess-course-info_price, .header-button-title{
+        font-size: 26px;
+    }
+    .hb-chess-desc{
+        max-width: 500px;
+    }
+}
+@media (max-width: 1280px){
+    .chess-course-img-wrapp::before {
+        background-position: 88% 182px, 68% 34px,61% 338px;
+        background-size: 82px, 106px, 121px;
+    }
+    .chess-course__img{
+        width:42% ;
+    }
+}
+@media (max-width: 1200px){
+    .chess-course::before{
+        background-position: 12px 48px,-37px 367px,374px 456px, 107% 478px, 45% 228px,-99% 36px;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 88% 182px, 68% 34px,61% 338px;
+        background-size: 82px, 106px, 121px;
+    }
+    .chess-course__img{
+        width:auto;
+    }
+    .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc, .button-chess {
+        left: 8%;
+    }
+    .hb-chess-desc {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 1176px){
+    .chess-course-img-wrapp::before {
+        background-position: 91% 182px, 68% 34px,61% 338px;
+    }
+}
+@media (max-width: 1085px){
+    .chess-course-img-wrapp::before {
+        background-position: 97% 180px, 71% 34px,63% 338px;
+        background-size: 75px, 97px, 110px;
+    }
+    .chess-course::before {
+        background-position: 12px 48px,-37px 367px,337px 493px, 106% 478px, 46% 257px,-99% 36px;
+    }
+    .hd-m{
+        width: 15%;
+    }
+    .hb-chess {
+        bottom: 465px;
+    }
+    .hb-chess-desc{
+        bottom: 490px;
+        max-width: 392px;
+    }
+    .button-chess {
+        bottom: 492px;
+    }
+}
+
+/* Блок после шапки H1 c 992px */
+@media (max-width: 992px){
+    .chess-course__img{
+        width: 100%;
+        left: 0;
+        margin: auto;
+        height: fit-content;
+    }
+    .chess-course-img-wrapp::before {
+        background-position: 86% 287px, 13% 34px,4% 620px;
+        background-size: 18%, 26%, 24%;
+        height: 100%;
+    }
+    .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc, .button-chess{
+        position: static;
+    }
+    .chess-course-title {
+        font-size: 42px;
+        padding-top: 20px;
+        margin-bottom: 20px;
+    }
+    .chess-course-info_big{
+        max-width: 500px;
+    }
+    .hd-m {
+        width: 42%;
+    }
+    .chess-course-wrapp{
+        margin-top: 35px;
+    }
+    .chess-course-info_price, .header-button-title{
+        font-size: 28px;
+    }
+    .chess-course-info_price{
+        margin-bottom: 23px;
+    }
+    .hb-chess{
+        margin-bottom: 10px;
+    }
+    .hb-chess-desc{
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 913px){
+    .chess-course-img-wrapp::before {
+        background-position: 86% 287px, 13% 34px,4% 574px;
+    }
+}
+@media (max-width: 850px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 273px, 13% 83px,3% 531px;
+        background-size: 16%, 21%, 22%;
+    }
+}
+@media (max-width: 770px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 273px, 13% 83px,4% 486px;
+    }
+}
+@media (max-width: 700px){
+    .chess-course-img-wrapp::before {
+        background-position: 83% 232px, 20% 83px,4% 454px;
+    }
+}
+@media (max-width: 655px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 222px, 19% 83px,4% 426px;
+    }
+}
+@media (max-width: 615px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 222px, 19% 83px,9% 405px;
+    }
+}
+@media (max-width: 600px){
+    .chess-course-wrapp{
+        flex-direction: column;
+    }
+    .hd-m{
+        margin-left: 0;
+        width: 70%;
+    }
+}
+@media (max-width: 580px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 197px, 17% 83px,9% 374px;
+    }
+}
+@media (max-width: 540px){
+    .chess-course-img-wrapp::before {
+        background-position: 84% 167px, 17% 83px,7% 357px;
+    }
+}
+@media (max-width: 513px){
+    .chess-course-img-wrapp::before {
+        background-position: 81% 150px, 18% 83px,6% 318px;
+    }
+}
+@media (max-width: 450px){
+    .chess-course-img-wrapp::before {
+        background-position: 80% 136px, 18% 83px,6% 282px;
+    }
+}
+
+@media (max-width: 405px){
+    .chess-course-img-wrapp::before {
+        background-position: 82% 125px, 18% 24px,4% 256px;
+    }
+}
+
+@media (max-width: 371px){
+    .chess-course-img-wrapp::before {
+        background-position: 82% 110px, 18% 35px,4% 242px;
+    }
+    .chess-course-title{
+        font-size: 30px;
+    }
+    .chess-course-text {
+        font-size: 20px;
+    }
+    .chess-course-wrapp {
+        margin-top: 22px;
+    }
+    .chess-course-info_price {
+        margin-bottom: 10px;
+    }
+    .chess-course-info_price, .header-button-title {
+        font-size: 24px;
+    }
+    .button-chess{
+        width: 100%;
+    }
+}
+@media (max-width: 350px){
+    .chess-course-img-wrapp::before {
+        background-position: 82% 110px, 18% 35px,4% 95%;
+    }
+}
+@media (max-width: 290px){
+    .chess-course-img-wrapp::before {
+        background-position: 82% 97px, 18% 34px,4% 95%;
+    }
+}
+/*          */
+
+/* Блок с совой и заголовками */
+@media (max-width: 2000px){
+    .owl-text-chess{
+        max-width: 280px;
+        bottom: 122px;
+    }
+    .t-i-chess{
+        margin: 0 20px 0 20px;
+    }
+    .chess-wrapp{
+        align-items: baseline;
+    }
+}
+@media (max-width: 1400px){
+    .owl-text-chess{
+        bottom: 92px;
+    }
+}
+@media (max-width: 1200px){
+    .owl-text-chess{
+        bottom: 72px;
+        left: 8%;
+    }
+}
+@media (max-width: 992px){
+    .owl-text-chess{
+        bottom: 217px;
+        left: 13%;
+        font-size: 16px;
+    }
+    .chess-wrapp{
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0;
+        flex-direction: row;
+    }
+    .t-i-chess{
+        margin: 0;
+    }
+    .c-c-title-inner{
+        margin: 0 !important;
+    }
+}
+@media (max-width: 767.98px) {
+    .owl-text-chess {
+        bottom: 168px;
+        left: 16%;
+    }
+}
+@media (max-width: 576px){
+    .t-i-chess{
+        margin: 16px auto 21px 0px;
+    }
+    .c-c-title-inner{
+        width: 46%;
+    }
+    .c-c-title-inner:nth-child(2){
+        margin-bottom: 20px !important;
+    }
+}
+@media (max-width: 460px){
+    .owl-text-chess {
+        bottom: 144px;
+        left: 9%;
+    }
+    .c-c-title-inner{
+        width: 47%;
+    }
+}
+@media (max-width: 390px){
+    .owl-text-chess {
+        bottom: 120px;
+        left: 14%;
+        font-size: 14px;
+    }
+}
+@media (max-width: 321px){
+    .owl-text-chess {
+        bottom: 116px;
+        left: 4%;
+    }
+}
+@media (max-width: 290px){
+    .owl-text-chess {
+        left: 5%;
+    }
+    .chess-wrapp{
+        flex-direction: column;
+    }
+    .c-c-title-inner{
+        width: 99%;
+    }
+}
+/*          */
+
+/* Блок видео */
+/*  Responsive  */
+@media (max-width: 1400px){
+ .c-c{
+        padding-top: 55px;
+        padding-bottom: 10px;
+    }
+}
+/*       */
+
+
+/* Блок школа шахмат */
+.chess-school{
+    padding: 68px 0 30px;
+}
+.chess-school-decs{
+    font-size: 18px;
+    max-width: 770px;
+    margin-bottom: 45px;
+}
+.chess-school-wrapp{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.chess-school__text{
+    max-width: 180px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+/*  Responsive  */
+@media (max-width: 992px){
+    .chess-school {
+        padding: 20px 0 30px;
+    }
+    .chess-school-wrapp{
+        flex-wrap: wrap;
+        justify-content: normal
+    }
+    .chess-school__inner{
+        margin: 20px;
+        width: 40%;
+    }
+    .c-s-carryover{
+        display: inline;
+    }
+}
+@media (max-width: 767.98px) {
+    .c-h-title{
+        margin-top: 0;
+    }
+}
+@media (max-width: 450px) {
+    .chess-school-decs {
+        font-size: 14px;
+    }
+}
+@media (max-width: 426px) {
+    .chess-school__inner{
+        width: 35%;
+    }
+}
+@media (max-width: 321px) {
+    .chess-school__text{
+        font-size: 12px;
+    }
+}
+@media (max-width: 290px) {
+    .chess-school__inner{
+        width: 30%;
+        margin: 24px;
+    }
+}
+/*              */
+
+/* Блок записаться на курс */
+.record-course{
+    padding: 30px 0 40px;
+    background:  url('../img/chess/cover-chess.svg') no-repeat top center;
+}
+.record-course-cover{
+    width: 1;
+}
+.record-course-inner{
+    display: flex;
+    margin-bottom: 41px;
+    justify-content: center;
+}
+.record-course-text{
+    font-size: 18px;
+    color: #fff;
+    max-width: 430px;
+    padding-top: 50px;
+}
+.r-c-button{
+    position: static;
+    margin: auto;
+    display: block;
+}
+/*  Responsive  */
+@media (max-width: 1200px){
+    .record-course-inner{
+        justify-content: space-between;
+    }
+    .record-course-text{
+        max-width: 320px;
+    }
+}
+@media (max-width: 767.98px) {
+    .record-course-text{
+        max-width: 225px;
+        padding-top: 20px;
+        font-size: 16px;
+    }
+    .record-course-inner{
+        margin-bottom: 28px;
+    }
+}
+@media (max-width: 576px) {
+    .record-course-inner{
+        flex-direction: column;
+    }
+    .record-course{
+        position: relative;
+        z-index: 1;
+    }
+    .record-course-text{
+        max-width: 85%;
+    }
+    .record-course::before{
+        content: '';
+        background: #00093C;
+        width: 100%;
+        height: 25px;
+        position: absolute;
+        bottom: 6px;
+        z-index: -1;
+    }
+}
+@media (max-width: 542px) {
+    .record-course-inner {
+        margin-bottom: 30px;
+    }
+    .record-course::before{
+        bottom: 8px;
+    }
+    .record-course-text{
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+}
+@media (max-width: 336px) {
+    .record-course::before{
+        bottom: 7px;
+        height: 43px;
+    }
+}
+/*                  */
+
+/* Блок Chess academy
+для школьников */
+.chess-academy {
+    padding: 84px 0 42px;
+}
+.chess-academy-text {
+    font-size: 18px;
+    max-width: 980px;
+}
+/*  Responsive  */
+@media (max-width: 1200px){
+    .chess-academy {
+        padding: 10px 0;
+    }
+}
+@media (max-width: 450px){
+    .chess-academy-text{
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+}
+/*              */
+
+/* Блок cодержание курса */
+.course-content{
+    padding: 42px 0 80px;
+    overflow: hidden;
+}
+.course-conten-wrapp{
+    display: flex;
+}
+.c-c-course{
+    margin-bottom: 30px;
+}
+.c-c-l{
+    margin-left: 35px;
+}
+.c-c-button{
+    position: static;
+}
+.c-c-desc{
+    max-width: 825px;
+}
+.course-figure {
+    position: relative;
+}
+.figure-one, .figure-two, .figure-two, .figure-three, .figure-four {
+    position: absolute;
+}
+.figure-one{
+    background: url('../img/chess/figure-one.svg') no-repeat;
+    width: 105px;
+    height: 123px;
+    bottom: 365px;
+    left: 94%;
+}
+.figure-two {
+    background: url('../img/chess/figure-two.svg') no-repeat;
+    width: 60px;
+    height: 87px;
+    bottom: 386px;
+    left: 133%;
+}
+.figure-three {
+    background: url('../img/chess/figure-three.svg') no-repeat;
+    width: 45px;
+    height: 68px;
+    bottom: 271px;
+    left: 111%;
+}
+.figure-four {
+    background: url('../img/chess/figure-four.svg') no-repeat;
+    width: 84px;
+    height: 114px;
+    bottom: 250px;
+    left: 136%;
+}
+.olw__c-c{
+    transform: scale(-1, 1);
+    left: 91%;
+    top: 36px;
+}
+.owl__frame-course{
+    background: url('../img/owl/frame-three.svg') no-repeat;
+    width: 352px;
+    height: 142px;
+    top: -15%;
+    left: 5%;
+    position: absolute;
+}
+.owl-c-c{
+    font-weight: 500;
+    font-size: 24px;
+}
+.owl-text-c-c{
+    bottom: 149px;
+}
+/*  Responsive  */
+@media (max-width: 1400px){
+    .owl__frame-course{
+        background-size: 90%;
+        left: 18%;
+    }
+    .olw__c-c{
+        left: 107%;
+    }
+    .owl-text-c-c {
+        bottom: 125px;
+        left: 28%;
+    }
+    .figure-one, .figure-two, .figure-two, .figure-three, .figure-four{
+        background-size: 90%;
+    }
+}
+@media (max-width: 1199px){
+    .course-content {
+        padding: 42px 0 40px;
+    }
+    .olw__c-c {
+        left: 142%;
+    }
+    .owl__frame-course {
+        background-size: 84%;
+        left: 41%;
+    }
+    .owl-text-c-c {
+        bottom: 96px;
+        left: 46%;
+        width: 300px;
+    }
+    .figure-one, .figure-two, .figure-two, .figure-three, .figure-four {
+        background-size: 80%;
+    }
+    .figure-one{
+        bottom: 318px;
+        left: 120%;
+    }
+    .figure-two{
+        bottom: 348px;
+        left: 160%;
+    }
+    .figure-three{
+        bottom: 252px;
+        left: 141%;
+    }
+    .figure-four{
+        bottom: 209px;
+        left: 170%;
+    }
+}
+@media (max-width: 992px){
+    .owl-course{
+        position: absolute;
+    }
+    .olw__c-c {
+        left: 393%;
+        top: -132px;
+        width: 90%;
+    }
+    .owl__frame-course {
+        top: -62%;
+        left: 214%;
+    }
+    .owl-text-c-c {
+        bottom: 360px;
+        left: 232%;
+        width: 250px;
+    }
+    .figure-one, .figure-two, .figure-two, .figure-three, .figure-four {
+        background-size: 60%;
+    }
+    .figure-one {
+        bottom: 179px;
+        left: 89%;
+    }
+    .figure-two {
+        bottom: 222px;
+        left: 103%;
+        background-size: 75%;
+    }
+    .figure-three {
+        bottom: 153px;
+        left: 97%;
+    }
+    .figure-four {
+        bottom: 110px;
+        left: 107%;
+    }
+}
+@media (max-width: 900px){
+    .figure-one {
+        left: 82%;
+    }
+    .figure-two {
+        left: 95%;
+    }
+    .figure-three {
+        left: 91%;
+    }
+    .figure-four {
+        bottom: 117px;
+        left: 100%;
+    }
+}
+@media (max-width: 807px){
+    .figure-one, .figure-two, .figure-two, .figure-three, .figure-four {
+        background-size: 50%;
+    }
+    .figure-one {
+        left: 79%;
+    }
+    .figure-two {
+        left: 90%;
+        background-size: 65%;
+    }
+    .figure-three {
+        left: 86%;
+    }
+    .figure-four {
+        bottom: 134px;
+        left: 94%;
+    }
+}
+@media (max-width: 767.98px){
+    .course-figure{
+        display: none;
+    }
+    .c-c-button {
+        margin-top: 160px;
+    }
+    .owl__frame-course {
+        top: -83%;
+        left: -6%;
+        background-size: 87%;
+        width: 406px;
+    }
+    .olw__c-c {
+        left: 198%;
+        top: -132px;
+        width: 90%;
+    }
+    .owl-text-c-c {
+        bottom: 406px;
+        left: 26%;
+        width: 275px;
+    }
+}
+@media (max-width: 450px){
+    .owl-c-c{
+        font-size: 18px;
+    }
+    .owl__frame-course {
+        left: 0%;
+        background-size: 87%;
+        width: 350px;
+        top: -78%;
+    }
+    .olw__c-c {
+        left: 172%;
+        top: -156px;
+        width: 80%;
+    }
+    .c-c-button {
+        margin-top: 130px;
+    }
+    .owl-text-c-c {
+        bottom: 368px;
+        left: 26%;
+        width: 230px;
+    }
+}
+@media (max-width: 390px){
+    .owl-c-c{
+        font-size: 18px;
+    }
+    .owl__frame-course {
+        left: 0%;
+        background-size: 87%;
+        width: 275px;
+        top: -114%;
+    }
+    .olw__c-c {
+        left: 141%;
+        top: -189px;
+        width: 70%;
+    }
+    .c-c-button {
+        margin-top: 180px;
+        width: 75%;
+    }
+    .owl-text-c-c {
+        bottom: 353px;
+        left: 14%;
+        width: 200px;
+    }
+}
+@media (max-width: 321px){
+    .course-conten-wrapp{
+        flex-direction: column;
+    }
+    .c-c-l{
+        margin-left: 0;
+    }
+    .owl__frame-course{
+        background: url('../img/owl/frame-four.svg') no-repeat;
+        background-size: 80%;
+        top: -100%;
+    }
+    .olw__c-c {
+        left: 130%;
+        top: -174px;
+        width: 57%;
+    }
+    .c-c-button {
+        margin-top: 130px;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 3;
+    }
+    .owl-text-c-c {
+        bottom: 288px;
+        left: 8%;
+        width: 182px;
+    }
+}
+/*                     */
+
+
+/* Блок Найдите ответ на свой вопрос */
+.answer-question{
+    font-size: 28px;
+    font-weight: 700;
+}
+.c-c-wrapper{
+    padding: 20px 0 140px;
+}
+/*  Responsive  */
+/* Изменение 11.01
+добавляю запрос на 992
+*/
+@media (max-width: 992px){
+    .c-c-wrapper{
+        padding: 20px 0 25px;
+    }
+}
+@media (max-width: 767.98px){
+    .c-c-wrapper {
+        padding: 20px 0 0px;
+    }
+}
+@media (max-width: 450px){
+    .answer-question{
+        font-size: 22px;
+    }
+}
+/*                                               */
+
+
+
+
+/*
+Изменение 11.01
+стр. курс с трудоустройством
+*/
+
+/* Блок шапки H1 */
+
+@media (max-width: 2000px){
+    .e-course{
+        font-weight: 500;
+        font-size: 16px;
+        max-width: 640px;
+        bottom: 499px;
+    }
+    .e-course-title{
+        bottom: 503px;
+    }
+    .e-course-wrapp {
+        bottom: 454px;
+    }
+    .e-course-wrapper {
+        bottom: 447px;
+    }
+    .e-c-free {
+        bottom: 460px;
+    }
+}
+@media (max-width: 1580px){
+    .e-course{
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 1330px){
+    .e-course{
+        max-width: 430px;
+    }
+}
+@media (max-width: 1050px){
+    .e-course{
+        max-width: 390px;
+    }
+}
+/* Блок после шапки H1 c 992px */
+@media (max-width: 992px){
+    .e-course{
+        position: static;
+        max-width: 90%;
+    }
+}
+/*                  */
+
+/*Блок с совой и заголовками  */
+.owl-frame-employment{
+    background: url('../img/owl/frame-five.svg') no-repeat;
+    width: 353px;
+    height: 158px;
+    left: 12%;
+}
+.owl-text-employment{
+    max-width: 287px;
+    left: 22%;
+    bottom: 106px
+}
+/*  Responsive  */
+@media (max-width: 1400px){
+    .owl-text-employment{
+        bottom: 75px;
+    }
+}
+@media (max-width: 1200px){
+    .owl-frame-employment{
+        background-size: 80%;
+        left: 4%;
+    }
+    .owl-text-employment {
+        bottom: 65px;
+        font-size: 14px;
+        left: 13%;
+    }
+}
+@media (max-width: 992px){
+    .owl-frame-employment {
+        background-size: 100%;
+        left: 12%;
+        bottom: 146px;
+        height: 161px;
+    }
+    .owl-text-employment {
+        bottom: 212px;
+        font-size: 16px;
+        left: 16%;
+        max-width: 300px;
+    }
+}
+@media (max-width: 767.98px){
+    .owl-frame-employment {
+        background-size: 96%;
+        bottom: 90px;
+    }
+    .owl-text-employment {
+        bottom: 158px;
+    }
+}
+@media (max-width: 460px){
+    .owl-frame-employment {
+        background-size: 89%;
+        bottom: 65px;
+    }
+    .owl-text-employment {
+        bottom: 127px;
+        left: 19%;
+        max-width: 255px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 390px){
+    .owl-frame-employment {
+        background-size: 85%;
+        bottom: 31px;
+    }
+    .owl-text-employment {
+        bottom: 97px;
+        left: 25%;
+        max-width: 236px;
+    }
+}
+@media (max-width: 360px){
+    .owl-frame-employment {
+        background-size: 78%;
+    }
+    .owl-text-employment {
+        left: 26%;
+        max-width: 207px;
+    }
+}
+@media (max-width: 330px){
+    .owl-frame-employment {
+        background-size: 73%;
+    }
+    .owl-text-employment{
+        bottom: 104px;
+        left: 20%;
+    }
+}
+@media (max-width: 300px){
+    .owl-frame-employment {
+        background-size: 69%;
+        bottom: 20px;
+        left: 10%;
+    }
+    .owl-text-employment {
+        bottom: 99px;
+        left: 18%;
+    }
+}
+/*             */
+
+
+/*Блок кто такой веб-разработчик  */
+.profession-info{
+    padding: 20px 0 50px;
+}
+.e-c-desc {
+    max-width: 862px;
+    margin-bottom: 0;
+}
+ul.skills{
+    column-count:2;
+    padding-left: 0;
+}
+.skills__item{
+    font-size: 16px;
+    max-width: 349px;
+    display: block;
+    margin-bottom: 24px;
+    display: flex;
+}
+.skills__item::before {
+    content: '';
+    background: url('../img/skills/skills.svg') no-repeat center center;
+    width: 31px;
+    height: 30px;
+    display: inline-block;
+    margin-right: 11px;
+   padding-right: 10px;
+}
+/*  Responsive  */
+@media (max-width: 767.98px){
+    .skills__item::before{
+        width: 35px;
+        margin-right: 6px;
+        padding-right: 37px;
+    }
+}
+@media (max-width: 460px){
+    ul.skills{
+        column-count:1;
+    }
+}
+/*          */
+
+
+
+/*  Блок эта программа подойдет тем, кто */
+.program {
+    padding: 24px 0 40px;
+    background: #00093C;
+    color: #fff;
+}
+.e-c-button {
+    position: static;
+    margin: auto;
+    display: block;
+}
+.program-title {
+    font-size: 36px;
+    font-weight: 700;
+    max-width: 325px;
+    color: #fff;
+    margin: 0 auto 37px;
+}
+.program-info-wrapp {
+    display: flex;
+    justify-content: space-between;
+}
+.program-info-title {
+    font-weight: 500;
+    font-size: 24px;
+    color: #fff;
+    margin: 0;
+}
+.program-info-text {
+    font-size: 18px;
+}
+.program-info-text, .program-info-title{
+    max-width: 288px;
+}
+/*  Responsive  */
+@media (max-width: 992px){
+    .program-info-text, .program-info-title {
+        max-width: 210px;
+    }
+}
+@media (max-width: 767.98px){
+    .program-info-text, .program-info-title {
+        max-width: 158px;
+    }
+    .program-info-title{
+        font-size: 20px;
+    }
+    .program-info-text {
+        font-size: 15px;
+    }
+}
+@media (max-width: 576px){
+    .program-info-wrapp {
+        flex-direction: column;
+    }
+    .program-info-text, .program-info-title {
+        max-width: 99%;
+    }
+    .program-info-title{
+        font-size: 24px;
+    }
+    .program-info-text {
+        font-size: 18px;
+    }
+    .e-c-button {
+        width: 90%;
+    }
+}
+@media (max-width: 500px){
+    .e-c-button {
+        width: 100%;
+    }
+}
+@media (max-width: 450px){
+    .program-title{
+        font-size: 24px;
+        max-width: 228px;
+    }
+    .program-info-title {
+        font-size: 18px;
+    }
+    .program-info-text {
+        font-size: 14px;
+    }
+}
+/*        */
+
+/*  Блок принципы обучения*/
+/*  Responsive  */
+@media (max-width: 992px){
+    .e-c-course{
+    padding: 10px 0 15px;;
+    }
+}
+@media (max-width: 324px){
+    .worth-course{
+        width: 49%;
+    }
+    .worth-course p{
+        font-size: 12px;
+    }
+}
+/*       */
+
+
+/* Сколько зарабатывает веб-разработчик */
+.earnings{
+    padding: 50px 0 40px;
+}
+.earnings-inner{
+    display: flex;
+}
+.level {
+    background: #C5DDFF;
+    border-radius: 20px;
+    padding: 27px 30px 33px;
+    width: 380px;
+}
+.level_green{
+    background: #B8EFCF;
+}
+.level_orange{
+    background: #FFCE94;
+}
+.level__name {
+    font-weight: 500;
+    font-size: 24px;
+    color: #00093C;
+    margin: 0 0 15px;
+}
+.level__desc {
+    font-size: 12px;
+    color: #4F4F4F;
+    max-width: 320px;
+    margin: 0 0 20px;
+}
+.level__price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #00093C;
+}
+/*  Responsive  */
+@media (max-width: 1400px){
+    .level{
+        width: 350px;
+    }
+}
+@media (max-width: 1200px){
+    .level{
+        width: 300px;
+        padding: 27px 10px 33px;
+    }
+    .level__price {
+        font-size: 26px;
+    }
+}
+@media (max-width: 992px){
+    .earnings {
+        padding: 20px 0;
+    }
+    .earnings-inner {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .level {
+        width: 380px;
+        padding: 27px 30px 33px;
+    }
+    .level__price {
+        font-size: 28px;
+    }
+    .level_orange{
+        margin-top: 30px;
+    }
+}
+@media (max-width: 900px){
+    .level {
+        width: 343px;
+    }
+}
+@media (max-width: 825px){
+    .level {
+        width: 322px;
+        padding: 27px 19px 33px;
+    }
+}
+@media (max-width: 767.98px){
+    .level {
+        padding: 27px 30px 33px;
+        width: 380px;
+    }
+    .level_orange{
+        margin-top: 0;
+    }
+    .level_green{
+       margin: 30px 0;
+    }
+}
+@media (max-width: 450px){
+    .level {
+        width: 320px;
+    }
+    .level__price {
+        font-size: 22px;
+    }
+    .level_green{
+       margin: 25px 0;
+    }
+}
+@media (max-width: 350px){
+    .level {
+        width: 285px;
+        padding: 27px 21px 33px;
+    }
+}
+@media (max-width: 315px){
+    .level {
+        width: 250px;
+        padding: 27px 9px 33px;
+    }
+}
+/*         */
+
+/* Блок  cодержание курса */
+.education{
+    padding: 50px 0 15px;
+}
+.education-one, .education-two, .education-three{
+    position: absolute;
+}
+.education-one{
+    background: url(../img/header/figures-header-one.svg) no-repeat;
+    width: 100px;
+    height: 100px;
+    bottom: 265px;
+    left: 76%;
+    background-size: 90%;
+}
+.education-two{
+    background:  url(../img/header/figures-header-three.svg) no-repeat;
+    width: 99px;
+    height: 82px;
+    bottom: 213px;
+    left: 101%;
+    background-size: 90%;
+}
+.education-three{
+    background: url(../img/header/figures-header-four.svg) no-repeat;
+    width: 112px;
+    height: 112px;
+    bottom: 333px;
+    left: 100%;
+    background-size: 96%;
+}
+ /*  Responsive  */
+@media (max-width: 1400px){
+    .education-one{
+        left: 102%;
+        bottom: 246px;
+    }
+    .education-two{
+        bottom: 203px;
+        left: 134%;
+    }
+    .education-three{
+        bottom: 317px;
+        left: 135%;
+    }
+}
+@media (max-width: 1200px){
+    .education-one{
+        left: 125%;
+        bottom: 216px;
+        background-size: 80%;
+    }
+    .education-two{
+        bottom: 170px;
+        left: 153%;
+        background-size: 80%;
+    }
+    .education-three{
+        bottom: 287px;
+        left: 150%;
+        background-size: 83%;
+    }
+}
+@media (max-width: 992px){
+    .education-one{
+        left: 84%;
+        bottom: 169px;
+        background-size: 70%;
+    }
+    .education-two{
+        bottom: 135px;
+        left: 97%;
+        background-size: 73%;
+    }
+    .education-three{
+        bottom: 214px;
+        left: 96%;
+        background-size: 83%;
+    }
+}
+@media (max-width: 840px){
+    .education-one {
+        left: 82%;
+        bottom: 165px;
+        background-size: 60%;
+    }
+    .education-two {
+        bottom: 147px;
+        left: 93%;
+        background-size: 63%;
+    }
+    .education-three {
+        bottom: 206px;
+        left: 92%;
+        background-size: 69%;
+    }
+}
+/*                    */
+
+
+
+/* Блок трудоустройство или создание бизнеса  */
+
+.employment-business {
+    padding: 64px 0 42px;
+}
+.employment-business-wrapp {
+    display: flex;
+    justify-content: space-between;
+}
+.cart-e-b {
+    background: #C5DDFF;
+    border-radius: 20px;
+    width: 580px;
+    padding: 27px 30px 23px;
+    color: #00093C;
+}
+.cart-e-b_green{
+    background: #B8EFCF;
+    height: 270px;
+}
+.cart-e-b__title {
+    font-weight: 500;
+    font-size: 24px;
+    color: #00093C;
+}
+.cart-e-b__desc {
+    font-size: 12px;
+    color: #4F4F4F;
+    max-width: 463px;
+    margin-bottom: 38px;
+}
+.cart-e-b__desc_lg{
+    margin-bottom: 64px;
+}
+.cart-e-b__text {
+    font-weight: 500;
+    font-size: 14px;
+}
+.cart-e-b__income {
+    font-size: 28px;
+    font-weight: 700;
+}
+ /*  Responsive  */
+ @media (max-width: 1400px){
+    .cart-e-b{
+        width: 517px;
+    }
+}
+@media (max-width: 1200px){
+    .cart-e-b{
+        width: 517px;
+    }
+    .cart-e-b {
+        width: 438px;
+    }
+    .cart-e-b__desc_lg{
+        margin-bottom: 57px;
+    }
+    .cart-e-b_green{
+        height: 286px;
+    }
+}
+@media (max-width: 992px){
+    .employment-business-wrapp {
+        flex-direction: column;
+    }
+    .cart-e-b {
+        width: 580px;
+        max-width: 500px;
+    }
+    .cart-e-b_green{
+        margin-top: 25px;
+        height: auto;
+    }
+    .cart-e-b__desc_lg {
+        margin-bottom: 38px;
+    }
+}
+@media (max-width: 580px){
+    .cart-e-b {
+        width: 445px;
+    }
+}
+@media (max-width: 475px){
+    .cart-e-b {
+        width: 424px;
+    }
+}
+@media (max-width: 450px){
+    .cart-e-b {
+        width: 355px;
+        padding: 27px 19px 23px;
+    }
+    .cart-e-b__income{
+        font-size: 18px;
+    }
+}
+@media (max-width: 375px){
+    .cart-e-b {
+        width: 295px;
+        padding: 17px 19px 16px;
+    }
+}
+@media (max-width: 320px){
+    .cart-e-b {
+        width: 281px;
+    }
+}
+@media (max-width: 300px){
+    .cart-e-b {
+        width: 253px;
+    }
+}
+/*                    */
+
+
+
+/* Блок ваше будущее резюме */
+.summary{
+    padding: 42px 0 80px;
+}
+/* рамка */
+.summary-wrapper {
+    position:relative;
+    padding: 30px;
+}
+.summary-cap {
+    position: relative;
+    z-index: 30;
+}
+.summary-wrapper::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    border-radius:20px;
+    padding:3px;
+    background:linear-gradient(98deg, rgba(247, 148, 29, 1), rgba(39, 170, 225, 1));
+    -webkit-mask:
+       linear-gradient(#fff 0 0) content-box,
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+}
+/*  */
+/* круг с фото */
+.summary-circle{
+    width:100px;
+    height: 100px;
+}
+.summary-photo {
+    transform: translateX(0);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+.summary-icon{
+    top: -49%;
+}
+/*  */
+.summary-cap__inner, .summary-wrapp-sm{
+    display: flex;
+    align-items: center;
+}
+.post-name-wrapp {
+    margin-left: 45px;
+}
+.post, .salary-from{
+    font-size: 12px;
+}
+.post-name, .money{
+    font-size: 18px;
+    font-weight: 700;
+    color: #00093C;
+}
+.money-wrapp{
+    margin-left: auto;
+}
+.border-summary{
+    border-image: linear-gradient(
+        90deg, #F7941D 0%, #27AAE1 100%);
+        border-bottom: 2px solid;
+        border-image-slice: 1;
+        padding-bottom: 18px;
+        width: 100%;
+        margin: auto;
+}
+.border-summary_sm{
+    display: none;
+}
+.skilss-title{
+    font-size: 18px;
+    margin-top: 18px;
+}
+.diploma-phopto{
+    margin-top: 20px;
+}
+.diploma-text{
+    margin-left: 54px;
+}
+.diploma-title{
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+}
+.diploma-decs{
+    font-size: 16px;
+    max-width: 565px;
+}
+.diploma-wrapp{
+    display: flex;
+    align-items: center;
+}
+ /*  Responsive  */
+ @media (max-width: 520px){
+    .post-name-wrapp {
+        margin-left: 6px;
+    }
+}
+@media (max-width: 460px){
+    .summary-cap__inner{
+        flex-direction: column;
+    }
+    .money-wrapp{
+        display: flex;
+        margin-right: auto;
+        margin-left: 0;
+        align-items: center;
+    }
+    .summary-wrapp-sm{
+        margin-right: auto;
+    }
+    .border-summary_sm{
+        display: block;
+    }
+    .skills__item_size{
+        font-size: 14px;
+    }
+    .diploma-wrapp{
+        flex-direction: column;
+    }
+    .diploma-decs{
+        max-width: 99%;
+    }
+    .summary-wrapper{
+        padding: 20px;
+    }
+    .diploma-text{
+        margin-left: 0;
+    }
+    .diploma-title{
+        margin: 20px 0 16px 0 !important;
+    }
+    .salary-from, .money{
+        margin: 0 !important;
+    }
+    .salary-from{
+        margin-right: 9px !important;
+    }
+    .b-s-sm{
+        padding-bottom: 10px;
+    }
+    .skills-summary{
+        margin-bottom: 0;
+    }
+}
+/*                                                              */
+
+
+
+/* Изменеия 12.01
+стр карьера
+*/
+/* Блок шапки H1  */
+@media (max-width: 2000px){
+    .career{
+        position: relative;
+        background: #00093C;
+        height: 440px;
+    }
+    .career::before{
+        content: '';
+        background:
+            url(../img/header/figures-header-one.svg) 5% 26px  no-repeat,
+            url(../img/header/figures-header-one.svg) 95% 179px  no-repeat,
+            url(../img/header/figures-header-two.svg) 76px 274px no-repeat,
+            url(../img/header/figures-header-three.svg) 49% 307px  no-repeat,
+            url(../img/header/figures-header-four.svg) 61% 63px no-repeat,
+            url(../img/header/figures-header-three-two.svg) 100% 391px no-repeat;
+        background-size: 8%, 5%, 18%, 6%, 5%, 23%;
+        position: absolute;
+        width: 100%;
+        height: 470px;
+        z-index: 8;
+    }
+    .career-img-wrapp{
+        position: relative;
+    }
+    .career-photo-one, .career-photo-two, .career-photo-three {
+        position: relative;
+    }
+    .career-photo-one {
+        left: 57%;
+        top: 227px;
+    }
+    .career-photo-two {
+        left: 63%;
+        top: 223px;
+    }
+    .career-photo-three {
+        left: 45%;
+        top: 16px;
+    }
+    .career-title,  .career-text{
+        bottom: 100px;
+    }
+    .career-title{
+        max-width: 671px;
+    }
+    .career-text{
+        max-width: 550px;
+        font-weight: 600;
+        margin-top: 40px;
+    }
+    .career-chess {
+        bottom: -32px;
+        left: 17%;
+    }
+}
+@media (max-width: 1930px){
+    .career::before{
+        background-position: 5% 26px, 95% 179px,76px 274px, 49% 307px, 61% 63px, 99% 391px ;
+        background-size: 8%, 5%, 18%, 6%, 5%, 20%;
+    }
+}
+@media (max-width: 1760px){
+    .career-title,  .career-text, .career-chess{
+        left: 17%;
+    }
+    .career-photo-one {
+        left: 62%;
+    }
+    .career-photo-two {
+        left: 66%;
+    }
+    .career-photo-three {
+        left: 48%;
+    }
+    .career::before{
+        background-position: 5% 26px, 95% 179px,76px 274px, 49% 307px, 61% 63px, 104% 391px ;
+    }
+}
+@media (max-width: 1570px){
+    .career-title,  .career-text, .career-chess{
+        left: 15%;
+    }
+    .career-photo-one {
+        left: 62%;
+    }
+    .career-photo-three {
+        left: 45%;
+    }
+    .career::before{
+        background-position: 5% 26px, 95% 179px,76px 274px, 49% 307px, 61% 63px, 104% 391px ;
+    }
+}
+@media (max-width: 1480px){
+    .career-title,  .career-text, .career-chess{
+        left: 11%;
+    }
+    .career::before {
+        background-position: 3% 26px, 96% 179px,22px 274px, 49% 307px, 64% 63px, 101% 391px;
+        background-size: 7%, 5%, 18%, 6%, 5%, 18%;
+    }
+}
+@media (max-width: 1375px){
+    .career-photo-one {
+        left: 56%;
+    }
+    .career-photo-two {
+        left: 59%;
+    }
+    .career-photo-three {
+        left: 37%;
+    }
+}
+@media (max-width: 1375px){
+    .career-photo-one {
+        top: 266px;
+    }
+    .career-photo-two {
+        left: 62%;
+        top:260px;
+    }
+    .career-photo-three {
+        left: 40%;
+        top: 80px;
+    }
+    .career-photo-one, .career-photo-two, .career-photo-three {
+        width: 13%;
+    }
+    .career-title, .career-text {
+        bottom: 52px;
+    }
+    .career-chess {
+        bottom: -77px;
+    }
+}
+@media (max-width: 1115px){
+    .career-title, .career-text {
+        bottom: 20px;
+    }
+    .career-title, .career-text, .career-chess {
+        left: 9%;
+    }
+}
+
+/* Блок после шапки H1 c 992px */
+
+@media (max-width: 992px){
+    .career-header{
+        width: 100%;
+        height: fit-content;
+    }
+    .career-chess{
+        position: static;
+        margin-bottom: 40px;
+    }
+    .career-text{
+        margin: 15px 0 30px;
+    }
+}
+@media (max-width: 600px){
+    .chess-course-title {
+        font-size: 38px;
+    }
+}
+@media (max-width: 500px){
+    .chess-course-title {
+        font-size: 32px;
+    }
+    .career-chess{
+       width: 100%;
+    }
+}
+@media (max-width: 300px){
+    .career-chess{
+        padding: 6pt 8pt;
+    }
+}
+ /*             */
+
+ /* Блок с совой и заголовками */
+ .olw-text-career{
+    max-width: 206px;
+ }
+  /*  Responsive  */
+ @media (max-width: 992px){
+    .olw-text-career {
+        max-width: 228px;
+        font-size: 18px;
+        left: 18%;
+        bottom: 210px;
+    }
+}
+@media (max-width: 767.98px){
+    .olw-text-career {
+        left: 22%;
+        bottom: 168px;
+    }
+}
+@media (max-width: 460px){
+    .olw-text-career {
+        left: 14%;
+        bottom: 138px;
+    }
+}
+@media (max-width: 390px){
+    .olw-text-career {
+        left: 19%;
+        bottom: 107px;
+    }
+}
+@media (max-width: 375px){
+    .olw-text-career {
+        left: 16%;
+        bottom: 121px;
+    }
+}
+/*          */
+
+/* Почему вы точно найдете работу с ХОД Future Academy */
+.find-job {
+    padding: 76px 0 100px;
+}
+.find-title {
+    font-size: 30px;
+    font-weight: 700;
+}
+.find-text {
+    max-width: 979px;
+    margin-bottom: 10px;
+}
+ /*  Responsive  */
+ @media (max-width: 992px){
+    .find-job {
+        padding:60px 0;
+    }
+    .t-g-career{
+        font-size: 75px;
+    }
+    .e-t-career{
+        max-width: 20ch;
+    }
+}
+@media (max-width: 767.98px){
+    .find-job {
+        padding:40px 0 60px;
+    }
+    .t-g-career{
+        font-size: 86px;
+    }
+}
+@media (max-width: 390px){
+    .find-job {
+        padding: 25px 0 50px;
+    }
+}
+/*            */
+
+/* Ваш путь к трудоустройству */
+.employment-path {
+    padding: 36px 0 60px;
+    background: #00093C;
+    position: relative;
+}
+.e-p-title{
+    color: #fff;
+    text-align: center;
+}
+.employment-path-wrapp {
+    display: flex;
+    justify-content: space-between;
+}
+.path-catr__icon {
+    margin: 0 auto 32px;
+    display: block;
+}
+.path-catr__text {
+    font-size: 14px;
+    color: #fff;
+    max-width: 280px;
+    text-align: center;
+}
+ /*  Responsive  */
+ @media (max-width: 2000px){
+    .employment-path::before {
+        content: '';
+         position: absolute;
+        height: 100%;
+        width: 100%;
+        background:
+            url('../img/employment-path/icon-one-one.svg') 24% 45% no-repeat,
+            url('../img/employment-path/icon-two-two.svg') 50% 44% no-repeat,
+            url('../img/employment-path/icon-three-three.svg') 77% 45% no-repeat;
+    }
+}
+@media (max-width: 1750px){
+    .employment-path::before {
+       background-position: 19% 47%, 50% 46%,82% 46%;
+    }
+}
+@media (max-width: 1510px){
+    .employment-path::before {
+       background-position: 15% 46%, 50% 46%,86% 46%;
+    }
+}
+@media (max-width: 1200px){
+    .employment-path::before {
+       background-position: 21% 47%, 50% 46%,80% 46%;
+    }
+}
+@media (max-width: 1100px){
+    .employment-path::before {
+       background-position: 19% 47%, 50% 46%,83% 46%;
+    }
+}
+@media (max-width: 992px){
+    .employment-path::before {
+       background-position: 24% 46%, 50% 45%,77% 45%;
+    }
+    .path-catr__text {
+        max-width: 200px;
+    }
+}
+@media (max-width: 900px){
+    .employment-path::before {
+       background-position: 21% 44%, 50% 44%,81% 44%;
+    }
+}
+@media (max-width: 850px){
+    .employment-path::before {
+       background-position: 18% 44%, 50% 44%,84% 44%;
+    }
+}
+@media (max-width: 767.98px){
+    .employment-path-wrapp {
+        flex-direction: column;
+    }
+    .path-catr__icon{
+        margin: 0 0 32px 0;
+    }
+    .path-catr__text {
+        max-width: 350px;
+        text-align: left;
+    }
+    .employment-path::before {
+        background:none;
+     }
+     .c-button{
+        margin: 25px 0 0;
+    }
+}
+@media (max-width: 315px){
+    .c-button{
+        padding: 6pt 6pt;
+    }
+}
+/*           */
+
+/* Примеры активных вакансий */
+.earnings-carrer{
+    padding: 69px 0 52px;
+}
+.career-inner{
+    flex-wrap: wrap;
+}
+.level-blue{
+    background: #C7EEFF;
+}
+.level-yellow{
+    background: #FFE38E;
+}
+.level-blue, .level-yellow{
+    margin-top: 30px;
+}
+
+/* Помогаем с трудоустройством */
+.our-value-carrer{
+    padding: 70px 0 250px;
+}
+ /*  Responsive  */
+ @media (max-width: 992px){
+    .our-value-carrer{
+        padding: 50px 0 6px;
+    }
+}
+@media (max-width: 767.98px){
+    .our-value-carrer{
+        padding: 30px 0 6px;
+    }
+}
+@media (max-width: 470px){
+    .our-value-carrer {
+        padding: 30px 0 45px;
+    }
+}
+@media (max-width: 450px){
+    .our-value-carrer {
+        padding: 30px 0 5px;
+    }
+}
+/*                                                          */
+
+
+/* Изменено
+стр. тест-1, тест-2
+*/
+.breadcrumbs-test {
+    padding: 32px 0 20px;
+}
+.test-wrapper{
+    padding: 15px 0 25px;
+}
+.test-decs{
+    font-size: 18px;
+    max-width: 860px;
+}
+.test-decs-tel{
+    display: inline;
+}
+.text-bottom{
+    margin: 10px 0 10px;
+}
+.text-title{
+    font-size: 24px;
+    margin-bottom: 40px;
+}
+.question-text{
+    padding: 40px 0 25px;
+}
+.button-wrapper {
+    padding: 20px 0 250px;
+}
+.button-inner{
+    display: flex;
+    align-items: center;
+}
+.progress__one, .progress__two, .progress__dash{
+    display: inline-block;
+    top: 50%;
+    transform: translate(0, -50%);
+    position: relative;
+    left: 17%;
+    padding: 1px;
+}
+.progress-circle{
+    font-size: 14px;
+    color: #828282;
+    border: 4px solid #E0E0E0;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin: 0 70px;
+}
+.progress-circle_test-two{
+    margin: 0 120px;
+}
+.button-back, .button-next{
+    border: 2px solid #00093C;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #00093C;
+    margin-bottom: 0;
+    background: #F6F7F9;
+}
+.button-back::before,.button-next::after {
+    content: '';
+    background: url('../img/all-news/arrow-back.svg') no-repeat center center;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-bottom: -5px;
+    margin-right: 9px;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+.button-back:hover::before, .button-back:focus::before{
+    background: url('../img/all-news/arrow-back-hover.svg') no-repeat center center ;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+.button-back:hover, .button-next:hover, .button-back:focus, .button-next:focus{
+    border: 2px solid #00093C;
+    color: #fff;
+    background: #00093C;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+.button-next::after{
+    content: '';
+    background: url('../img/all-news/arrow-news.svg') no-repeat center center;
+    margin-bottom: -7px;
+    margin-left: 9px;
+}
+.button-next:hover::after, .button-next:focus::after {
+    background: url('../img/all-news/arrow-next-hover.svg') no-repeat center center;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+ /*  Responsive  */
+ @media (max-width: 992px){
+    .breadcrumbs-test{
+        padding: 127px 0 20px;
+    }
+    .button-wrapper {
+        padding: 20px 0 10px;
+    }
+    .button-inner{
+        overflow: scroll hidden;
+    }
+}
+@media (max-width: 767.98px){
+    .progress-circle_test-two{
+        margin: 0 65px;
+    }
+}
+@media (max-width: 600px){
+    .button-wrapper {
+        padding: 20px 0 10px;
+    }
+}
+@media (max-width: 500px){
+    .progress-circle{
+        margin: 0 50px;
+    }
+    .question-text {
+        padding: 20px 0 25px;
+    }
+    .button-wrapper {
+        padding: 20px 0 45px;
+    }
+}
+@media (max-width: 475px){
+    .button-inner{
+        padding-bottom: 15px;
+    }
+}
+@media (max-width: 370px){
+    .button-wrapper {
+        padding: 20px 0 5px;
+    }
+}
+/*                                 */
