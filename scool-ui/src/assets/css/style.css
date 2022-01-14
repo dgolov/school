@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400");
+/*@import url("https://fonts.googleapis.com/css?family=Lato:400");*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
@@ -1274,40 +1274,6 @@ ul.main-nav {
     max-width: 60ch;
 }
 
-.cta {
-    /*background: linear-gradient(to right, #6C63FF, #4641FF);*/
-    background: linear-gradient(to right, #cc3e2b, #6b1d12);
-    color: #fff;
-    padding: 48pt 0;
-}
-
-.cta--reverse {
-    background-image: url("../images/bg-main.svg");
-    /*background: linear-gradient(to left, #633527, #cc3e2b);*/
-}
-
-.cta--plain {
-    background: #6C63FF;
-}
-
-.cta--secondary {
-    background: #4641FF;
-}
-
-.cta__title {
-    color: inherit;
-}
-
-.cta__sub {
-    opacity: 0.85;
-    max-width: 58ch;
-    margin: 16pt auto 24pt auto;
-    padding-right: 30px;
-}
-
-.cta__sub--center {
-    text-align: center;
-}
 
 .footer {
     background-color: #ffffff;
@@ -1367,12 +1333,6 @@ ul.main-nav {
         flex-wrap: nowrap;
         flex-direction: row;
     }
-}
-
-.footer__data__item {
-    padding-bottom: 0.5rem;
-    display: inline-block;
-    margin-bottom: 8pt;
 }
 
 .footer__link {

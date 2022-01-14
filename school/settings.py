@@ -152,10 +152,10 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:1337',
     'http://80.78.253.102',
     'http://109.172.27.159',
-    'http://www.f-academy.ru/',
-    'http://f-academy.ru/',
-    'https://www.f-academy.ru/',
-    'https://f-academy.ru/',
+    # 'http://www.f-academy.ru/',
+    # 'http://f-academy.ru/',
+    # 'https://www.f-academy.ru/',
+    # 'https://f-academy.ru/',
 ]
 
 
@@ -182,7 +182,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),

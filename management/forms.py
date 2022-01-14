@@ -11,7 +11,19 @@ from mainapp.models import (
     Student,
     Teacher
 )
-from management.models import Client, Contract, Order, Request, Vacancy, Interview, Staff
+from management.models import (
+    Client,
+    Contract,
+    Order,
+    Request,
+    Vacancy,
+    Interview,
+    Staff,
+    Cost,
+    CostCategory,
+    AdvertisingActivityCategory,
+    AdvertisingActivity
+)
 
 
 class AuthForm(forms.Form):
@@ -605,3 +617,85 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ('name', 'teacher')
+
+
+class CostCategoryForm(forms.ModelForm):
+    """ Форма добавления и редактирования категорий затрат в CRM
+    """
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите название категории...'}
+        )
+    )
+    comment = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'placeholder': 'Введите комментарий...'}
+        )
+    )
+
+    class Meta:
+        model = CostCategory
+        fields = ('name', 'comment',)
+
+
+class CostForm(forms.ModelForm):
+    """ Форма добавления и редактирования затрат в CRM
+    """
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите название затраты...'}
+        )
+    )
+    category = forms.ModelChoiceField(
+        queryset=CostCategory.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    advertising_activity = forms.ModelChoiceField(
+        required=False,
+        queryset=AdvertisingActivity.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
+    date_to = forms.DateField(
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
+    date_from = forms.DateField(
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
+    amount = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    comment = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'placeholder': 'Введите комментарий...'}
+        )
+    )
+
+    class Meta:
+        model = Cost
+        fields = ('name', 'category', 'advertising_activity', 'date_to', 'date_from', 'amount', 'comment',)
+
+
+class AdvertisingActivityForm(forms.ModelForm):
+    """ Форма добавления и редактирования рекламной активности в CRM
+        """
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите название категории...'}
+        )
+    )
+
+    class Meta:
+        model = CostCategory
+        fields = ('name',)

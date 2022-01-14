@@ -6,7 +6,7 @@
                 <div class="row mb-4">
                     <div class="col-md-8">
                         <div class="d-flex align-items-center mb-3">
-                            <h5 class="mb-0">Клиент {{ client.id }}</h5>
+                            <h5 class="mb-0">{{ client }}</h5>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -18,10 +18,23 @@
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
                             <div class="ml-md-4 flex-grow-1">
-                                <div class="d-flex align-items-center mb-1">
-                                    <h4 class="mb-0">{{ client }}</h4>
-                                </div>
-                                <p class="mb-0 text-muted">Клиент</p>
+                                <h3>Информация</h3>
+                        <table class="table table-sm table-borderless mt-md-0 mt-3">
+                            <tbody>
+                            <tr>
+                                <th>id клиента:</th>
+                                <td>{{ client.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Дата занесения в систему:</th>
+                                <td>{{ client.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Последний статус заявок:</th>
+                                <td>{{ client.last_status }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                             </div>
                         </div>
                     </div>

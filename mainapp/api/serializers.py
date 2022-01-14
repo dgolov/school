@@ -196,11 +196,11 @@ class CreateProfileSerializer(serializers.Serializer):
             phone=profile_data['phone'],
             gender=profile_data['gender'],
         )
-        send_mail_task.delay(
-            theme='Регистрация на Future Academy',
-            message='Благодарим за регистрацию',
-            email_to=new_user.email,
-        )
+        # send_mail_task.delay(
+        #     theme='Регистрация на Future Academy',
+        #     message='Благодарим за регистрацию',
+        #     email_to=new_user.email,
+        # )
         return new_user
 
 
@@ -620,3 +620,39 @@ class MessageViewSerializer(MessageSerializer):
         fields = [
             'id', 'dialog', 'from_user', 'attachment', 'text', 'date_and_time', 'is_read', 'system_message'
         ]
+
+
+class EventDaySerializer(serializers.ModelSerializer):
+    """ Серилизация дней мероприятий
+    """
+    class Meta:
+        model = models.EventDay
+        fields = '__all__'
+
+
+class EventSerializer(serializers.ModelSerializer):
+    """ Серилизация мероприятий
+    """
+    speakers = ProfileSerializer(many=True)
+    days = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Event
+        fields = [
+            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 
+            'block_image', 'days'
+        ]
+
+    @staticmethod
+    def get_days(obj):
+        days = obj.event_days.all()
+        serializer = EventDaySerializer(days, many=True)
+        return serializer.data
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    """ Серилизация новостей
+    """
+    class Meta:
+        model = models.News
+        fields = '__all__'

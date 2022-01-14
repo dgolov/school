@@ -1,20 +1,6 @@
 from django.contrib import admin
 
-from .models import (
-    Student,
-    Teacher,
-    Dialog,
-    DialogAttachment,
-    Message,
-    Group,
-    Category,
-    Course,
-    Lesson,
-    Timetable,
-    Certificate,
-    AcademicPerformance,
-    Photo
-)
+from mainapp import models
 
 
 admin.site.site_header = 'Администрирование Future Academy'
@@ -33,7 +19,7 @@ class ProfileAdmin(admin.ModelAdmin):
     username.short_description = 'Имя пользователя'
 
 
-@admin.register(Group)
+@admin.register(models.Group)
 class GroupAdmin(admin.ModelAdmin):
     """ Отображение списка групп в админке
     """
@@ -42,14 +28,22 @@ class GroupAdmin(admin.ModelAdmin):
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
 
-@admin.register(Student)
+@admin.register(models.StudentAgeGroup)
+class StudentAgeGroupAdmin(admin.ModelAdmin):
+    """ Отображение возрастных групп учеников в админке
+    """
+    list_display = ['id', 'age_group']
+    list_display_links = ['age_group']
+
+
+@admin.register(models.Student)
 class StudentAdmin(ProfileAdmin):
     """ Отображение списка учеников в админке
     """
     # readonly_fields = ('user', 'first_name', 'last_name', 'email')
     list_display = ['id', 'full_name', 'username', 'user_group']
     list_display_links = ['full_name']
-    list_filter = ['group_list']
+    list_filter = ['group_list', 'age_group_access']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
     # fieldsets = (
     #     ('Обучающийся', {
@@ -73,7 +67,7 @@ class StudentAdmin(ProfileAdmin):
     email.short_description = 'Электронная почта'
 
 
-@admin.register(Teacher)
+@admin.register(models.Teacher)
 class TeacherAdmin(ProfileAdmin):
     """ Отображение списка преподователей в админке
     """
@@ -82,7 +76,7 @@ class TeacherAdmin(ProfileAdmin):
     search_fields = ['user__last_name', 'user__first_name', 'middle_name', 'professional_activity']
 
 
-@admin.register(Dialog)
+@admin.register(models.Dialog)
 class DialogAdmin(admin.ModelAdmin):
     """ Отображение списка диалогов в адмике
     """
@@ -90,7 +84,7 @@ class DialogAdmin(admin.ModelAdmin):
     list_display_links = ['name']
 
 
-@admin.register(DialogAttachment)
+@admin.register(models.DialogAttachment)
 class DialogAttachmentAdmin(admin.ModelAdmin):
     """ Отображение списка вложений к диалогам в адмике
     """
@@ -98,7 +92,7 @@ class DialogAttachmentAdmin(admin.ModelAdmin):
     list_display_links = ['dialog']
 
 
-@admin.register(Message)
+@admin.register(models.Message)
 class MessageAdmin(admin.ModelAdmin):
     """ Отображение списка личных сообщений в адмике
     """
@@ -106,7 +100,7 @@ class MessageAdmin(admin.ModelAdmin):
     list_display_links = ['dialog']
 
 
-@admin.register(Category)
+@admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
     """ Отображение списка категорий в адмике
     """
@@ -115,7 +109,7 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
-@admin.register(Course)
+@admin.register(models.Course)
 class CourseAdmin(admin.ModelAdmin):
     """ Отображение списка курсов в админке
     """
@@ -125,7 +119,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
 
 
-@admin.register(Lesson)
+@admin.register(models.Lesson)
 class LessonAdmin(admin.ModelAdmin):
     """ Отображение списка уоков в админке
     """
@@ -135,7 +129,7 @@ class LessonAdmin(admin.ModelAdmin):
     search_fields = ['theme', 'course__name']
 
 
-@admin.register(Timetable)
+@admin.register(models.Timetable)
 class TimetableAdmin(admin.ModelAdmin):
     """ Отображение рассписания в админке
     """
@@ -146,7 +140,7 @@ class TimetableAdmin(admin.ModelAdmin):
     search_fields = ['lesson__theme', 'group__name']
 
 
-@admin.register(Certificate)
+@admin.register(models.Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     """ Отображение сертификатов в админке
     """
@@ -156,7 +150,7 @@ class CertificateAdmin(admin.ModelAdmin):
     search_fields = ['profile__user__last_name', 'profile__user__first_name', 'profile__middle_name', 'course__name']
 
 
-@admin.register(AcademicPerformance)
+@admin.register(models.AcademicPerformance)
 class AcademicPerformanceAdmin(admin.ModelAdmin):
     """ Отображение успеваемости в админке
     """
@@ -169,8 +163,32 @@ class AcademicPerformanceAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(Photo)
+@admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
     """ Отображение списка фотографий в адмике
     """
     list_display = ['id', 'image']
+
+
+@admin.register(models.Event)
+class EventAdmin(admin.ModelAdmin):
+    """ Отображение списка мероприятий в админке
+    """
+    list_display = ['id', 'name', 'date']
+    list_display_links = ['name']
+
+
+@admin.register(models.EventDay)
+class EventDayAdmin(admin.ModelAdmin):
+    """ Отображение дней (программы) пероприятий в админке
+    """
+    list_display = ['id', 'number', 'event', 'description']
+    list_display_links = ['number']
+
+
+@admin.register(models.News)
+class NewsAdmin(admin.ModelAdmin):
+    """ Отображение списка новостей в админке
+    """
+    list_display = ['id', 'name', 'date']
+    list_display_links = ['name']

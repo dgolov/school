@@ -1,7 +1,7 @@
 <template>
   <div id="auth">
     <navbar></navbar>
-    <div class="auth">
+    <div class="auth past-events">
       <div class="container">
         <div class="auth__inner">
           <div class="auth__media">
@@ -209,7 +209,7 @@ export default {
         baseURL: this.$store.state.backendUrl,
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": '{{csrf_token}}'
+          "X-CSRFToken": '{{ csrf_token() }}'
         },
         xhrFields: {
           withCredentials: true,

@@ -1,29 +1,30 @@
 {% extends 'crm/base.html' %}
 {% block content %}
     <div class="card-title mb-4">
-        <h4>Список заявок</h4>
+        <h4 style="display: inline;">Список заявок</h4>
+        <a type="button" href="{% url 'create_request' %}" class="btn btn-outline-primary m-1 px-5"
+           style="float: right">Добавить заявку</a>
     </div>
     <div class="card radius-15">
         <div class="card-body">
             <div class="row mb-4">
-                <div class="col-md-8">
-                    <div class="flex-grow-1 search-bar">
-                        <div class="input-group">
-                            <div class="input-group-prepend search-arrow-back">
-                                <button class="btn btn-search-back" type="button"><i class="bx bx-arrow-back"></i>
-                                </button>
-                            </div>
-                            <input type="text" class="form-control" placeholder="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="button"><i class="lni lni-search-alt"></i>
-                                </button>
-                            </div>
+                <div class="col-md-12">
+                    <form action="" method="get">
+                        <div class="row ml-2">
+                            <input type="date" class="form-control" name="date_from" style="width: 20%; margin: 8px;">
+                            <input type="date" class="form-control" name="date_to" style="width: 20%; margin: 8px;">
+                            {% for request in view.get_status %}
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="status"
+                                           value="{{ request.status }}">
+                                    <label class="form-check-label">{{ request.status }}</label>
+                                </div>
+                            {% endfor %}
+                            <button class="btn btn-light m-1 px-5" type="submit" style="display: inline;">
+                                Применить фильтры
+                            </button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <a type="button" href="{% url 'create_request' %}" class="btn btn-outline-primary m-1 px-5"
-                       style="float: right;">Добавить заявку</a>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
@@ -32,6 +33,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Клиент</th>
+                        <th scope="col">Телефон</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Тип заявки</th>
                         <th scope="col">Статус</th>
                         <th scope="col">Курс</th>
@@ -44,6 +47,8 @@
                         <tr>
                             <th scope="row"><a href="/api/crm/requests/{{ request.pk }}">{{ request.id }}</a></th>
                             <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
+                            <td>{{ request.client.phone }}</td>
+                            <td>{{ request.client.email }}</td>
                             <td>{{ request.type_request }}</td>
                             <td>{{ request.status }}</td>
                             <td>{{ request.course }}</td>

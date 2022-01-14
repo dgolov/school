@@ -6,6 +6,13 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Client(models.Model):
     """ Модель клиента
     """
+    RESULT_CHOICES = ('contract', 'meeting', 'waiting_call', 'will_think', 'refusal', 'dissatisfied', 'no_connection')
+    RESULT_CHOICES_RUS = (
+        'Заключен договор', 'Назначена встреча', 'Ждет звонка', 'Будет думать', 'Отказ', 'Недовольный клиент',
+        'Нет ответа'
+    )
+    RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
+
     manager = models.ForeignKey(
         'Staff',
         on_delete=models.SET_NULL,
@@ -22,6 +29,15 @@ class Client(models.Model):
     phone = PhoneNumberField(verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Электронная почта', blank=True, null=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
+    date = models.DateField(verbose_name='Дата занесения в базу', auto_now_add=True, blank=True, null=True)
+    # contract = models.BooleanField(verbose_name='Заключен договор', default=False)
+    last_status = models.CharField(
+        max_length=50,
+        verbose_name='Последний статус по заявкам',
+        blank=True,
+        null=True,
+        choices=RESULT_CHOICES,
+    )
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
@@ -35,7 +51,14 @@ class Contract(models.Model):
     """ Модель договор
     """
     number = models.PositiveIntegerField(verbose_name='Номер договора')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент', related_name='client_contract')
+    student = models.ForeignKey(
+        'mainapp.Student',
+        on_delete=models.SET_NULL,
+        verbose_name='Слушатель',
+        blank=True,
+        null=True
+    )
     file = models.FileField(upload_to='files/contracts', verbose_name='Файл', blank=True, null=True)
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Приобретенный курс')
     date = models.DateField(auto_now_add=True, verbose_name='Дата')
@@ -170,7 +193,7 @@ class Interview(models.Model):
 
 
 class Staff(models.Model):
-    """
+    """ Модель сотрудника
     """
     USER_GROUP_CHOICES = ('admin', 'sale_manager', 'education_manager', 'hr')
     USER_GROUP_CHOICES_RUS = ('Администратор', 'Менеджер по продажам', 'Менеджер учебного процесса', 'HR менеджер')
@@ -199,14 +222,42 @@ class Staff(models.Model):
         verbose_name_plural = '07. Сотрудники'
 
 
+class AdvertisingActivityCategory(models.Model):
+    """ Модель категории рекламной активности
+    """
+    name = models.CharField(max_length=50, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория рекламной активности'
+        verbose_name_plural = '08. Категории рекламной активности'
+
+
+class AdvertisingActivity(models.Model):
+    """ Модель рекламной активности
+    """
+    category = models.ForeignKey(AdvertisingActivityCategory, on_delete=models.CASCADE, verbose_name='Категория')
+    name = models.CharField(max_length=50, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Рекламная активность'
+        verbose_name_plural = '09. Рекламная активность'
+
+
 class CostCategory(models.Model):
     """ Модель категории затрат
     """
     name = models.CharField(max_length=50, verbose_name='Название категории')
+    comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Категория затрат'
-        verbose_name_plural = '08. Категории затрат'
+        verbose_name_plural = '10. Категории затрат'
 
     def __str__(self):
         return self.name
@@ -215,12 +266,25 @@ class CostCategory(models.Model):
 class Cost(models.Model):
     """ Модель регастрации затрат
     """
+    name = models.CharField(max_length=50, verbose_name='Наименование затраты', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Автор записи', blank=True, null=True)
-    category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True)
-    date = models.DateTimeField(verbose_name='Дата и время затраты', auto_now_add=True)
+    category = models.ForeignKey(CostCategory, on_delete=models.SET_NULL, null=True, verbose_name='Категория')
+    advertising_activity = models.ForeignKey(
+        AdvertisingActivity,
+        on_delete=models.SET_NULL,
+        verbose_name='Рекламная активность',
+        blank=True,
+        null=True
+    )
+    date = models.DateTimeField(verbose_name='Дата и время записи', auto_now_add=True)
+    date_to = models.DateField(verbose_name='Период затрат с', blank=True, null=True)
+    date_from = models.DateField(verbose_name='Период затрат по', blank=True, null=True)
     amount = models.IntegerField(verbose_name='Сумма затрат')
     comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Затрата'
-        verbose_name_plural = '09. Затраты'
+        verbose_name_plural = '11. Затраты'
+
+    def __str__(self):
+        return self.name

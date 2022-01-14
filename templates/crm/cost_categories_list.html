@@ -1,0 +1,36 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card-title mb-4">
+        <h4>Список категорий затрат</h4>
+    </div>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                    <a type="button" href="{% url 'create_cost_categories' %}" class="btn btn-outline-primary m-1 px-5"
+                       style="float: right;">Новая категория</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Название категории</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in category_list %}
+                        <tr>
+                            <th scope="row"><a href="/api/crm/cost-categories/{{ category.id }}">{{ category.id }}</a></th>
+                            <td><a href="/api/crm/cost-categories/{{ category.id }}">{{ category.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

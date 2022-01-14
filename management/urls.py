@@ -52,6 +52,8 @@ urlpatterns = [
     path('teachers/', management.TeacherListView.as_view(), name='teachers'),
     path('teachers/<int:pk>/', management.TeacherDetailView.as_view(), name='teacher_detail'),
     path('teachers/create/', management.CreateTeacherView.as_view(), name='create_teacher'),
+    path('students/', management.TeacherListView.as_view(), name='students'),
+    path('students/<int:pk>/', management.TeacherDetailView.as_view(), name='student_detail'),
     path('staffs/', management.StaffListView.as_view(), name='staffs'),
     path('staffs/<int:pk>/', management.StaffDetailView.as_view(), name='staff_detail'),
     path('staffs/create/', management.CreateStaffView.as_view(), name='create_staff'),
@@ -59,4 +61,16 @@ urlpatterns = [
     path('groups/<int:pk>/', management.GroupDetailView.as_view(), name='group_detail'),
     path('groups/create/', management.CreateGroupView.as_view(), name='create_group'),
     path('groups/update/<int:pk>/', management.UpdateGroupView.as_view(), name='update_group'),
+    path('cost-categories/', management.CostCategoryListView.as_view(), name='cost_categories'),
+    path('cost-categories/<int:pk>/', management.CostCategoryDetailView.as_view(), name='cost_categories_detail'),
+    path('cost-categories/create/', management.CreateCostCategoryView.as_view(), name='create_cost_categories'),
+    path(
+        route='cost-categories/update/<int:pk>/',
+        view=management.UpdateCostCategoryView.as_view(),
+        name='update_cost_categories'
+    ),
+    path('costs/', management.CostListView.as_view(), name='cost'),
+    path('costs/<int:pk>/', management.CostDetailView.as_view(), name='cost_detail'),
+    path('costs/create/', management.CreateCostView.as_view(), name='create_cost'),
+    path('costs/update/<int:pk>/', management.UpdateCostView.as_view(), name='update_cost'),
 ]

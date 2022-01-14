@@ -7,6 +7,7 @@ import Profile from "../views/Profile/Profile";
 import Education from "../views/Education";
 import EducationSingle from "../views/EducationSingle";
 import ChessSingleCourse from "../views/ChessSingleCourse";
+import Events from "../views/Events";
 import About from "../views/About";
 import News from "../views/News";
 import Contacts from "../views/Contacts";
@@ -30,6 +31,8 @@ import CreateGroupChat from "../views/Messages/CreateGroupChat";
 import Settings from "../views/Profile/Settings";
 import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
+import EventSingle from "../views/EventSingle";
+import Career from "../views/Career";
 
 
 Vue.use(VueRouter)
@@ -185,6 +188,17 @@ const routes = [
     props: true
   },
   {
+    path: '/events',
+    name: 'Events',
+    component: Events
+  },
+  {
+    path: '/events/:id',
+    name: 'EventSingle',
+    component: EventSingle,
+    props: true
+  },
+  {
     path: '/news',
     name: 'News',
     component: News
@@ -199,6 +213,11 @@ const routes = [
     path: '/contacts',
     name: 'Contacts',
     component: Contacts
+  },
+  {
+    path: '/career',
+    name: 'Career',
+    component: Career
   }
 ]
 

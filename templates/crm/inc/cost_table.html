@@ -1,0 +1,26 @@
+<div class="table-responsive">
+    <table class="table mb-0">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Категория</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Сумма</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cost in cost_list %}
+            <tr>
+                <th scope="row"><a href="/api/crm/costs/{{ cost.id }}">{{ cost.id }}</a></th>
+                <td><a href="/api/crm/costs/{{ cost.id }}">{{ cost.name }}</a></td>
+                <td>{{ cost.user }}</td>
+                <td>{{ cost.category }}</td>
+                <td>{{ cost.date }}</td>
+                <td>{{ cost.amount }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
