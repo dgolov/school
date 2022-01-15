@@ -13,7 +13,7 @@ export default new Vuex.Store({
     refreshJwt: localStorage.getItem("refresh_token"),
     refreshStatus: false,
     backendUrl: "/api",
-    webSocketUrl: "ws://109.172.27.159:8001",
+    webSocketUrl: "wss://109.172.27.159:8001",
     isMainPage: false,
     error: '',
   },
