@@ -246,10 +246,7 @@
         <div class="row">
           <div class="col-12">
             <h2 class="program-events-title mt-0 mb-3">Как проходит обучение</h2>
-            <p class="program-events-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis
-              tellus feugiat, posuere magna et, scelerisque leo. In scelerisque pulvinar sem, et gravida mi tincidunt
-              nec. Suspendisse a ullamcorper nisi. Duis et mauris et ex posuere dignissim vitae a diam. Praesent
-              vulputate nulla sapien, nec auctor nibh congue eu. </p>
+            <p class="program-events-desc">{{ course.category.how_is_the_training }}</p>
           </div>
         </div>
       </div>
