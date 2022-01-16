@@ -192,3 +192,11 @@ class NewsAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name', 'date']
     list_display_links = ['name']
+
+
+@admin.register(models.Skill)
+class SkillAdmin(admin.ModelAdmin):
+    """ Отображение списка новостей в админке
+    """
+    list_display = ['id', 'text', 'course']
+    list_display_links = ['id']

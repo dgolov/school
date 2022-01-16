@@ -426,14 +426,21 @@ class CourseSerializer(serializers.ModelSerializer):
     """
     category = CategorySerializer()
     teachers = ProfileSerializer(many=True)
+    skills = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Course
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
-            'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'skills',
-            'profession'
+            'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
+            'profession', 'skills'
         ]
+
+    @staticmethod
+    def get_skills(obj):
+        days = obj.skills.all()
+        serializer = SkillSerializer(days, many=True)
+        return serializer.data
 
 
 class LessonSerializer(serializers.ModelSerializer):
