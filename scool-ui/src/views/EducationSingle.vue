@@ -81,21 +81,17 @@
             <div class="events-title-wrapp">
               <div class="events-title__inner">
                 <span class="events-title__cross"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Актуальные программы</h3>
+<!--                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,-->
+<!--                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>-->
               </div>
               <div class="events-title__inner ">
                 <span class="events-title__circle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Удобный для вас формат обучения</h3>
               </div>
               <div class="events-title__inner">
                 <span class="events-title__triangle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Помощь в трудоустройстве</h3>
               </div>
             </div>
           </div>
@@ -144,12 +140,7 @@
           </div>
           <div class="col-md-12 col-lg-9">
             <ul class="skills">
-              <li class="skills__item">Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-              <li class="skills__item">Praesent vulputate nulla sapien, nec auctor nibh congue eu.</li>
-              <li class="skills__item ">Lorem ipsum dolor sit amet</li>
-              <li class="skills__item">Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-              <li class="skills__item">Praesent vulputate nulla sapien, nec auctor nibh congue eu.</li>
-              <li class="skills__item">Lorem ipsum dolor sit amet</li>
+              <li class="skills__item" v-for="skill in course.skills">{{ skill.text }}</li>
             </ul>
           </div>
         </div>
@@ -178,7 +169,7 @@
                 <p class="program-info-text">и получить актуальную высокооплачиваемую специальность в IT</p>
               </div>
             </div>
-            <button class="button button-header  e-c-button" type="button">Записаться на курс</button>
+            <button class="button button-header  e-c-button" type="button" @click="pay()">Записаться на курс</button>
           </div>
         </div>
       </div>
@@ -296,13 +287,7 @@
         <div class="row">
           <div class="col-lg-10">
             <h2 class="program-events-title mt-0 mb-3">Содержание курса</h2>
-            <p class="chess-school-decs c-c-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna
-              et, scelerisque leo. In scelerisque pulvinar sem, et gravida mi tincidunt nec. Suspendisse a ullamcorper
-              nisi. Duis et mauris et ex posuere dignissim vitae a diam. Praesent vulputate nulla sapien, nec auctor
-              nibh congue eu. Nulla lectus felis, luctus et sodales ac, convallis quis urna. Etiam id ultricies dolor,
-              non efficitur tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque in augue
-              porttitor, ornare nulla id, hendrerit nunc.</p>
+            <p class="chess-school-decs c-c-desc">{{ course.content }}</p>
           </div>
           <div class="col-lg-5">
             <div class="course-conten-wrapp">
