@@ -72,7 +72,8 @@
                    class="social__facebook c-f-facebook"></a>
                 <!--/noindex-->
                 <!--noindex-->
-                <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="social__youtube c-f-youtube"></a>
+                <a href="https://www.youtube.com/channel/UCZjqT7xZQRA73hPwUMWudUQ"
+                   rel="nofollow noopener noreferrer" target="_blank" class="social__youtube c-f-youtube"></a>
                 <!--/noindex-->
                 <!--noindex-->
                 <a href="#" rel="nofollow noopener noreferrer" target="_blank"
@@ -88,7 +89,7 @@
             </div>
             <div v-for="category in categoryList" :key="category.id" class="footer__row">
               <p v-if="category.age_group === 'children'">
-                <a href="#" @click="goTo(category.id)">{{ category.name }}</a>
+                <a href="#" @click="goToCategory(category.id)">{{ category.name }}</a>
               </p>
             </div>
           </div>
@@ -98,7 +99,7 @@
             </div>
             <div v-for="category in categoryList" :key="category.id" class="footer__row">
               <p v-if="category.age_group === 'teens'">
-                <a href="#" @click="goTo(category.id)">{{ category.name }}</a>
+                <a href="#" @click="goToCategory(category.id)">{{ category.name }}</a>
               </p>
             </div>
           </div>
@@ -108,21 +109,19 @@
             </div>
             <div v-for="category in categoryList" :key="category.id" class="footer__row">
               <p v-if="category.age_group === 'adults'">
-                <a href="#" @click="goTo(category.id)">{{ category.name }}</a>
+                <a href="#" @click="goToCategory(category.id)">{{ category.name }}</a>
               </p>
             </div>
           </div>
-          <!-- Здесь добавлю класс чтобы через него скрыть блок на 400 -->
-          <div data-v-da8f1e60="" class="footer__data__item footer__data__item-info">
-            <div data-v-da8f1e60="" class="footer__row">
-              <div data-v-da8f1e60="" class="footer__row mb-5">
-                <h3 data-v-da8f1e60="" style="font-size: 18px; color: rgb(255, 255, 255); font-weight: bold;">
-                  Информация</h3></div>
-              <div data-v-da8f1e60="" class="footer__row"><p data-v-da8f1e60="">Об академии</p></div>
-              <div data-v-da8f1e60="" class="footer__row"><p data-v-da8f1e60="">Мероприятия</p></div>
-              <div data-v-da8f1e60="" class="footer__row"><p data-v-da8f1e60="">Новости</p></div>
-              <div data-v-da8f1e60="" class="footer__row"><p data-v-da8f1e60="">Карьера</p></div>
-              <div data-v-da8f1e60="" class="footer__row"><p data-v-da8f1e60="">Контакты</p></div>
+          <div class="footer__data__item footer__data__item-info">
+            <div class="footer__row">
+              <div class="footer__row mb-5">
+                <h3 style="font-size: 18px; color: rgb(255, 255, 255); font-weight: bold;">Информация</h3></div>
+              <div class="footer__row"><a href="/about">Об академии</a></div>
+              <div class="footer__row"><a href="/events" @click="goTo('Events')">Мероприятия</a></div>
+              <div class="footer__row"><a href="/news" @click="goTo('News')">Новости</a></div>
+              <div class="footer__row"><a href="/career" @click="goTo('Career')">Карьера</a></div>
+              <div class="footer__row"><a href="/contacts" @click="goTo('Contacts')">Контакты</a></div>
             </div>
           </div>
         </div>
@@ -133,6 +132,7 @@
 
 <script>
 import axios from "axios";
+import {redirect} from "./mixins/redirect";
 
 export default {
   name: "Footer",
@@ -147,6 +147,8 @@ export default {
     this.loadCategoryList()
   },
 
+  mixins: [redirect],
+
   methods: {
     async loadCategoryList() {
       await axios
@@ -154,7 +156,7 @@ export default {
           .then(response => (this.categoryList = response.data));
     },
 
-    goTo(id) {
+    goToCategory(id) {
       this.$router.push({name: 'Education', params: {'category': id}})
     },
   },

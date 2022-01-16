@@ -1,10 +1,28 @@
 <template>
   <div id="education">
     <navbar></navbar>
-    <div class="step landing__section landing__section_white past-events">
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+
+            <ul class="breadcrumb">
+              <li class="breadcrumb__list">
+                <a href="/" class="breadcrumb__item">Главная</a>
+              </li>
+              <li class="breadcrumb__list">
+                <span style="display: inline-block;">Все курсы</span>
+              </li>
+            </ul>
+            <h1 class="breadcrumb-title">Все программы обучения</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="step landing__section past-events">
       <div class="page">
         <div class="container mt-1">
-          <h1 class="mb-5 bold">Все программы обучения</h1>
           <div class="container mb-4">
             <div class="row groups">
               <div class="col-md-3" id="menu"></div>
@@ -58,26 +76,28 @@
                     <button class="category-button" @click="category_name=category.name">{{ category.name }}</button>
                   </div>
                   <div class="page__inner mt-4">
-                    <div class="page__main">
-                      <div v-if="listCourses" class="row">
-                        <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
-                             v-if="course.category.age_group === age_group &&
+                    <div v-if="listCourses" class="row">
+                      <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
+                           v-if="course.category.age_group === age_group &&
                              (course.complexity === complexity || complexity === 'complexityAll') &&
                              (course.education_type === education_type || education_type === 'all') &&
                              (course.category.name === category_name || category_name === 'all')"
-                             :style="{ 'background-color': '#' + course.color_hex }"
-                             @click="goTo(course)">
-                          <h6 class="left-align my-1" style="display: inline; float: left;">{{ typesRus[course.education_type] }}</h6>
-                          <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
-                          <div class="course-title mt-5">
-                            <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
-                          </div>
-                          <div class="course-desc">
-                            <p v-if="course.description.length > 120" class="mt-4">{{ course.description.substr(0, 120) }}...</p>
-                            <p v-else class="mt-4">{{ course.description }}</p>
-                          </div>
-                          <p class="mt-3" style="color: gray; font-size: 11px;">Длительность: {{ course.duration }} месяцев</p>
+                           :style="{ 'background-color': '#' + course.color_hex }"
+                           @click="goTo(course)">
+                        <h6 class="left-align my-1" style="display: inline; float: left;">
+                          {{ typesRus[course.education_type] }}</h6>
+                        <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
+                        <div class="course-title mt-5">
+                          <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
                         </div>
+                        <div class="course-desc">
+                          <p v-if="course.description.length > 120" class="mt-4">{{
+                              course.description.substr(0, 120)
+                            }}...</p>
+                          <p v-else class="mt-4">{{ course.description }}</p>
+                        </div>
+                        <p class="mt-3" style="color: gray; font-size: 11px;">Длительность: {{ course.duration }}
+                          месяцев</p>
                       </div>
                     </div>
                   </div>
@@ -155,7 +175,7 @@ export default {
     },
 
     goTo(course) {
-      if (course.category.name !== 'Шахматы'){
+      if (course.category.name !== 'Шахматы') {
         this.$router.push({name: 'EducationSingle', params: {'id': course.id}})
       } else {
         this.$router.push({name: 'ChessSingle', params: {'id': course.id}})
