@@ -291,6 +291,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название Категории')
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     age_group = models.CharField(max_length=50, verbose_name='Возрастная категория', choices=AGE_GROUP_CHOICES)
+    how_is_the_training = models.TextField(verbose_name='Как проходит обучение', blank=True, null=True)
 
     def __str__(self):
         return f'{self.name} ({self.age_group})'

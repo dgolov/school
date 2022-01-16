@@ -40,18 +40,21 @@
                 <img src="../assets/images/children.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('children')">Дети</button>
+                  <span class="group-text__age">8 — 14 лет</span>
                 </div>
               </div>
               <div class="col-md-4 center" id="teens">
                 <img src="../assets/images/teens.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('teens')">Подростки</button>
+                  <span class="group-text__age">14 — 18 лет</span>
                 </div>
               </div>
               <div class="col-md-4 center" id="adults">
                 <img src="../assets/images/adults.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('adults')">Взрослые</button>
+                  <span class="group-text__age">18 — ∞</span>
                 </div>
               </div>
             </div>
@@ -162,15 +165,14 @@
               <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
                 профессию и занятие по душе, изучить
                 новое и получить практические знания, которые помогут получить работу мечты.</p>
-              <!-- Кнопку меняю на свою -->
-              <button type="button" class="button-open-day button-open-day_home">Подробнее</button>
+              <a href="/education" class="button-open-day button-open-day_home" @click="goTo('Education')">Подробнее</a>
               <!-- <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button> -->
             </div>
           </div>
           <div class="col-md-7">
             <div class="row">
               <div class="col-md-6">
-                <a href="">
+                <a href="/news">
                   <div class="news-block py-4 mb-4 eff-h-two" style="background-color: #B8EFCF;">
                     <img src="../assets/img/cart/news-main.svg">
                     <h2 class="bold">Новости академии</h2>

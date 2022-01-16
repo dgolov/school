@@ -1,7 +1,7 @@
 <template>
   <div id="friends">
     <navbar></navbar>
-    <div class="step landing__section" style="background-color: #f7f7f7">
+    <div class="step landing__section past-events" style="background-color: #f7f7f7">
       <div class="page">
         <div class="container mt-1">
           <div class="page__inner">
