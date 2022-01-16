@@ -205,7 +205,7 @@
       </div>
     </section>
 
-    <section class="earnings" v-if="course.category.age_group === 'adults'">
+    <section class="earnings" v-if="course.profession">
       <div class="container">
         <div class="row">
           <div class="col-12">
