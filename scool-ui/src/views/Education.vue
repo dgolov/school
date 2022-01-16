@@ -30,18 +30,21 @@
                 <img src="../assets/images/children.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('children')">Дети</button>
+                  <span class="group-text__age">8 — 14 лет</span>
                 </div>
               </div>
               <div class="col-md-3 center" id="teens">
                 <img src="../assets/images/teens.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('teens')">Подростки</button>
+                  <span class="group-text__age">14 — 18 лет</span>
                 </div>
               </div>
               <div class="col-md-3 center" id="adults">
                 <img src="../assets/images/adults.svg" class="group-image">
                 <div class="group-text">
                   <button @click="setAgeGroup('adults')">Взрослые</button>
+                  <span class="group-text__age">18 — ∞</span>
                 </div>
               </div>
             </div>
