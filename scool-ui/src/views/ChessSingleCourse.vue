@@ -190,7 +190,7 @@
         </div>
       </div>
     </div>
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 c-c-wrapper e-c-wrapp">
       <div class="row">
         <div class="faq" id="question1">
           <p class="question">Кому подойдет этот курс?</p>

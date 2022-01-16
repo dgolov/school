@@ -81,21 +81,17 @@
             <div class="events-title-wrapp">
               <div class="events-title__inner">
                 <span class="events-title__cross"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Актуальные программы</h3>
+<!--                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,-->
+<!--                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>-->
               </div>
               <div class="events-title__inner ">
                 <span class="events-title__circle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Удобный для вас формат обучения</h3>
               </div>
               <div class="events-title__inner">
                 <span class="events-title__triangle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,
-                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <h3 class="events-title__subject">Помощь в трудоустройстве</h3>
               </div>
             </div>
           </div>
@@ -132,11 +128,11 @@
 <!--      </div>-->
 <!--    </section>-->
 
-    <section class="profession-info">
+    <section class="profession-info" v-if="course.profession">
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="program-events-title">Кто такой {{ course.name }}</h2>
+            <h2 class="program-events-title">Кто такой {{ course.profession.name }}</h2>
             <p class="chess-school-decs e-c-desc">{{ course.who_is }}</p>
           </div>
           <div class="col-12">
@@ -144,12 +140,7 @@
           </div>
           <div class="col-md-12 col-lg-9">
             <ul class="skills">
-              <li class="skills__item">Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-              <li class="skills__item">Praesent vulputate nulla sapien, nec auctor nibh congue eu.</li>
-              <li class="skills__item ">Lorem ipsum dolor sit amet</li>
-              <li class="skills__item">Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-              <li class="skills__item">Praesent vulputate nulla sapien, nec auctor nibh congue eu.</li>
-              <li class="skills__item">Lorem ipsum dolor sit amet</li>
+              <li class="skills__item" v-for="skill in course.skills">{{ skill.text }}</li>
             </ul>
           </div>
         </div>
@@ -178,7 +169,7 @@
                 <p class="program-info-text">и получить актуальную высокооплачиваемую специальность в IT</p>
               </div>
             </div>
-            <button class="button button-header  e-c-button" type="button">Записаться на курс</button>
+            <button class="button button-header  e-c-button" type="button" @click="pay()">Записаться на курс</button>
           </div>
         </div>
       </div>
@@ -214,35 +205,35 @@
       </div>
     </section>
 
-    <section class="earnings">
+    <section class="earnings" v-if="course.category.age_group === 'adults'">
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="program-events-title mt-0 mb-5">Сколько зарабатывает веб-разработчик</h2>
+            <h2 class="program-events-title mt-0 mb-5">Сколько зарабатывает {{ course.profession.name }}</h2>
           </div>
           <div class="earnings-inner">
             <div class="col-md-5 col-lg-4">
               <div class="level">
-                <h5 class="level__name">Junior</h5>
+                <h5 class="level__name">{{ course.profession.junior_name }}</h5>
                 <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
                   feugiat, posuere magna et, scelerisque leo.</p>
-                <span class="level__price">от  80 000 ₽ в месяц</span>
+                <span class="level__price">от  {{ course.profession.salary_junior }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
               <div class="level level_green">
-                <h5 class="level__name">Middle</h5>
+                <h5 class="level__name">{{ course.profession.middle_name }}</h5>
                 <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
                   feugiat, posuere magna et, scelerisque leo.</p>
-                <span class="level__price">от  150 000 ₽ в месяц</span>
+                <span class="level__price">от  {{ course.profession.salary_middle }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
               <div class="level level_orange">
-                <h5 class="level__name">Middle</h5>
+                <h5 class="level__name">{{ course.profession.senior_name }}</h5>
                 <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
                   feugiat, posuere magna et, scelerisque leo. </p>
-                <span class="level__price">от  200 000 ₽ в месяц</span>
+                <span class="level__price">от  {{ course.profession.salary_senior }} ₽ в месяц</span>
               </div>
             </div>
           </div>
@@ -255,10 +246,7 @@
         <div class="row">
           <div class="col-12">
             <h2 class="program-events-title mt-0 mb-3">Как проходит обучение</h2>
-            <p class="program-events-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis
-              tellus feugiat, posuere magna et, scelerisque leo. In scelerisque pulvinar sem, et gravida mi tincidunt
-              nec. Suspendisse a ullamcorper nisi. Duis et mauris et ex posuere dignissim vitae a diam. Praesent
-              vulputate nulla sapien, nec auctor nibh congue eu. </p>
+            <p class="program-events-desc">{{ course.category.how_is_the_training }}</p>
           </div>
         </div>
       </div>
@@ -296,13 +284,7 @@
         <div class="row">
           <div class="col-lg-10">
             <h2 class="program-events-title mt-0 mb-3">Содержание курса</h2>
-            <p class="chess-school-decs c-c-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna
-              et, scelerisque leo. In scelerisque pulvinar sem, et gravida mi tincidunt nec. Suspendisse a ullamcorper
-              nisi. Duis et mauris et ex posuere dignissim vitae a diam. Praesent vulputate nulla sapien, nec auctor
-              nibh congue eu. Nulla lectus felis, luctus et sodales ac, convallis quis urna. Etiam id ultricies dolor,
-              non efficitur tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque in augue
-              porttitor, ornare nulla id, hendrerit nunc.</p>
+            <p class="chess-school-decs c-c-desc">{{ course.content }}</p>
           </div>
           <div class="col-lg-5">
             <div class="course-conten-wrapp">
@@ -436,7 +418,7 @@
     <!--      </div>-->
     <!--    </div>-->
 
-    <section class="employment-business">
+    <section class="employment-business" v-if="course.category.age_group === 'adults'">
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -468,7 +450,7 @@
       </div>
     </section>
 
-    <section class="summary">
+    <section class="summary" v-if="course.profession">
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -487,13 +469,13 @@
                     </div>
                     <div class="post-name-wrapp">
                       <p class="post mb-2">Должность:</p>
-                      <h5 class="post-name mt-1">Веб-разработчик</h5>
+                      <h5 class="post-name mt-1">{{ course.profession.name }}</h5>
                     </div>
                   </div>
                   <span class="border-summary border-summary_sm"></span>
                   <div class="money-wrapp">
                     <p class="salary-from mb-2">Зарплата от:</p>
-                    <span class="money mt-1">90 000 ₽</span>
+                    <span class="money mt-1">{{ course.profession.salary_resume }} ₽</span>
                   </div>
                 </div>
                 <span class="border-summary b-s-sm"></span>
@@ -502,18 +484,9 @@
                 <div class="skilss-wrapp">
                   <p class="skilss-title">Профессиональные навыки:</p>
                   <ul class="skills skills-summary">
-                    <li class="skills__item skills__item_size">Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    <li class="skills__item skills__item_size" v-for="skill in course.profession.skills">
+                      {{ skill.text }}
                     </li>
-                    <li class="skills__item skills__item_size">Praesent vulputate nulla sapien, nec auctor nibh congue
-                      eu.
-                    </li>
-                    <li class="skills__item skills__item_size">Lorem ipsum dolor sit amet</li>
-                    <li class="skills__item skills__item_size">Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </li>
-                    <li class="skills__item skills__item_size">Praesent vulputate nulla sapien, nec auctor nibh congue
-                      eu.
-                    </li>
-                    <li class="skills__item skills__item_size">Lorem ipsum dolor sit amet</li>
                   </ul>
                 </div>
                 <span class="border-summary"></span>

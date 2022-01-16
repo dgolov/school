@@ -1,6 +1,6 @@
 <template>
   <div class="steps landing__section">
-    <div class="container mt-5">
+    <div class="container mt-5 past-events">
       <h3 style="margin: 100px 0 30px;">Страница в разработке...</h3>
       <img src="../assets/images/construction.png" class="construction_img">
     </div>

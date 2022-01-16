@@ -421,19 +421,52 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProfessionSkillSerializer(serializers.ModelSerializer):
+    """ Серилизация модели скиллов для профессий
+    """
+
+    class Meta:
+        model = models.ProfessionSkill
+        fields = '__all__'
+
+
+class ProfessionSerializer(serializers.ModelSerializer):
+    """ Серилизация модели профессий
+    """
+    skills = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Profession
+        fields = '__all__'
+
+    @staticmethod
+    def get_skills(obj):
+        days = obj.skills.all()
+        serializer = ProfessionSkillSerializer(days, many=True)
+        return serializer.data
+
+
 class CourseSerializer(serializers.ModelSerializer):
     """ Серилизация моделей курсов
     """
     category = CategorySerializer()
     teachers = ProfileSerializer(many=True)
+    profession = ProfessionSerializer()
+    skills = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Course
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
-            'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'skills',
-            'profession'
+            'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
+            'profession', 'skills'
         ]
+
+    @staticmethod
+    def get_skills(obj):
+        days = obj.skills.all()
+        serializer = SkillSerializer(days, many=True)
+        return serializer.data
 
 
 class LessonSerializer(serializers.ModelSerializer):

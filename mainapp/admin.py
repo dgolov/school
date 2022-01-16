@@ -192,3 +192,27 @@ class NewsAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name', 'date']
     list_display_links = ['name']
+
+
+@admin.register(models.Skill)
+class SkillAdmin(admin.ModelAdmin):
+    """ Отображение списка скилов в админке
+    """
+    list_display = ['id', 'text', 'course']
+    list_display_links = ['id']
+
+
+@admin.register(models.Profession)
+class ProfessionAdmin(admin.ModelAdmin):
+    """ Отображение списка профессий в админке
+    """
+    list_display = ['id', 'name']
+    list_display_links = ['name']
+
+
+@admin.register(models.ProfessionSkill)
+class ProfessionSkillAdmin(admin.ModelAdmin):
+    """ Отображение списка скиллов профессий в админке
+    """
+    list_display = ['id', 'text', 'profession']
+    list_display_links = ['id']

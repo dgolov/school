@@ -1,7 +1,7 @@
 <template>
   <div v-if="responseData" id="photo">
     <navbar></navbar>
-    <div class="step landing__section main-section">
+    <div class="step landing__section main-section past-events">
       <div class="page">
         <div class="container mt-1">
           <div class="page__inner">
