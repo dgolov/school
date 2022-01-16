@@ -70,9 +70,7 @@
                           <h6 class="left-align my-1" style="display: inline; float: left;">{{ typesRus[course.education_type] }}</h6>
                           <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
                           <div class="course-title mt-5">
-                            <h3 class="left-align bold mt-3 mb-1">
-                              <a href="#" @click="goTo(course)">{{ course.name }}</a>
-                            </h3>
+                            <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
                           </div>
                           <div class="course-desc">
                             <p v-if="course.description.length > 120" class="mt-4">{{ course.description.substr(0, 120) }}...</p>
