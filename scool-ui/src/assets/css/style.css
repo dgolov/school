@@ -1535,6 +1535,7 @@ ul.main-nav {
 
 .page__main {
     flex-grow: 1;
+    background-color: #ffffff;
     /*padding: 20px 40px;*/
 }
 
