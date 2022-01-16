@@ -421,11 +421,37 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProfessionSkillSerializer(serializers.ModelSerializer):
+    """ Серилизация модели скиллов для профессий
+    """
+
+    class Meta:
+        model = models.ProfessionSkill
+        fields = '__all__'
+
+
+class ProfessionSerializer(serializers.ModelSerializer):
+    """ Серилизация модели профессий
+    """
+    skills = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Profession
+        fields = '__all__'
+
+    @staticmethod
+    def get_skills(obj):
+        days = obj.skills.all()
+        serializer = ProfessionSkillSerializer(days, many=True)
+        return serializer.data
+
+
 class CourseSerializer(serializers.ModelSerializer):
     """ Серилизация моделей курсов
     """
     category = CategorySerializer()
     teachers = ProfileSerializer(many=True)
+    profession = ProfessionSerializer()
     skills = serializers.SerializerMethodField()
 
     class Meta:

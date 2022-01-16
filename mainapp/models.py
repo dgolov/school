@@ -332,7 +332,13 @@ class Course(models.Model):
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     content = models.TextField(verbose_name='Содержание', blank=True, null=True)
     activity_mode = models.CharField(max_length=50, verbose_name='Режим заниятий', blank=True, null=True)
-    profession = models.CharField(max_length=50, verbose_name='Профессия', blank=True, null=True)
+    profession = models.ForeignKey(
+        'Profession',
+        on_delete=models.CASCADE,
+        verbose_name='Профессия',
+        blank=True,
+        null=True
+    )
     who_is = models.TextField(verbose_name='Блок кто такой', blank=True, null=True)
     # skills = models.ManyToManyField('Skill', blank=True, verbose_name='Вы научитесь', related_name='skills')
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
@@ -366,6 +372,40 @@ class Skill(models.Model):
     class Meta:
         verbose_name = 'Навык'
         verbose_name_plural = '02. Обучение - Навыки'
+
+
+class Profession(models.Model):
+    """ Модель професии
+    """
+    name = models.CharField(max_length=100, verbose_name='Название')
+    salary_resume = models.CharField(max_length=100, verbose_name='Зарплата в резюме')
+    salary_junior = models.CharField(max_length=100, verbose_name='Зарплата Junior')
+    salary_middle = models.CharField(max_length=100, verbose_name='Зарплата Middle')
+    salary_senior = models.CharField(max_length=100, verbose_name='Зарплата Senior')
+    junior_name = models.CharField(max_length=100, verbose_name='Junior название блока', default='Junior')
+    middle_name = models.CharField(max_length=100, verbose_name='Middle название блока', default='Middle')
+    senior_name = models.CharField(max_length=100, verbose_name='Senior название блока', default='Senior')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Провессия'
+        verbose_name_plural = '02. Обучение - Провессии'
+
+
+class ProfessionSkill(models.Model):
+    """ Модель скиллов (Блок "Вы научитесь в курсе")
+    """
+    profession = models.ForeignKey(Profession, on_delete=models.CASCADE, verbose_name='Проессия', related_name='skills')
+    text = models.TextField(verbose_name='Текс навыка')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Навык'
+        verbose_name_plural = '02. Обучение - Профессии - Навыки'
 
 
 class Lesson(models.Model):
