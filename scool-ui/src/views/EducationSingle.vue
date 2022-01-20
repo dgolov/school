@@ -128,17 +128,17 @@
 <!--      </div>-->
 <!--    </section>-->
 
-    <section class="profession-info" v-if="course.profession">
+    <section class="profession-info">
       <div class="container">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12" v-if="course.profession">
             <h2 class="program-events-title">Кто такой {{ course.profession.name }}</h2>
             <p class="chess-school-decs e-c-desc">{{ course.who_is }}</p>
           </div>
-          <div class="col-12">
+          <div class="col-12" v-if="course.skills">
             <h2 class="program-events-title">Вы научитесь:</h2>
           </div>
-          <div class="col-md-12 col-lg-9">
+          <div class="col-md-12 col-lg-9" v-if="course.skills">
             <ul class="skills">
               <li class="skills__item" v-for="skill in course.skills">{{ skill.text }}</li>
             </ul>
@@ -215,24 +215,24 @@
             <div class="col-md-5 col-lg-4">
               <div class="level">
                 <h5 class="level__name">{{ course.profession.junior_name }}</h5>
-                <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
-                  feugiat, posuere magna et, scelerisque leo.</p>
+                <p class="level__desc">Обычно на позицию Junior претендуют выпускники, которые только закончили
+                  профильное образование или имеют небольшой опыт в разработке.</p>
                 <span class="level__price">от  {{ course.profession.salary_junior }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
               <div class="level level_green">
                 <h5 class="level__name">{{ course.profession.middle_name }}</h5>
-                <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
-                  feugiat, posuere magna et, scelerisque leo.</p>
+                <p class="level__desc">Они уже имеют хороший опыт работы, достаточный уровень знания языков
+                  программирования и понимания стека технологий, могут справляться с задачами самостоятельно.</p>
                 <span class="level__price">от  {{ course.profession.salary_middle }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
               <div class="level level_orange">
                 <h5 class="level__name">{{ course.profession.senior_name }}</h5>
-                <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus
-                  feugiat, posuere magna et, scelerisque leo. </p>
+                <p class="level__desc">Это исключительный специалист, который в полной мере овладел стеком технологий и
+                  языками программирования, необходимыми в его работе. </p>
                 <span class="level__price">от  {{ course.profession.salary_senior }} ₽ в месяц</span>
               </div>
             </div>
