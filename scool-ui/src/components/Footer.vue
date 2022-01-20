@@ -55,8 +55,8 @@
             </div>
             <div class="footer__row">
               <div class="menu-contact d-flex">
-                <a href="tel:+88009503398 " class="number number-footer">8 800 950-33-98</a>
-                <p class="menu-contact__address address-footer">г. Москва, ул. Ленина, д. 50</p>
+                <a href="tel:+88009503398 " class="number number-footer">{{ $store.state.phone }}</a>
+                <p class="menu-contact__address address-footer">{{ $store.state.address }}</p>
                 <a href="mailto:info@hodfutureacademy.ru" class="menu-contact__email email-footer">info@hodfutureacademy.ru</a>
               </div>
               <div class="social social-footer d-flex">

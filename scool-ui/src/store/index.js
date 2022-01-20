@@ -16,6 +16,8 @@ export default new Vuex.Store({
     webSocketUrl: "wss://109.172.27.159:8001",
     isMainPage: false,
     error: '',
+    phone: '8 800 550-09-72',
+    address: 'г. Дзержинск, пл. Дзержинского 2',
   },
 
   mutations: {

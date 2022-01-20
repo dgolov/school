@@ -41,7 +41,7 @@
                   </svg>
                 </a>
               </li>
-              <li><a href="#" class="bold">8 800 950-33-98</a></li>
+              <li><a href="#" class="bold">{{ $store.state.phone }}</a></li>
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>
