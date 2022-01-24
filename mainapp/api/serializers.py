@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from mainapp import models
-from management.models import Staff
+from management.models import Staff, Request, Client
 from ..tasks import send_mail_task
 
 
@@ -688,4 +688,21 @@ class NewsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = models.News
+        fields = '__all__'
+
+
+class ClientSerializer(serializers.ModelSerializer):
+    """ Серилизация заявок
+    """
+
+    class Meta:
+        model = Client
+        fields = '__all__'
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    """ Серилизация заявок
+    """
+    class Meta:
+        model = Request
         fields = '__all__'

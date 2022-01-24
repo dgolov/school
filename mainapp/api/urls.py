@@ -19,6 +19,7 @@ router.register('performance', views.AcademicPerformanceViewSet, basename='perfo
 router.register('dialogs', views.DialogViewSet, basename='dialogs')
 router.register('events', views.EventViewSet, basename='events')
 router.register('news', views.NewsViewSet, basename='news')
+router.register('requests', views.RequestsViewSet, basename='requests')
 
 
 urlpatterns = [

@@ -105,10 +105,11 @@ class Request(models.Model):
     STATUS_CHOICES_RUS = ('Новая', 'Обработанная', 'Удаленная')
     STATUS_CHOICES = list(zip(STATUS_CHOICES, STATUS_CHOICES_RUS))
 
-    PURPOSE_CHOICES = ('price', 'meeting', 'info', 'details', 'repeat')
+    PURPOSE_CHOICES = ('price', 'meeting', 'info', 'details', 'repeat', 'free_lesson')
     PURPOSE_CHOICES_RUS = (
         'Узнать цену', 'Договориться о встрече', 'Получить общую информацию',
-        'Уточнить детали перед заключением договора', 'Повторная консультация'
+        'Уточнить детали перед заключением договора', 'Повторная консультация',
+        'Записаться на пробный урок'
     )
     PURPOSE_CHOICES = list(zip(PURPOSE_CHOICES, PURPOSE_CHOICES_RUS))
 
@@ -120,7 +121,17 @@ class Request(models.Model):
     RESULT_CHOICES = list(zip(RESULT_CHOICES, RESULT_CHOICES_RUS))
 
     manager = models.ForeignKey('Staff', on_delete=models.SET_NULL, verbose_name='Менеджер', blank=True, null=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент')
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, verbose_name='Клиент', blank=True, null=True)
+    student = models.ForeignKey(
+        'mainapp.Student',
+        on_delete=models.SET_NULL,
+        verbose_name='Студент',
+        blank=True,
+        null=True
+    )
+    request_fio = models.CharField(max_length=50, verbose_name='ФИО из заявки', blank=True, null=True)
+    request_phone = models.CharField(max_length=50, verbose_name='Телефон из заявки', blank=True, null=True)
+    request_email = models.CharField(max_length=50, verbose_name='Email из заявки', blank=True, null=True)
     type_request = models.CharField(max_length=50, verbose_name='Тип заявки', choices=TYPE_CHOICES)
     status = models.CharField(max_length=50, verbose_name='Статус заявки', choices=STATUS_CHOICES, default='new')
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Курс', blank=True, null=True)
@@ -145,6 +156,9 @@ class Request(models.Model):
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = '04. Заявки'
+
+    def __str__(self):
+        return self.request_fio
 
 
 class Vacancy(models.Model):
