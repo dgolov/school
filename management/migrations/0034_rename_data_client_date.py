@@ -4,15 +4,4 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('management', '0033_advertisingactivity_category'),
-    ]
-
-    operations = [
-        migrations.RenameField(
-            model_name='client',
-            old_name='data',
-            new_name='date',
-        ),
-    ]
+    pass
