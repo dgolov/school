@@ -83,6 +83,7 @@ import {friendMixin} from "../../components/mixins/friendMixin";
 import axios from "axios";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "AcademicPerformance",
 
   data() {

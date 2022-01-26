@@ -29,6 +29,7 @@ import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Subscriptions",
 
   components: {

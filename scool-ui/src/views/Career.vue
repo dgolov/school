@@ -255,6 +255,7 @@ import Navbar from "../components/NavbarMain";
 import Reviews from "../components/Reviews";
 
 export default {
+  title: 'Академия будущего | Карьера',
   name: "Career",
   components: {Navbar, Reviews},
 }

@@ -68,6 +68,7 @@ import {dialogMixin} from "../../components/mixins/dialogMixin";
 import axios from "axios";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Messages",
 
   components: {

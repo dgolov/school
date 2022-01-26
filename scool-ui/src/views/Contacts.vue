@@ -83,6 +83,7 @@ import Navbar from "../components/Navbar";
 import Construction from "../components/Construction";
 
 export default {
+  title: 'Академия будущего | Контакты',
   name: "Contacts",
   components: {
     Navbar

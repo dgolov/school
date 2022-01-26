@@ -402,6 +402,7 @@ import {playerMixin} from "../components/mixins/playerMixin";
 
 
 export default {
+  title: 'Академия будущего | Об Академии',
   name: "About",
   components: {
     Navbar

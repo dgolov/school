@@ -251,6 +251,7 @@ import axios from "axios";
 import {playerMixin} from "../components/mixins/playerMixin";
 
 export default {
+  title: 'Академия будущего',
   name: 'Home',
   components: {
     Navbar, Reviews

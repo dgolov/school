@@ -28,6 +28,7 @@ import {redirect} from "../../components/mixins/redirect";
 import FriendsList from "../../components/Profile/FriendsList";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Followers",
 
   components: {

@@ -241,6 +241,7 @@ import Navbar from "../components/NavbarMain";
 import Construction from "../components/Construction";
 
 export default {
+  title: 'Академия будущего | Мероприятия',
   name: "EventSingle",
 
   components: {

@@ -65,6 +65,7 @@ import DatePicker from "vue2-datepicker";
 import axios from "axios";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "TimeTable",
 
   components: {

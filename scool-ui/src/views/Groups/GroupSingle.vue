@@ -36,6 +36,7 @@ import {redirect} from "../../components/mixins/redirect";
 import {friendMixin} from "../../components/mixins/friendMixin";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "GroupSingle",
 
   components: {

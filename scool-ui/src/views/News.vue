@@ -10,6 +10,7 @@ import Navbar from "../components/Navbar";
 import Construction from "../components/Construction";
 
 export default {
+  title: 'Академия будущего | Новости',
   name: "News",
   components: {
     Navbar, Construction
