@@ -14,27 +14,28 @@
                     <div class="owl-footer-text-wrapp">
                       <span class="owl-footer-frame"></span>
                       <h4 class="owl-frame-title">Помочь с выбором?</h4>
-                      <p class="owl-frame-text"> Оставьте заявку и наши специалисты свяжутся с вами, ответят на все вопросы и подберут подходящий вариант обучения.</p>
+                      <p class="owl-frame-text"> Оставьте заявку и наши специалисты свяжутся с вами, ответят на все
+                        вопросы и подберут подходящий вариант обучения.</p>
                     </div>
                   </div>
                 </div>
                 <!-- Добавлю к input класс для стилизации class="input" -->
                 <div class="col-12 col-lg-5">
                   <form class="form-footer">
-                    <input type='text' placeholder="Ваше имя" class="input">
+                    <input type='text' v-model="fio" placeholder="Ваше имя" class="input">
                     <div class="double">
                       <div class="half">
-                        <input type="tel" class="input" id="first" placeholder="Ваш телефон">
+                        <input type="tel" v-model="phone" class="input" id="first" placeholder="Ваш телефон">
                       </div>
                       <div class="half">
-                        <input type="email" class="input" id="second" placeholder="Ваш e-mail">
+                        <input type="email" v-model="email" class="input" id="second" placeholder="Ваш e-mail">
                       </div>
                     </div>
                     <div class="form-info">
                       <p class="form-info__text">Нажимая на кнопку, я соглашаюсь
                         на обработку персональных данных
                         и с правилами пользования Платформой</p>
-                      <button class="button button__accent"> Отправить</button>
+                      <button class="button button__accent" @click="sendRequest()"> Отправить</button>
                     </div>
                   </form>
                 </div>
@@ -139,7 +140,13 @@ export default {
 
   data() {
     return {
-      categoryList: []
+      categoryList: [],
+      fio: '',
+      phone: '',
+      email: '',
+      typeRequest: 'online',
+      status: 'new',
+      date: "2022-01-07T16:55:43.151840+03:00",
     }
   },
 
@@ -154,6 +161,33 @@ export default {
       await axios
           .get(`${this.$store.getters.getServerUrl}/categories/`)
           .then(response => (this.categoryList = response.data));
+    },
+
+    async sendRequest() {
+      const body = {
+        request_fio: this.fio,
+        request_phone: this.phone,
+        request_email: this.email,
+        type_request: this.typeRequest,
+        status: this.status,
+        date: this.dates,
+        student: null,
+        client: null,
+        result: null,
+        remind: null,
+        comment: "",
+        manager: null,
+        course: null
+      }
+      axios
+          .post(`${this.$store.getters.getServerUrl}/requests/`, body)
+          .then((response) => {
+            this.$store.commit("setAuthUser", {
+              authUser: response.data,
+              isAuthenticated: true,
+            });
+            this.goTo('Profile', {id: this.$store.state.authUser.id})
+          });
     },
 
     goToCategory(id) {
