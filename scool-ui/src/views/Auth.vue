@@ -93,6 +93,7 @@ import {redirect} from "../components/mixins/redirect";
 
 
 export default {
+  title: 'Академия будущего | Регистрация - Вход',
   name: "Auth",
 
   mixins: [redirect],

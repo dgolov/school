@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='client',
-            name='data',
+            name='date',
             field=models.DateField(auto_now_add=True, null=True, verbose_name='Дата занесения в базу'),
         ),
         migrations.AddField(

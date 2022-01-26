@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Games"
 }
 </script>

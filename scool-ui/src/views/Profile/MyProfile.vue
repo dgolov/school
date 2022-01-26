@@ -24,6 +24,7 @@ import {redirect} from "../../components/mixins/redirect";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "MyProfile",
 
   data() {

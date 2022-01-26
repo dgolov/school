@@ -76,6 +76,7 @@ import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
 import ProfileAvatar from "../../components/Profile/ProfileAvatar";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Settings",
 
   components: {

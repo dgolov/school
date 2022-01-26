@@ -60,6 +60,7 @@ import axios from "axios";
 import {groupChatMixin} from "../../components/mixins/groupChatMixin";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "CreateGroupChat",
 
   data() {

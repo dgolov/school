@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView
 
 from .classes import BuyingCourseManager
+from .methods import get_normalize_phone
 from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
 from . import serializers
 from .utils import (
@@ -17,7 +18,7 @@ from .utils import (
 )
 from mainapp import models
 
-from management.models import Staff
+from management.models import Staff, Request, Client
 
 
 # USERS
@@ -257,6 +258,8 @@ class CoursesViewSet(viewsets.ModelViewSet):
         'list': [IsAuthenticatedOrReadOnly],
         'retrieve': [IsAuthenticatedOrReadOnly],
         'lessons': [IsAuthenticatedOrReadOnly],
+        'delete': [IsAdminUser],
+        'create': [IsAdminUser],
     }
 
     @action(detail=True, renderer_classes=[JSONRenderer])
@@ -635,3 +638,42 @@ class NewsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return models.News.objects.all()
+
+
+# REQUESTS
+class RequestsViewSet(viewsets.ModelViewSet):
+    """ Эндпоинт списка заявок
+    """
+    serializer_class = serializers.RequestSerializer
+    permission_classes_by_action = {
+        'list': [IsAdminUser],
+        'retrieve': [IsAdminUser],
+        'delete': [IsAdminUser],
+        'create': [AllowAny],
+    }
+
+    def get_queryset(self):
+        return Request.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        """ Добавить заявку """
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            new_request = serializer.save()
+            phone = get_normalize_phone(request.data.get('request_phone'))
+            try:
+                client = Client.objects.get(phone=phone)
+                new_request.client = client
+            except Client.DoesNotExist:
+                comment = '-- Система: Клиент не найден по введенному номеру телефону'
+                new_request.comment = comment
+            new_request.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return IsAdminUser()

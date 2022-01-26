@@ -30,6 +30,7 @@ import SearchFriends from "../../components/Profile/SearchFriends";
 import FriendsMenu from "../../components/Profile/FriendsMenu";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "FriendRequests",
 
   components: {

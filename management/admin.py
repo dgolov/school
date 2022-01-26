@@ -75,7 +75,7 @@ class InterviewAdmin(admin.ModelAdmin):
 class RequestAdmin(admin.ModelAdmin):
     """ Отоборажение заявок в админке
     """
-    list_display = ['client', 'type_request', 'status', 'course', 'purpose', 'result']
+    list_display = ['client', 'type_request', 'status', 'purpose', 'result']
     list_filter = ['result', 'purpose', 'type_request', 'status']
     list_editable = ['result']
 

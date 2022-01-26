@@ -734,6 +734,7 @@ import HowGoing from "../components/Course/HowGoing";
 import axios from "axios";
 
 export default {
+  title: 'Академия будущего | Обучение',
   name: "EducationSingle",
 
   mixins: [requestsMixin],

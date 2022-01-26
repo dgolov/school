@@ -78,6 +78,7 @@ import axios from "axios";
 
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Photo",
 
   components: {

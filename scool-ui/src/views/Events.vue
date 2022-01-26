@@ -67,6 +67,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import {redirect} from "../components/mixins/redirect";
 export default {
+  title: 'Академия будущего | Мероприятия',
   name: "Events",
 
   components: {Navbar},

@@ -5,6 +5,7 @@ import store from './store'
 import axios from "axios";
 import VueAxios from "vue-axios";
 import loader from "vue-ui-preloader";
+import titleMixin from "./components/mixins/titleMixin";
 
 
 Vue.config.productionTip = true
@@ -18,6 +19,7 @@ Vue.config.productionTip = true
 // Vue.use(IconsPlugin)
 Vue.use(VueAxios, axios)
 Vue.use(loader);
+Vue.mixin(titleMixin)
 
 new Vue({
   loader,

@@ -250,6 +250,7 @@ import axios from "axios";
 import CourseInfo from "../components/Course/CourseInfo";
 
 export default {
+  title: 'Академия будущего | Шахматная школа',
   name: "EducationSingle",
 
   mixins: [requestsMixin],

@@ -62,6 +62,7 @@ import {getDateTime} from "../../components/mixins/getDateTime";
 import {dialogMixin} from "../../components/mixins/dialogMixin";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "Chats",
 
   data() {

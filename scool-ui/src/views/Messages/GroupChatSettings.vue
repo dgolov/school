@@ -127,6 +127,7 @@ import {groupChatMixin} from "../../components/mixins/groupChatMixin";
 import axios from "axios";
 
 export default {
+  title: 'Академия будущего | Личный кабинет',
   name: "ChatSettings",
 
   components: {

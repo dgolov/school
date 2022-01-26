@@ -211,132 +211,7 @@
       </div>
     </div>
 
-    <section class="reviews">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="reviews-title">Отзывы наших студентов</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="slider-wrapper d-flex justify-content-center">
-            <div class="slide">
-              <!-- Контент 1 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl
-                    at augue dapibus, id tristique lorem placerat. <span></span> Curabitur
-                    pellentesque est
-                    bibendum urna facilisis varius. In hac habitasse platea dictumst. In ut dui
-                    sodales.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide">
-              <!-- Контент 2 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat.
-                    <span></span>Curabitur pellentesque est bibendum urna facilisis varius.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide ">
-              <!-- Контент 3 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat.<span></span>
-                    Curabitur pellentesque est bibendum urna facilisis varius. In hac habitasse
-                    platea dictumst. In ut dui sodales, scelerisque eros non, ultrices magna.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide ">
-              <!-- Контент 4 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat!</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Reviews></Reviews>
 
     <div class="white-section mt-3 mb-5 white-section-welcome">
       <div class="container">
@@ -371,13 +246,15 @@
 
 <script>
 import Navbar from "../components/NavbarMain";
+import Reviews from "../components/Reviews";
 import axios from "axios";
 import {playerMixin} from "../components/mixins/playerMixin";
 
 export default {
+  title: 'Академия будущего',
   name: 'Home',
   components: {
-    Navbar,
+    Navbar, Reviews
   },
 
   mixins: [playerMixin],

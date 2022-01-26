@@ -11,15 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='client',
-            name='data',
-        ),
-        migrations.AddField(
-            model_name='client',
-            name='date',
-            field=models.DateField(auto_now_add=True, null=True, verbose_name='Дата занесения в базу'),
-        ),
         migrations.AlterField(
             model_name='client',
             name='last_status',
