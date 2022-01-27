@@ -311,7 +311,7 @@
               <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events olw__c-c">
               <span class=" owl__frame-course"></span>
               <div class="owl-text owl-text-events owl-text-c-c">
-                <p class="owl-desc owl-desc-events owl-c-c">1 занятие бесплатное</p>
+                <p class="owl-desc owl-desc-events">1 занятие бесплатное</p>
               </div>
             </div>
             <div class="course-figure">
@@ -324,78 +324,25 @@
       </div>
     </section>
 
-
-    <!--  Блок наши преподаватели -->
-    <section class="teachers">
+    <section class="teachers" v-if="course.teachers.length > 0">
       <div class="row">
         <div class="col-12">
-          <h2 class="reviews-title">Мероприятие проводят</h2>
+          <h2 class="reviews-title">Наши преподаватели</h2>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <div class="teachers-wrapp">
-            <div class="carousel">
+            <div class="carousel" v-for="teacher of course.teachers">
               <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
-                    <span class="teacher__circle">
-                      <img src="../assets/img/teacher/teacher__photo-one.png" alt=" Фото преподавателя"
-                           class="teacher__photo">
-                    </span>
+                    <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar">
+                    <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
                   </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <!-- Контент 2 слайда -->
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                  <span class="teacher__circle">
-                    <img src="../assets/img/teacher/teacher__photo-two.png" alt=" Фото преподавателя"
-                         class="teacher__photo">
-                  </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <!-- Контент 3 слайда -->
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                <span class="teacher__circle">
-                  <img src="../assets/img/teacher/teacher__photo-three.png" alt=" Фото преподавателя"
-                       class="teacher__photo">
-                </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <!-- Контент 4 слайда -->
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-              <span class="teacher__circle">
-                <img src="../assets/img/teacher/teacher__photo-five.png" alt=" Фото преподавателя"
-                     class="teacher__photo">
-              </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
+                  <h4 class="teacher__name">{{ teacher.last_name }} {{ teacher.first_name }}</h4>
+                  <p class="teacher__info">{{ teacher.about }}</p>
                 </div>
               </div>
             </div>
@@ -403,20 +350,6 @@
         </div>
       </div>
     </section>
-    <!--    <div class="teachers_step" v-if="course.teachers">-->
-    <!--      <div class="container">-->
-    <!--        <div class="row center">-->
-    <!--          <h2>Наши преподаватели</h2>-->
-    <!--          <div v-for="teacher of course.teachers" class="teacher">-->
-    <!--            <img v-if="teacher.avatar" class="center profile-avatar"-->
-    <!--                 :src="`${teacher.avatar.image}`">-->
-    <!--            <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">-->
-    <!--            <h3 class="bold">{{ teacher.last_name }} {{ teacher.first_name }}</h3>-->
-    <!--            <p>{{ teacher.about }}</p>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
 
     <section class="employment-business" v-if="course.category.age_group === 'adults'">
       <div class="container">
@@ -508,220 +441,9 @@
       </div>
     </section>
 
-    <section class="reviews">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="reviews-title">Отзывы наших студентов</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="slider-wrapper d-flex justify-content-center">
-            <div class="slide">
-              <!-- Контент 1 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl
-                    at augue dapibus, id tristique lorem placerat. <span></span> Curabitur
-                    pellentesque est
-                    bibendum urna facilisis varius. In hac habitasse platea dictumst. In ut dui
-                    sodales.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide">
-              <!-- Контент 2 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat.
-                    <span></span>Curabitur pellentesque est bibendum urna facilisis varius.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide ">
-              <!-- Контент 3 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat.<span></span>
-                    Curabitur pellentesque est bibendum urna facilisis varius. In hac habitasse
-                    platea dictumst. In ut dui sodales, scelerisque eros non, ultrices magna.</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slide ">
-              <!-- Контент 4 слайда -->
-              <div class="col-3">
-                <div class="reviews-student">
-                  <div class="reviews-inner d-flex">
-                    <div class="reviews-inner__userpic">
-                      <img src="../assets/img/reviews/userpic-one.png" alt="Фото студента">
-                    </div>
-                    <div class="userpic-about">
-                      <h5 class="userpic-about__name">Имя Фамилия</h5>
-                      <p class="userpic-about__course">Студент курса
-                        <span class="course-name">«WEB-разработчик»</span>
-                      </p>
-                    </div>
-                  </div>
-                  <p class="reviews-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    feugiat nisl at augue dapibus, id tristique lorem placerat!</p>
-                  <div class="rating d-flex align-items-center">
-                    <span class="rating__star"></span>
-                    <span class="rating__number">4,87</span>
-                    <p class="rating__number">/</p>
-                    <span class="rating__number">5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Reviews v-if="course.category.age_group === 'adults'"></Reviews>
 
-    <section class="program-events c-c-wrapper e-c-wrapp">
-      <div class="container mt-5 mb-5 ">
-        <div class="row" style="position: relative;">
-          <div class="col-12">
-            <h3 class="answer-question">Найдите ответ на свой вопрос</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="faq" id="question1">
-            <p class="question">У меня нет опыта в программировании. Подойдёт ли мне этот курс?</p>
-            <button v-if="!question1" class="faq-open-button" @click="openFaqBlock('question1', question1)">
-              <img src="../assets/images/faq-open.svg">
-            </button>
-            <button v-else class="faq-open-button" @click="openFaqBlock('question1', question1)">
-              <img src="../assets/images/faq-close.svg">
-            </button>
-            <p v-if="question1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit
-              amet
-              aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla
-              tincidunt
-              efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus,
-              non
-              semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent
-              per
-              conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus
-              dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
-          </div>
-          <div class="faq" id="question2">
-            <p class="question">Нужно ли знать математику?</p>
-            <button v-if="!question2" class="faq-open-button" @click="openFaqBlock('question2', question2)">
-              <img src="../assets/images/faq-open.svg">
-            </button>
-            <button v-else class="faq-open-button" @click="openFaqBlock('question2', question2)">
-              <img src="../assets/images/faq-close.svg">
-            </button>
-            <p v-if="question2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit
-              amet
-              aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla
-              tincidunt
-              efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus,
-              non
-              semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent
-              per
-              conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus
-              dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
-          </div>
-          <div class="faq" id="question3">
-            <p class="question">Сколько часов в неделю мне нужно будет уделять курсу?</p>
-            <button v-if="!question3" class="faq-open-button" @click="openFaqBlock('question3', question3)">
-              <img src="../assets/images/faq-open.svg">
-            </button>
-            <button v-else class="faq-open-button" @click="openFaqBlock('question3', question3)">
-              <img src="../assets/images/faq-close.svg">
-            </button>
-            <p v-if="question3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit
-              amet
-              aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla
-              tincidunt
-              efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus,
-              non
-              semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent
-              per
-              conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus
-              dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
-          </div>
-          <div class="faq" id="question4">
-            <p class="question">Кто будет помогать мне на курсе?</p>
-            <button v-if="!question4" class="faq-open-button" @click="openFaqBlock('question4', question4)">
-              <img src="../assets/images/faq-open.svg">
-            </button>
-            <button v-else class="faq-open-button" @click="openFaqBlock('question4', question4)">
-              <img src="../assets/images/faq-close.svg">
-            </button>
-            <p v-if="question4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit
-              amet
-              aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla
-              tincidunt
-              efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus,
-              non
-              semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent
-              per
-              conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus
-              dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Faq></Faq>
   </div>
 </template>
 
@@ -732,6 +454,8 @@ import NavbarMain from "../components/NavbarMain";
 import Lessons from "../components/Course/Lessons";
 import HowGoing from "../components/Course/HowGoing";
 import axios from "axios";
+import Reviews from "../components/Reviews";
+import Faq from "../components/Faq";
 
 export default {
   title: 'Академия будущего | Обучение',
@@ -739,7 +463,7 @@ export default {
 
   mixins: [requestsMixin],
 
-  components: {Lessons, HowGoing, NavbarMain},
+  components: {Lessons, HowGoing, NavbarMain, Reviews, Faq},
 
   data() {
     return {
