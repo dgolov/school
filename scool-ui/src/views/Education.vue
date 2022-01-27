@@ -81,7 +81,7 @@
                   <div class="page__inner mt-4">
                     <div v-if="listCourses" class="row">
                       <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
-                           v-if="course.category.age_group === age_group &&
+                           v-if="course.is_active && course.category.age_group === age_group &&
                              (course.complexity === complexity || complexity === 'complexityAll') &&
                              (course.education_type === education_type || education_type === 'all') &&
                              (course.category.name === category_name || category_name === 'all')"
