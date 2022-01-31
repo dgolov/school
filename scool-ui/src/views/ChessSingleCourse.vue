@@ -29,9 +29,10 @@
         <button class="button button-header button-chess" type="button">Записаться на пробное занятие</button>
       </div>
     </div>
+
     <div class="header-mobi d-none">
       <div class="chess-course-img-wrapp">
-        <img src="../assets/images/chess-course.png" alt="" class="chess-course__img">
+        <img src="../assets/images/chess-course.png" alt="" class="chess-course__img" style="align-items:center;">
       </div>
       <div class="container">
         <div class="row">

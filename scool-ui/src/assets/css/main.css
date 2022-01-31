@@ -6037,6 +6037,7 @@ a.events {
     }
     .chess-course__img{
         width:auto;
+        height: 200px;
     }
     .chess-course-title, .chess-course-text, .chess-course-wrapp, .hb-chess, .hb-chess-desc, .button-chess {
         left: 8%;
@@ -6080,7 +6081,7 @@ a.events {
         width: 100%;
         left: 0;
         margin: auto;
-        height: fit-content;
+        height: auto;
     }
     .chess-course-img-wrapp::before {
         background-position: 86% 287px, 13% 34px,4% 620px;

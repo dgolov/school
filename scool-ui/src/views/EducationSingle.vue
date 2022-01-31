@@ -32,7 +32,7 @@
 
     <div class="header-mobi d-none">
       <div class="chess-course-img-wrapp">
-        <img src="../assets/img/header/employment-course.jpg" alt="" class="chess-course__img">
+        <img src="../assets/img/header/employment-course.jpg" alt="" class="chess-course__img" style="align-self:center">
       </div>
       <div class="container">
         <div class="row">

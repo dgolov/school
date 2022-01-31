@@ -62,14 +62,16 @@
               </div>
               <div class="social social-footer d-flex">
                 <!--noindex-->
-                <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="social__vk c-f-vk"></a>
+                <a href="https://vk.com/club208872699" rel="nofollow noopener noreferrer" target="_blank"
+                   class="social__vk c-f-vk"></a>
                 <!--/noindex-->
                 <!--noindex-->
                 <a href="#" rel="nofollow noopener noreferrer" target="_blank"
                    class="social__instagram c-f-instagram"></a>
                 <!--/noindex-->
                 <!--noindex-->
-                <a href="#" rel="nofollow noopener noreferrer" target="_blank"
+                <a href="https://www.facebook.com/Академия-будущего-ХОД-106638701868195"
+                   rel="nofollow noopener noreferrer" target="_blank"
                    class="social__facebook c-f-facebook"></a>
                 <!--/noindex-->
                 <!--noindex-->
@@ -77,7 +79,7 @@
                    rel="nofollow noopener noreferrer" target="_blank" class="social__youtube c-f-youtube"></a>
                 <!--/noindex-->
                 <!--noindex-->
-                <a href="#" rel="nofollow noopener noreferrer" target="_blank"
+                <a href="https://t.me/+qsd97a8BPXVmNjQy" rel="nofollow noopener noreferrer" target="_blank"
                    class="social__telegram c-f-telegram "></a>
                 <!--/noindex-->
               </div>
