@@ -27,7 +27,7 @@
               <div class="connection-inner">
                 <div class="connection-one">
                   <img src="../assets/img/connection/connection-phone.svg" alt="phone" class="connection-tel-icon">
-                  <a href="tel:+88009503398 " class="connection-number">8 800 950-33-98</a>
+                  <a href="tel:+88009503398 " class="connection-number">{{ $store.state.phone }}</a>
                 </div>
                 <div class="connection-two">
                   <img src="../assets/img/connection/connection-email.svg" alt="email" class="connection-email-icon">
@@ -37,23 +37,26 @@
                 <div class="connection-three">
                   <img src="../assets/img/connection/connection-adress.svg" alt="adress"
                        class="connection-adress-icon">
-                  <p class="connection-address">г. Москва, ул. Ленина, д. 50</p>
+                  <p class="connection-address">{{ $store.state.address }}</p>
                 </div>
                 <div class="connection-social d-flex">
                   <!--noindex-->
-                  <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="vk"></a>
+                  <a href="https://vk.com/club208872699" rel="nofollow noopener noreferrer" target="_blank" class="vk"></a>
                   <!--/noindex-->
                   <!--noindex-->
                   <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="instagram"></a>
                   <!--/noindex-->
                   <!--noindex-->
-                  <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="facebook"></a>
+                  <a href="https://www.facebook.com/Академия-будущего-ХОД-106638701868195"
+                     rel="nofollow noopener noreferrer" target="_blank" class="facebook"></a>
                   <!--/noindex-->
                   <!--noindex-->
-                  <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="youtube"></a>
+                  <a href="https://www.youtube.com/channel/UCZjqT7xZQRA73hPwUMWudUQ"
+                     rel="nofollow noopener noreferrer" target="_blank" class="youtube"></a>
                   <!--/noindex-->
                   <!--noindex-->
-                  <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="telegram"></a>
+                  <a href="https://t.me/+qsd97a8BPXVmNjQy" rel="nofollow noopener noreferrer" target="_blank"
+                     class="telegram"></a>
                   <!--/noindex-->
                 </div>
 <!--                <div class="connection-yandex-wrapp">-->
