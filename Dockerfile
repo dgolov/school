@@ -21,7 +21,7 @@ COPY . .
 
 # install dependencies
 COPY ./requirements.txt /usr/src/requirements.txt
-RUN pip wheel -default-timeout = 100 --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
 
 #########
@@ -51,7 +51,7 @@ RUN apt-get update \
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip install -default-timeout = 100 --no-cache /wheels/*
+RUN pip install -default-timeout=100 --no-cache /wheels/*
 
 # copy entrypoint-prod.sh
 COPY ./entrypoint.sh $APP_HOME
