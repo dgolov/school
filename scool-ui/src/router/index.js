@@ -33,6 +33,7 @@ import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
 import EventSingle from "../views/EventSingle";
 import Career from "../views/Career";
+import Requests from "../views/Requests";
 
 
 Vue.use(VueRouter)
@@ -218,6 +219,12 @@ const routes = [
     path: '/career',
     name: 'Career',
     component: Career
+  },
+  {
+    path: '/send-request',
+    name: 'Requests',
+    component: Requests,
+    props: true
   }
 ]
 
