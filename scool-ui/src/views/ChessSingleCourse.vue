@@ -26,7 +26,10 @@
           </div>
         </div>
         <p class="header-button-title hb-chess e-c-free">1 занятие бесплатное</p>
-        <button class="button button-header button-chess" type="button">Записаться на пробное занятие</button>
+        <button class="button button-header button-chess" type="submit"
+                @click="goTo('Requests', {purpose: 'event', course: course.id})" style="z-index: 999">
+          Записаться на пробное занятие
+        </button>
       </div>
     </div>
 
@@ -58,7 +61,10 @@
               </div>
             </div>
             <p class="header-button-title hb-chess">1 занятие бесплатное</p>
-            <button class="button button-header button-chess" type="button">Записаться на пробное занятие</button>
+            <button class="button button-header button-chess" type="button"
+                    @click="goTo('Requests', {purpose: 'event', course: course.id})">
+              Записаться на пробное занятие
+            </button>
           </div>
         </div>
       </div>
