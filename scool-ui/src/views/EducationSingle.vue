@@ -161,18 +161,32 @@
           </div>
           <div class="col-12">
             <div class="program-info-wrapp">
-              <div class="header-desc">
+              <div class="header-desc" v-if="course.category.age_group === 'adults'">
                 <h4 class="program-info-title">Никогда не работал</h4>
                 <p class="program-info-text">и хочет получить востребованную профессию, трудоустроиться или создать
                   собственный бизнес с нуля</p>
               </div>
-              <div class="header-desc">
+              <div class="header-desc" v-else>
+                <h4 class="program-info-title">Много времени проводит за компьютером</h4>
+                <p class="program-info-text">и хочет это делать не только для развлечения, но и с пользой для своего
+                  развития</p>
+              </div>
+              <div class="header-desc" v-if="course.category.age_group === 'adults'">
                 <h4 class="program-info-title">Хочет научиться новому</h4>
                 <p class="program-info-text">и попробовать себя в интересной и востребованной професии</p>
               </div>
-              <div class="header-desc">
+              <div class="header-desc" v-else>
+                <h4 class="program-info-title">Хочет научиться новому</h4>
+                <p class="program-info-text">и готов пробовать разные направления IT-сферы, чтобы выбрать лучшее</p>
+              </div>
+              <div class="header-desc" v-if="course.category.age_group === 'adults'">
                 <h4 class="program-info-title">Хочет сменить работу</h4>
                 <p class="program-info-text">и получить актуальную высокооплачиваемую специальность в IT</p>
+              </div>
+              <div class="header-desc" v-else>
+                <h4 class="program-info-title">Мечтает стать айтишником</h4>
+                <p class="program-info-text">и хочет примерить на себя профессию программиста, веб-разработчика или
+                  дизайнера.</p>
               </div>
             </div>
             <button class="button button-header  e-c-button" type="button" @click="pay()">Записаться на курс</button>
