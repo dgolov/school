@@ -66,7 +66,8 @@
                    class="social__vk c-f-vk"></a>
                 <!--/noindex-->
                 <!--noindex-->
-                <a href="#" rel="nofollow noopener noreferrer" target="_blank"
+                <a href="https://www.instagram.com/future_academyrus/"
+                   rel="nofollow noopener noreferrer" target="_blank"
                    class="social__instagram c-f-instagram"></a>
                 <!--/noindex-->
                 <!--noindex-->
