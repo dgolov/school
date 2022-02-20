@@ -84,7 +84,6 @@ class ProfileCreateView(CreateAPIView):
             return Response(status=status.HTTP_403_FORBIDDEN, data={'message': f'{e}'})
 
 
-
 class PersonalProfileView(viewsets.ModelViewSet):
     """ Эндпоинт личного кабинета
     Request data for students: hobbies - увлечения
