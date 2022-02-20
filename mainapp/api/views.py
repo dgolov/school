@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models.base import ModelBase
 from rest_framework import viewsets, status, decorators
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
@@ -73,6 +74,14 @@ class ProfileCreateView(CreateAPIView):
     """
     permission_classes = [AllowAny]
     serializer_class = serializers.CreateProfileSerializer
+
+    def create(self, request, *args, **kwargs):
+        try:
+            super(ProfileCreateView, self).create(request, *args, **kwargs)
+            return Response(status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_403_FORBIDDEN, data={'message': f'{e}'})
 
 
 class PersonalProfileView(viewsets.ModelViewSet):

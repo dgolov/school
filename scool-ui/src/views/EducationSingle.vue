@@ -4,7 +4,9 @@
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="chess-course">
         <div class="chess-course-img-wrapp">
-          <img src="../assets/img/header/employment-course.jpg" alt="" class="chess-course__img">
+          <img v-if="course.category.age_group === 'adults'" src="../assets/img/header/employment-course.jpg"
+               alt="" class="chess-course__img">
+          <img v-else src="../assets/img/header/shutterstock_1337001122.jpg" alt="" class="chess-course__img">
         </div>
         <div class="header-page-inner">
           <h1 class="chess-course-title e-course-title">{{ course.name }}</h1>

@@ -39,9 +39,6 @@
             </div>
             <div id="signOutForm" v-if="signOut">
               <h1 class="auth__title">Регистрация</h1>
-              <ul v-if="error.status" class="error">
-                <li v-for="message in error.messageList">{{ message }}</li>
-              </ul>
               <p>Заполните краткую анкету чтобы зарегистрироваться на сайте</p>
               <form action="#" class="form">
                 <label>Логин</label>
@@ -73,6 +70,9 @@
                   <label for="two">Женский</label>
                 </div>
                 <hr/>
+                <ul v-if="error.status" class="error">
+                  <li v-for="message in error.messageList">{{ message }}</li>
+                </ul>
                 <button type="button" class="button button__accent mt-4" @click="singUp">Зарегистрироваться</button>
                 <h6 class="left-align mb-5">
                   Уже зарегистрированы? <a href="#" @click="setAuthMode('signIn')">Войти</a>
@@ -231,6 +231,10 @@ export default {
               // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');
+            } else if (error.request.status === 403) {
+              console.log(error.request);
+              this.error.status = true;
+              this.error.messageList.push("Пользователь с такими данными уже существует");
             } else {
               console.log(error.request);
             }

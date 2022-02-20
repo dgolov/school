@@ -352,6 +352,7 @@ class Course(models.Model):
         related_name='is_finished_course'
     )
     is_active = models.BooleanField(default=True, verbose_name='Доступный курс')
+    in_main_page = models.BooleanField(default=False, verbose_name='На главной странице')
 
     def __str__(self):
         return self.name

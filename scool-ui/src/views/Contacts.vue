@@ -44,7 +44,8 @@
                   <a href="https://vk.com/club208872699" rel="nofollow noopener noreferrer" target="_blank" class="vk"></a>
                   <!--/noindex-->
                   <!--noindex-->
-                  <a href="#" rel="nofollow noopener noreferrer" target="_blank" class="instagram"></a>
+                  <a href="https://www.instagram.com/future_academyrus"
+                     rel="nofollow noopener noreferrer" target="_blank" class="instagram"></a>
                   <!--/noindex-->
                   <!--noindex-->
                   <a href="https://www.facebook.com/Академия-будущего-ХОД-106638701868195"
