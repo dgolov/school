@@ -35,6 +35,7 @@
             </div>
           </div>
           <div class="col-md-9">
+            <h2 class="mb-4">Наиболее популярные курсы</h2>
             <div class="row groups mb-4">
               <div class="col-md-4 group-active" id="children">
                 <img src="../assets/images/children.svg" class="group-image">
@@ -58,11 +59,25 @@
                 </div>
               </div>
             </div>
-            <div class="mb-5">
-              <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
-                <button class="category-button" @click="goTo(category.name)">
-                  {{ category.name }}
-                </button>
+            <div class="row">
+              <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
+                   v-if="course.is_active && course.category.age_group === age_group && course.in_main_page"
+                   :style="{ 'background-color': '#' + course.color_hex }"
+                   @click="goTo(course)">
+                <h6 class="left-align my-1" style="display: inline; float: left;">
+                  {{ typesRus[course.education_type] }}</h6>
+                <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
+                <div class="course-title mt-5">
+                  <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
+                </div>
+                <div class="course-desc">
+                  <p v-if="course.description.length > 120" class="mt-4">{{
+                      course.description.substr(0, 120)
+                    }}...</p>
+                  <p v-else class="mt-4">{{ course.description }}</p>
+                </div>
+                <p class="mt-3" style="color: gray; font-size: 11px;">Длительность: {{ course.duration }}
+                  месяцев</p>
               </div>
             </div>
           </div>
@@ -262,7 +277,11 @@ export default {
   data() {
     return {
       age_group: 'children',
-      categoryList: []
+      listCourses: [],
+      typesRus: {
+        'profession': 'Профессия',
+        'course': 'Курс'
+      }
     }
   },
 
@@ -273,8 +292,8 @@ export default {
   methods: {
     async loadCategoryList() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/categories/`)
-          .then(response => (this.categoryList = response.data));
+          .get(`${this.$store.getters.getServerUrl}/courses/`)
+          .then(response => (this.listCourses = response.data));
     },
 
     goTo(name) {
