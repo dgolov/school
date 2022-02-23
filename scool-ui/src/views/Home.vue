@@ -1,12 +1,15 @@
 <template>
   <div class="home">
+
     <navbar></navbar>
+
     <div class="header-wrapper d-none d-lg-block">
       <div class="header">
         <h1 class="header-title">Образовательная платформа ХОД Future Academy</h1>
         <p class="header-title__desc">Актуальные знания для новичков и профессионалов</p>
       </div>
     </div>
+
     <div class="header-mobi d-none">
       <img src="../assets/img/header/header-mobi.jpg" alt="" class="header-mobi__img">
       <div class="container">
@@ -20,6 +23,7 @@
         </div>
       </div>
     </div>
+
     <div class="steps white-section mt-3 pt-0">
       <div class="container">
         <div class="row">
@@ -34,8 +38,8 @@
               </div>
             </div>
           </div>
+
           <div class="col-md-9">
-            <h2 class="mb-4">Наиболее популярные курсы</h2>
             <div class="row groups mb-4">
               <div class="col-md-4 group-active" id="children">
                 <img src="../assets/images/children.svg" class="group-image">
@@ -59,31 +63,83 @@
                 </div>
               </div>
             </div>
+
+            <div class="mb-5">
+              <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
+                <button class="category-button" @click="goTo(category.name)">
+                  {{ category.name }}
+                </button>
+              </div>
+            </div>
             <div class="row">
-              <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
-                   v-if="course.is_active && course.category.age_group === age_group && course.in_main_page"
-                   :style="{ 'background-color': '#' + course.color_hex }"
-                   @click="goTo(course)">
-                <h6 class="left-align my-1" style="display: inline; float: left;">
-                  {{ typesRus[course.education_type] }}</h6>
-                <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
-                <div class="course-title mt-5">
-                  <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
-                </div>
-                <div class="course-desc">
-                  <p v-if="course.description.length > 120" class="mt-4">{{
-                      course.description.substr(0, 120)
-                    }}...</p>
-                  <p v-else class="mt-4">{{ course.description }}</p>
-                </div>
-                <p class="mt-3" style="color: gray; font-size: 11px;">Длительность: {{ course.duration }}
-                  месяцев</p>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFEEF6;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Программирование', 'ageGroup': 'children'}})">
+                    <img src="../assets/img/cart/e_learning_monitor_icon_187419.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">IT обучение</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #C7EEFF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Киберспорт', 'ageGroup': 'teens'}})">
+                    <img src="../assets/img/cart/game-console-svgrepo-com(1).svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Киберспорт</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFCE94;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Шахматы', 'ageGroup': 'children'}})">
+                    <img src="../assets/img/cart/3413424.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Шахматы</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #DDDDFF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">
+                    <img src="../assets/img/cart/social_bitcoin_casino_cryptocurrency_icon_133203.svg"
+                         style="width: 70px; height: 70px;">
+                    <h2 class="bold">Криптовалюта</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #B8EFCF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Иностранные языки', 'ageGroup': 'teens'}})">
+                    <img src="../assets/img/cart/1153499251637753558.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Иностранные языки</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFE38E;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Маркетинг', 'ageGroup': 'adults'}})">
+                    <img src="../assets/img/cart/seo_training_marketing_presentation_icon_192451.svg"
+                         style="width: 70px; height: 70px;">
+                    <h2 class="bold">Маркетплейс</h2>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <section class="video">
       <div class="container">
         <div class="row justify-content-center" style="position:relative;z-index: 1;">
@@ -117,26 +173,26 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих
-              специалистов.</h3>
+            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих специалистов.</h3>
           </div>
         </div>
       </div>
     </div>
+
     <div class="white-section">
       <div class="container">
         <div class="row">
           <div class="text-gradient-wrapper">
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">600</h3>
-              <p class="expanded__text bold px-1">Курсов</p>
+              <h3 class="text-gradient mt-4 mb-0">33</h3>
+              <p class="expanded__text bold px-1">Курса</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">82</h3>
-              <p class="expanded__text bold px-1">Ведущих преподователей</p>
+              <h3 class="text-gradient mt-4 mb-0">22</h3>
+              <p class="expanded__text bold px-1">Ведущих преподователя</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">14795</h3>
+              <h3 class="text-gradient mt-4 mb-0">1000</h3>
               <p class="expanded__text bold px-1">Выпускников</p>
             </div>
           </div>
@@ -158,14 +214,11 @@
                     </div>
                     <div class="excursion">
                       <h2 class="excursion__open-day excursion__open-day_home">День открытых дверей</h2>
-                      <p class="excursion__desc excursion__desc_home">
-                        Приглашаем всех желающих на бесплатную экскурсию в мир
-                        востребованных профессий и полезных навыков
-                      </p>
+                      <p class="excursion__desc excursion__desc_home">Приглашаем всех желающих на бесплатную экскурсию
+                        в мир востребованных профессий и полезных навыков</p>
                     </div>
                   </div>
                   <button type="button" class="button-open-day">Записаться</button>
-                  <!-- Если кнопка отправляет данные тогда type="submit, если нет то type="button"-->
                 </div>
               </div>
             </div>
@@ -177,11 +230,9 @@
             <div class="news-block news-block-programs py-4 mb-4 eff-h-one" style="background-color: #C5DDFF; ">
               <img src="../assets/img/cart/education.svg">
               <h2 class="bold mb-4">Программы обучения</h2>
-              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
-                профессию и занятие по душе, изучить
-                новое и получить практические знания, которые помогут получить работу мечты.</p>
+              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти профессию и занятие по
+                душе, изучить новое и получить практические знания, которые помогут получить работу мечты.</p>
               <a href="/education" class="button-open-day button-open-day_home" @click="goTo('Education')">Подробнее</a>
-              <!-- <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button> -->
             </div>
           </div>
           <div class="col-md-7">
@@ -213,8 +264,8 @@
                       </div>
                       <div class="col-md-8">
                         <h2 class="left-align  bold px-3 title-test-md">Попробуй!</h2>
-                        <p class="news-block-text px-3 text-test-md">Пройдите тест и узнайте свои способности в сфере информационных
-                          технологий</p>
+                        <p class="news-block-text px-3 text-test-md">Пройдите тест и узнайте свои способности в сфере
+                          информационных технологий</p>
                       </div>
                     </div>
                   </a>
@@ -277,7 +328,7 @@ export default {
   data() {
     return {
       age_group: 'children',
-      listCourses: [],
+      categoryList: [],
       typesRus: {
         'profession': 'Профессия',
         'course': 'Курс'
@@ -292,8 +343,8 @@ export default {
   methods: {
     async loadCategoryList() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/courses/`)
-          .then(response => (this.listCourses = response.data));
+          .get(`${this.$store.getters.getServerUrl}/categories/`)
+          .then(response => (this.categoryList = response.data));
     },
 
     goTo(name) {

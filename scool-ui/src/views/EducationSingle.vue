@@ -107,35 +107,6 @@
       </div>
     </div>
 
-<!--    <section class="video v-a-a c-c">-->
-<!--      <div class="container">-->
-<!--        <div class="row justify-content-center" style="position:relative;z-index: 1;">-->
-<!--          <div class="col-md-12 col-lg-8">-->
-<!--            <div class="video-wrapper video-wrapper_chess-course">-->
-<!--              <div class="video__link" id="video__link">-->
-<!--                        <span class="video__circle">-->
-<!--                            <img src="../assets/img/video/play.svg" alt="" class="video__play">-->
-<!--                        </span>-->
-<!--              </div>-->
-<!--              <span class="video-content__triangle video-content-position"></span>-->
-<!--              <span class="video-content__line-left video-content-position"></span>-->
-<!--              <span class="video-content__line-right video-content-position"></span>-->
-<!--              <span class="video-content__cross video-content-position"></span>-->
-<!--            </div>-->
-<!--            <div class="wrapper-modal" id="wrapper-modal">-->
-<!--              <div class="overlay" id="overlay"></div>-->
-<!--              &lt;!&ndash;noindex&ndash;&gt;-->
-<!--              <iframe class="iframe" width="560" height="315" src="https://www.youtube.com/embed/64E1DnxBRyE"-->
-<!--                      rel="nofollow noopener noreferrer" target="_blank" title="YouTube video player" frameborder="0"-->
-<!--                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--                      allowfullscreen></iframe>-->
-<!--              &lt;!&ndash;/noindex&ndash;&gt;-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </section>-->
-
     <section class="profession-info">
       <div class="container">
         <div class="row">
@@ -267,47 +238,94 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="program-events-title mt-0 mb-3">Как проходит обучение</h2>
-            <p class="program-events-desc">{{ course.category.how_is_the_training }}</p>
+            <h2 class="program-events-title mt-0 mb-4">Как проходит обучение</h2>
+          </div>
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+               class="col-12 col-sm-5 col-lg-3">
+            <div class="education-wrapp">
+              <div class="header-desc">
+                <p class="education-text">
+                  Наша уникальная программа сможет открыть ребенку безграничные возможности в обучении. Позволит
+                  развить у учеников стремление и способности к непрерывному образованию в течение всей жизни.
+                  Сформирует у учащихся критическое и рефлексивное мышление, а также способностей к самоорганизации.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+               class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0">
+            <div class="education-wrapp">
+              <div class="header-desc">
+                <p class="education-text">
+                  В соответствии с этими представлениями наша академия видит образование как целенаправленный
+                  развивающий процесс, который приводит к определенному результату — становлению человека, развитию у
+                  него интегральных человеческих качеств и способностей, которые позволяют человеку развиваться гораздо
+                  быстрее, открывать новые горизонты , стать объектом собственного развития и собственной жизни.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+               class="col-12 col-sm-5 col-lg-3">
+            <div class="education-wrapp">
+              <div class="header-desc">
+                <p class="education-text">
+                  В своем образовательном процессе мы применяем принцип обучения по пирамиде Дейла, что способствует
+                  лучшему усвоению материала. В совокупности с применением STEAM технологий, целью которых является
+                  развитие интеллектуальных способностей ребенка с возможностью вовлечения его в научно-техническое
+                  творчество, мы комплексно работаем с ребятами в интересных для них направлениях.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+               class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0">
+            <div class="education-wrapp">
+              <div class="header-desc">
+                <p class="education-text">
+                  Программа обучения –авторская, разработанная с анализом современных педагогических критериев в
+                  европейской системе образования. Родители всегда видят результат занятий в выполненных проектах
+                  наших детей.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="carousel-past-events">
         <div class="gallery">
-          <!-- Контент 1 слайда -->
           <img src="../assets/img/education/education-one.jpg" alt="слайд 1" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 2 слайда -->
           <img src="../assets/img/education/education-two.jpg" alt="слайд 2" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 3 слайда -->
           <img src="../assets/img/education/education-three.jpg" alt="слайд 3" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 4 слайда -->
           <img src="../assets/img/education/education-four.jpg" alt="слайд 4" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 5 слайда -->
           <img src="../assets/img/education/education-five.jpg" alt="слайд 5" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 6 слайда -->
           <img src="../assets/img/education/education-six.jpg" alt="слайд 5" class="past-events-img">
         </div>
       </div>
     </section>
 
-    <!--Блок cодержание курса -->
     <section class="course-content">
       <div class="container">
         <div class="row">
           <div class="col-lg-10">
             <h2 class="program-events-title mt-0 mb-3">Содержание курса</h2>
-            <p class="chess-school-decs c-c-desc">{{ course.content }}</p>
+            <div class="col-12">
+              <ul class="skills skills_two">
+                <li class="skills__item skills__item_marker" v-for="item in contentList">{{ item }}</li>
+              </ul>
+            </div>
           </div>
+
           <div class="col-lg-5">
             <div class="course-conten-wrapp">
               <div class="header-desc header-desc_tiny  c-c-course">
@@ -327,7 +345,6 @@
             </div>
             <button class="button button-header c-c-button" type="button">Записаться на курс</button>
           </div>
-          <!-- Сова -->
           <div class="col-lg-4 mb-3" style="position: relative;">
             <div class="owl owl-events owl-course">
               <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events olw__c-c">
@@ -356,7 +373,6 @@
         <div class="col-12">
           <div class="teachers-wrapp">
             <div class="carousel" v-for="teacher of course.teachers">
-              <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -419,9 +435,7 @@
                     <div class="teacher__avatar summary-photo">
                                     <span class="teacher__circle summary-circle">
                                         <img src="../assets/img/diploma/photo.png" alt=" Фото резюме"
-                                             class="teacher__photo summary-icon">
-                                    </span>
-                    </div>
+                                             class="teacher__photo summary-icon"></span></div>
                     <div class="post-name-wrapp">
                       <p class="post mb-2">Должность:</p>
                       <h5 class="post-name mt-1">{{ course.profession.name }}</h5>
@@ -490,7 +504,8 @@ export default {
 
   data() {
     return {
-      course: {}
+      course: {},
+      contentList: [],
     }
   },
 
@@ -503,7 +518,7 @@ export default {
   },
 
   created() {
-    this.loadCourse()
+    this.loadCourse();
   },
 
   methods: {
@@ -511,6 +526,7 @@ export default {
       await axios
           .get(`${this.$store.getters.getServerUrl}/courses/${this.id}`)
           .then(response => (this.course = response.data))
+      this.contentList = this.course.content.split('.');
     },
 
     async pay() {
@@ -528,7 +544,6 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');
             } else {

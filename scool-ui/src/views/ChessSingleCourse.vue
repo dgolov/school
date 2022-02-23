@@ -73,45 +73,7 @@
     <div class="steps white-section mt-3 pt-0">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <h2 style="text-align: left;">Тренажерный зал</h2>
-            <ul style="text-align: left;">
-              <li>Занятие по тактике</li>
-              <li>Подбор и обучение шахматных тренеров</li>
-              <li>Разбор партии мировой шахматной элиты</li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <h2 style="text-align: left;">Командный пункт</h2>
-            <ul style="text-align: left;">
-              <li>Формирование спортивного характера (работа с психологом)</li>
-              <li>Как не расстраиваться, использовать поражения с максимальной пользой</li>
-              <li>Как правильно использовать радость побед</li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <h2 style="text-align: left;">Шахматная лабаратория</h2>
-            <ul style="text-align: left;">
-              <li>Разборка дебютов</li>
-              <li>Корректировка наигранных дебютов</li>
-              <li>Мониторинг и внедрение актуальных идей</li>
-              <li>Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
-              <li>Формирование индивидуального уникального стиля игры шахматиста</li>
-              <li>Составление плана и контроль выполнения задач самостоятельной подготовки</li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <div class="col-md-6">
-              <h2 style="text-align: left;">Центр полетов</h2>
-              <ul style="text-align: left;">
-                <li>Сопровождение и помощь на соревнованиях</li>
-                <li>Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
-                <li>Занятия в рамках авторской программы от GM (Гроссмейстера)</li>
-                <li>Аналитика и разбор партий с лучшими специалистами</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 mb-3 mt-5">
+          <div class="col-lg-4 mb-3 mt-3 mb-5">
             <div class="owl owl-events">
               <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events ">
               <span class="owl__frame-events"></span>
@@ -120,7 +82,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-8 mt-5">
+          <div class="col-12 col-lg-8 mt-3 mb-5">
             <div class="events-title-wrapp chess-wrapp">
               <div class="events-title__inner c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-one.svg" alt="">
@@ -142,6 +104,44 @@
                 <h3 class="events-title__subject">Цель 4</h3>
                 <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от спасения</p>
               </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h2 class="mb-3" style="text-align: left;">Тренажерный зал</h2>
+            <ul style="text-align: left;">
+              <li class="skills__item skills__item_marker">Занятие по тактике</li>
+              <li class="skills__item skills__item_marker">Подбор и обучение шахматных тренеров</li>
+              <li class="skills__item skills__item_marker">Разбор партии мировой шахматной элиты</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h2 class="mb-3" style="text-align: left;">Командный пункт</h2>
+            <ul style="text-align: left;">
+              <li class="skills__item skills__item_marker">Формирование спортивного характера (работа с психологом)</li>
+              <li class="skills__item skills__item_marker">Как не расстраиваться, использовать поражения с максимальной пользой</li>
+              <li class="skills__item skills__item_marker">Как правильно использовать радость побед</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h2 class="mb-3" style="text-align: left;">Шахматная лабаратория</h2>
+            <ul style="text-align: left;">
+              <li class="skills__item skills__item_marker">Разборка дебютов</li>
+              <li class="skills__item skills__item_marker">Корректировка наигранных дебютов</li>
+              <li class="skills__item skills__item_marker">Мониторинг и внедрение актуальных идей</li>
+              <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
+              <li class="skills__item skills__item_marker">Формирование индивидуального уникального стиля игры шахматиста</li>
+              <li class="skills__item skills__item_marker">Составление плана и контроль выполнения задач самостоятельной подготовки</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-6">
+              <h2 class="mb-3" style="text-align: left;">Центр полетов</h2>
+              <ul style="text-align: left;">
+                <li class="skills__item skills__item_marker">Сопровождение и помощь на соревнованиях</li>
+                <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
+                <li class="skills__item skills__item_marker">Занятия в рамках авторской программы от GM (Гроссмейстера)</li>
+                <li class="skills__item skills__item_marker">Аналитика и разбор партий с лучшими специалистами</li>
+              </ul>
             </div>
           </div>
         </div>
