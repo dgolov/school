@@ -67,8 +67,10 @@
             </div>
             <div class="row">
               <div class="col-md-4">
-                <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
+                <a href="#">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFEEF6;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Программирование', 'ageGroup': 'children'}})">
                     <img src="../assets/img/cart/e_learning_monitor_icon_187419.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">IT обучение</h2>
                   </div>
@@ -76,7 +78,9 @@
               </div>
               <div class="col-md-4">
                 <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #C7EEFF;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #C7EEFF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Киберспорт', 'ageGroup': 'teens'}})">
                     <img src="../assets/img/cart/game-console-svgrepo-com(1).svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">Киберспорт</h2>
                   </div>
@@ -84,7 +88,9 @@
               </div>
               <div class="col-md-4">
                 <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFCE94;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFCE94;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Шахматы', 'ageGroup': 'children'}})">
                     <img src="../assets/img/cart/3413424.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">Шахматы</h2>
                   </div>
@@ -92,7 +98,9 @@
               </div>
               <div class="col-md-4">
                 <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #DDDDFF;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #DDDDFF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">
                     <img src="../assets/img/cart/social_bitcoin_casino_cryptocurrency_icon_133203.svg"
                          style="width: 70px; height: 70px;">
                     <h2 class="bold">Криптовалюта</h2>
@@ -101,7 +109,9 @@
               </div>
               <div class="col-md-4">
                 <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #B8EFCF;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #B8EFCF;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Иностранные языки', 'ageGroup': 'teens'}})">
                     <img src="../assets/img/cart/1153499251637753558.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">Иностранные языки</h2>
                   </div>
@@ -109,7 +119,9 @@
               </div>
               <div class="col-md-4">
                 <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFE38E;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFE38E;"
+                       @click="$router.push({name: 'Education', params: {'category': 'Маркетинг', 'ageGroup': 'adults'}})">
                     <img src="../assets/img/cart/seo_training_marketing_presentation_icon_192451.svg"
                          style="width: 70px; height: 70px;">
                     <h2 class="bold">Маркетплейс</h2>
