@@ -107,35 +107,6 @@
       </div>
     </div>
 
-<!--    <section class="video v-a-a c-c">-->
-<!--      <div class="container">-->
-<!--        <div class="row justify-content-center" style="position:relative;z-index: 1;">-->
-<!--          <div class="col-md-12 col-lg-8">-->
-<!--            <div class="video-wrapper video-wrapper_chess-course">-->
-<!--              <div class="video__link" id="video__link">-->
-<!--                        <span class="video__circle">-->
-<!--                            <img src="../assets/img/video/play.svg" alt="" class="video__play">-->
-<!--                        </span>-->
-<!--              </div>-->
-<!--              <span class="video-content__triangle video-content-position"></span>-->
-<!--              <span class="video-content__line-left video-content-position"></span>-->
-<!--              <span class="video-content__line-right video-content-position"></span>-->
-<!--              <span class="video-content__cross video-content-position"></span>-->
-<!--            </div>-->
-<!--            <div class="wrapper-modal" id="wrapper-modal">-->
-<!--              <div class="overlay" id="overlay"></div>-->
-<!--              &lt;!&ndash;noindex&ndash;&gt;-->
-<!--              <iframe class="iframe" width="560" height="315" src="https://www.youtube.com/embed/64E1DnxBRyE"-->
-<!--                      rel="nofollow noopener noreferrer" target="_blank" title="YouTube video player" frameborder="0"-->
-<!--                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--                      allowfullscreen></iframe>-->
-<!--              &lt;!&ndash;/noindex&ndash;&gt;-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </section>-->
-
     <section class="profession-info">
       <div class="container">
         <div class="row">
@@ -343,7 +314,6 @@
       </div>
     </section>
 
-    <!--Блок cодержание курса -->
     <section class="course-content">
       <div class="container">
         <div class="row">
@@ -403,7 +373,6 @@
         <div class="col-12">
           <div class="teachers-wrapp">
             <div class="carousel" v-for="teacher of course.teachers">
-              <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -466,9 +435,7 @@
                     <div class="teacher__avatar summary-photo">
                                     <span class="teacher__circle summary-circle">
                                         <img src="../assets/img/diploma/photo.png" alt=" Фото резюме"
-                                             class="teacher__photo summary-icon">
-                                    </span>
-                    </div>
+                                             class="teacher__photo summary-icon"></span></div>
                     <div class="post-name-wrapp">
                       <p class="post mb-2">Должность:</p>
                       <h5 class="post-name mt-1">{{ course.profession.name }}</h5>
@@ -577,7 +544,6 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
               this.sendToServer('/send-message/');
             } else {
