@@ -35,7 +35,6 @@
             </div>
           </div>
           <div class="col-md-9">
-            <h2 class="mb-4">Наиболее популярные курсы</h2>
             <div class="row groups mb-4">
               <div class="col-md-4 group-active" id="children">
                 <img src="../assets/images/children.svg" class="group-image">
@@ -59,25 +58,63 @@
                 </div>
               </div>
             </div>
+            <div class="mb-5">
+              <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
+                <button class="category-button" @click="goTo(category.name)">
+                  {{ category.name }}
+                </button>
+              </div>
+            </div>
             <div class="row">
-              <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
-                   v-if="course.is_active && course.category.age_group === age_group && course.in_main_page"
-                   :style="{ 'background-color': '#' + course.color_hex }"
-                   @click="goTo(course)">
-                <h6 class="left-align my-1" style="display: inline; float: left;">
-                  {{ typesRus[course.education_type] }}</h6>
-                <h6 class="right-align" style="display: inline; float: right;">{{ course.category.name }}</h6>
-                <div class="course-title mt-5">
-                  <h3 class="left-align bold mt-3 mb-1" @click="goTo(course)">{{ course.name }}</h3>
-                </div>
-                <div class="course-desc">
-                  <p v-if="course.description.length > 120" class="mt-4">{{
-                      course.description.substr(0, 120)
-                    }}...</p>
-                  <p v-else class="mt-4">{{ course.description }}</p>
-                </div>
-                <p class="mt-3" style="color: gray; font-size: 11px;">Длительность: {{ course.duration }}
-                  месяцев</p>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
+                    <img src="../assets/img/cart/e_learning_monitor_icon_187419.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">IT обучение</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #C7EEFF;">
+                    <img src="../assets/img/cart/game-console-svgrepo-com(1).svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Киберспорт</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFCE94;">
+                    <img src="../assets/img/cart/3413424.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Шахматы</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #DDDDFF;">
+                    <img src="../assets/img/cart/social_bitcoin_casino_cryptocurrency_icon_133203.svg"
+                         style="width: 70px; height: 70px;">
+                    <h2 class="bold">Криптовалюта</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #B8EFCF;">
+                    <img src="../assets/img/cart/1153499251637753558.svg" style="width: 70px; height: 70px;">
+                    <h2 class="bold">Иностранные языки</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFE38E;">
+                    <img src="../assets/img/cart/seo_training_marketing_presentation_icon_192451.svg"
+                         style="width: 70px; height: 70px;">
+                    <h2 class="bold">Маркетплейс</h2>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
@@ -128,15 +165,15 @@
         <div class="row">
           <div class="text-gradient-wrapper">
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">600</h3>
-              <p class="expanded__text bold px-1">Курсов</p>
+              <h3 class="text-gradient mt-4 mb-0">33</h3>
+              <p class="expanded__text bold px-1">Курса</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">82</h3>
-              <p class="expanded__text bold px-1">Ведущих преподователей</p>
+              <h3 class="text-gradient mt-4 mb-0">22</h3>
+              <p class="expanded__text bold px-1">Ведущих преподователя</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">14795</h3>
+              <h3 class="text-gradient mt-4 mb-0">1000</h3>
               <p class="expanded__text bold px-1">Выпускников</p>
             </div>
           </div>
@@ -165,7 +202,6 @@
                     </div>
                   </div>
                   <button type="button" class="button-open-day">Записаться</button>
-                  <!-- Если кнопка отправляет данные тогда type="submit, если нет то type="button"-->
                 </div>
               </div>
             </div>
@@ -181,7 +217,6 @@
                 профессию и занятие по душе, изучить
                 новое и получить практические знания, которые помогут получить работу мечты.</p>
               <a href="/education" class="button-open-day button-open-day_home" @click="goTo('Education')">Подробнее</a>
-              <!-- <button class="button news-block-button w-50 mt-4 mb-4">Подробнее</button> -->
             </div>
           </div>
           <div class="col-md-7">
@@ -277,7 +312,7 @@ export default {
   data() {
     return {
       age_group: 'children',
-      listCourses: [],
+      categoryList: [],
       typesRus: {
         'profession': 'Профессия',
         'course': 'Курс'
@@ -292,8 +327,8 @@ export default {
   methods: {
     async loadCategoryList() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/courses/`)
-          .then(response => (this.listCourses = response.data));
+          .get(`${this.$store.getters.getServerUrl}/categories/`)
+          .then(response => (this.categoryList = response.data));
     },
 
     goTo(name) {
