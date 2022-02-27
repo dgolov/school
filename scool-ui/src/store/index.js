@@ -10,6 +10,7 @@ export default new Vuex.Store({
     profileInfo: {},
     isAuthenticated: false,
     jwt: localStorage.getItem("token"),
+    ageGroup: 'children',
     refreshJwt: localStorage.getItem("refresh_token"),
     refreshStatus: false,
     backendUrl: "/api",
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setProfileInfo(state, { profileInfo }) {
       Vue.set(state, "profileInfo", profileInfo);
+    },
+    setAgeGroup(state, { ageGroup }) {
+      Vue.set(state, "ageGroup", ageGroup);
     },
     setError(state, { error }) {
       Vue.set(state, "error", error);

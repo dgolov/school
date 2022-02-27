@@ -20,7 +20,9 @@
         <div class="col-md-10" style="height: 60px; padding-top: 15px">
           <nav class="navbar__menu">
             <ul class="main-nav">
-              <li><a href="/education" @click="goTo('Education')" class="bold">
+              <li><a href="/education" @click="
+                                            $store.commit('setAgeGroup', {ageGroup: 'children'});
+                                            goTo('Education')" class="bold">
                 <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg" style="padding-bottom: 3px;">
                   <rect x="1" y="1.51392" width="18" height="4.99717" rx="1" stroke="#ffffff" stroke-width="2"/>
                   <rect x="1" y="10.4858" width="18" height="5" rx="1" stroke="#ffffff" stroke-width="2"/>
