@@ -105,13 +105,11 @@ class Request(models.Model):
     STATUS_CHOICES_RUS = ('Новая', 'Обработанная', 'Удаленная')
     STATUS_CHOICES = list(zip(STATUS_CHOICES, STATUS_CHOICES_RUS))
 
-    PURPOSE_CHOICES = (
-        'price', 'meeting', 'info', 'details', 'repeat', 'free_lesson', 'event', 'chess_express', 'chess_pool'
-    )
+    PURPOSE_CHOICES = ('price', 'meeting', 'info', 'details', 'repeat', 'free_lesson', 'event')
     PURPOSE_CHOICES_RUS = (
         'Узнать цену', 'Договориться о встрече', 'Получить общую информацию',
-        'Уточнить детали перед заключением договора', 'Повторная консультация', 'Записаться на пробный урок',
-        'Запись на мероприятие', 'Шахматы - Экспресс курс', 'Шахматы - Пуля/Блиц'
+        'Уточнить детали перед заключением договора', 'Повторная консультация',
+        'Записаться на пробный урок', 'Запись на мероприятие',
     )
     PURPOSE_CHOICES = list(zip(PURPOSE_CHOICES, PURPOSE_CHOICES_RUS))
 
