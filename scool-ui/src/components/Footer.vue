@@ -19,7 +19,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Добавлю к input класс для стилизации class="input" -->
                 <div class="col-12 col-lg-5">
                   <form class="form-footer">
                     <input type='text' v-model="fio" placeholder="Ваше имя" class="input">
@@ -56,7 +55,7 @@
             </div>
             <div class="footer__row">
               <div class="menu-contact d-flex">
-                <a href="tel:+88009503398 " class="number number-footer">{{ $store.state.phone }}</a>
+                <a href="tel:88005500972" class="number number-footer">{{ $store.state.phone }}</a>
                 <p class="menu-contact__address address-footer">{{ $store.state.address }}</p>
                 <a href="mailto:info@hodfutureacademy.ru" class="menu-contact__email email-footer">info@hodfutureacademy.ru</a>
               </div>

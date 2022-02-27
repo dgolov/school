@@ -5,8 +5,8 @@
 
     <div class="header-wrapper d-none d-lg-block">
       <div class="header">
-        <h1 class="header-title">Образовательная платформа ХОД Future Academy</h1>
-        <p class="header-title__desc">Актуальные знания для новичков и профессионалов</p>
+        <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+        <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
       </div>
     </div>
 

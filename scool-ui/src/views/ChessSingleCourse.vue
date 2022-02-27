@@ -1,6 +1,8 @@
 <template>
   <div id="chess">
+
     <navbar-main></navbar-main>
+
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="chess-course">
         <div class="chess-course-img-wrapp">
@@ -72,6 +74,24 @@
 
     <div class="steps white-section mt-3 pt-0">
       <div class="container">
+        <div class="row mb-3">
+          <div class="col-md-6" style="padding: 10px;">
+            <h2 class="pool-blitz">Экспресс обучение для самых нетерпеливых</h2>
+            <p style="text-align: left;">Повышение рейтинга до 200 единиц за минимальное количество занятий.</p>
+            <button class="button button__accent" type="button"
+                    @click="goTo('Requests', {purpose: 'chess_express', course: course.id})">
+              Подать заявку
+            </button>
+          </div>
+          <div class="col-md-6" style="padding: 10px;">
+            <h2 class="pool-blitz">Курсы по блицу и пуле</h2>
+            <p style="text-align: left;">Обучение ускоренному варианту игры от 5 до 10 минут на партию.</p>
+            <button class="button button__accent" type="button"
+                    @click="goTo('Requests', {purpose: 'chess_pool', course: course.id})">
+              Подать заявку
+            </button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-lg-4 mb-3 mt-3 mb-5">
             <div class="owl owl-events">
@@ -474,5 +494,14 @@ export default {
 
 h2 {
   font-weight: bold;
+}
+
+.pool-blitz {
+  text-align: left;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(98deg, rgba(247, 148, 29, 1), rgba(39, 170, 225, 1));
+  padding-bottom: 10px;
+  margin-bottom: 15px;
 }
 </style>

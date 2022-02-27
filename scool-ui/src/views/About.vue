@@ -224,7 +224,6 @@
         <div class="col-12">
           <div class="teachers-wrapp">
             <div class="carousel">
-              <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -239,7 +238,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 2 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -254,7 +252,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 3 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -269,7 +266,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 4 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -302,7 +298,6 @@
         </div>
       </div>
     </section>
-
 
     <section class="our-programs">
       <div class="container">

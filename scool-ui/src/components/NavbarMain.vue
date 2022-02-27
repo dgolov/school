@@ -21,7 +21,9 @@
           <nav class="navbar__menu">
             <ul class="main-nav">
               <li>
-                <a href="/education" @click="goTo('Education')" class="bold">
+                <a href="/education" @click="
+                                            $store.commit('setAgeGroup', {ageGroup: 'children'});
+                                            goTo('Education')" class="bold">
                   <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1.51392" width="18" height="4.99717" rx="1" stroke="#00093C" stroke-width="2"/>
                     <rect x="1" y="10.4858" width="18" height="5" rx="1" stroke="#00093C" stroke-width="2"/>
@@ -29,8 +31,12 @@
                   Все курсы
                 </a>
               </li>
-              <li><a href="/events" @click="goTo('Events')" class="bold">Мероприятия</a></li>
-              <li><a href="/about" @click="goTo('About')" class="bold">Об академии</a></li>
+              <li>
+                <a href="/events" @click="goTo('Events')" class="bold">Мероприятия</a>
+              </li>
+              <li>
+                <a href="/about" @click="goTo('About')" class="bold">Об академии</a>
+              </li>
               <li>
                 <svg width="14" height="17" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -45,7 +51,9 @@
                   </svg>
                 </a>
               </li>
-              <li><a href="#" class="bold">{{ $store.state.phone }}</a></li>
+              <li>
+                <a href="tel:88005500972" class="bold">{{ $store.state.phone }}</a>
+              </li>
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>

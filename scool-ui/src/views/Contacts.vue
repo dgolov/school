@@ -60,14 +60,6 @@
                      class="telegram"></a>
                   <!--/noindex-->
                 </div>
-<!--                <div class="connection-yandex-wrapp">-->
-<!--                  &lt;!&ndash;noindex&ndash;&gt;-->
-<!--                  <a href="#" rel="nofollow noopener noreferrer" target="_blank"-->
-<!--                     class="connection-yandex-zen">-->
-<!--                    <img src="../assets/img/connection/connection-yandex-zen.svg" alt="">-->
-<!--                  </a>-->
-<!--                  &lt;!&ndash;/noindex&ndash;&gt;-->
-<!--                </div>-->
               </div>
             </div>
             <div class="col-lg-9">

@@ -1,11 +1,12 @@
 <template>
   <div class="event">
+
     <navbar></navbar>
+
     <section class="breadcrumbs">
       <div class="container">
         <div class="row">
           <div class="col-12">
-
             <ul class="breadcrumb">
               <li class="breadcrumb__list">
                 <a href="/" class="breadcrumb__item">Главная</a>
