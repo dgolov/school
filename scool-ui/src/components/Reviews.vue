@@ -11,7 +11,6 @@
       <div class="col-12">
         <div class="slider-wrapper d-flex justify-content-center">
           <div class="slide">
-            <!-- Контент 1 слайда -->
             <div class="col-3">
               <div class="reviews-student">
                 <div class="reviews-inner d-flex">
@@ -32,7 +31,6 @@
             </div>
           </div>
           <div class="slide">
-            <!-- Контент 2 слайда -->
             <div class="col-3">
               <div class="reviews-student">
                 <div class="reviews-inner d-flex">
@@ -53,7 +51,6 @@
             </div>
           </div>
           <div class="slide ">
-            <!-- Контент 3 слайда -->
             <div class="col-3">
               <div class="reviews-student">
                 <div class="reviews-inner d-flex">
@@ -74,7 +71,6 @@
             </div>
           </div>
           <div class="slide ">
-            <!-- Контент 4 слайда -->
             <div class="col-3">
               <div class="reviews-student">
                 <div class="reviews-inner d-flex">
@@ -91,12 +87,6 @@
                 <p class="reviews-desc">Учусь в Академии Будущего  уже  два месяца на QA-инженера. Ни разу не
                   пожалела, что выбрала курсы именно тут. Администрация всегда на связи, решит любой вопрос по первой
                   просьбе. Преподаватель искренне заинтересован в предмете, что ещё больше мотивирует учиться.</p>
-                <!--                  <div class="rating d-flex align-items-center">-->
-                <!--                    <span class="rating__star"></span>-->
-                <!--                    <span class="rating__number">4,87</span>-->
-                <!--                    <p class="rating__number">/</p>-->
-                <!--                    <span class="rating__number">5</span>-->
-                <!--                  </div>-->
               </div>
             </div>
           </div>

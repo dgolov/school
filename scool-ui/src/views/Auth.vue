@@ -22,6 +22,7 @@
                 </div>
               </div>
             </div>
+
             <div id="signInForm" v-if="signIn">
               <p v-if="error.status" class="error">{{ error.message }}</p>
               <p>Введите свой адрес электронной почты и пароль, чтобы продолжить</p>
@@ -37,6 +38,7 @@
                 <a href="#" @click="setAuthMode('signUp')">Зарегистрироваться</a>
               </h6>
             </div>
+
             <div id="signOutForm" v-if="signOut">
               <h1 class="auth__title">Регистрация</h1>
               <p>Заполните краткую анкету чтобы зарегистрироваться на сайте</p>

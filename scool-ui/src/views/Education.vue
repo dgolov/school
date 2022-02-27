@@ -1,6 +1,8 @@
 <template>
   <div id="education">
+
     <navbar></navbar>
+
     <section class="breadcrumbs">
       <div class="container">
         <div class="row">
@@ -52,6 +54,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-12 mt-4">
               <div class="category-area">
@@ -62,6 +65,7 @@
               </div>
             </div>
           </div>
+
           <div class="page__inner mt-4 row" v-if="listCourses">
               <div v-for="course in listCourses" :key="course.id" class="col-md-5 course-block mx-2 my-2"
                    v-if="course.is_active && course.category.age_group === age_group &&

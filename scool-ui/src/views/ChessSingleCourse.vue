@@ -1,6 +1,8 @@
 <template>
   <div id="chess">
+
     <navbar-main></navbar-main>
+
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="chess-course">
         <div class="chess-course-img-wrapp">

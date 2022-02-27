@@ -1,12 +1,12 @@
 <template>
   <div>
     <navbar></navbar>
+
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="header-page">
         <div class="header-page-img-wrapp">
           <img src="../assets/img/header/header-page.jpg" alt="" class="header-page__img">
         </div>
-
         <div class="header-page-inner">
           <h1 class="header-page-title">Название мероприятия</h1>
           <p class="header-page-text">Подпись к названию</p>
@@ -137,7 +137,6 @@
         <div class="col-12">
           <div class="teachers-wrapp">
             <div class="carousel">
-              <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -151,7 +150,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 2 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -165,7 +163,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 3 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -179,7 +176,6 @@
               </div>
             </div>
             <div class="carousel">
-              <!-- Контент 4 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
@@ -208,27 +204,21 @@
       </div>
       <div class="carousel-past-events">
         <div class="gallery">
-          <!-- Контент 1 слайда -->
           <img src="../assets/img/past-events/past-events__one.jpg" alt="слайд 1" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 2 слайда -->
           <img src="../assets/img/past-events/past-events__two.jpg" alt="слайд 2" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 3 слайда -->
           <img src="../assets/img/past-events/past-events__three.jpg" alt="слайд 3" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 4 слайда -->
           <img src="../assets/img/past-events/past-events__four.jpg" alt="слайд 4" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 5 слайда -->
           <img src="../assets/img/past-events/past-events__five.jpg" alt="слайд 5" class="past-events-img">
         </div>
         <div class="gallery">
-          <!-- Контент 6 слайда -->
           <img src="../assets/img/past-events/past-events__six.jpg" alt="слайд 5" class="past-events-img">
         </div>
       </div>

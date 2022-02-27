@@ -31,8 +31,12 @@
                   Все курсы
                 </a>
               </li>
-              <li><a href="/events" @click="goTo('Events')" class="bold">Мероприятия</a></li>
-              <li><a href="/about" @click="goTo('About')" class="bold">Об академии</a></li>
+              <li>
+                <a href="/events" @click="goTo('Events')" class="bold">Мероприятия</a>
+              </li>
+              <li>
+                <a href="/about" @click="goTo('About')" class="bold">Об академии</a>
+              </li>
               <li>
                 <svg width="14" height="17" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -47,7 +51,9 @@
                   </svg>
                 </a>
               </li>
-              <li><a href="#" class="bold">{{ $store.state.phone }}</a></li>
+              <li>
+                <a href="tel:88005500972" class="bold">{{ $store.state.phone }}</a>
+              </li>
             </ul>
             <ul v-if="authenticated" style="float: right;">
               <li>

@@ -1,6 +1,8 @@
 <template>
 <div id="career">
+
   <navbar></navbar>
+
   <div class="header-page-wrapper d-none d-lg-block">
     <div class="career">
       <div class="career-img-wrapp">
