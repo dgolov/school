@@ -68,7 +68,12 @@ export const requestsMixin = {
                     if (error.request.status === 401) {
                         // Если 401 ошибка - refresh токен просрочен, LogOut
                         this.$store.commit("removeToken")
-                        this.goTo('/')
+                        this.goTo('Home')
+                    } else if (error.request.status === 400) {
+                        this.goTo(
+                            'Auth',
+                            {message: 'Необходимо авторизоваться в системе'}
+                        )
                     }
                 })
             return access
