@@ -249,7 +249,7 @@
             </div>
           </div>
           <div class="col-12">
-            <button class="button button-header r-c-button" type="button">Записаться на курс</button>
+            <button class="button button-header r-c-button" type="button" @click="pay()">Записаться на курс</button>
           </div>
         </div>
       </div>

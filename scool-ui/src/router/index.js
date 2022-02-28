@@ -52,7 +52,8 @@ const routes = [
   {
     path: '/auth',
     name: "Auth",
-    component: Auth
+    component: Auth,
+    props: true
   },
   {
     path: '/profile',

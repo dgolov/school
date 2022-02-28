@@ -92,8 +92,6 @@
               <div class="events-title__inner">
                 <span class="events-title__cross"></span>
                 <h3 class="events-title__subject">Актуальные программы</h3>
-<!--                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit,-->
-<!--                  egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>-->
               </div>
               <div class="events-title__inner ">
                 <span class="events-title__circle"></span>
@@ -345,7 +343,7 @@
                 <p class="chess-course-info chess-course-info_price ">от {{ course.price }} ₽ в месяц</p>
               </div>
             </div>
-            <button class="button button-header c-c-button" type="button">Записаться на курс</button>
+            <button class="button button-header c-c-button" type="button" @click="pay()">Записаться на курс</button>
           </div>
           <div class="col-lg-4 mb-3" style="position: relative;">
             <div class="owl owl-events owl-course">

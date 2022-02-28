@@ -3,6 +3,7 @@
     <navbar></navbar>
     <div class="auth past-events">
       <div class="container">
+        <h3 class="center bold" v-if="message">{{ message }}</h3>
         <div class="auth__inner">
           <div class="auth__media">
             <img src="../assets/images/owl-auth.svg">
@@ -130,6 +131,10 @@ export default {
       // Если пользователь вс системе - выгоняем его отсюда
       this.goTo('Home')
     }
+  },
+
+  props: {
+    message: String
   },
 
   methods: {
