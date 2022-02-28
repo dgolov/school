@@ -165,6 +165,7 @@ export default {
       } else {
         this.$router.push({name: 'ChessSingle', params: {'id': course.id}})
       }
+      window.scrollTo(0,0)
     },
 
     setAgeGroup(group) {
