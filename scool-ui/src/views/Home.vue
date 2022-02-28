@@ -76,7 +76,7 @@
                 <a href="#">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
                        style="background-color: #FFEEF6;"
-                       @click="$router.push({name: 'Education', params: {'category': 'Программирование', 'ageGroup': 'children'}})">
+                       @click="$router.push({name: 'Education', params: {'category': 'Программирование', 'ageGroup': 'adults'}})">
                     <img src="../assets/img/cart/e_learning_monitor_icon_187419.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">IT обучение</h2>
                   </div>
