@@ -11,6 +11,7 @@ export const redirect = {
                     throw Error(error)
                 }
             })
+            window.scrollTo(0,0)
         },
     }
 }
