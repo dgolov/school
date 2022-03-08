@@ -127,6 +127,17 @@
             </div>
           </div>
           <div class="col-md-6">
+            <h2 class="mb-3" style="text-align: left;">Шахматная лабаратория</h2>
+            <ul style="text-align: left;">
+              <li class="skills__item skills__item_marker">Разборка дебютов</li>
+              <li class="skills__item skills__item_marker">Корректировка наигранных дебютов</li>
+              <li class="skills__item skills__item_marker">Мониторинг и внедрение актуальных идей</li>
+              <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
+              <li class="skills__item skills__item_marker">Формирование индивидуального уникального стиля игры шахматиста</li>
+              <li class="skills__item skills__item_marker">Составление плана и контроль выполнения задач самостоятельной подготовки</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
             <h2 class="mb-3" style="text-align: left;">Тренажерный зал</h2>
             <ul style="text-align: left;">
               <li class="skills__item skills__item_marker">Занятие по тактике</li>
@@ -140,17 +151,6 @@
               <li class="skills__item skills__item_marker">Формирование спортивного характера (работа с психологом)</li>
               <li class="skills__item skills__item_marker">Как не расстраиваться, использовать поражения с максимальной пользой</li>
               <li class="skills__item skills__item_marker">Как правильно использовать радость побед</li>
-            </ul>
-          </div>
-          <div class="col-md-6">
-            <h2 class="mb-3" style="text-align: left;">Шахматная лабаратория</h2>
-            <ul style="text-align: left;">
-              <li class="skills__item skills__item_marker">Разборка дебютов</li>
-              <li class="skills__item skills__item_marker">Корректировка наигранных дебютов</li>
-              <li class="skills__item skills__item_marker">Мониторинг и внедрение актуальных идей</li>
-              <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
-              <li class="skills__item skills__item_marker">Формирование индивидуального уникального стиля игры шахматиста</li>
-              <li class="skills__item skills__item_marker">Составление плана и контроль выполнения задач самостоятельной подготовки</li>
             </ul>
           </div>
           <div class="col-md-6">
