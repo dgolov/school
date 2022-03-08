@@ -162,7 +162,10 @@
                   дизайнера.</p>
               </div>
             </div>
-            <button class="button button-header  e-c-button" type="button" @click="pay()">Записаться на курс</button>
+            <button class="button button-header  e-c-button" type="button"
+                    @click="goTo('Requests', {purpose: 'buy', course: course.id})" style="z-index: 999">
+              Записаться на курс
+            </button>
           </div>
         </div>
       </div>
@@ -343,7 +346,10 @@
                 <p class="chess-course-info chess-course-info_price ">от {{ course.price }} ₽ в месяц</p>
               </div>
             </div>
-            <button class="button button-header c-c-button" type="button" @click="pay()">Записаться на курс</button>
+            <button class="button button-header c-c-button" type="button"
+                    @click="goTo('Requests', {purpose: 'buy', course: course.id})" style="z-index: 999">
+              Записаться на курс
+            </button>
           </div>
           <div class="col-lg-4 mb-3" style="position: relative;">
             <div class="owl owl-events owl-course">
