@@ -353,6 +353,10 @@ class Course(models.Model):
     )
     is_active = models.BooleanField(default=True, verbose_name='Доступный курс')
     in_main_page = models.BooleanField(default=False, verbose_name='На главной странице')
+    slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
+    title = models.CharField(max_length=50, verbose_name='Title', blank=True, null=True)
+    html_desc = models.TextField(verbose_name='Описание для поисковиков', blank=True, null=True)
+    header = models.CharField(max_length=50, verbose_name='Заголовок h1', blank=True, null=True)
 
     def __str__(self):
         return self.name
