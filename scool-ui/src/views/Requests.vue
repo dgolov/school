@@ -3,6 +3,7 @@
   <Navbar></Navbar>
   <div class="container past-events">
     <h1 class="breadcrumb-title mb-5" v-if="purpose==='event'">Отправить заявку на бесплатный урок</h1>
+    <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='buy'">Отправить заявку на запись</h1>
     <h1 class="breadcrumb-title mb-5" v-else>Отправить заявку</h1>
     <h2 v-if="success" class="success mb-5">Ваша заявка отправлена!</h2>
     <form action="#" method="get" autocompelete="new-password" class="form" id="formLogin">
@@ -36,13 +37,24 @@ export default {
       request_fio: null,
       request_phone: null,
       request_email: null,
-      purpose: "info",
+      purpose: localStorage.getItem('purpose'),
       comment: "",
       success: false
     }
   },
 
   props: {purpose: String, course: String},
+
+  created() {
+    if (this.purpose) {
+      localStorage.setItem('purpose', this.purpose)
+      localStorage.setItem('course', this.course)
+    }
+  },
+
+  mounted() {
+    this.purpose = localStorage.getItem('purpose')
+  },
 
   methods: {
     async send() {
@@ -54,12 +66,12 @@ export default {
         request_email: this.request_email,
         type_request: "online",
         status: "new",
-        purpose: this.purpose,
+        purpose: localStorage.getItem('purpose'),
         result: null,
         remind: null,
         date: "2022-01-07T16:55:43.151840+03:00",
         comment: this.comment,
-        course: null
+        course: localStorage.getItem('course')
       }
       axios
           .post(`${this.$store.getters.getServerUrl}/requests/`, data)
