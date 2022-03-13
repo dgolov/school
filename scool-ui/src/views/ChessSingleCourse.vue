@@ -314,7 +314,7 @@
         </div>
       </div>
     </div>
-    
+
     <section class="chess-academy">
       <div class="container">
         <div class="row">
@@ -358,7 +358,6 @@
         <div class="col-12">
           <div class="teachers-wrapp">
             <div class="carousel" v-for="teacher of course.teachers">
-              <!-- Контент 1 слайда -->
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">

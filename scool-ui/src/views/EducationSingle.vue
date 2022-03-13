@@ -631,4 +631,14 @@ export default {
   transition: box-shadow 0.8s ease;
 }
 
+.profile-avatar {
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: 0;
+  border-radius: 50%;
+  margin: auto;
+  text-align: center;
+}
+
 </style>
