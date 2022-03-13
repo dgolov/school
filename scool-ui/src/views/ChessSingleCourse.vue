@@ -85,7 +85,7 @@
           </div>
           <div class="col-md-6" style="padding: 10px;">
             <h2 class="pool-blitz">Курсы по блицу и пуле</h2>
-            <p style="text-align: left;">Обучение ускоренному варианту игры от 5 до 10 минут на партию.</p>
+            <p style="text-align: left;">Обучение игре с контролем по 1 минуте, по 3 минуты и 5 минут.</p>
             <button class="button button__accent" type="button"
                     @click="goTo('Requests', {purpose: 'chess_pool', course: course.id})">
               Подать заявку
@@ -98,7 +98,8 @@
               <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events ">
               <span class="owl__frame-events"></span>
               <div class="owl-text owl-text-chess">
-                <p class="owl-desc owl-desc-chess">Вы полюбите шахматы, <span></span>и вам этого будет не хватать всегда!</p>
+                <p class="owl-desc owl-desc-chess">Вы полюбите шахматы, <span></span>и вам этого будет не хватать
+                  всегда!</p>
               </div>
             </div>
           </div>
@@ -112,17 +113,20 @@
               <div class="events-title__inner c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-two.svg" alt="">
                 <h3 class="events-title__subject">Цель 2</h3>
-                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от спасения</p>
+                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от
+                  спасения</p>
               </div>
               <div class="events-title__inner t-i-chess c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-three.svg" alt="">
                 <h3 class="events-title__subject">Цель 3</h3>
-                <p class="events-title__text">Научить анализировать свои и чужие ошибки, учиться на них с помощью GM мирового уровня</p>
+                <p class="events-title__text">Научить анализировать свои и чужие ошибки, учиться на них с помощью GM
+                  мирового уровня</p>
               </div>
               <div class="events-title__inner c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-four.svg" alt="">
                 <h3 class="events-title__subject">Цель 4</h3>
-                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от спасения</p>
+                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от
+                  спасения</p>
               </div>
             </div>
           </div>
@@ -132,9 +136,15 @@
               <li class="skills__item skills__item_marker">Разборка дебютов</li>
               <li class="skills__item skills__item_marker">Корректировка наигранных дебютов</li>
               <li class="skills__item skills__item_marker">Мониторинг и внедрение актуальных идей</li>
-              <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
-              <li class="skills__item skills__item_marker">Формирование индивидуального уникального стиля игры шахматиста</li>
-              <li class="skills__item skills__item_marker">Составление плана и контроль выполнения задач самостоятельной подготовки</li>
+              <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок;
+                неточностей)
+              </li>
+              <li class="skills__item skills__item_marker">Формирование индивидуального уникального стиля игры
+                шахматиста
+              </li>
+              <li class="skills__item skills__item_marker">Составление плана и контроль выполнения задач самостоятельной
+                подготовки
+              </li>
             </ul>
           </div>
           <div class="col-md-6">
@@ -149,7 +159,9 @@
             <h2 class="mb-3" style="text-align: left;">Командный пункт</h2>
             <ul style="text-align: left;">
               <li class="skills__item skills__item_marker">Формирование спортивного характера (работа с психологом)</li>
-              <li class="skills__item skills__item_marker">Как не расстраиваться, использовать поражения с максимальной пользой</li>
+              <li class="skills__item skills__item_marker">Как не расстраиваться, использовать поражения с максимальной
+                пользой
+              </li>
               <li class="skills__item skills__item_marker">Как правильно использовать радость побед</li>
             </ul>
           </div>
@@ -158,8 +170,12 @@
               <h2 class="mb-3" style="text-align: left;">Центр полетов</h2>
               <ul style="text-align: left;">
                 <li class="skills__item skills__item_marker">Сопровождение и помощь на соревнованиях</li>
-                <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок; неточностей)</li>
-                <li class="skills__item skills__item_marker">Занятия в рамках авторской программы от GM (Гроссмейстера)</li>
+                <li class="skills__item skills__item_marker">Разбор игры (выявление и анализ системных ошибок;
+                  неточностей)
+                </li>
+                <li class="skills__item skills__item_marker">Занятия в рамках авторской программы от GM
+                  (Гроссмейстера)
+                </li>
                 <li class="skills__item skills__item_marker">Аналитика и разбор партий с лучшими специалистами</li>
               </ul>
             </div>
@@ -202,7 +218,10 @@
         <div class="row">
           <div class="col-12">
             <h2 class="program-events-title c-h-title">Школа шахмат</h2>
-            <p class="chess-school-decs">Шахматы - это отличная идея для времяпрепровождения с родителями, детьми и друзьями. Игра дает полезные в жизни навыки: учит побеждать и проигрывать, развивает творческие способности, вырабатывает стрессо-устойчивость, терпение, помогает сосредоточиться, а так же помогает осознать последствия своих действий.</p>
+            <p class="chess-school-decs">Шахматы - это отличная идея для времяпрепровождения с родителями, детьми и
+              друзьями. Игра дает полезные в жизни навыки: учит побеждать и проигрывать, развивает творческие
+              способности, вырабатывает стрессо-устойчивость, терпение, помогает сосредоточиться, а так же помогает
+              осознать последствия своих действий.</p>
           </div>
           <div class="col-12">
             <div class="chess-school-wrapp">
@@ -241,10 +260,12 @@
         <div class="row">
           <div class="record-course-inner">
             <div class="col-lg-5">
-              <p class="record-course-text">Шахматы могут помочь вам планировать наперед, не торопиться с решениями и взвешивать их плюсы и минусы.</p>
+              <p class="record-course-text">Шахматы могут помочь вам планировать наперед, не торопиться с решениями и
+                взвешивать их плюсы и минусы.</p>
             </div>
             <div class="col-lg-5">
-              <p class="record-course-text">Шахматами можно наслаждаться в любом возрасте — в результате, тренировка мозга может укреплять ваше здоровье.
+              <p class="record-course-text">Шахматами можно наслаждаться в любом возрасте — в результате, тренировка
+                мозга может укреплять ваше здоровье.
               </p>
             </div>
           </div>
@@ -260,7 +281,9 @@
         <div class="row">
           <div class="col-12">
             <h2 class="program-events-title">Chess academy для школьников</h2>
-            <p class="chess-academy-text">Обеспечиваем индивидуальный подходк учащимся. В основе процесса обучения — тесное <span class="c-s-carryover"></span> и открытое взаимодействие педагода и ученика. Обучение проходит по программе, созданной GM.</p>
+            <p class="chess-academy-text">Обеспечиваем индивидуальный подходк учащимся. В основе процесса обучения —
+              тесное <span class="c-s-carryover"></span> и открытое взаимодействие педагода и ученика. Обучение проходит
+              по программе, созданной GM.</p>
           </div>
         </div>
       </div>
@@ -346,7 +369,8 @@
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
-                    <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar">
+                    <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя"
+                         class="profile-avatar">
                     <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
                   </div>
                   <h4 class="teacher__name">{{ teacher.last_name }} {{ teacher.first_name }}</h4>
@@ -358,7 +382,9 @@
         </div>
       </div>
     </section>
+
     <Faq></Faq>
+
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5 mb-5 c-c-wrapper e-c-wrapp">
+  <div class="container mt-5 e-c-wrapp">
     <div class="row">
       <div class="faq" id="question1">
         <p class="question">У меня нет опыта. Подойдет ли мне данный курс</p>
