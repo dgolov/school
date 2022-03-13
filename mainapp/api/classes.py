@@ -54,7 +54,7 @@ class BuyingCourseManager:
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": f"http://127.0.0.1:8080/education/{self.course.id}"
+                "return_url": f"{os.environ.get('BASE_HOST')}/chess/{self.course.id}"
             },
             "capture": True,
             "description": f"Заказ №{order.id}"
