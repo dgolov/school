@@ -2,7 +2,8 @@
 <div class="requests">
   <Navbar></Navbar>
   <div class="container past-events">
-    <h1 class="breadcrumb-title mb-5" v-if="purpose==='event'">Отправить заявку на бесплатный урок</h1>
+    <h1 class="breadcrumb-title mb-5" v-if="purpose==='free_lesson'">Отправить заявку на бесплатный урок</h1>
+    <h1 class="breadcrumb-title mb-5" v-if="purpose==='event'">Отправить заявку на мероприятие</h1>
     <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='buy'">Отправить заявку на запись</h1>
     <h1 class="breadcrumb-title mb-5" v-else>Отправить заявку</h1>
     <h2 v-if="success" class="success mb-5">Ваша заявка отправлена!</h2>
