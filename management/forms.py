@@ -143,12 +143,12 @@ class CreateOrderForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
-    payed = forms.BooleanField(
-        widget=forms.Select(
-            choices=(('False', 'Нет'), ('True', 'Да')),
-            attrs={'class': 'form-control'}
-        )
-    )
+    # payed = forms.BooleanField(
+    #     widget=forms.Select(
+    #         choices=(('False', 'Нет'), ('True', 'Да')),
+    #         attrs={'class': 'form-control'}
+    #     )
+    # )
     course = forms.ModelChoiceField(
         queryset=Course.objects.all(),
         widget=forms.Select(

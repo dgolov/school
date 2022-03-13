@@ -87,7 +87,7 @@ class Order(models.Model):
     payed = models.BooleanField(default=False, verbose_name='Оплачено')
     date_and_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время заказа')
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Курс')
-    price = models.IntegerField(verbose_name='Оплаченная сумма')
+    price = models.IntegerField(verbose_name='Оплаченная сумма', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Заказ'

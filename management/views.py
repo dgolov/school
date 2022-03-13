@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 
+from management.classes import PaymentManager
 from management import forms
 from management.models import (
     Client,
@@ -253,7 +254,10 @@ class CreateOrderView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.instance.price = form.instance.course.price
-            form.save()
+            order = form.save()
+            payment = PaymentManager(order)
+            payment.get_paid_uuid()
+            payment.send_payment_url()
         return HttpResponseRedirect('/api/crm/orders')
 
 
