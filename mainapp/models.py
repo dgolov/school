@@ -111,6 +111,7 @@ class Profile(models.Model):
         default='student'
     )
     is_active = models.BooleanField(default=True, verbose_name='Активный пользователь')
+    is_show = models.BooleanField(default=False, verbose_name='Виден всем')
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'

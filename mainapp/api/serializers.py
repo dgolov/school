@@ -106,7 +106,7 @@ class ProfileSerializer(ProfileSerializerBase):
         model = models.Profile
         fields = [
             'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
-            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about'
+            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about', 'is_show'
         ]
 
 
