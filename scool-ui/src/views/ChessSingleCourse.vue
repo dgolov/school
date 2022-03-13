@@ -29,7 +29,7 @@
         </div>
         <p class="header-button-title hb-chess e-c-free">1 занятие бесплатное</p>
         <button class="button button-header button-chess" type="submit"
-                @click="goTo('Requests', {purpose: 'event', course: course.id})" style="z-index: 999">
+                @click="goTo('Requests', {purpose: 'free_lesson', course: course.id})" style="z-index: 999">
           Записаться на пробное занятие
         </button>
       </div>
@@ -64,7 +64,7 @@
             </div>
             <p class="header-button-title hb-chess">1 занятие бесплатное</p>
             <button class="button button-header button-chess" type="button"
-                    @click="goTo('Requests', {purpose: 'event', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'free_lesson', course: course.id})">
               Записаться на пробное занятие
             </button>
           </div>
@@ -276,46 +276,6 @@
       </div>
     </section>
 
-    <section class="chess-academy">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="program-events-title">Chess academy для школьников</h2>
-            <p class="chess-academy-text">Обеспечиваем индивидуальный подходк учащимся. В основе процесса обучения —
-              тесное <span class="c-s-carryover"></span> и открытое взаимодействие педагода и ученика. Обучение проходит
-              по программе, созданной GM.</p>
-          </div>
-        </div>
-      </div>
-      <!-- Фотографии с прошлых мероприятий стр мероприятия -->
-      <div class="carousel-past-events">
-        <div class="gallery">
-          <!-- Контент 1 слайда -->
-          <img src="../assets/img/chess/slide-one.jpg" alt="слайд 1" class="past-events-img">
-        </div>
-        <div class="gallery">
-          <!-- Контент 2 слайда -->
-          <img src="../assets/img/chess/slide-two.jpg" alt="слайд 2" class="past-events-img">
-        </div>
-        <div class="gallery">
-          <!-- Контент 3 слайда -->
-          <img src="../assets/img/chess/slide-three.jpg" alt="слайд 3" class="past-events-img">
-        </div>
-        <div class="gallery">
-          <!-- Контент 4 слайда -->
-          <img src="../assets/img/chess/slide-four.jpg" alt="слайд 4" class="past-events-img">
-        </div>
-        <div class="gallery">
-          <!-- Контент 5 слайда -->
-          <img src="../assets/img/chess/slide-five.jpg" alt="слайд 5" class="past-events-img">
-        </div>
-        <div class="gallery">
-          <!-- Контент 6 слайда -->
-          <img src="../assets/img/chess/slide-six.jpg" alt="слайд 5" class="past-events-img">
-        </div>
-      </div>
-    </section>
-
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-8">
@@ -354,6 +314,39 @@
         </div>
       </div>
     </div>
+    
+    <section class="chess-academy">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="program-events-title">Chess academy для школьников</h2>
+            <p class="chess-academy-text">Обеспечиваем индивидуальный подходк учащимся. В основе процесса обучения —
+              тесное <span class="c-s-carryover"></span> и открытое взаимодействие педагода и ученика. Обучение проходит
+              по программе, созданной GM.</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-past-events">
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-one.jpg" alt="слайд 1" class="past-events-img">
+        </div>
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-two.jpg" alt="слайд 2" class="past-events-img">
+        </div>
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-three.jpg" alt="слайд 3" class="past-events-img">
+        </div>
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-four.jpg" alt="слайд 4" class="past-events-img">
+        </div>
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-five.jpg" alt="слайд 5" class="past-events-img">
+        </div>
+        <div class="gallery">
+          <img src="../assets/img/chess/slide-six.jpg" alt="слайд 5" class="past-events-img">
+        </div>
+      </div>
+    </section>
 
     <section class="teachers" v-if="course.teachers">
       <div class="row">

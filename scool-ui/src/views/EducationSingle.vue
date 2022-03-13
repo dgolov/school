@@ -31,7 +31,7 @@
         </div>
         <p class="header-button-title hb-chess e-c-free">1 занятие бесплатное</p>
         <button class="button button-header button-chess" type="submit"
-                @click="goTo('Requests', {purpose: 'event', course: course.id})" style="z-index: 999">
+                @click="goTo('Requests', {purpose: 'free_lesson', course: course.id})" style="z-index: 999">
           Записаться на пробное занятие
         </button>
       </div>
@@ -66,7 +66,7 @@
             </div>
             <p class="header-button-title hb-chess">1 занятие бесплатное</p>
             <button class="button button-header button-chess" type="button"
-                    @click="goTo('Requests', {purpose: 'event', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'free_lesson', course: course.id})">
               Записаться на пробное занятие
             </button>
           </div>
@@ -130,7 +130,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="program-title">Эта программа <span></span> подойдет тем, кто</h2>
+            <h2 class="program-title mb-5">Эта программа подойдет тем, кто</h2>
           </div>
           <div class="col-12">
             <div class="program-info-wrapp">
@@ -166,6 +166,58 @@
                     @click="goTo('Requests', {purpose: 'buy', course: course.id})" style="z-index: 999">
               Записаться на курс
             </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="course-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10">
+            <h2 class="program-events-title mt-0 mb-3">Содержание курса</h2>
+            <div class="col-12">
+              <ul class="skills skills_two">
+                <li class="skills__item skills__item_marker" v-for="item in contentList">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="course-conten-wrapp">
+              <div class="header-desc header-desc_tiny  c-c-course">
+                <p class="chess-course-info chess-course-info_small">Срок обучения: <span></span> {{ course.duration }}
+                </p>
+              </div>
+              <div class="header-desc header-desc_small c-c-course c-c-l">
+                <p class="chess-course-info chess-course-info_big">Режим занятий: <span></span> {{
+                    course.activity_mode
+                  }}</p>
+              </div>
+            </div>
+            <div class="course-conten-wrapp">
+              <div class="header-desc  header-desc_big">
+                <p class="chess-course-info chess-course-info_price ">от {{ course.price }} ₽ в месяц</p>
+              </div>
+            </div>
+            <button class="button button-header c-c-button" type="button"
+                    @click="goTo('Requests', {purpose: 'buy', course: course.id})" style="z-index: 999">
+              Записаться на курс
+            </button>
+          </div>
+          <div class="col-lg-4 mb-3" style="position: relative;">
+            <div class="owl owl-events owl-course">
+              <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events olw__c-c">
+              <span class=" owl__frame-course"></span>
+              <div class="owl-text owl-text-events owl-text-c-c">
+                <p class="owl-desc owl-desc-events">1 занятие бесплатное</p>
+              </div>
+            </div>
+            <div class="course-figure">
+              <span class="education-one"></span>
+              <span class="education-two"></span>
+              <span class="education-three"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -317,58 +369,6 @@
       </div>
     </section>
 
-    <section class="course-content">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-10">
-            <h2 class="program-events-title mt-0 mb-3">Содержание курса</h2>
-            <div class="col-12">
-              <ul class="skills skills_two">
-                <li class="skills__item skills__item_marker" v-for="item in contentList">{{ item }}</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-lg-5">
-            <div class="course-conten-wrapp">
-              <div class="header-desc header-desc_tiny  c-c-course">
-                <p class="chess-course-info chess-course-info_small">Срок обучения: <span></span> {{ course.duration }}
-                </p>
-              </div>
-              <div class="header-desc header-desc_small c-c-course c-c-l">
-                <p class="chess-course-info chess-course-info_big">Режим занятий: <span></span> {{
-                    course.activity_mode
-                  }}</p>
-              </div>
-            </div>
-            <div class="course-conten-wrapp">
-              <div class="header-desc  header-desc_big">
-                <p class="chess-course-info chess-course-info_price ">от {{ course.price }} ₽ в месяц</p>
-              </div>
-            </div>
-            <button class="button button-header c-c-button" type="button"
-                    @click="goTo('Requests', {purpose: 'buy', course: course.id})" style="z-index: 999">
-              Записаться на курс
-            </button>
-          </div>
-          <div class="col-lg-4 mb-3" style="position: relative;">
-            <div class="owl owl-events owl-course">
-              <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events olw__c-c">
-              <span class=" owl__frame-course"></span>
-              <div class="owl-text owl-text-events owl-text-c-c">
-                <p class="owl-desc owl-desc-events">1 занятие бесплатное</p>
-              </div>
-            </div>
-            <div class="course-figure">
-              <span class="education-one"></span>
-              <span class="education-two"></span>
-              <span class="education-three"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="teachers" v-if="course.teachers.length > 0">
       <div class="row">
         <div class="col-12">
@@ -486,6 +486,7 @@
     <Reviews v-if="course.category.age_group === 'adults'"></Reviews>
 
     <Faq></Faq>
+
   </div>
 </template>
 
