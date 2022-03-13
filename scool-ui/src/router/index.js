@@ -34,6 +34,7 @@ import GroupChatSettings from "../views/Messages/GroupChatSettings";
 import EventSingle from "../views/EventSingle";
 import Career from "../views/Career";
 import Requests from "../views/Requests";
+import Reviews from "../views/Reviews";
 
 
 Vue.use(VueRouter)
@@ -220,6 +221,11 @@ const routes = [
     path: '/career',
     name: 'Career',
     component: Career
+  },
+  {
+    path: '/reviews',
+    name: 'Reviews',
+    component: Reviews
   },
   {
     path: '/send-request',

@@ -106,7 +106,7 @@ class ProfileSerializer(ProfileSerializerBase):
         model = models.Profile
         fields = [
             'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
-            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about'
+            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about', 'is_show'
         ]
 
 
@@ -672,8 +672,8 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = [
-            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 
-            'block_image', 'days'
+            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex',
+            'block_image', 'days', 'text1', 'text2', 'text3', 'text_x', 'text_o', 'text_d', 'text_owl', 'content',
         ]
 
     @staticmethod

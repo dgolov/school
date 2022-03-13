@@ -111,6 +111,7 @@ class Profile(models.Model):
         default='student'
     )
     is_active = models.BooleanField(default=True, verbose_name='Активный пользователь')
+    is_show = models.BooleanField(default=False, verbose_name='Виден всем')
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
@@ -511,7 +512,15 @@ class Event(models.Model):
 
     name = models.CharField(max_length=100, verbose_name='Название')
     signature = models.CharField(max_length=100, verbose_name='Подпись к мероприятию')
+    text1 = models.CharField(max_length=100, verbose_name='Текст 1 (в шапке)', blank=True, null=True)
+    text2 = models.CharField(max_length=100, verbose_name='Текст 2 (в шапке)', blank=True, null=True)
+    text3 = models.CharField(max_length=100, verbose_name='Текст 3 (в шапке)', blank=True, null=True)
+    text_owl = models.CharField(max_length=100, verbose_name='Текст в сове', blank=True, null=True)
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
+    content = models.TextField(verbose_name='Содержание мероприятия', blank=True, null=True)
+    text_x = models.CharField(max_length=100, verbose_name='Текст Х', blank=True, null=True)
+    text_o = models.CharField(max_length=100, verbose_name='Текст О', blank=True, null=True)
+    text_d = models.CharField(max_length=100, verbose_name='Текст Д', blank=True, null=True)
     date = models.DateTimeField(verbose_name='Дата и время')
     speakers = models.ManyToManyField(Teacher, verbose_name='Спикеры', blank=True, related_name='event_speakers')
     image = models.ImageField(upload_to='images/events', verbose_name='Изображение', blank=True, null=True)

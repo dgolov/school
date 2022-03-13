@@ -99,10 +99,8 @@
           <div class="founder-wrapper">
             <div class="col-lg-4">
               <div class="founder-person">
-                <img src="../assets/img/founder/founder-person__photo.jpg" alt="Основатель Академии будущего ХОД"
-                     class="founder-person__photo">
-                <h5 class="founder-person__name">Имя Фамилия</h5>
-                <p class="founder-person__desc">Основатель Академии будущего ХОД</p>
+<!--                <img src="../assets/img/owl/owl-main.png" alt="Основатель Академии будущего ХОД"-->
+<!--                     class="founder-person__photo" style="margin: auto;">-->
               </div>
             </div>
             <div class="col-md-12">
@@ -214,89 +212,30 @@
       </div>
     </section>
 
-    <section class="teachers">
-      <div class="row">
-        <div class="col-12">
-          <h2 class="reviews-title">Наши люди</h2>
-        </div>
+    <section class="teachers" v-if="teachers">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="reviews-title">Наши люди</h2>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="teachers-wrapp">
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                    <span class="teacher__circle">
-                      <img src="../assets/img/teacher/teacher__photo-one.png" alt=" Фото преподавателя" class="teacher__photo">
-                    </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="teachers-wrapp">
+          <div class="carousel" v-for="teacher of teachers">
+            <div class="col-3" v-if="teacher.is_show">
+              <div class="teacher">
+                <div class="teacher__avatar">
+                  <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar">
+                  <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
                 </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                  <span class="teacher__circle">
-                    <img src="../assets/img/teacher/teacher__photo-two.png" alt=" Фото преподавателя" class="teacher__photo">
-                  </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                <span class="teacher__circle">
-                  <img src="../assets/img/teacher/teacher__photo-three.png" alt=" Фото преподавателя" class="teacher__photo">
-                </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-              <span class="teacher__circle">
-                <img src="../assets/img/teacher/teacher__photo-five.png" alt=" Фото преподавателя" class="teacher__photo">
-              </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <!-- Контент 5 слайда -->
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-              <span class="teacher__circle">
-                <img src="../assets/img/teacher/teacher__photo-six.jpg" alt=" Фото преподавателя" class="teacher__photo">
-              </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и
-                    участвует в турнирах.</p>
-                </div>
+                <h4 class="teacher__name">{{ teacher.last_name }} {{ teacher.first_name }}</h4>
+                <p class="teacher__info">{{ teacher.about }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </section>
 
     <section class="our-programs">
@@ -317,15 +256,15 @@
           </div>
           <div class="text-gradient-wrapper">
             <div class="col-md-3">
-              <h3 class="text-gradient mt-4 mb-0">600</h3>
-              <p class="expanded__text bold px-1 o-p">Курсов</p>
+              <h3 class="text-gradient mt-4 mb-0">33</h3>
+              <p class="expanded__text bold px-1 o-p">Курса</p>
             </div>
             <div class="col-md-3 t-g">
-              <h3 class="text-gradient mt-4 mb-0">82</h3>
-              <p class="expanded__text bold px-1 o-p">Ведущих преподователей</p>
+              <h3 class="text-gradient mt-4 mb-0">22</h3>
+              <p class="expanded__text bold px-1 o-p">Ведущих преподователя</p>
             </div>
             <div class="col-md-5">
-              <h3 class="text-gradient mt-4 mb-0">14 795</h3>
+              <h3 class="text-gradient mt-4 mb-0">1000</h3>
               <p class="expanded__text bold px-1 o-p">Выпускников</p>
             </div>
           </div>
@@ -359,46 +298,6 @@
               <div class="col-md-4 col-lg-3 col-xl-2">
                 <div class="partners-cart p-c-l  eff-h-three">
                   <img src="../assets/img/our-partners/our-partners-four.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-two.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart  p-c-r eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-three.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart p-c-l  eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-four.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-three.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart  p-c-r eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-one.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart p-c-l  eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-two.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-four.png" alt="партнер" class="partner-img">
-                </div>
-              </div>
-              <div class="col-md-4 col-lg-3 col-xl-2">
-                <div class="partners-cart  p-c-r eff-h-three">
-                  <img src="../assets/img/our-partners/our-partners-one.png" alt="партнер" class="partner-img">
                 </div>
               </div>
             </div>
@@ -448,6 +347,8 @@
 <script>
 import Navbar from "../components/NavbarMain";
 import {playerMixin} from "../components/mixins/playerMixin";
+import axios from "axios";
+import {requestsMixin} from "../components/mixins/requestsMixin";
 
 
 export default {
@@ -457,10 +358,38 @@ export default {
     Navbar
   },
 
-  mixins: [playerMixin],
+  mixins: [playerMixin, requestsMixin],
+
+  data() {
+    return {
+      teachers: {}
+    }
+  },
+
+  created() {
+    this.loadTeachers();
+  },
+
+  methods: {
+    async loadTeachers() {
+      await axios
+          .get(`${this.$store.getters.getServerUrl}/teachers`)
+          .then(response => (this.teachers = response.data))
+    },
+  },
 }
 </script>
 
 <style scoped>
+
+.profile-avatar {
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: 0;
+  border-radius: 50%;
+  margin: auto;
+  text-align: center;
+}
 
 </style>

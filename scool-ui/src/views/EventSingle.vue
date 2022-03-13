@@ -8,22 +8,24 @@
           <img src="../assets/img/header/header-page.jpg" alt="" class="header-page__img">
         </div>
         <div class="header-page-inner">
-          <h1 class="header-page-title">Название мероприятия</h1>
-          <p class="header-page-text">Подпись к названию</p>
+          <h1 class="header-page-title" style="max-width: 40%;">{{ event.name }}</h1>
+          <p class="header-page-text" style="max-width: 40%;">{{ event.signature }}</p>
         </div>
         <div class="header-page-wrapp">
           <div class="header-desc">
-            <p class="header-desc-info">Узнайте самые востребованные профессии, на которые более 113 тысяч вакансий</p>
+            <p class="header-desc-info">{{ event.text1 }}</p>
           </div>
           <div class="header-desc header-desc_margin">
-            <p class="header-desc-info">Выберите подходящую именно для вас</p>
+            <p class="header-desc-info">{{ event.text2 }}</p>
           </div>
           <div class="header-desc">
-            <p class="header-desc-info">Сделайте первые шаги к возможности выйти на доход более 100 тысяч рублей</p>
+            <p class="header-desc-info">{{ event.text3 }}</p>
           </div>
         </div>
-        <h2 class="header-button-title">Запишись сейчас</h2>
-        <button class="button button-header" type="button">Записаться на интенсив</button>
+        <button class="button button-header" type="button"
+                @click="goTo('Requests', {purpose: 'event', course: event.id})" style="z-index: 999">
+          Записаться на интенсив
+        </button>
       </div>
     </div>
 
@@ -36,22 +38,25 @@
           <div class="col-12">
             <div class="header-page-lg">
               <div class="header-page-inner">
-                <h1 class="header-page-title">Название мероприятия</h1>
-                <p class="header-page-text">Подпись к названию</p>
+                <h1 class="header-page-title">{{ event.name }}</h1>
+                <p class="header-page-text">{{ event.signature }}</p>
               </div>
               <div class="header-page-wrapp">
                 <div class="header-desc header-desc_tiny">
-                  <p class="header-desc-info">Узнайте самые востребованные профессии, на которые более 113 тысяч вакансий</p>
+                  <p class="header-desc-info">{{ event.text1 }}</p>
                 </div>
                 <div class="header-desc header-desc_small header-desc_margin">
-                  <p class="header-desc-info">Выберите подходящую именно для вас</p>
+                  <p class="header-desc-info">{{ event.text2 }}</p>
                 </div>
                 <div class="header-desc header-desc_big">
-                  <p class="header-desc-info">Сделайте первые шаги к возможности выйти на доход более 100 тысяч рублей</p>
+                  <p class="header-desc-info">{{ event.text3 }}</p>
                 </div>
               </div>
               <h2 class="header-button-title">Запишись сейчас</h2>
-              <button class="button button-header" type="button">Записаться на интенсив</button>
+              <button class="button button-header" type="button"
+                      @click="goTo('Requests', {purpose: 'event', course: course.id})" style="z-index: 999">
+                Записаться на интенсив
+              </button>
             </div>
           </div>
         </div>
@@ -66,26 +71,25 @@
               <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events ">
               <span class="owl__frame-events"></span>
               <div class="owl-text owl-text-events">
-                <p class="owl-desc owl-desc-events">Текст, призывающий записаться на мероприятие</p>
+                <p class="owl-desc owl-desc-events">{{ event.text_owl }}</p>
               </div>
             </div>
           </div>
           <div class="col-12 col-lg-8">
             <div class="events-title-wrapp">
               <div class="events-title__inner">
-                <span class="events-title__cross"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
-              </div>
-              <div class="events-title__inner ">
-                <span class="events-title__circle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <span class="events-title__cross mb-4"></span>
+                <p class="events-title__text">{{ event.text_x }}</p>
               </div>
               <div class="events-title__inner">
-                <span class="events-title__triangle"></span>
-                <h3 class="events-title__subject">Заголовок</h3>
-                <p class="events-title__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget</p>
+                <span class="events-title__circle mb-4"></span>
+<!--                <h3 class="events-title__subject">Заголовок</h3>-->
+                <p class="events-title__text">{{ event.text_o }}</p>
+              </div>
+              <div class="events-title__inner">
+                <span class="events-title__triangle mb-4"></span>
+<!--                <h3 class="events-title__subject">Заголовок</h3>-->
+                <p class="events-title__text">{{ event.text_d }}</p>
               </div>
             </div>
           </div>
@@ -99,27 +103,19 @@
           <div class="row" style="position: relative;">
             <div class="col-12">
               <h2 class="program-events-title">Программа мероприятия</h2>
-              <p class="program-events-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget varius eleifend, massa nibh imperdiet est, vel sagittis quam justo vestibulum eros. Cras dignissim mi quis fringilla feugiat. Proin malesuada luctus diam, vitae faucibus dolor venenatis vel. In hac habitasse platea dictumst.</p>
+              <div class="col-12">
+                <ul class="skills skills_two">
+                  <li class="skills__item skills__item_marker" v-for="item in contentList">{{ item }}</li>
+                </ul>
+              </div>
             </div>
-            <div class="col-12" style="padding-bottom: 80px;">
-              <div id="question1" class="faq faq_active">
-                <p class="question">День первый</p>
+            <div v-if="event.days" class="col-12" style="padding-bottom: 80px;">
+              <div v-for="day in event.days" id="question1" class="faq faq_active">
+                <p class="question">День {{ day.number }}</p>
                 <button class="faq-open-button">
                   <img src="../assets/images/faq-close.svg">
                 </button>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit amet aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla tincidunt efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus, non semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
-              </div>
-              <div id="question2" class="faq faq_active">
-                <p class="question">День второй</p>
-                <button class="faq-open-button">
-                  <img src="../assets/images/faq-close.svg">
-                </button>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit amet aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla tincidunt efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus, non semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
-              </div>
-              <div id="question3" class="faq faq_active">
-                <p class="question">День третий</p><button data-v-872cd706="" class="faq-open-button"><img data-v-872cd706="" src="/img/faq-close.cd68421b.svg">
-              </button>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim, neque sit amet aliquam cursus, ante urna porta mauris, eget venenatis risus turpis ac nisl. Aenean blandit, nulla tincidunt efficitur placerat, ante nisl auctor ipsum, in auctor mauris lacus sed nibh. Quisque id imperdiet metus, non semper dui. Phasellus pellentesque vitae leo in dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse id aliquam nunc. Sed dignissim, nibh quis dapibus dapibus, ex sapien ultricies leo, sit amet placerat arcu sem id sem..</p>
+                <p>{{ day.description }}</p>
               </div>
             </div>
           </div>
@@ -127,7 +123,7 @@
       </div>
     </section>
 
-    <section class="teachers">
+    <section v-if="event.speakers.length > 0" class="teachers">
       <div class="row">
         <div class="col-12">
           <h2 class="reviews-title">Мероприятие проводят</h2>
@@ -136,55 +132,15 @@
       <div class="row">
         <div class="col-12">
           <div class="teachers-wrapp">
-            <div class="carousel">
+            <div class="carousel" v-for="speaker of event.speakers">
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
-                  <span class="teacher__circle">
-                    <img src="../assets/img/teacher/teacher__photo-one.png" alt=" Фото преподавателя" class="teacher__photo">
-                  </span>
+                    <img v-if="speaker.avatar" :src="`${speaker.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar">
+                    <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
                   </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-                <span class="teacher__circle">
-                  <img src="../assets/img/teacher/teacher__photo-two.png" alt=" Фото преподавателя" class="teacher__photo">
-                </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-              <span class="teacher__circle">
-                <img src="../assets/img/teacher/teacher__photo-three.png" alt=" Фото преподавателя" class="teacher__photo">
-              </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и участвует в турнирах.</p>
-                </div>
-              </div>
-            </div>
-            <div class="carousel">
-              <div class="col-3">
-                <div class="teacher">
-                  <div class="teacher__avatar">
-            <span class="teacher__circle">
-              <img src="../assets/img/teacher/teacher__photo-five.png" alt=" Фото преподавателя" class="teacher__photo">
-            </span>
-                  </div>
-                  <h4 class="teacher__name">Имя Фамилия</h4>
-                  <p class="teacher__info">Выпускница Гарвардского Университета. Более 10 лет играет в шахматы и участвует в турнирах.</p>
+                  <h4 class="teacher__name">{{ speaker.last_name }} {{ speaker.first_name }}</h4>
+                  <p class="teacher__info">{{ speaker.about }}</p>
                 </div>
               </div>
             </div>
@@ -197,8 +153,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="program-events-title">Фотографии с прошлых мероприятий</h2>
-            <p class="program-events-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi elit, egestas ut feugiat id, laoreet volutpat risus. Cras condimentum, ligula eget varius eleifend, massa nibh imperdiet est, vel sagittis quam justo.</p>
+            <h2 class="program-events-title mb-5">Фотографии с прошлых мероприятий</h2>
           </div>
         </div>
       </div>
@@ -229,17 +184,41 @@
 <script>
 import Navbar from "../components/NavbarMain";
 import Construction from "../components/Construction";
+import axios from "axios";
+import {redirect} from "../components/mixins/redirect";
 
 export default {
   title: 'Академия будущего | Мероприятия',
   name: "EventSingle",
 
-  components: {
-    Navbar, Construction
+  mixins: [redirect],
+
+  data() {
+    return {
+      event: {},
+      contentList: [],
+    }
   },
 
   props: {
     id: String
+  },
+
+  components: {
+    Navbar, Construction
+  },
+
+  created() {
+    this.loadEvent()
+  },
+
+  methods: {
+    async loadEvent() {
+      await axios
+          .get(`${this.$store.getters.getServerUrl}/events/${this.id}`)
+          .then(response => (this.event = response.data))
+      this.contentList = this.event.content.split('.');
+    },
   },
 }
 </script>
@@ -285,5 +264,15 @@ export default {
       -18px 7px 20px -12px rgb(247 148 29 / 40%),
       -28px -22px 20px -22px rgb(247 148 29 / 40%);
   transition: box-shadow 0.8s ease;
+}
+
+.profile-avatar {
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: 0;
+  border-radius: 50%;
+  margin: auto;
+  text-align: center;
 }
 </style>

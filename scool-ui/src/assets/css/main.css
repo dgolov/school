@@ -6513,9 +6513,9 @@ ul.skills_two{
 .program-title {
     font-size: 36px;
     font-weight: 700;
-    max-width: 325px;
+    max-width: 725px;
     color: #fff;
-    margin: 0 auto 37px;
+    margin: 10px auto 37px;
 }
 .program-info-wrapp {
     display: flex;

@@ -30,9 +30,9 @@ class BuyingCourseManager:
             return {"message": "Bad request"}, status.HTTP_400_BAD_REQUEST
         if self.course in self.profile.student.courses.all():
             return {"message": "Already reported"}, status.HTTP_208_ALREADY_REPORTED
-        if not self.check_age_group():
+        # if not self.check_age_group():
             # Покупать курсы можно только с правами соответствующими возрастной категории студента
-            return {"message": "Not suitable age category"}, status.HTTP_403_FORBIDDEN
+            # return {"message": "Not suitable age category"}, status.HTTP_403_FORBIDDEN
         response = self.get_paid_status_from_yookassa()
         print(response)
         # add_order.delay(self.profile.id, course.id, response)
@@ -54,7 +54,7 @@ class BuyingCourseManager:
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": f"http://127.0.0.1:8080/education/{self.course.id}"
+                "return_url": f"{os.environ.get('BASE_HOST')}/chess/{self.course.id}"
             },
             "capture": True,
             "description": f"Заказ №{order.id}"

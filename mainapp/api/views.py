@@ -57,6 +57,7 @@ class StudentsViewSet(BaseProfileViewSet):
 class TeachersViewSet(BaseProfileViewSet):
     """ Эндпоинт списка всех преподавателей
     """
+    permission_classes = [AllowAny]
     queryset = models.Teacher.objects.all()
     detail_serializer_class = serializers.ProfileSerializer
 
