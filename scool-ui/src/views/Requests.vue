@@ -3,7 +3,7 @@
   <Navbar></Navbar>
   <div class="container past-events">
     <h1 class="breadcrumb-title mb-5" v-if="purpose==='free_lesson'">Отправить заявку на бесплатный урок</h1>
-    <h1 class="breadcrumb-title mb-5" v-if="purpose==='event'">Отправить заявку на мероприятие</h1>
+    <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='event'">Отправить заявку на мероприятие</h1>
     <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='buy'">Отправить заявку на запись</h1>
     <h1 class="breadcrumb-title mb-5" v-else>Отправить заявку</h1>
     <h2 v-if="success" class="success mb-5">Ваша заявка отправлена!</h2>
@@ -44,12 +44,13 @@ export default {
     }
   },
 
-  props: {purpose: String, course: String},
+  props: {purpose: String, course: String, event: String},
 
   created() {
     if (this.purpose) {
       localStorage.setItem('purpose', this.purpose)
       localStorage.setItem('course', this.course)
+      localStorage.setItem('event', this.event)
     }
   },
 
@@ -59,6 +60,14 @@ export default {
 
   methods: {
     async send() {
+      let event = localStorage.getItem('event')
+      let course = localStorage.getItem('course')
+      if (event === 'null') {
+        event = null
+      }
+      if (course === 'null') {
+        course = null
+      }
       let data = {
         student: this.$store.state.authUser.id,
         client: null,
@@ -72,8 +81,10 @@ export default {
         remind: null,
         date: "2022-01-07T16:55:43.151840+03:00",
         comment: this.comment,
-        course: localStorage.getItem('course')
+        course: course,
+        event: event
       }
+      console.log(data)
       axios
           .post(`${this.$store.getters.getServerUrl}/requests/`, data)
           .then((response) => {

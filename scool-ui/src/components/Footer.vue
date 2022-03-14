@@ -175,11 +175,13 @@ export default {
         date: this.dates,
         student: null,
         client: null,
+        purpose: 'info',
         result: null,
         remind: null,
         comment: "",
         manager: null,
-        course: null
+        course: null,
+        event: null
       }
       axios
           .post(`${this.$store.getters.getServerUrl}/requests/`, body)
@@ -188,7 +190,9 @@ export default {
               authUser: response.data,
               isAuthenticated: true,
             });
-            this.goTo('Profile', {id: this.$store.state.authUser.id})
+            this.fio = null;
+            this.phone = null;
+            this.email = null;
           });
     },
 

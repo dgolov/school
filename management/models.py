@@ -137,6 +137,13 @@ class Request(models.Model):
     type_request = models.CharField(max_length=50, verbose_name='Тип заявки', choices=TYPE_CHOICES)
     status = models.CharField(max_length=50, verbose_name='Статус заявки', choices=STATUS_CHOICES, default='new')
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Курс', blank=True, null=True)
+    event = models.ForeignKey(
+        'mainapp.Event',
+        on_delete=models.CASCADE,
+        verbose_name='Мероприятие',
+        blank=True,
+        null=True
+    )
     purpose = models.CharField(
         max_length=50,
         verbose_name='Цель заявки',

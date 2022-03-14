@@ -79,7 +79,7 @@
             <h2 class="pool-blitz">Экспресс обучение для самых нетерпеливых</h2>
             <p style="text-align: left;">Повышение рейтинга до 200 единиц за минимальное количество занятий.</p>
             <button class="button button__accent" type="button"
-                    @click="goTo('Requests', {purpose: 'chess_express', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'chess_express', course: course.id, event: null})">
               Подать заявку
             </button>
           </div>
@@ -87,7 +87,7 @@
             <h2 class="pool-blitz">Курсы по блицу и пуле</h2>
             <p style="text-align: left;">Обучение игре с контролем по 1 минуте, по 3 минуты и 5 минут.</p>
             <button class="button button__accent" type="button"
-                    @click="goTo('Requests', {purpose: 'chess_pool', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'chess_pool', course: course.id, event: null})">
               Подать заявку
             </button>
           </div>
@@ -125,13 +125,12 @@
               <div class="events-title__inner c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-four.svg" alt="">
                 <h3 class="events-title__subject">Цель 4</h3>
-                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от
-                  спасения</p>
+                <p class="events-title__text">Развитие последовательного логического мышления</p>
               </div>
             </div>
           </div>
           <div class="col-md-6">
-            <h2 class="mb-3" style="text-align: left;">Шахматная лабаратория</h2>
+            <h2 class="mb-3" style="text-align: left;">Шахматная лаборатория</h2>
             <ul style="text-align: left;">
               <li class="skills__item skills__item_marker">Разборка дебютов</li>
               <li class="skills__item skills__item_marker">Корректировка наигранных дебютов</li>
@@ -375,7 +374,36 @@
       </div>
     </section>
 
-    <Faq></Faq>
+    <div class="container mt-5  e-c-wrapp past-events">
+      <div class="row">
+        <div class="col-md-12 mb-5">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="../assets/img/andrey-jigalko.jpeg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>Уважаемые будущие ученики Академии Будущего "ХОД"! Желаю вам заниматься здесь шахматами и достичь
+                успехов! Сильных ходов, удачных решений и побед!</p>
+              <p class="bold">Международный гроссмейстер Жигалко Сергей</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="../assets/img/sergey_jigalko.jpeg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>Желаю успехов и удачи Академия Будущего "ХОД". Пусть исполнятся все цели и мечты! Покорения самых
+                больших высот! Спасибо за развитие и любовь к шахматам и нашему светлому будущему!</p>
+              <p class="bold">Международный гроссмейстер Жигалко Андрей</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    <Faq></Faq>-->
 
   </div>
 </template>
