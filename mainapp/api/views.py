@@ -668,6 +668,7 @@ class RequestsViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """ Добавить заявку """
         serializer = self.serializer_class(data=request.data)
+        print(request.data)
         if serializer.is_valid():
             new_request = serializer.save()
             phone = get_normalize_phone(request.data.get('request_phone'))
