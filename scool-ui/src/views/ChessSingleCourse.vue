@@ -125,8 +125,7 @@
               <div class="events-title__inner c-c-title-inner">
                 <img src="../assets/img/chess/chess-figure-four.svg" alt="">
                 <h3 class="events-title__subject">Цель 4</h3>
-                <p class="events-title__text">Получить удовольствие от процесса игры, от факта победы в партии, от
-                  спасения</p>
+                <p class="events-title__text">Развитие последовательного логического мышления</p>
               </div>
             </div>
           </div>
