@@ -23,7 +23,8 @@
           </div>
         </div>
         <button class="button button-header" type="button"
-                @click="goTo('Requests', {purpose: 'event', course: event.id})" style="z-index: 999">
+                @click="goTo('Requests', {purpose: 'event', course: null, event: event.id})"
+                style="z-index: 999">
           Записаться на интенсив
         </button>
       </div>
@@ -54,7 +55,8 @@
               </div>
               <h2 class="header-button-title">Запишись сейчас</h2>
               <button class="button button-header" type="button"
-                      @click="goTo('Requests', {purpose: 'event', course: course.id})" style="z-index: 999">
+                      @click="goTo('Requests', {purpose: 'event', course: null, event: event.id})"
+                      style="z-index: 999">
                 Записаться на интенсив
               </button>
             </div>

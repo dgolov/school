@@ -79,7 +79,7 @@
             <h2 class="pool-blitz">Экспресс обучение для самых нетерпеливых</h2>
             <p style="text-align: left;">Повышение рейтинга до 200 единиц за минимальное количество занятий.</p>
             <button class="button button__accent" type="button"
-                    @click="goTo('Requests', {purpose: 'chess_express', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'chess_express', course: course.id, event: null})">
               Подать заявку
             </button>
           </div>
@@ -87,7 +87,7 @@
             <h2 class="pool-blitz">Курсы по блицу и пуле</h2>
             <p style="text-align: left;">Обучение игре с контролем по 1 минуте, по 3 минуты и 5 минут.</p>
             <button class="button button__accent" type="button"
-                    @click="goTo('Requests', {purpose: 'chess_pool', course: course.id})">
+                    @click="goTo('Requests', {purpose: 'chess_pool', course: course.id, event: null})">
               Подать заявку
             </button>
           </div>
