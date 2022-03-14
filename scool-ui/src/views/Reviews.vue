@@ -89,6 +89,30 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12 mb-5">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="../assets/img/andrey-jigalko.jpeg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>Уважаемые будущие ученики Академии Будущего "ХОД"! Желаю вам заниматься здесь шахматами и достичь
+              успехов! Сильных ходов, удачных решений и побед!</p>
+              <p class="bold">Международный гроссмейстер Жигалко Сергей</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-5">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="../assets/img/sergey_jigalko.jpeg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>Желаю успехов и удачи Академия Будущего "ХОД". Пусть исполнятся все цели и мечты! Покорения самых
+              больших высот! Спасибо за развитие и любовь к шахматам и нашему светлому будущему!</p>
+              <p class="bold">Международный гроссмейстер Жигалко Андрей</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
