@@ -99,8 +99,8 @@
           <div class="founder-wrapper">
             <div class="col-lg-4">
               <div class="founder-person">
-<!--                <img src="../assets/img/owl/owl-main.png" alt="Основатель Академии будущего ХОД"-->
-<!--                     class="founder-person__photo" style="margin: auto;">-->
+                <img src="../assets/img/image_girl_with_laptop_2.jpg"
+                     class="founder-person__photo mt-5" style="margin: auto;">
               </div>
             </div>
             <div class="col-md-12">

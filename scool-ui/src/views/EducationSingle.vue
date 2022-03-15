@@ -100,7 +100,8 @@
               </div>
               <div class="events-title__inner">
                 <span class="events-title__triangle"></span>
-                <h3 class="events-title__subject">Помощь в трудоустройстве</h3>
+                <h3 class="events-title__subject" v-if="course.category.age_group === 'adults'">Помощь в трудоустройстве</h3>
+                <h3 class="events-title__subject" v-else>Забота о студентах</h3>
               </div>
             </div>
           </div>

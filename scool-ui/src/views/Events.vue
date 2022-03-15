@@ -39,7 +39,10 @@
                   </p>
                 </div>
               </div>
-              <button type="button" class="button-open-day">Записаться</button>
+              <button type="button" class="button-open-day"
+                      @click="goTo('Requests', {purpose: 'event', course: null, event: '1'})">
+                Записаться
+              </button>
             </div>
           </div>
         </div>
