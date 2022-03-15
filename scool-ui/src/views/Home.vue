@@ -66,7 +66,7 @@
 
             <div class="mb-5">
               <div v-for="category in categoryList" v-if="category.age_group === age_group" class="category-area">
-                <button class="category-button" @click="goTo(category.name)">
+                <button class="category-button" @click="goToCategory(category.name)">
                   {{ category.name }}
                 </button>
               </div>
@@ -209,8 +209,8 @@
                 <div class="open-day open-day_home d-flex">
                   <div class="open-day__inner d-flex">
                     <div class="date">
-                      <span class="date__numder">25</span>
-                      <span class="date__month">ноября</span>
+                      <span class="date__numder">19</span>
+                      <span class="date__month">марта</span>
                     </div>
                     <div class="excursion">
                       <h2 class="excursion__open-day excursion__open-day_home">День открытых дверей</h2>
@@ -218,7 +218,10 @@
                         в мир востребованных профессий и полезных навыков</p>
                     </div>
                   </div>
-                  <button type="button" class="button-open-day">Записаться</button>
+                  <button type="button" class="button-open-day"
+                          @click="goTo('Requests', {purpose: 'event', course: null, event: '1'})">
+                    Записаться
+                  </button>
                 </div>
               </div>
             </div>
@@ -232,7 +235,10 @@
               <h2 class="bold mb-4">Программы обучения</h2>
               <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти профессию и занятие по
                 душе, изучить новое и получить практические знания, которые помогут получить работу мечты.</p>
-              <a href="/education" class="button-open-day button-open-day_home" @click="goTo('Education')">Подробнее</a>
+              <a href="/education" class="button-open-day button-open-day_home"
+                 @click="goToCategory('Education')">
+                Подробнее
+              </a>
             </div>
           </div>
           <div class="col-md-7">
@@ -315,6 +321,7 @@ import Navbar from "../components/NavbarMain";
 import Reviews from "../components/Reviews";
 import axios from "axios";
 import {playerMixin} from "../components/mixins/playerMixin";
+import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
   title: 'Академия будущего',
@@ -323,7 +330,7 @@ export default {
     Navbar, Reviews
   },
 
-  mixins: [playerMixin],
+  mixins: [playerMixin, requestsMixin],
 
   data() {
     return {
@@ -347,7 +354,7 @@ export default {
           .then(response => (this.categoryList = response.data));
     },
 
-    goTo(name) {
+    goToCategory(name) {
       this.$router.push({name: 'Education', params: {'category': name, 'ageGroup': this.age_group}})
     },
 
