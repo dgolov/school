@@ -379,6 +379,18 @@
         <div class="col-md-12 mb-5">
           <div class="row">
             <div class="col-md-3">
+              <img src="../assets/img/dvorkovich.jpg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>Желаю успехов в шахматах и во всех добрых начинаниях Академии Будущего г. Дзержинска!
+                Спасибо за ваш труд и любовь к шахматам</p>
+              <p class="bold">Президент FIDE Дворкович Аркадий Владимирович</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-5">
+          <div class="row">
+            <div class="col-md-3">
               <img src="../assets/img/andrey-jigalko.jpeg">
             </div>
             <div class="col-md-9 px-4 py-2">
