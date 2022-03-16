@@ -379,7 +379,7 @@
         <div class="col-md-12 mb-5">
           <div class="row">
             <div class="col-md-3">
-              <img src="../assets/img/sergey_jigalko.jpeg">
+              <img src="../assets/img/andrey_jigalko.jpeg">
             </div>
             <div class="col-md-9 px-4 py-2">
               <p>Уважаемые будущие ученики Академии Будущего "ХОД"! Желаю вам заниматься здесь шахматами и достичь
@@ -391,7 +391,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3">
-              <img src="../assets/img/andrey-jigalko.jpeg">
+              <img src="../assets/img/sergey-jigalko.jpeg">
             </div>
             <div class="col-md-9 px-4 py-2">
               <p>Желаю успехов и удачи Академия Будущего "ХОД". Пусть исполнятся все цели и мечты! Покорения самых
