@@ -189,11 +189,11 @@
             </div>
             <div class="col-md-4">
               <h3 class="text-gradient mt-4 mb-0">22</h3>
-              <p class="expanded__text bold px-1">Ведущих преподователя</p>
+              <p class="expanded__text bold px-1">Ведущих преподавателя</p>
             </div>
             <div class="col-md-4">
               <h3 class="text-gradient mt-4 mb-0">1000</h3>
-              <p class="expanded__text bold px-1">Выпускников</p>
+              <p class="expanded__text bold px-1">Довольных студентов</p>
             </div>
           </div>
         </div>
