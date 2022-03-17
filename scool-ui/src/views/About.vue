@@ -261,11 +261,11 @@
             </div>
             <div class="col-md-3 t-g">
               <h3 class="text-gradient mt-4 mb-0">22</h3>
-              <p class="expanded__text bold px-1 o-p">Ведущих преподователя</p>
+              <p class="expanded__text bold px-1 o-p">Ведущих преподавателя</p>
             </div>
             <div class="col-md-5">
               <h3 class="text-gradient mt-4 mb-0">1000</h3>
-              <p class="expanded__text bold px-1 o-p">Выпускников</p>
+              <p class="expanded__text bold px-1 o-p">Довольных студентов</p>
             </div>
           </div>
         </div>
