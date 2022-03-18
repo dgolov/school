@@ -20,6 +20,17 @@
         <div class="col-md-12 mb-5">
           <div class="row">
             <div class="col-md-3">
+              <img src="../assets/img/vishvanatan.jpeg">
+            </div>
+            <div class="col-md-9 px-4 py-2">
+              <p>With best regards to Academy of Future (Dzerzhinsk) Dubai 2021</p>
+              <p class="bold">Вишванатан Ананд 15-й чемпион мира по шахматам</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-5">
+          <div class="row">
+            <div class="col-md-3">
               <img src="../assets/img/professors/yasenev.png">
             </div>
             <div class="col-md-9 px-4 py-2">
