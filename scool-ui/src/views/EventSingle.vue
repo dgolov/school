@@ -161,22 +161,22 @@
       </div>
       <div class="carousel-past-events">
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__one.jpg" alt="слайд 1" class="past-events-img">
+          <img src="../assets/img/events/event_1.jpeg" alt="слайд 1" class="past-events-img">
         </div>
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__two.jpg" alt="слайд 2" class="past-events-img">
+          <img src="../assets/img/events/event_2.jpeg" alt="слайд 2" class="past-events-img">
         </div>
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__three.jpg" alt="слайд 3" class="past-events-img">
+          <img src="../assets/img/events/event_3.jpeg" alt="слайд 3" class="past-events-img">
         </div>
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__four.jpg" alt="слайд 4" class="past-events-img">
+          <img src="../assets/img/events/event_4.jpeg" alt="слайд 4" class="past-events-img">
         </div>
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__five.jpg" alt="слайд 5" class="past-events-img">
+          <img src="../assets/img/events/event_5.jpeg" alt="слайд 5" class="past-events-img">
         </div>
         <div class="gallery">
-          <img src="../assets/img/past-events/past-events__six.jpg" alt="слайд 5" class="past-events-img">
+          <img src="../assets/img/events/event_6.jpeg" alt="слайд 5" class="past-events-img">
         </div>
       </div>
     </section>
