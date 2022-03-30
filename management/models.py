@@ -167,7 +167,7 @@ class Request(models.Model):
         verbose_name_plural = '04. Заявки'
 
     def __str__(self):
-        return self.request_fio
+        return self.request_fio if self.request_fio else ''
 
 
 class Vacancy(models.Model):

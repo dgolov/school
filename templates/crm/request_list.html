@@ -46,7 +46,11 @@
                     {% for request in request_list %}
                         <tr>
                             <th scope="row"><a href="/api/crm/requests/{{ request.pk }}">{{ request.id }}</a></th>
-                            <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
+                            {% if request.client %}
+                                <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
+                            {% else %}
+                                <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.request_fio }}</a></td>
+                            {% endif %}
                             <td>{{ request.client.phone }}</td>
                             <td>{{ request.client.email }}</td>
                             <td>{{ request.type_request }}</td>
