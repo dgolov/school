@@ -21,10 +21,10 @@
                 </div>
                 <div class="col-12 col-lg-5">
                   <form class="form-footer">
-                    <input type='text' v-model="fio" placeholder="Ваше имя" class="input">
+                    <input type='text' v-model="fio" placeholder="Ваше имя" class="input" required>
                     <div class="double">
                       <div class="half">
-                        <input type="tel" v-model="phone" class="input" id="first" placeholder="Ваш телефон">
+                        <input type="tel" v-model="phone" class="input" id="first" placeholder="Ваш телефон" required>
                       </div>
                       <div class="half">
                         <input type="email" v-model="email" class="input" id="second" placeholder="Ваш e-mail">
