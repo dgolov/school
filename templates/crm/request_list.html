@@ -48,8 +48,10 @@
                             <th scope="row"><a href="/api/crm/requests/{{ request.pk }}">{{ request.id }}</a></th>
                             {% if request.client %}
                                 <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a></td>
-                            {% else %}
+                            {% elif request.request_fio %}
                                 <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.request_fio }}</a></td>
+                            {% else%}
+                                <td><a href="/api/crm/requests/{{ request.pk }}">Не указан</a></td>
                             {% endif %}
                             <td>{{ request.client.phone }}</td>
                             <td>{{ request.client.email }}</td>
