@@ -177,6 +177,7 @@ class EventAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name', 'date']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(models.EventDay)
@@ -193,6 +194,7 @@ class NewsAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name', 'date']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(models.Skill)

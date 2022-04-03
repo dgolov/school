@@ -527,6 +527,9 @@ class Event(models.Model):
     block_size = models.CharField(max_length=20, verbose_name='Размер блока', choices=SIZE_CHOICES, default='small')
     color_hex = models.CharField(max_length=10, verbose_name='Цвет блока мероприятия (hex)', blank=True, null=True)
     block_image = models.BooleanField(default=False, verbose_name='Обложка блока картинкой')
+    slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
+    open_doors_day = models.BooleanField(default=False, verbose_name='День открытых дверей')
+    # is_active = models.BooleanField(default=True, verbose_name='Активное мероприятие')
 
     def __str__(self):
         return self.name
@@ -560,6 +563,7 @@ class News(models.Model):
     text = models.TextField(verbose_name='Текст новости', blank=True, null=True)
     date = models.DateField(verbose_name='Дата публикации')
     image = models.ImageField(upload_to='images/news', verbose_name='Изображение', blank=True, null=True)
+    slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.name

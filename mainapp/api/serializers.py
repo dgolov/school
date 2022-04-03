@@ -459,7 +459,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
-            'profession', 'skills', 'in_main_page'
+            'profession', 'skills', 'in_main_page', 'slug',
         ]
 
     @staticmethod
@@ -672,7 +672,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = [
-            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex',
+            'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 'slug',
             'block_image', 'days', 'text1', 'text2', 'text3', 'text_x', 'text_o', 'text_d', 'text_owl', 'content',
         ]
 
