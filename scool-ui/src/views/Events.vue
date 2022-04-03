@@ -28,7 +28,7 @@
             <div class="open-day d-flex">
               <div class="open-day__inner d-flex">
                 <div class="date">
-                  <span class="date__numder">2</span>
+                  <span class="date__numder">9</span>
                   <span class="date__month">апреля</span>
                 </div>
                 <div class="excursion">
@@ -50,7 +50,7 @@
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4" v-for="event in eventsList">
             <div class="events eff-h" v-bind:style="{'background-color': '#' + event.color_hex}"
-               @click="goTo('EventSingle', {id: event.id})">
+               @click="goTo('EventSingle', {id: event.id, slug: event.slug})">
               <span class="events-meeting">Встреча</span>
               <div class="events__inner d-flex align-items-center">
                 <img src="../assets/img/events/events.svg" alt="icon" class="events-icon">
