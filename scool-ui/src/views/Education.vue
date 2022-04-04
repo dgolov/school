@@ -161,9 +161,9 @@ export default {
 
     goTo(course) {
       if (course.category.name !== 'Шахматы') {
-        this.$router.push({name: 'EducationSingle', params: {'id': course.id}})
+        this.$router.push({name: 'EducationSingle', params: {'id': course.id, 'slug': course.slug}})
       } else {
-        this.$router.push({name: 'ChessSingle', params: {'id': course.id}})
+        this.$router.push({name: 'ChessSingle', params: {'id': course.id, 'slug': course.slug}})
       }
       window.scrollTo(0,0)
     },

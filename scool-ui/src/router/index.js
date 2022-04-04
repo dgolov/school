@@ -179,13 +179,13 @@ const routes = [
     props: true
   },
   {
-    path: '/education/:id',
+    path: '/education/:slug',
     name: 'EducationSingle',
     component: EducationSingle,
     props: true
   },
   {
-    path: '/chess/:id',
+    path: '/chess/:slug',
     name: 'ChessSingle',
     component: ChessSingleCourse,
     props: true
@@ -196,7 +196,7 @@ const routes = [
     component: Events
   },
   {
-    path: '/events/:id',
+    path: '/events/:slug',
     name: 'EventSingle',
     component: EventSingle,
     props: true
@@ -207,7 +207,7 @@ const routes = [
     component: News
   },
   {
-    path: '/news/:id',
+    path: '/news/:slug',
     name: 'NewsSingle',
     component: News,
     props: true
