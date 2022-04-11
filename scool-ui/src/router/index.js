@@ -46,6 +46,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/index.php',
+    redirect: { name: 'Home' }
+  },
+  {
+    path: '/index.html',
+    redirect: { name: 'Home' }
+  },
+  {
     path: '/about',
     name: 'About',
     component: About
