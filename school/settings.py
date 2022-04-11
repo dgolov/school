@@ -13,6 +13,8 @@ DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '80.78.253.102', '109.172.27.159', 'www.f-academy.ru', 'f-academy.ru']
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -23,6 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'mainapp.apps.MainappConfig',
     'management.apps.ManagementConfig',
 
