@@ -1,13 +1,12 @@
 from django.shortcuts import get_object_or_404
-from django.db.models.base import ModelBase
-from rest_framework import viewsets, status, decorators
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView
 
 from .classes import BuyingCourseManager
 from .methods import get_normalize_phone
