@@ -270,6 +270,7 @@ class CoursesViewSet(viewsets.ModelViewSet):
         'delete': [IsAdminUser],
         'create': [IsAdminUser],
     }
+    lookup_field = 'slug'
 
     @action(detail=True, renderer_classes=[JSONRenderer])
     def lessons(self, request, *args, **kwargs):
@@ -632,6 +633,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     serializer_class = serializers.EventSerializer
     permission_classes = [AllowAny]
+    lookup_field = 'slug'
 
     def get_queryset(self):
         return models.Event.objects.all()
@@ -644,6 +646,7 @@ class NewsViewSet(viewsets.ModelViewSet):
     """
     serializer_class = serializers.NewsSerializer
     permission_classes = [AllowAny]
+    lookup_field = 'slug'
 
     def get_queryset(self):
         return models.News.objects.all()
