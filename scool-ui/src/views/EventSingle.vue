@@ -203,7 +203,8 @@ export default {
   },
 
   props: {
-    id: String
+    id: String,
+    slug: String
   },
 
   components: {
@@ -217,7 +218,7 @@ export default {
   methods: {
     async loadEvent() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/events/${this.id}`)
+          .get(`${this.$store.getters.getServerUrl}/events/${this.slug}`)
           .then(response => (this.event = response.data))
       this.contentList = this.event.content.split('.');
     },
