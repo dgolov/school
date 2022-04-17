@@ -457,7 +457,8 @@ export default {
   },
 
   props: {
-    id: Number
+    id: Number,
+    slug: String,
   },
 
   created() {
@@ -467,7 +468,7 @@ export default {
   methods: {
     async loadCourse() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/courses/${this.id}`)
+          .get(`${this.$store.getters.getServerUrl}/courses/${this.slug}`)
           .then(response => (this.course = response.data))
     },
 
