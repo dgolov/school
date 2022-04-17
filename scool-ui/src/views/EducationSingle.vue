@@ -520,6 +520,7 @@ export default {
 
   props: {
     id: Number,
+    slug: String,
     question1: false,
     question2: false,
     question3: false,
@@ -533,7 +534,7 @@ export default {
   methods: {
     async loadCourse() {
       await axios
-          .get(`${this.$store.getters.getServerUrl}/courses/${this.id}`)
+          .get(`${this.$store.getters.getServerUrl}/courses/${this.slug}`)
           .then(response => (this.course = response.data))
       this.contentList = this.course.content.split('.');
     },

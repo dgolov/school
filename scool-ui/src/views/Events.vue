@@ -28,7 +28,7 @@
             <div class="open-day d-flex">
               <div class="open-day__inner d-flex">
                 <div class="date">
-                  <span class="date__numder">9</span>
+                  <span class="date__numder">16</span>
                   <span class="date__month">апреля</span>
                 </div>
                 <div class="excursion">

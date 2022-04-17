@@ -453,6 +453,9 @@ class CourseSerializer(serializers.ModelSerializer):
     teachers = ProfileSerializer(many=True)
     profession = ProfessionSerializer()
     skills = serializers.SerializerMethodField()
+    extra_kwargs = {
+        'url': {'lookup_field': 'slug'}
+    }
 
     class Meta:
         model = models.Course
@@ -668,6 +671,9 @@ class EventSerializer(serializers.ModelSerializer):
     """
     speakers = ProfileSerializer(many=True)
     days = serializers.SerializerMethodField()
+    extra_kwargs = {
+        'url': {'lookup_field': 'slug'}
+    }
 
     class Meta:
         model = models.Event
@@ -686,6 +692,10 @@ class EventSerializer(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     """ Серилизация новостей
     """
+    extra_kwargs = {
+        'url': {'lookup_field': 'slug'}
+    }
+
     class Meta:
         model = models.News
         fields = '__all__'
