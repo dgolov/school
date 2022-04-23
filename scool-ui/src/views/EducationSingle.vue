@@ -473,7 +473,7 @@
                     <img src="../assets/img/diploma/diploma.png" alt="">
                   </div>
                   <div class="diploma-text">
-                    <h4 class="diploma-title mt-2">Диплом ХОД Future Academy</h4>
+                    <h4 class="diploma-title mt-2">Диплом Академия Будущего ХОД</h4>
                     <p class="diploma-decs">Подтвердит, что вы прошли курс, и станет дополнительным аргументом при
                       устройстве на работу.</p>
                   </div>
