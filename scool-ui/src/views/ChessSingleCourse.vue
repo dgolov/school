@@ -443,7 +443,6 @@ import {playerMixin} from "../components/mixins/playerMixin";
 import Faq from "../components/Faq";
 
 export default {
-  title: 'Академия будущего | Шахматная школа',
   name: "EducationSingle",
 
   mixins: [requestsMixin, playerMixin],
@@ -470,6 +469,8 @@ export default {
       await axios
           .get(`${this.$store.getters.getServerUrl}/courses/${this.slug}`)
           .then(response => (this.course = response.data))
+      document.title = this.course.title;
+      document.querySelector('meta[name="description"]').setAttribute("content", this.course.html_desc);
     },
 
     async pay() {

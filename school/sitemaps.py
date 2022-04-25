@@ -8,6 +8,21 @@ class Site:
     domain = 'f-academy.ru'
 
 
+class MainSitemap(Sitemap):
+    priority = 1
+    changefreq = 'daily'
+
+    def items(self):
+        return ['/']
+
+    def location(self, item):
+        return item
+
+    def get_urls(self, site=None, protocol=None, **kwargs):
+        site = Site()
+        return super(MainSitemap, self).get_urls(site=site, protocol='https', **kwargs)
+
+
 class CourseSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8

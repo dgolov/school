@@ -529,6 +529,8 @@ class Event(models.Model):
     block_image = models.BooleanField(default=False, verbose_name='Обложка блока картинкой')
     slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
     open_doors_day = models.BooleanField(default=False, verbose_name='День открытых дверей')
+    title = models.CharField(max_length=50, verbose_name='Title', blank=True, null=True)
+    html_desc = models.TextField(verbose_name='Описание для поисковиков', blank=True, null=True)
     # is_active = models.BooleanField(default=True, verbose_name='Активное мероприятие')
 
     def __str__(self):

@@ -221,6 +221,8 @@ export default {
           .get(`${this.$store.getters.getServerUrl}/events/${this.slug}`)
           .then(response => (this.event = response.data))
       this.contentList = this.event.content.split('.');
+      document.title = this.event.title
+      document.querySelector('meta[name="description"]').setAttribute("content", this.event.html_desc);
     },
   },
 }

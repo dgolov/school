@@ -473,7 +473,7 @@
                     <img src="../assets/img/diploma/diploma.png" alt="">
                   </div>
                   <div class="diploma-text">
-                    <h4 class="diploma-title mt-2">Диплом ХОД Future Academy</h4>
+                    <h4 class="diploma-title mt-2">Диплом Академия Будущего ХОД</h4>
                     <p class="diploma-decs">Подтвердит, что вы прошли курс, и станет дополнительным аргументом при
                       устройстве на работу.</p>
                   </div>
@@ -504,7 +504,6 @@ import Faq from "../components/Faq";
 import {redirect} from "../components/mixins/redirect";
 
 export default {
-  title: 'Академия будущего | Обучение',
   name: "EducationSingle",
 
   mixins: [requestsMixin, redirect],
@@ -537,6 +536,9 @@ export default {
           .get(`${this.$store.getters.getServerUrl}/courses/${this.slug}`)
           .then(response => (this.course = response.data))
       this.contentList = this.course.content.split('.');
+
+      document.title = this.course.title;
+      document.querySelector('meta[name="description"]').setAttribute("content", this.course.html_desc);
     },
 
     async pay() {
