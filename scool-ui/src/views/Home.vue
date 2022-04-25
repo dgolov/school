@@ -325,6 +325,7 @@ import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
   title: 'Академия будущего',
+  description: 'Академия будущего',
   name: 'Home',
   components: {
     Navbar, Reviews

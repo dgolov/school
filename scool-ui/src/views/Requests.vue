@@ -26,6 +26,8 @@ import {redirect} from "../components/mixins/redirect";
 import axios from "axios";
 
 export default {
+  title: 'Академия  | Отправить заявку',
+  description: 'Отправить заявку',
   name: "Requests",
 
   components: {Navbar},

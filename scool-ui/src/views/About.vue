@@ -353,6 +353,7 @@ import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
   title: 'Академия будущего | Об Академии',
+  description: 'Об Академии',
   name: "About",
   components: {
     Navbar

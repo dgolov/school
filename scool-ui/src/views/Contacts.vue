@@ -80,6 +80,7 @@ import Construction from "../components/Construction";
 
 export default {
   title: 'Академия будущего | Контакты',
+  description: 'Контакты',
   name: "Contacts",
   components: {
     Navbar
