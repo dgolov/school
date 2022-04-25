@@ -121,7 +121,8 @@ import EducationSingle from "./EducationSingle";
 import axios from "axios";
 
 export default {
-  title: "Академия будущего | Обучение",
+  title: 'Академия будущего | Обучение',
+  description: 'Обучение',
   name: "Education",
 
   data() {
