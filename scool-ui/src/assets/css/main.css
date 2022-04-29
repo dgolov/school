@@ -190,6 +190,10 @@ button:focus {
 	transition: box-shadow 0.8s ease;
 }
 
+.course-block {
+	cursor: pointer;
+}
+
 /*     */
 
 /* для блока Новости академии и Мир IT, Попробуй! на главно*/
