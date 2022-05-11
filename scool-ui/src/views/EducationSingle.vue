@@ -46,7 +46,7 @@
           class="button button-header button-chess"
           type="submit"
           @click="
-            goTo('Requests', { purpose: 'free_lesson', course: course.id, event: null })
+            goTo('Requests', { purpose: 'free_lesson', course: course.id, event: 'null' })
           "
           style="z-index: 999"
         >
@@ -98,7 +98,7 @@
                 goTo('Requests', {
                   purpose: 'free_lesson',
                   course: course.id,
-                  event: null,
+                  event: 'null',
                 })
               "
             >
@@ -225,7 +225,7 @@
             <button
               class="button button-header e-c-button"
               type="button"
-              @click="goTo('Requests', { purpose: 'buy', course: course.id })"
+              @click="goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })"
               style="z-index: 999"
             >
               Записаться на курс
@@ -272,7 +272,7 @@
             <button
               class="button button-header c-c-button"
               type="button"
-              @click="goTo('Requests', { purpose: 'buy', course: course.id })"
+              @click="goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })"
               style="z-index: 999"
             >
               Записаться на курс
