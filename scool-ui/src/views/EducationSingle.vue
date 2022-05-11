@@ -6,7 +6,14 @@
       <div class="chess-course">
         <div class="chess-course-img-wrapp">
           <img
-            v-if="course.category.age_group === 'adults'"
+            v-if="course.poster"
+            :src="`${course.poster}`"
+            alt=""
+            class="chess-course__img"
+            style="width: 45%;"
+          />
+          <img
+            v-else-if="course.category.age_group === 'adults'"
             src="../assets/img/header/employment-course.jpg"
             alt=""
             class="chess-course__img"
@@ -58,11 +65,24 @@
     <div class="header-mobi d-none">
       <div class="chess-course-img-wrapp">
         <img
-          src="../assets/img/header/employment-course.jpg"
-          alt=""
-          class="chess-course__img"
-          style="align-self: center"
-        />
+            v-if="course.poster"
+            :src="`${course.poster}`"
+            alt=""
+            class="chess-course__img"
+            style="width: 100%;"
+          />
+          <img
+            v-else-if="course.category.age_group === 'adults'"
+            src="../assets/img/header/employment-course.jpg"
+            alt=""
+            class="chess-course__img"
+          />
+          <img
+            v-else
+            src="../assets/img/header/shutterstock_1337001122.jpg"
+            alt=""
+            class="chess-course__img"
+          />
       </div>
       <div class="container">
         <div class="row">
@@ -226,8 +246,7 @@
               class="button button-header e-c-button"
               type="button"
               @click="goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })"
-              style="z-index: 999"
-            >
+              style="z-index: 999">
               Записаться на курс
             </button>
           </div>
@@ -273,8 +292,7 @@
               class="button button-header c-c-button"
               type="button"
               @click="goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })"
-              style="z-index: 999"
-            >
+              style="z-index: 999">
               Записаться на курс
             </button>
           </div>
