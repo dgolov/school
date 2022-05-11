@@ -9,4 +9,4 @@ Disallow: *?
 
 Host: https://f-academy.ru/
 
-Sitemap: http://f-academy.ru/sitemap.xml
+Sitemap: https://f-academy.ru/sitemap.xml
