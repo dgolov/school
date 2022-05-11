@@ -28,8 +28,8 @@
             <div class="open-day d-flex">
               <div class="open-day__inner d-flex">
                 <div class="date">
-                  <span class="date__numder">23</span>
-                  <span class="date__month">апреля</span>
+                  <span class="date__numder">{{ dateOpenDoors.getDate() }}</span>
+                  <span class="date__month">{{ formatDate(dateOpenDoors, true) }}</span>
                 </div>
                 <div class="excursion">
                   <h2 class="excursion__open-day">День открытых дверей</h2>
@@ -40,7 +40,10 @@
                 </div>
               </div>
               <button type="button" class="button-open-day"
-                      @click="goTo('Requests', {purpose: 'event', course: null, event: '1'})">
+                      @click="goTo(
+                          'Requests',
+                          {purpose: 'event', course: 'null', event: String(dateOpenDoorsID)}
+                          )">
                 Записаться
               </button>
             </div>
@@ -49,7 +52,8 @@
 
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4" v-for="event in eventsList">
-            <div class="events eff-h" v-bind:style="{'background-color': '#' + event.color_hex}"
+            <div class="events eff-h"
+                 v-bind:style="{'background-color': '#' + event.color_hex, 'height': '300px'}"
                @click="goTo('EventSingle', {id: event.id, slug: event.slug})">
               <span class="events-meeting">Встреча</span>
               <div class="events__inner d-flex align-items-center">
@@ -57,7 +61,7 @@
                 <h4 class="events-title">{{ event.name }}</h4>
               </div>
               <p class="events-text">{{ event.description.slice(0, 100) + '...' }}</p>
-              <span class="events-date">{{ formatDate(event.date) }}</span>
+              <span class="events-date">{{ formatDate(event.date, false) }}</span>
             </div>
           </div>
         </div>
@@ -82,6 +86,8 @@ export default {
   data() {
     return {
       eventsList: [],
+      dateOpenDoors: null,
+      dateOpenDoorsID: 1,
     }
   },
 
@@ -94,16 +100,29 @@ export default {
       await axios
           .get(`${this.$store.getters.getServerUrl}/events/`)
           .then(response => (this.eventsList = response.data));
+      this.getDateOpenDoors();
     },
 
-    formatDate(date) {
+    getDateOpenDoors() {
+      for (let itemEvent of this.eventsList) {
+        if (itemEvent.open_doors_day) {
+          this.dateOpenDoors = new Date(itemEvent.date);
+          this.dateOpenDoorsID = itemEvent.id;
+        }
+      }
+    },
+
+    formatDate(date, onlyMonth) {
       let d1 = new Date(date);
       let ms = [
           'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
         'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
       ];
+      if (onlyMonth) {
+        return ms[d1.getMonth()];
+      }
       return d1.getDate() + ' ' + ms[d1.getMonth()] + ' ' + d1.getFullYear();
-    }
+    },
   },
 }
 </script>
