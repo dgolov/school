@@ -208,7 +208,7 @@
               <div class="row">
                 <div class="open-day open-day_home d-flex">
                   <div class="open-day__inner d-flex">
-                    <div class="date">
+                    <div class="date" v-if="dateOpenDoors">
                       <span class="date__numder">{{ dateOpenDoors.getDate() }}</span>
                       <span class="date__month">{{ formatDate(dateOpenDoors, true) }}</span>
                     </div>
