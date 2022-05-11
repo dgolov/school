@@ -190,6 +190,10 @@ button:focus {
 	transition: box-shadow 0.8s ease;
 }
 
+.course-block {
+	cursor: pointer;
+}
+
 /*     */
 
 /* для блока Новости академии и Мир IT, Попробуй! на главно*/
@@ -4999,7 +5003,6 @@ a.events {
 /* Фотографии с прошлых мероприятий */
 .past-events {
 	padding: 70px 0 230px;
-	overflow: hidden;
 }
 
 .past-events-img,
@@ -10026,105 +10029,3 @@ ul.skills_two {
     }
  }
 */
-
-.reviewer-image {
-	max-height: 20em;
-}
-
-@media (max-width: 1200px) {
-	.navbar__logo img {
-		margin-left: 0 !important;
-		height: 60% !important;
-		margin-top: 7%;
-	}
-
-	.navbar__menu {
-		margin-left: -8em;
-		margin-top: 0.2em;
-	}
-
-	.navbar__logo {}
-
-	.news-block .bold {
-		font-size: 1.2em;
-	}
-
-	.excursion__open-day {
-		font-size: 2em;
-		text-align: left;
-	}
-
-	.form-info__text {
-		font-size: 0.5em;
-	}
-
-	.header-desc {
-		border-bottom: none;
-		border-left: none;
-		border-right: none;
-	}
-
-}
-
-@media (max-width: 992px) {
-	.navbar__menu-mob {
-		margin-top: 1em;
-	}
-
-	.header-mobi {
-		padding-top: 0;
-	}
-
-	.owl-text {
-		font-size: 0.6em;
-	}
-
-	.news-block-world {
-		height: 12em;
-	}
-}
-
-@media (max-width: 394px) {
-	.owl-title {
-		font-size: 12px;
-	}
-
-	.owl-text {
-		margin-top: -0.1em
-	}
-
-	.groups {
-		margin-left: -15px;
-	}
-
-	.owl-frame-text,
-	.owl-frame-title {
-		max-width: 182px;
-	}
-
-	.owl-frame-text,
-	.owl-frame-title {
-		bottom: 210px;
-	}
-
-	.form-footer {
-		top: 124px;
-	}
-
-	.money-wrapp {
-		margin-top: 0.5em;
-	}
-
-	.logo-wrapper {
-		max-width: 80%;
-	}
-
-	.groups--alt {
-		padding-top: 0 !important;
-	}
-
-	.landing__section--alt {
-		padding-top: 0 !important;
-	}
-
-}
