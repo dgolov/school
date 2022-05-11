@@ -636,7 +636,7 @@ class EventViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        return models.Event.objects.all()
+        return models.Event.objects.all().order_by('date')
 
 
 # NEWS
