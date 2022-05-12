@@ -208,9 +208,9 @@
               <div class="row">
                 <div class="open-day open-day_home d-flex">
                   <div class="open-day__inner d-flex">
-                    <div class="date">
-                      <span class="date__numder">23</span>
-                      <span class="date__month">апреля</span>
+                    <div class="date" v-if="dateOpenDoors">
+                      <span class="date__numder">{{ dateOpenDoors.getDate() }}</span>
+                      <span class="date__month">{{ formatDate(dateOpenDoors, true) }}</span>
                     </div>
                     <div class="excursion">
                       <h2 class="excursion__open-day excursion__open-day_home">День открытых дверей</h2>
@@ -219,7 +219,7 @@
                     </div>
                   </div>
                   <button type="button" class="button-open-day"
-                          @click="goTo('Requests', {purpose: 'event', course: null, event: '1'})">
+                          @click="goTo('Requests', {purpose: 'event', course: 'null', event: '1'})">
                     Записаться
                   </button>
                 </div>
@@ -340,12 +340,15 @@ export default {
       typesRus: {
         'profession': 'Профессия',
         'course': 'Курс'
-      }
+      },
+      dateOpenDoors: null,
+      dateOpenDoorsID: 1,
     }
   },
 
   created() {
-    this.loadCategoryList()
+    this.loadCategoryList();
+    this.loadEventList();
   },
 
   methods: {
@@ -353,6 +356,34 @@ export default {
       await axios
           .get(`${this.$store.getters.getServerUrl}/categories/`)
           .then(response => (this.categoryList = response.data));
+    },
+
+     async loadEventList() {
+      await axios
+          .get(`${this.$store.getters.getServerUrl}/events/`)
+          .then(response => (this.eventsList = response.data));
+      this.getDateOpenDoors();
+    },
+
+    getDateOpenDoors() {
+      for (let itemEvent of this.eventsList) {
+        if (itemEvent.open_doors_day) {
+          this.dateOpenDoors = new Date(itemEvent.date);
+          this.dateOpenDoorsID = itemEvent.id;
+        }
+      }
+    },
+
+    formatDate(date, onlyMonth) {
+      let d1 = new Date(date);
+      let ms = [
+          'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
+        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+      ];
+      if (onlyMonth) {
+        return ms[d1.getMonth()];
+      }
+      return d1.getDate() + ' ' + ms[d1.getMonth()] + ' ' + d1.getFullYear();
     },
 
     goToCategory(name) {

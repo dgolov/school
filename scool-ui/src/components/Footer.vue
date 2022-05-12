@@ -83,7 +83,7 @@
                    class="social__telegram c-f-telegram "></a>
                 <!--/noindex-->
               </div>
-              <p style="font-size: 14px; color: gray; margin: 0;">© ХОД, Future Academy</p></div>
+            </div>
           </div>
 
           <div class="footer__data__item d-none d-lg-block">
@@ -128,6 +128,7 @@
             </div>
           </div>
         </div>
+        <p style="font-size: 14px; color: gray; margin: 0;">© ХОД, Future Academy - школа программирование и обучение новым знаниям для взрослых и детей в Дзержинске</p>
       </div>
     </div>
   </div>

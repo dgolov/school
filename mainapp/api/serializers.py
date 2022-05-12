@@ -680,7 +680,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 'slug',
             'block_image', 'days', 'text1', 'text2', 'text3', 'text_x', 'text_o', 'text_d', 'text_owl', 'content',
-            'html_desc', 'title',
+            'html_desc', 'title', 'open_doors_day',
         ]
 
     @staticmethod
