@@ -27,7 +27,7 @@
             <p class="chess-course-info chess-course-info_price">от {{ course.price }} ₽ в месяц</p>
           </div>
         </div>
-        <p class="header-button-title hb-chess e-c-free">1 занятие бесплатное</p>
+        <p class="header-button-title hb-chess e-c-free">первое занятие бесплатное</p>
         <button class="button button-header button-chess" type="submit"
                 @click="goTo('Requests', {purpose: 'free_lesson', course: course.id})" style="z-index: 999">
           Записаться на пробное занятие
