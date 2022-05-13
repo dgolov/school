@@ -6,7 +6,13 @@
       <div class="chess-course">
         <div class="chess-course-img-wrapp">
           <img
-            v-if="course.category.age_group === 'adults'"
+            v-if="course.poster"
+            :src="`${course.poster}`"
+            alt=""
+            class="chess-course__img"
+          />
+          <img
+            v-else-if="course.category.age_group === 'adults'"
             src="../assets/img/header/employment-course.jpg"
             alt=""
             class="chess-course__img"
@@ -46,7 +52,7 @@
           class="button button-header button-chess"
           type="submit"
           @click="
-            goTo('Requests', { purpose: 'free_lesson', course: course.id, event: null })
+            goTo('Requests', { purpose: 'free_lesson', course: course.id, event: 'null' })
           "
           style="z-index: 999"
         >
@@ -58,10 +64,23 @@
     <div class="header-mobi d-none">
       <div class="chess-course-img-wrapp">
         <img
+          v-if="course.poster"
+          :src="`${course.poster}`"
+          alt=""
+          class="chess-course__img"
+          style="width: 100%"
+        />
+        <img
+          v-else-if="course.category.age_group === 'adults'"
           src="../assets/img/header/employment-course.jpg"
           alt=""
           class="chess-course__img"
-          style="align-self: center"
+        />
+        <img
+          v-else
+          src="../assets/img/header/shutterstock_1337001122.jpg"
+          alt=""
+          class="chess-course__img"
         />
       </div>
       <div class="container">
@@ -98,7 +117,7 @@
                 goTo('Requests', {
                   purpose: 'free_lesson',
                   course: course.id,
-                  event: null,
+                  event: 'null',
                 })
               "
             >
@@ -225,7 +244,9 @@
             <button
               class="button button-header e-c-button"
               type="button"
-              @click="goTo('Requests', { purpose: 'buy', course: course.id })"
+              @click="
+                goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })
+              "
               style="z-index: 999"
             >
               Записаться на курс
@@ -272,7 +293,9 @@
             <button
               class="button button-header c-c-button"
               type="button"
-              @click="goTo('Requests', { purpose: 'buy', course: course.id })"
+              @click="
+                goTo('Requests', { purpose: 'buy', course: course.id, event: 'null' })
+              "
               style="z-index: 999"
             >
               Записаться на курс
