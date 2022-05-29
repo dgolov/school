@@ -3907,142 +3907,140 @@ a.events {
 /* Блок H1 */
 
 /*  Responsive  */
-@media (max-width: 2000px) {
-	.header-page-wrapper {
-		overflow: hidden;
-		padding-bottom: 30px;
-	}
+.header-page-wrapper {
+	overflow: hidden;
+	padding-bottom: 30px;
+}
 
-	.header-page__img {
-		position: relative;
-		left: 56%;
-		height: 500px;
-		width: 35%;
-	}
+.header-page__img {
+	position: relative;
+	left: 56%;
+	height: 500px;
+	width: 35%;
+}
 
-	.header-page-img-wrapp {
-		position: relative;
-	}
+.header-page-img-wrapp {
+	position: relative;
+}
 
-	.header-page-img-wrapp::before {
-		content: '';
-		background:
-			url('../img/header/figures-header-one.svg') 82% 185px no-repeat,
-			url('../img/header/figures-header-three.svg') 72% 13px no-repeat,
-			url('../img/header/figures-header-four.svg') 67% 338px no-repeat;
-		background-size: 96px, 117px, 130px;
-		position: absolute;
-		width: 100%;
-		height: 500px;
-		z-index: 8;
-	}
+.header-page-img-wrapp::before {
+	content: '';
+	background:
+		url('../img/header/figures-header-one.svg') 82% 185px no-repeat,
+		url('../img/header/figures-header-three.svg') 72% 13px no-repeat,
+		url('../img/header/figures-header-four.svg') 67% 338px no-repeat;
+	background-size: 96px, 117px, 130px;
+	position: absolute;
+	width: 100%;
+	height: 500px;
+	z-index: 8;
+}
 
-	.header-page {
-		position: relative;
-		background: #00093C;
+.header-page {
+	position: relative;
+	background: #00093C;
 
-		height: 500px;
-	}
+	height: 500px;
+}
 
-	.header-page::before {
-		content: '';
-		background:
-			url('../img/header/figures-header-one.svg') 196px 48px no-repeat,
-			url('../img/header/figures-header-eight-one.svg') 156px 329px no-repeat,
-			url('../img/header/figures-header-two.svg') 685px 431px no-repeat,
-			url('../img/header/figures-header-three-two.svg') 97% 442px no-repeat,
-			url('../img/header/figures-header-three.svg') 99% 36px no-repeat;
-		color: #fff;
-		background-size: 121px, 102px, 265px, 281px, 135px;
-		position: absolute;
-		height: 115%;
-		width: 100%;
-		z-index: 5;
-	}
+.header-page::before {
+	content: '';
+	background:
+		url('../img/header/figures-header-one.svg') 196px 48px no-repeat,
+		url('../img/header/figures-header-eight-one.svg') 156px 329px no-repeat,
+		url('../img/header/figures-header-two.svg') 685px 431px no-repeat,
+		url('../img/header/figures-header-three-two.svg') 97% 442px no-repeat,
+		url('../img/header/figures-header-three.svg') 99% 36px no-repeat;
+	color: #fff;
+	background-size: 121px, 102px, 265px, 281px, 135px;
+	position: absolute;
+	height: 115%;
+	width: 100%;
+	z-index: 5;
+}
 
-	.header-page-title {
-		font-size: 42px;
-		color: #fff;
-		font-weight: 700;
-	}
+.header-page-title {
+	font-size: 42px;
+	color: #fff;
+	font-weight: 700;
+}
 
-	.header-page-text {
-		font-weight: 500;
-		font-size: 24px;
-		max-width: 280px;
-		margin: 11px 0 0 0;
-		color: #fff;
-	}
+.header-page-text {
+	font-weight: 500;
+	font-size: 24px;
+	max-width: 280px;
+	margin: 11px 0 0 0;
+	color: #fff;
+}
 
-	.header-page-text,
-	.header-page-title {
-		position: relative;
-		left: 22%;
-		bottom: 456px;
-	}
+.header-page-text,
+.header-page-title {
+	position: relative;
+	left: 22%;
+	bottom: 456px;
+}
 
-	.header-desc-info {
-		max-width: 182px;
-	}
+.header-desc-info {
+	max-width: 182px;
+}
 
-	.header-desc_margin {
-		margin: 0 19px 0 18px;
-	}
+.header-desc_margin {
+	margin: 0 19px 0 18px;
+}
 
-	.header-page-wrapp {
-		display: flex;
-		position: relative;
-		color: #fff;
-		left: 22%;
-		bottom: 400px;
-	}
+.header-page-wrapp {
+	display: flex;
+	position: relative;
+	color: #fff;
+	left: 22%;
+	bottom: 400px;
+}
 
-	.header-desc {
-		border-image: linear-gradient(90deg, #F7941D 0%, #27AAE1 100%);
-		border-top: 2px solid;
-		border-image-slice: 1;
-		padding-top: 16px;
-	}
+.header-desc {
+	border-image: linear-gradient(90deg, #F7941D 0%, #27AAE1 100%);
+	border-top: 2px solid;
+	border-image-slice: 1;
+	padding-top: 16px;
+}
 
-	.header-button-title {
-		font-size: 28px;
-		color: #fff;
-		font-weight: 700;
-		position: relative;
-		left: 22%;
-		bottom: 415px;
-	}
+.header-button-title {
+	font-size: 28px;
+	color: #fff;
+	font-weight: 700;
+	position: relative;
+	left: 22%;
+	bottom: 415px;
+}
 
-	/*  Изменение  10.01 .button-header =  z-index: 50; */
-	.button-header {
-		background: #F7941D;
-		border-radius: 6px;
-		position: relative;
-		left: 22%;
-		bottom: 403px;
-		font-size: 14px;
-		font-weight: 700;
-		color: #fff;
-		border: 1px solid rgba(255, 255, 255, 0);
-		transition: background 0.8s ease;
-		z-index: 50;
-	}
+/*  Изменение  10.01 .button-header =  z-index: 50; */
+.button-header {
+	background: #F7941D;
+	border-radius: 6px;
+	position: relative;
+	left: 22%;
+	bottom: 403px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, 0);
+	transition: background 0.8s ease;
+	z-index: 50;
+}
 
-	.button-header:hover,
-	.button-header:focus {
-		background: #FFAE4D;
-		color: #fff;
-		border: 1px solid rgba(255, 255, 255, 0);
-		transition: background 0.8s ease;
-	}
+.button-header:hover,
+.button-header:focus {
+	background: #FFAE4D;
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, 0);
+	transition: background 0.8s ease;
+}
 
-	.header-page-text,
-	.header-page-title,
-	.header-page-wrapp,
-	.header-button-title,
-	.button-header {
-		left: 20%;
-	}
+.header-page-text,
+.header-page-title,
+.header-page-wrapp,
+.header-button-title,
+.button-header {
+	left: 20%;
 }
 
 @media (max-width: 1761px) {
@@ -6200,6 +6198,7 @@ a.events {
 
 	.chess-course-img-wrapp {
 		position: relative;
+		height: 100%;
 	}
 
 	.chess-course-img-wrapp::before {
@@ -6215,9 +6214,9 @@ a.events {
 	}
 
 	.chess-course__img {
-		position: relative;
-		left: 56%;
-		height: 530px;
+		position: absolute;
+		right: 0;
+		height: 100%;
 	}
 
 	.chess-course__img-long {
@@ -6500,11 +6499,16 @@ a.events {
 /* Блок после шапки H1 c 992px */
 @media (max-width: 992px) {
 	.chess-course__img {
+		position: static;
 		width: 100%;
 		left: 0;
 		margin: auto;
 		/* Изменение 27.01 */
 		height: auto;
+	}
+
+	.header-mobi {
+		padding-top: 0;
 	}
 
 	.chess-course-img-wrapp::before {
