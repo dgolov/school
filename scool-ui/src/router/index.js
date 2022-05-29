@@ -36,6 +36,7 @@ import Career from "../views/Career";
 import Requests from "../views/Requests";
 import Reviews from "../views/Reviews";
 import Camp from "../views/Camp"
+import PageNotFound from "../views/PageNotFound"
 
 
 Vue.use(VueRouter)
@@ -247,6 +248,10 @@ const routes = [
     name: 'Camp',
     component: Camp,
     props: true
+  },
+  {
+    path: "*",
+    component: PageNotFound
   }
 ]
 
