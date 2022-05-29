@@ -35,9 +35,7 @@ FROM python:3.9.2
 RUN mkdir -p /home/app
 
 # create the app user
-RUN groupadd app
-RUN useradd -m -g app app -p FAcademy5671313
-RUN usermod -aG app app
+RUN groupadd app && useradd -m -g app app -p FAcademy5671313 && usermod -aG app app
 
 # create the appropriate directories
 ENV HOME=/home/app
@@ -46,12 +44,10 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apt-get update \
-    && apt-get install netcat -y
+RUN apt-get update && apt-get install netcat -y
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
-RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
+RUN /usr/local/bin/python -m pip install --upgrade pip && pip install --no-cache /wheels/*
 
 # copy entrypoint-prod.sh
 COPY ./entrypoint.sh $APP_HOME
