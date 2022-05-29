@@ -38,6 +38,7 @@
                   <img src="../assets/img/connection/connection-adress.svg" alt="adress"
                        class="connection-adress-icon">
                   <p class="connection-address">{{ $store.state.address }}</p>
+                  <p class="connection-address">г. Нижний новгород, Большая Печерская 40</p>
                 </div>
                 <div class="connection-social d-flex">
                   <!--noindex-->
