@@ -35,6 +35,7 @@ import EventSingle from "../views/EventSingle";
 import Career from "../views/Career";
 import Requests from "../views/Requests";
 import Reviews from "../views/Reviews";
+import Camp from "../views/Camp"
 
 
 Vue.use(VueRouter)
@@ -239,6 +240,12 @@ const routes = [
     path: '/send-request',
     name: 'Requests',
     component: Requests,
+    props: true
+  },
+  {
+    path: '/summer-camp',
+    name: 'Camp',
+    component: Camp,
     props: true
   }
 ]
