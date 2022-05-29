@@ -9,7 +9,7 @@
     <h2 v-if="success" class="success mb-5">Ваша заявка отправлена!</h2>
     <form action="#" method="get" autocompelete="new-password" class="form" id="formLogin">
       <input class="input" v-model="request_fio" type="text" name="request_fio" placeholder="Введите ФИО..." required>
-      <input class="input" v-model="request_phone" type="text" name="request_phone" placeholder="Введите номер теелефона..." required>
+      <input class="input" v-model="request_phone" type="text" name="request_phone" placeholder="Введите номер телефона..." required>
       <input class="input" v-model="request_email" type="text" name="request_email" placeholder="Введите email..." required>
       <textarea class="input" v-model="comment"  name="comment"
                 placeholder="Комментарий..." required style="border-radius: 5px; padding: 10pt 20pt;"></textarea>

@@ -64,7 +64,22 @@
       </div>
     </div>
 
-    <section class="video v-a-a">
+    <section class="steps white-section mt-5 mb-0 pt-0 st">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a href="https://storage.yandexcloud.net/v2bdemo/p52/FutureAcademy/index.html" target="_blank">
+              <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
+                   style="background-color: #C7EEFF;">
+                <h2 class="bold my-0 mx-4">3D тур по Академии Будущего</h2>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="video mt-0 v-a-a">
       <div class="container">
         <div class="row justify-content-center" style="position:relative;z-index: 1;">
           <div class="col-md-12 col-lg-8">
@@ -103,7 +118,7 @@
                      class="founder-person__photo mt-5" style="margin: auto;">
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="founder-info">
                 <h2 class="program-events-title">Кто мы?</h2>
                 <p class="founder-info__text">Организация дополнительного образования детей от 8 до 18 и взрослых от

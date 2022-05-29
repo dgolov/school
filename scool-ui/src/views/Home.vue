@@ -72,6 +72,14 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-12">
+                <a href="/summer-camp">
+                  <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
+                       style="background-color: #B8EFCF;">
+                    <h2 class="bold my-0">IT летние каникулы в Академии Будущего</h2>
+                  </div>
+                </a>
+              </div>
               <div class="col-md-4">
                 <a href="#">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
@@ -131,6 +139,14 @@
                     <img src="../assets/img/cart/seo_training_marketing_presentation_icon_192451.svg"
                          style="width: 70px; height: 70px;">
                     <h2 class="bold">Маркетплейс</h2>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-12">
+                <a href="#">
+                  <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
+                       style="background-color: #FFEEF6;">
+                    <h2 class="bold my-0">Образовательные программы на базе Высшей Школы Экономики</h2>
                   </div>
                 </a>
               </div>

@@ -52,11 +52,8 @@
         <button
           class="button button-header button-chess"
           type="submit"
-          @click="
-            goTo('Requests', { purpose: 'free_lesson', course: course.id, event: 'null' })
-          "
-          style="z-index: 999"
-        >
+          @click="goTo('Requests', { purpose: 'free_lesson', course: course.id, event: 'null' })"
+          style="z-index: 999">
           Записаться на пробное занятие
         </button>
       </div>
