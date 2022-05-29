@@ -76,7 +76,7 @@
                 <a href="/summer-camp">
                   <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
                        style="background-color: #B8EFCF;">
-                    <h2 class="bold my-0">IT каникулы в Академии Будущего</h2>
+                    <h2 class="bold my-0">IT летние каникулы в Академии Будущего</h2>
                   </div>
                 </a>
               </div>
