@@ -13,7 +13,7 @@
             <p class="top-gradient">Смены 1/2 дня</p>
           </div>
           <div class="summery-camp__price">
-            <span class="introduce_price top-gradient">от 4 640 ₽ в месяц</span>
+            <span class="introduce_price top-gradient">от 8 900 ₽ в месяц</span>
           </div>
           <h2 style="color: white;">Открой своё IT-лето!</h2>
           <div class="btn-wrapper">

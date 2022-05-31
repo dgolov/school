@@ -57,6 +57,7 @@
               <div class="menu-contact d-flex">
                 <a href="tel:88005500972" class="number number-footer">{{ $store.state.phone }}</a>
                 <p class="menu-contact__address address-footer">{{ $store.state.address }}</p>
+                <p class="menu-contact__address address-footer">г. Нижний новгород, Большая Печерская 40</p>
                 <a href="mailto:info@hodfutureacademy.ru" class="menu-contact__email email-footer">info@hodfutureacademy.ru</a>
               </div>
               <div class="social social-footer d-flex">
