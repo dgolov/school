@@ -162,6 +162,7 @@ class Request(models.Model):
     remind = models.DateField(verbose_name='Перезвонить / напомнить', blank=True, null=True)
     date = models.DateTimeField(verbose_name='Дата и время заявки', auto_now_add=True)
     comment = models.TextField(verbose_name='Комментарий менеджера', blank=True, null=True)
+    city = models.ForeignKey('mainapp.City', on_delete=models.SET_NULL, verbose_name='Город', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Заявка'
