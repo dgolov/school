@@ -40,18 +40,10 @@ class StudentAgeGroupAdmin(admin.ModelAdmin):
 class StudentAdmin(ProfileAdmin):
     """ Отображение списка учеников в админке
     """
-    # readonly_fields = ('user', 'first_name', 'last_name', 'email')
     list_display = ['id', 'full_name', 'username', 'user_group']
     list_display_links = ['full_name']
     list_filter = ['group_list', 'age_group_access']
     search_fields = ['user__last_name', 'user__first_name', 'middle_name']
-    # fieldsets = (
-    #     ('Обучающийся', {
-    #         'fields': (
-    #             'user', 'first_name', 'last_name', 'middle_name', 'phone', 'email', 'gender', 'date_of_birthday'
-    #         ),
-    #     }),
-    # )
 
     def first_name(self, obj):
         return obj.user.first_name
@@ -219,3 +211,11 @@ class ProfessionSkillAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'text', 'profession']
     list_display_links = ['id']
+
+
+@admin.register(models.City)
+class CityAdmin(admin.ModelAdmin):
+    """ Отображение списка городов в админке
+    """
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
