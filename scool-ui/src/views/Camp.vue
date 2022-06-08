@@ -17,7 +17,10 @@
           </div>
           <h2 style="color: white;">Открой своё IT-лето!</h2>
           <div class="btn-wrapper">
-            <a class="accent-btn summery-cyamp__btn" href="#!">Записаться</a>
+            <a class="accent-btn summery-cyamp__btn" href=""
+                @click="goTo('Requests', {purpose: 'it_camp', course: null, event: 'null'})">
+                Записаться
+            </a>
           </div>
         </div>
       </div>
@@ -85,7 +88,10 @@
           </div>
         </div>
         <div class="schedule__btm--wrapper">
-          <a class="accent-btn schedule__btn" href="#!">Подать заявку</a>
+          <a class="accent-btn schedule__btn" href=""
+            @click="goTo('Requests', {purpose: 'it_camp', course: null, event: 'null'})">
+                Подать заявку
+          </a>
         </div>
       </div>
     </section>
@@ -346,9 +352,13 @@
 <script>
 import Navbar from "../components/NavbarMain";
 import Reviews from "../components/Reviews";
+import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
   name: "Camp",
+
+  mixins: [requestsMixin],
+
   components: {
     Navbar, Reviews
   },

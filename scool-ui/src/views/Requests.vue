@@ -5,6 +5,7 @@
     <h1 class="breadcrumb-title mb-5" v-if="purpose==='free_lesson'">Отправить заявку на бесплатный урок</h1>
     <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='event'">Отправить заявку на мероприятие</h1>
     <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='buy'">Отправить заявку на запись</h1>
+    <h1 class="breadcrumb-title mb-5" v-else-if="purpose==='it_camp'">Отправить заявку на IT каникулы</h1>
     <h1 class="breadcrumb-title mb-5" v-else>Отправить заявку</h1>
     <h2 v-if="success" class="success mb-5">Ваша заявка отправлена!</h2>
     <form action="#" method="get" autocompelete="new-password" class="form" id="formLogin">
@@ -57,21 +58,25 @@ export default {
   },
 
   mounted() {
-    this.purpose = localStorage.getItem('purpose')
+    this.purpose = localStorage.getItem('purpose');
   },
 
   methods: {
     async send() {
-      let event = localStorage.getItem('event')
-      let course = localStorage.getItem('course')
+      let event = localStorage.getItem('event');
+      let course = localStorage.getItem('course');
+      let student = null;
       if (event === 'null') {
         event = null
-      }
+      };
       if (course === 'null') {
-        course = null
-      }
+        course = null;
+      };
+      if (this.$store.state.authUser) {
+        student = this.$store.state.authUser.id;
+      };
       let data = {
-        student: this.$store.state.authUser.id,
+        student: student,
         client: null,
         request_fio: this.request_fio,
         request_phone: this.request_phone,
