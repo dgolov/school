@@ -16,8 +16,8 @@
         <div class="row">
           <div class="col-12">
             <div class="header-mobi-title">
-              <h1 class="header-title">Образовательная платформа ХОД Future Academy</h1>
-              <p class="header-title__desc">Актуальные знания для новичков и профессионалов</p>
+              <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+              <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
             </div>
           </div>
         </div>
