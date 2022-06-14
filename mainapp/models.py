@@ -352,6 +352,7 @@ class Course(models.Model):
         verbose_name='Обучающиеся завершившие курс',
         related_name='is_finished_course'
     )
+    city = models.ForeignKey('City', on_delete=models.SET_NULL, verbose_name='Город', blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name='Доступный курс')
     in_main_page = models.BooleanField(default=False, verbose_name='На главной странице')
     slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
@@ -531,7 +532,7 @@ class Event(models.Model):
     open_doors_day = models.BooleanField(default=False, verbose_name='День открытых дверей')
     title = models.CharField(max_length=150, verbose_name='Title', blank=True, null=True)
     html_desc = models.TextField(verbose_name='Описание для поисковиков', blank=True, null=True)
-    # is_active = models.BooleanField(default=True, verbose_name='Активное мероприятие')
+    city = models.ForeignKey('City', on_delete=models.SET_NULL, verbose_name='Город', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -566,6 +567,7 @@ class News(models.Model):
     date = models.DateField(verbose_name='Дата публикации')
     image = models.ImageField(upload_to='images/news', verbose_name='Изображение', blank=True, null=True)
     slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
+    city = models.ForeignKey('City', on_delete=models.SET_NULL, verbose_name='Город', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -574,3 +576,17 @@ class News(models.Model):
         verbose_name = 'Новости'
         verbose_name_plural = '06. Новости'
         ordering = ['-date']
+
+
+class City(models.Model):
+    """ Модель города
+    """
+    name = models.CharField(max_length=100, verbose_name='Название')
+    slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Город'
+        verbose_name_plural = '06. Города'
