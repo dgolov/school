@@ -155,7 +155,7 @@
               <div class="plan-day_item--name">
                 <img class="play-day_item__brace" src="../assets/images/svg-icons-page2/time/line.svg" alt="line">
                 <img src="../assets/images/svg-icons-page2/time/learn.svg" alt="sport">
-                <span>Занятие по английскому языкуили шахматам</span>
+                <span>Занятие по английскому языку или шахматам</span>
               </div>
             </div>
 
@@ -274,7 +274,7 @@
               <div class="plan-day_item--name">
                 <img class="play-day_item__brace" src="../assets/images/svg-icons-page2/time/line.svg" alt="line">
                 <img src="../assets/images/svg-icons-page2/time/learn.svg" alt="sport">
-                <span>Занятие по английскому языкуили шахматам</span>
+                <span>Занятие по английскому языку или шахматам</span>
               </div>
             </div>
 
@@ -283,7 +283,7 @@
                 <p>13:00<img src="../assets/images/svg-icons-page2/horiz-line.svg" alt="line">14:00</p>
               </div>
               <div class="plan-day_item--name">
-                <img class="play-day_item__brace" src=../assets/images/svg-icons-page2/time/line.svg" alt="line">
+                <img class="play-day_item__brace" src="../assets/images/svg-icons-page2/time/line.svg" alt="line">
                 <img src="../assets/images/svg-icons-page2/time/eat.svg" alt="sport">
                 <span>Обед в кафе</span>
               </div>
