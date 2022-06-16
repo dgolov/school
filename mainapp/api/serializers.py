@@ -725,7 +725,6 @@ class ClientSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     """ Серилизация заявок
     """
-    city = CitySerializer()
 
     class Meta:
         model = Request

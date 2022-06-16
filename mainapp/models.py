@@ -583,6 +583,8 @@ class City(models.Model):
     """
     name = models.CharField(max_length=100, verbose_name='Название')
     slug = models.SlugField(max_length=50, verbose_name='Ссылка', unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=20, verbose_name='Номер телефона', blank=True, null=True)
+    map_frame = models.TextField(verbose_name='Код яндекс карты', blank=True, null=True)
 
     def __str__(self):
         return self.name
