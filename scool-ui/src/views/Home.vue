@@ -340,8 +340,8 @@ import {playerMixin} from "../components/mixins/playerMixin";
 import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
-  title: 'Академия будущего',
-  description: 'Академия будущего',
+  title: 'Академия Будущего',
+  description: 'Академия Будущего',
   name: 'Home',
   components: {
     Navbar, Reviews
