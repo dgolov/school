@@ -403,6 +403,14 @@ class FriendsRequestOutSerializer(serializers.ModelSerializer):
         ]
 
 
+class CitySerializer(serializers.ModelSerializer):
+    """ Серилизация городов
+    """
+    class Meta:
+        model = models.City
+        fields = '__all__'
+
+
 class CategorySerializer(serializers.ModelSerializer):
     """ Серилизация модели категирий курса
     """
@@ -453,6 +461,7 @@ class CourseSerializer(serializers.ModelSerializer):
     teachers = ProfileSerializer(many=True)
     profession = ProfessionSerializer()
     skills = serializers.SerializerMethodField()
+    city = CitySerializer()
     extra_kwargs = {
         'url': {'lookup_field': 'slug'}
     }
@@ -462,7 +471,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
-            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title',
+            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city'
         ]
 
     @staticmethod
@@ -671,6 +680,7 @@ class EventSerializer(serializers.ModelSerializer):
     """
     speakers = ProfileSerializer(many=True)
     days = serializers.SerializerMethodField()
+    city = CitySerializer()
     extra_kwargs = {
         'url': {'lookup_field': 'slug'}
     }
@@ -680,7 +690,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'signature', 'description', 'date', 'speakers', 'image', 'block_size', 'color_hex', 'slug',
             'block_image', 'days', 'text1', 'text2', 'text3', 'text_x', 'text_o', 'text_d', 'text_owl', 'content',
-            'html_desc', 'title', 'open_doors_day',
+            'html_desc', 'title', 'open_doors_day', 'city'
         ]
 
     @staticmethod
@@ -693,6 +703,7 @@ class EventSerializer(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     """ Серилизация новостей
     """
+    city = CitySerializer()
     extra_kwargs = {
         'url': {'lookup_field': 'slug'}
     }
@@ -703,7 +714,7 @@ class NewsSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    """ Серилизация заявок
+    """ Серилизация клиентов
     """
 
     class Meta:
@@ -714,6 +725,7 @@ class ClientSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     """ Серилизация заявок
     """
+
     class Meta:
         model = Request
         fields = '__all__'

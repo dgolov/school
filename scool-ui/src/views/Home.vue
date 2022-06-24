@@ -143,7 +143,7 @@
                 </a>
               </div>
               <div class="col-md-12">
-                <a href="#">
+                <a href="https://facademy-hsecamp.ru/">
                   <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
                        style="background-color: #FFEEF6;">
                     <h2 class="bold my-0">Образовательные программы на базе Высшей Школы Экономики</h2>
@@ -340,8 +340,8 @@ import {playerMixin} from "../components/mixins/playerMixin";
 import {requestsMixin} from "../components/mixins/requestsMixin";
 
 export default {
-  title: 'Академия будущего',
-  description: 'Академия будущего',
+  title: 'Академия Будущего',
+  description: 'Академия Будущего',
   name: 'Home',
   components: {
     Navbar, Reviews
