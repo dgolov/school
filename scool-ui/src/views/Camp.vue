@@ -60,6 +60,35 @@
       </div>
     </section>
 
+    <section class="video">
+      <div class="container">
+        <div class="row justify-content-center" style="position:relative;z-index: 1;">
+          <div class="col-md-12 col-lg-8">
+            <div class="video-wrapper">
+              <div class="video__link" v-if="videoLink">
+                            <span class="video__circle" @click="videoStart()">
+                                <img src="../assets/img/video/play.svg" alt="" class="video__play">
+                            </span>
+              </div>
+              <span class="video-content__triangle video-content-position"></span>
+              <span class="video-content__line-left video-content-position"></span>
+              <span class="video-content__line-right video-content-position"></span>
+              <span class="video-content__cross video-content-position"></span>
+            </div>
+            <div class="wrapper-modal" v-if="wrapperModal">
+              <div class="overlay" id="overlay" @click="videoClose()"></div>
+              <!--noindex-->
+              <iframe class="iframe eff-h" width="560" height="315" src="https://www.youtube.com/embed/-1-z0z4yDDs"
+                      rel="nofollow noopener noreferrer" target="_blank" title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <!--/noindex-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="certificate">
       <div class="certificate-wrapper container">
         <div class="certificate_item">
@@ -353,11 +382,12 @@
 import Navbar from "../components/NavbarMain";
 import Reviews from "../components/Reviews";
 import {requestsMixin} from "../components/mixins/requestsMixin";
+import {playerMixin} from "../components/mixins/playerMixin";
 
 export default {
   name: "Camp",
 
-  mixins: [requestsMixin],
+  mixins: [playerMixin, requestsMixin],
 
   components: {
     Navbar, Reviews
