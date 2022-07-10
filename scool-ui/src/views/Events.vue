@@ -28,7 +28,7 @@
             <div class="open-day d-flex">
               <div class="open-day__inner d-flex">
                 <div class="date">
-                  <span class="date__numder">{{ dateOpenDoors.getDate() }}</span>
+                  <span class="date__numder">{{ new Date(dateOpenDoors).getDate() }}</span>
                   <span class="date__month">{{ formatDate(dateOpenDoors, true) }}</span>
                 </div>
                 <div class="excursion">

@@ -227,32 +227,6 @@
       </div>
     </section>
 
-    <section class="teachers" v-if="teachers">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="reviews-title">Наши люди</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="teachers-wrapp">
-          <div class="carousel" v-for="teacher of teachers">
-            <div class="col-3" v-if="teacher.is_show">
-              <div class="teacher">
-                <div class="teacher__avatar">
-                  <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar">
-                  <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
-                </div>
-                <h4 class="teacher__name">{{ teacher.last_name }} {{ teacher.first_name }}</h4>
-                <p class="teacher__info">{{ teacher.about }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </section>
-
     <section class="our-programs">
       <div class="container">
         <div class="row">

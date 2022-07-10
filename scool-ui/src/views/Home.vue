@@ -5,7 +5,7 @@
 
     <div class="header-wrapper d-none d-lg-block">
       <div class="header">
-        <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+        <h1 class="header-title">Образовательная IT - платформа Academy of the Future</h1>
         <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
       </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-12">
             <div class="header-mobi-title">
-              <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+              <h1 class="header-title">Образовательная IT - платформа Academy of the Future</h1>
               <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
             </div>
           </div>
@@ -101,10 +101,9 @@
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="#">
+                <a href="https://f-academychess.ru">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
-                       style="background-color: #FFCE94;"
-                       @click="$router.push({name: 'Education', params: {'category': 'Шахматы', 'ageGroup': 'children'}})">
+                       style="background-color: #FFCE94;">
                     <img src="../assets/img/cart/3413424.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">Шахматы</h2>
                   </div>
@@ -189,7 +188,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих специалистов.</h3>
+            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих
+              специалистов.</h3>
           </div>
         </div>
       </div>
@@ -200,16 +200,28 @@
         <div class="row">
           <div class="text-gradient-wrapper">
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">33</h3>
-              <p class="expanded__text bold px-1">Курса</p>
+              <h3 class="text-gradient mt-4 mb-0">80</h3>
+              <p class="expanded__text bold px-1">Авторских программ для детей</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">22</h3>
-              <p class="expanded__text bold px-1">Ведущих преподавателя</p>
+              <h3 class="text-gradient mt-4 mb-0">300</h3>
+              <p class="expanded__text bold px-1">Оборудованных мест для занятий</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">1000</h3>
-              <p class="expanded__text bold px-1">Довольных студентов</p>
+              <h3 class="text-gradient mt-4 mb-0">15</h3>
+              <p class="expanded__text bold px-1">Стипендиатов</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-gradient-wrapper">
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">200</h3>
+              <p class="expanded__text bold px-1">Защищенных проектов</p>
+            </div>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">12</h3>
+              <p class="expanded__text bold px-1">Инновационных технологий обучения</p>
             </div>
           </div>
         </div>
@@ -249,7 +261,8 @@
             <div class="news-block news-block-programs py-4 mb-4 eff-h-one" style="background-color: #C5DDFF; ">
               <img src="../assets/img/cart/education.svg">
               <h2 class="bold mb-4">Программы обучения</h2>
-              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти профессию и занятие по
+              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
+                профессию и занятие по
                 душе, изучить новое и получить практические знания, которые помогут получить работу мечты.</p>
               <a href="/education" class="button-open-day button-open-day_home"
                  @click="goToCategory('Education')">
@@ -260,18 +273,19 @@
           <div class="col-md-7">
             <div class="row">
               <div class="col-md-6">
-                <a href="/news">
+                <a href="/contacts">
                   <div class="news-block py-4 mb-4 eff-h-two" style="background-color: #B8EFCF;">
                     <img src="../assets/img/cart/news-main.svg">
-                    <h2 class="bold">Новости академии</h2>
+                    <h2 class="bold">Контакты</h2>
                   </div>
                 </a>
               </div>
               <div class="col-md-6">
-                <a href="">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
+                <a href="career">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFEEF6;">
                     <img src="../assets/img/cart/it-world.svg">
-                    <h2 class="bold">Мир IT</h2>
+                    <h2 class="bold">Карьера</h2>
                   </div>
                 </a>
               </div>
@@ -279,7 +293,7 @@
             <div class="col-md-12">
               <div class="news-block py-4 mb-4 tests eff-h-two" style="background-color: #FFE38E;">
                 <div class="row">
-                  <a href="">
+                  <a href="news">
                     <div class="news-block-wrapp">
                       <div class="col-md-4 news-block-img">
                         <img src="../assets/img/cart/tests.svg" class="test-img-md">
@@ -298,8 +312,6 @@
         </div>
       </div>
     </div>
-
-    <Reviews></Reviews>
 
     <div class="white-section mt-3 mb-5 white-section-welcome">
       <div class="container">
@@ -374,7 +386,7 @@ export default {
           .then(response => (this.categoryList = response.data));
     },
 
-     async loadEventList() {
+    async loadEventList() {
       await axios
           .get(`${this.$store.getters.getServerUrl}/events/`)
           .then(response => (this.eventsList = response.data));
@@ -393,7 +405,7 @@ export default {
     formatDate(date, onlyMonth) {
       let d1 = new Date(date);
       let ms = [
-          'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
+        'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
         'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
       ];
       if (onlyMonth) {

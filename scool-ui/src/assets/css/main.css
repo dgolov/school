@@ -3346,12 +3346,12 @@ ul.town {
 
 	.owl-frame-title,
 	.owl-frame-text {
-		right: 7%;
+		right: 9%;
 		bottom: 255px;
 	}
 
 	.owl-frame-text {
-		max-width: 230px;
+		max-width: 100px;
 	}
 }
 
@@ -3403,10 +3403,6 @@ ul.town {
 		bottom: 215px;
 	}
 }
-
-/*            */
-
-
 
 /* Футер */
 .footer__row a {
@@ -3558,8 +3554,6 @@ ul.town {
 	}
 }
 
-/*          */
-
 /* Стили стр мероприятия */
 
 /* Breadcrumbs */
@@ -3606,15 +3600,11 @@ ul.town {
 	margin: 0;
 }
 
-/*          */
-
 /* Блок день открытых дверей на стр мероприятия */
 .all-events {
 	padding-top: 20px;
 	padding-bottom: 50px;
 }
-
-/*              */
 
 /* Блок карточек 1 */
 .events {
@@ -9953,55 +9943,6 @@ ul.skills_two {
  Там с диапазона 450 начинает вылазить. Я, наверное, на нем сбилась, когда тебе правки давала. Можешь просто заменить с того момента на это:
  */
 
-@media (max-width: 450px) {
-
-	.owl-frame-text,
-	.owl-frame-title {
-		right: 6%;
-		bottom: 247px;
-		max-width: 271px;
-	}
-}
-
-@media (max-width: 420px) {
-
-	.owl-frame-text,
-	.owl-frame-title {
-		right: 7%;
-		bottom: 254px;
-		max-width: 250px;
-	}
-}
-
-@media (max-width: 370px) {
-
-	.owl-frame-text,
-	.owl-frame-title {
-		right: 9%;
-		bottom: 220px;
-		max-width: 205px;
-	}
-
-	.owl-footer-frame {
-		right: 15%;
-		background-size: 53% !important;
-		top: 6px;
-	}
-}
-
-@media (max-width: 321px) {
-	.owl-footer-frame {
-		right: 15%;
-		background-size: 51% !important;
-		top: 6px;
-	}
-
-	.owl-frame-text,
-	.owl-frame-title {
-		right: 10%;
-		bottom: 222px;
-	}
-}
 
 @media (max-width: 311px) {
 
