@@ -5,7 +5,7 @@
 
     <div class="header-wrapper d-none d-lg-block">
       <div class="header">
-        <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+        <h1 class="header-title">Образовательная IT - платформа Academy of the Future</h1>
         <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
       </div>
     </div>
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-12">
             <div class="header-mobi-title">
-              <h1 class="header-title">Образовательная  IT - платформа Academy of the Future</h1>
+              <h1 class="header-title">Образовательная IT - платформа Academy of the Future</h1>
               <p class="header-title__desc">Авторские программы обучения для детей и взрослых</p>
             </div>
           </div>
@@ -188,7 +188,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих специалистов.</h3>
+            <h3 class="bold">Актуальные знания от признанных экспертов рынка для новичков и практикующих
+              специалистов.</h3>
           </div>
         </div>
       </div>
@@ -248,7 +249,8 @@
             <div class="news-block news-block-programs py-4 mb-4 eff-h-one" style="background-color: #C5DDFF; ">
               <img src="../assets/img/cart/education.svg">
               <h2 class="bold mb-4">Программы обучения</h2>
-              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти профессию и занятие по
+              <p class="news-block-text px-3" style="text-align: center">В списке наших курсов вы сможете найти
+                профессию и занятие по
                 душе, изучить новое и получить практические знания, которые помогут получить работу мечты.</p>
               <a href="/education" class="button-open-day button-open-day_home"
                  @click="goToCategory('Education')">
@@ -268,7 +270,8 @@
               </div>
               <div class="col-md-6">
                 <a href="career">
-                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
+                  <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
+                       style="background-color: #FFEEF6;">
                     <img src="../assets/img/cart/it-world.svg">
                     <h2 class="bold">Карьера</h2>
                   </div>
@@ -371,7 +374,7 @@ export default {
           .then(response => (this.categoryList = response.data));
     },
 
-     async loadEventList() {
+    async loadEventList() {
       await axios
           .get(`${this.$store.getters.getServerUrl}/events/`)
           .then(response => (this.eventsList = response.data));
@@ -390,7 +393,7 @@ export default {
     formatDate(date, onlyMonth) {
       let d1 = new Date(date);
       let ms = [
-          'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
+        'января', 'февряля', 'марта', 'апреля', 'мая', 'июня',
         'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
       ];
       if (onlyMonth) {
