@@ -214,4 +214,54 @@ export default {
 .footer-city {
   display: inline;
 }
+
+@media (max-width: 450px) {
+
+  .owl-frame-text,
+  .owl-frame-title {
+    right: 6%;
+    bottom: 247px;
+    max-width: 271px;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .owl-frame-text,
+  .owl-frame-title {
+    right: 7%;
+    bottom: 254px;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 370px) {
+
+  .owl-frame-text,
+  .owl-frame-title {
+    right: 9%;
+    bottom: 220px;
+    max-width: 205px;
+  }
+
+  .owl-footer-frame {
+    right: 15%;
+    background-size: 53% !important;
+    top: 6px;
+  }
+}
+
+@media (max-width: 321px) {
+  .owl-footer-frame {
+    right: 15%;
+    background-size: 51% !important;
+    top: 6px;
+  }
+
+  .owl-frame-text,
+  .owl-frame-title {
+    right: 10%;
+    bottom: 222px;
+  }
+}
 </style>
