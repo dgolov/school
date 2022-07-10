@@ -200,16 +200,28 @@
         <div class="row">
           <div class="text-gradient-wrapper">
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">33</h3>
-              <p class="expanded__text bold px-1">Курса</p>
+              <h3 class="text-gradient mt-4 mb-0">80</h3>
+              <p class="expanded__text bold px-1">Авторских программ для детей</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">22</h3>
-              <p class="expanded__text bold px-1">Ведущих преподавателя</p>
+              <h3 class="text-gradient mt-4 mb-0">300</h3>
+              <p class="expanded__text bold px-1">Оборудованных мест для занятий</p>
             </div>
             <div class="col-md-4">
-              <h3 class="text-gradient mt-4 mb-0">1000</h3>
-              <p class="expanded__text bold px-1">Довольных студентов</p>
+              <h3 class="text-gradient mt-4 mb-0">15</h3>
+              <p class="expanded__text bold px-1">Стипендиатов</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-gradient-wrapper">
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">200</h3>
+              <p class="expanded__text bold px-1">Защищенных проектов</p>
+            </div>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">12</h3>
+              <p class="expanded__text bold px-1">Инновационных технологий обучения</p>
             </div>
           </div>
         </div>
