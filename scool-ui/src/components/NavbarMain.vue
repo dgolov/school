@@ -1,6 +1,6 @@
 <template>
   <div class="nav_bar" id="navbar">
-    <nav class="nav__mobile"></nav>
+    <nav class="nav__mobile">123</nav>
     <div class="container">
       <div class="row navbar__inner">
         <div class="col-md-2" style="height: 80px; padding-top: 8px">
@@ -47,12 +47,17 @@
                       stroke="#00093C" stroke-width="2"/>
                   <circle cx="8.5" cy="7.5" r="2.5" fill="#00093C"/>
                 </svg>
-                <a href="#" class="bold">
-                  Дзержинск
+                <a href="#" class="bold" id="dropdownMenuLink" @click="openCity()">
+                  {{ $store.state.city }}
                   <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1L5 5L9 1" stroke="#00093C" stroke-width="2" stroke-linecap="round"/>
                   </svg>
                 </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" v-if="getCity">
+                  <li><a class="dropdown-item" href="#" @click="setCity('Дзержинск')">Дзержинск</a></li>
+                  <li><a class="dropdown-item" href="#" @click="setCity('Нижний Новгород')">Нижний Новгород</a></li>
+                  <li><a class="dropdown-item" href="#" @click="setCity('Online')">Online филиал</a></li>
+                </ul>
               </li>
               <li>
                 <a href="tel:88005500972" class="bold">{{ $store.state.phone }}</a>
@@ -92,6 +97,7 @@
 <script>
 import NavLogin from "./NavLogin";
 import {redirect} from "./mixins/redirect";
+import {cityMixin} from "./mixins/cityMixin";
 
 export default {
   name: "Navbar",
@@ -103,7 +109,7 @@ export default {
   data() {
     return {
       user: {},
-      authenticated: false
+      authenticated: false,
     }
   },
 
@@ -112,7 +118,7 @@ export default {
     this.authenticated = this.$store.state.isAuthenticated;
   },
 
-  mixins: [redirect],
+  mixins: [redirect, cityMixin],
 
   methods: {
     getAvatar() {
@@ -143,4 +149,35 @@ export default {
   text-align: right;
 }
 
+.js .nav__mobile-0.opened {
+  max-height: 508px !important;
+}
+.js .nav__mobile-0.opened.dropdown-active {
+  max-height: 9999px !important;
+}
+
+.navbar__menu ul:not(.dropdown-menu) {
+  display: inline;
+}
+
+.navbar__menu li.menu__item {
+  margin-left: 4pt;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: inline-block;
+}
+
+.nav__mobile ul:not(.dropdown-menu) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: block;
+  list-style: none;
+  background-color: #333c44;
+  color: #fff;
+}
+
+.nav__mobile .dropdown-menu li {
+  width: 100%;
+}
 </style>

@@ -17,6 +17,7 @@ export default new Vuex.Store({
     webSocketUrl: "wss://109.172.27.159:8001",
     isMainPage: false,
     error: '',
+    city: 'Дзержинск',
     phone: '8 800 550-09-72',
     address: 'г. Дзержинск, пл. Дзержинского 2',
   },
@@ -28,6 +29,12 @@ export default new Vuex.Store({
     },
     setProfileInfo(state, { profileInfo }) {
       Vue.set(state, "profileInfo", profileInfo);
+    },
+    setCity(state, { city }) {
+      Vue.set(state, "city", city);
+    },
+    setAddress(state, { address }) {
+      Vue.set(state, "address", address);
     },
     setAgeGroup(state, { ageGroup }) {
       Vue.set(state, "ageGroup", ageGroup);
