@@ -101,10 +101,9 @@
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="#">
+                <a href="https://f-academychess.ru">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
-                       style="background-color: #FFCE94;"
-                       @click="$router.push({name: 'Education', params: {'category': 'Шахматы', 'ageGroup': 'children'}})">
+                       style="background-color: #FFCE94;">
                     <img src="../assets/img/cart/3413424.svg" style="width: 70px; height: 70px;">
                     <h2 class="bold">Шахматы</h2>
                   </div>
@@ -260,18 +259,18 @@
           <div class="col-md-7">
             <div class="row">
               <div class="col-md-6">
-                <a href="/news">
+                <a href="/contacts">
                   <div class="news-block py-4 mb-4 eff-h-two" style="background-color: #B8EFCF;">
                     <img src="../assets/img/cart/news-main.svg">
-                    <h2 class="bold">Новости академии</h2>
+                    <h2 class="bold">Контакты</h2>
                   </div>
                 </a>
               </div>
               <div class="col-md-6">
-                <a href="">
+                <a href="career">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two" style="background-color: #FFEEF6;">
                     <img src="../assets/img/cart/it-world.svg">
-                    <h2 class="bold">Мир IT</h2>
+                    <h2 class="bold">Карьера</h2>
                   </div>
                 </a>
               </div>
@@ -279,7 +278,7 @@
             <div class="col-md-12">
               <div class="news-block py-4 mb-4 tests eff-h-two" style="background-color: #FFE38E;">
                 <div class="row">
-                  <a href="">
+                  <a href="news">
                     <div class="news-block-wrapp">
                       <div class="col-md-4 news-block-img">
                         <img src="../assets/img/cart/tests.svg" class="test-img-md">
@@ -298,8 +297,6 @@
         </div>
       </div>
     </div>
-
-    <Reviews></Reviews>
 
     <div class="white-section mt-3 mb-5 white-section-welcome">
       <div class="container">
