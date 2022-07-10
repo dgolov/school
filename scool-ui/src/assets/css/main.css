@@ -2916,7 +2916,7 @@ ul.town {
 .owl-frame-title,
 .owl-frame-text {
 	font-weight: 600;
-	font-size: 24px;
+	font-size: 22px;
 	position: relative;
 	z-index: 1;
 	bottom: 160px;
@@ -3312,7 +3312,7 @@ ul.town {
 	}
 
 	.owl-frame-title {
-		font-size: 22px;
+		font-size: 20px;
 	}
 }
 
