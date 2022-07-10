@@ -738,6 +738,8 @@ export default {
         .get(`${this.$store.getters.getServerUrl}/courses/${this.slug}`)
         .then((response) => (this.course = response.data));
       this.contentList = this.course.content.split(".");
+      document.title = this.course.title
+      document.querySelector('meta[name="description"]').setAttribute("content", this.course.html_desc);
     },
 
     async pay() {
