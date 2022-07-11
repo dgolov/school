@@ -110,10 +110,10 @@
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="#">
+                <a href="/news">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
-                       style="background-color: #DDDDFF;"
-                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">
+                       style="background-color: #DDDDFF;">
+<!--                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">-->
                     <img src="../assets/img/cart/social_bitcoin_casino_cryptocurrency_icon_133203.svg"
                          style="width: 70px; height: 70px;">
                     <h2 class="bold">Криптовалюта</h2>
