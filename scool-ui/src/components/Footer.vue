@@ -14,7 +14,7 @@
                     <div class="owl-footer-text-wrapp">
                       <span class="owl-footer-frame"></span>
                       <h4 class="owl-frame-title">Помочь с выбором?</h4>
-                      <p class="owl-frame-text"> Оставьте заявку и наши специалисты свяжутся с вами, ответят на все
+                      <p class="owl-frame-text"> Оставьте заявку, и наши специалисты свяжутся с вами, ответят на все
                         вопросы и подберут подходящий вариант обучения.</p>
                     </div>
                   </div>
