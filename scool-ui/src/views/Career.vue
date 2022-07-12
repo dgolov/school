@@ -40,7 +40,7 @@
           <div class="owl owl-events">
             <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events ">
             <span class="owl__frame-events olw__career"></span>
-            <div class="owl-text owl-text-events olw-text-career">
+            <div class="owl-text owl-text-events">
               <p class="owl-desc owl-desc-events">С нами вы найдёте работу о которой мечтали</p>
             </div>
           </div>
@@ -147,38 +147,33 @@
           <div class="col-md-5 col-lg-4">
             <div class="level">
               <h5 class="level__name">Графический дизайнер</h5>
-              <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo.</p>
               <span class="level__price">от 80 000 ₽ в месяц</span>
             </div>
           </div>
           <div class="col-md-5 col-lg-4">
             <div class="level level_green">
               <h5 class="level__name">Веб-разработчик</h5>
-              <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo.</p>
               <span class="level__price">от 90 000 ₽ в месяц</span>
             </div>
           </div>
           <div class="col-md-5 col-lg-4">
             <div class="level level_orange">
-              <h5 class="level__name">Графический дизайнер</h5>
-              <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo.</p>
-              <span class="level__price">от 80 000 ₽ в месяц</span>
+              <h5 class="level__name">Java разработчик</h5>
+              <span class="level__price">от 100 000 ₽ в месяц</span>
             </div>
           </div>
-          <div class="col-md-5 col-lg-4">
-            <div class="level level-blue">
-              <h5 class="level__name">Графический дизайнер</h5>
-              <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo.</p>
-              <span class="level__price">от 80 000 ₽ в месяц</span>
-            </div>
-          </div>
-          <div class="col-md-5 col-lg-4">
-            <div class="level level-yellow">
-              <h5 class="level__name">Веб-разработчик</h5>
-              <p class="level__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tellus feugiat, posuere magna et, scelerisque leo.</p>
-              <span class="level__price">от 90 000 ₽ в месяц</span>
-            </div>
-          </div>
+<!--          <div class="col-md-5 col-lg-4">-->
+<!--            <div class="level level-blue">-->
+<!--              <h5 class="level__name">Графический дизайнер</h5>-->
+<!--              <span class="level__price">от 80 000 ₽ в месяц</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-5 col-lg-4">-->
+<!--            <div class="level level-yellow">-->
+<!--              <h5 class="level__name">Веб-разработчик</h5>-->
+<!--              <span class="level__price">от 90 000 ₽ в месяц</span>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
@@ -217,8 +212,6 @@
       </div>
     </div>
   </section>
-
-  <Reviews></Reviews>
 
   <section class="our-values e-c-course our-value-carrer">
     <div class="container">

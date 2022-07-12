@@ -76,7 +76,7 @@
                 <a href="/summer-camp">
                   <div class="news-block news-block-world py-5 mb-4 white-text eff-h-two"
                        style="background-color: #B8EFCF;">
-                    <h2 class="bold my-0">IT летние каникулы в Академии Будущего</h2>
+                    <h2 class="bold my-0">IT каникулы в Академии Будущего</h2>
                   </div>
                 </a>
               </div>
@@ -86,7 +86,7 @@
                        style="background-color: #FFEEF6;"
                        @click="$router.push({name: 'Education', params: {'category': 'Программирование', 'ageGroup': 'adults'}})">
                     <img src="../assets/img/cart/e_learning_monitor_icon_187419.svg" style="width: 70px; height: 70px;">
-                    <h2 class="bold">IT обучение</h2>
+                    <h2 class="bold">IT-обучение</h2>
                   </div>
                 </a>
               </div>
@@ -110,10 +110,10 @@
                 </a>
               </div>
               <div class="col-md-4">
-                <a href="#">
+                <a href="/news">
                   <div class="news-block news-block-world py-4 mb-4 white-text eff-h-two"
-                       style="background-color: #DDDDFF;"
-                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">
+                       style="background-color: #DDDDFF;">
+<!--                       @click="$router.push({name: 'Education', params: {'category': 'Криптовалюта', 'ageGroup': 'adults'}})">-->
                     <img src="../assets/img/cart/social_bitcoin_casino_cryptocurrency_icon_133203.svg"
                          style="width: 70px; height: 70px;">
                     <h2 class="bold">Криптовалюта</h2>

@@ -176,16 +176,16 @@
             <h3 class="mb-5 program-events-title">Три верных друга (три кита):</h3>
             <div class="events-title-wrapp row">
               <div class="col-md-4">
+                <span class="events-title__cross mb-4"></span>
+                <h3 class="events-title__subject">Хорошие люди</h3>
+              </div>
+              <div class="col-md-4">
                 <span class="events-title__circle mb-4"></span>
                 <h3 class="events-title__subject">Опыт</h3>
               </div>
               <div class="col-md-4">
                 <span class="events-title__triangle mb-4"></span>
-                <h3 class="events-title__subject">Целеустремленность</h3>
-              </div>
-              <div class="col-md-4">
-                <span class="events-title__cross mb-4"></span>
-                <h3 class="events-title__subject">Хорошие люди</h3>
+                <h3 class="events-title__subject">Достижения</h3>
               </div>
             </div>
           </div>
@@ -244,17 +244,27 @@
             </div>
           </div>
           <div class="text-gradient-wrapper">
-            <div class="col-md-3">
-              <h3 class="text-gradient mt-4 mb-0">33</h3>
-              <p class="expanded__text bold px-1 o-p">Курса</p>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">80</h3>
+              <p class="expanded__text bold px-1">Авторских программ для детей</p>
             </div>
-            <div class="col-md-3 t-g">
-              <h3 class="text-gradient mt-4 mb-0">22</h3>
-              <p class="expanded__text bold px-1 o-p">Ведущих преподавателя</p>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">300</h3>
+              <p class="expanded__text bold px-1">Оборудованных мест для занятий</p>
             </div>
-            <div class="col-md-5">
-              <h3 class="text-gradient mt-4 mb-0">1000</h3>
-              <p class="expanded__text bold px-1 o-p">Довольных студентов</p>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">15</h3>
+              <p class="expanded__text bold px-1">Стипендиатов</p>
+            </div>
+          </div>
+          <div class="text-gradient-wrapper">
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">200</h3>
+              <p class="expanded__text bold px-1">Защищенных проектов</p>
+            </div>
+            <div class="col-md-4">
+              <h3 class="text-gradient mt-4 mb-0">12</h3>
+              <p class="expanded__text bold px-1">Инновационных технологий обучения</p>
             </div>
           </div>
         </div>
@@ -303,25 +313,25 @@
           </div>
           <div class="click-on-wrapp">
             <div class="col-lg-3">
-              <a href="#" class="click-cart click-cart_blue eff-h-four">
+              <a href="/education/novichok" class="click-cart click-cart_blue eff-h-four">
                 <img src="../assets/img/click-on/click-on-one.svg" alt="one-icon" class="click-cart__icon">
                 <p class="click-cart__info">Я хочу, чтобы мой ребенок был успешным</p>
               </a>
             </div>
             <div class="col-lg-3">
-              <a href="#" class="click-cart click-cart_yellow eff-h-four">
+              <a href="/education/menedzher-po-rabote-s-marketplejsami" class="click-cart click-cart_yellow eff-h-four">
                 <img src="../assets/img/click-on/click-on-two.svg" alt="two-icon" class="click-cart__icon">
                 <p class="click-cart__info">Я хочу больше зарабатывать</p>
               </a>
             </div>
             <div class="col-lg-3">
-              <a href="#" class="click-cart click-cart_violet eff-h-four">
+              <a href="/education/polzovatel" class="click-cart click-cart_violet eff-h-four">
                 <img src="../assets/img/click-on/click-on-three.svg" alt="three-icon" class="click-cart__icon">
                 <p class="click-cart__info">Мой ребенок не выпускает гаджет из рук</p>
               </a>
             </div>
             <div class="col-lg-3">
-              <a href="#" class="click-cart click-cart_green eff-h-four">
+              <a href="/send-request" class="click-cart click-cart_green eff-h-four">
                 <img src="../assets/img/click-on/click-on-four.svg" alt="four-icon" class="click-cart__icon">
                 <p class="click-cart__info">Я хочу стать айтишником</p>
               </a>
