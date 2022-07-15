@@ -180,13 +180,10 @@
           <div class="col-12" v-if="course.skills">
             <h2 class="program-events-title">Вы научитесь:</h2>
           </div>
-          <div class="col-md-12 col-lg-9" v-if="course.skills">
-            <ul class="skills">
-              <li class="skills__item" v-for="skill in course.skills">
+              <div class="col-md-6 my-4" v-if="course.skills" v-for="skill in course.skills">
+                <img src="../assets/img/skills/skills.svg" class="mr-5">
                 {{ skill.text }}
-              </li>
-            </ul>
-          </div>
+              </div>
         </div>
       </div>
     </section>
