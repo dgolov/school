@@ -1,6 +1,6 @@
 <template>
   <div class="nav_bar" id="navbar">
-    <nav class="nav__mobile">123</nav>
+    <nav class="nav__mobile"></nav>
     <div class="container">
       <div class="row navbar__inner">
         <div class="col-md-2" style="height: 80px; padding-top: 8px">
