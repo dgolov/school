@@ -31,7 +31,7 @@ class Group(models.Model):
     """ Модель группы обучающихся
     """
     name = models.CharField(max_length=50, verbose_name='Название группы')
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Преподаватель')
+    courses = models.ManyToManyField('Course', verbose_name='Курсы', blank=True, related_name='group_courses')
     manager = models.ForeignKey(
         'management.Staff',
         on_delete=models.SET_NULL,
