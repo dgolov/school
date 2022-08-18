@@ -11,10 +11,31 @@ class GroupMixin:
     """
     @staticmethod
     def update_students_group(new_group, request) -> None:
+        """ Добавляет группу в список групп выбранным студентам
+        :param new_group: Созданная группа
+        :param request: Объект запроса содержит в себе список студентов
+        """
         students_id_list = request.POST.getlist('students')
         for student_id in students_id_list:
-            student = Student.objects.get(pk=int(student_id))
-            student.group_list.add(new_group)
+            try:
+                student = Student.objects.get(pk=int(student_id))
+                student.group_list.add(new_group)
+            except Student.DoesNotExist:
+                continue
+
+    @staticmethod
+    def update_teachers_group(new_group, request) -> None:
+        """ Добавляет группу в список групп выбранным преподавателям
+        :param new_group: Созданная группа
+        :param request: Объект запроса содержит в себе список преподавателей
+        """
+        teachers_id_list = request.POST.getlist('teachers')
+        for teacher_id in teachers_id_list:
+            try:
+                teacher = Teacher.objects.get(pk=int(teacher_id))
+                teacher.group_list.add(new_group)
+            except Student.DoesNotExist:
+                continue
 
 
 class CourseMixin:

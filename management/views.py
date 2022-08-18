@@ -944,14 +944,24 @@ class CreateGroupView(CreateView, GroupMixin):
         context = super(CreateGroupView, self).get_context_data()
         context['title'] = 'Добавление новой группы'
         context['student_list'] = Student.objects.all()
+        context['course_list'] = Course.objects.all()
+        context['teacher_list'] = Teacher.objects.all()
         return context
 
     def form_valid(self, form):
         if form.is_valid():
             new_group = form.save()
             new_group.manager = self.request.user.staff
+            courses_id_list = self.request.POST.getlist('courses')
+            for course_id in courses_id_list:
+                try:
+                    course = Course.objects.get(pk=int(course_id))
+                    new_group.courses.add(course)
+                except Course.DoesNotExist:
+                    continue
             new_group.save()
             self.update_students_group(new_group, self.request)
+            self.update_teachers_group(new_group, self.request)
         return HttpResponseRedirect('/api/crm/groups')
 
 

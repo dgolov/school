@@ -607,16 +607,10 @@ class GroupForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
-    teacher = forms.ModelChoiceField(
-        queryset=Teacher.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
-        )
-    )
 
     class Meta:
         model = Group
-        fields = ('name', 'teacher')
+        fields = ('name', )
 
 
 class CostCategoryForm(forms.ModelForm):
