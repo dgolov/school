@@ -23,9 +23,9 @@ class ProfileAdmin(admin.ModelAdmin):
 class GroupAdmin(admin.ModelAdmin):
     """ Отображение списка групп в админке
     """
-    list_display = ['id', 'name', 'teacher']
+    list_display = ['id', 'name']
     list_display_links = ['name']
-    search_fields = ['teacher__user__last_name', 'teacher__user__first_name', 'teacher__middle_name', 'name']
+    search_fields = ['name']
 
 
 @admin.register(models.StudentAgeGroup)
