@@ -13,13 +13,19 @@ export default new Vuex.Store({
     ageGroup: 'children',
     refreshJwt: localStorage.getItem("refresh_token"),
     refreshStatus: false,
-    backendUrl: "/api",
-    webSocketUrl: "wss://109.172.27.159:8001",
+    // backendUrl: "/api",
+    backendUrl: "http://127.0.0.1:8000/api",
+    // webSocketUrl: "ws://80.78.253.102:8001",
+    // webSocketUrl: "ws://109.172.27.159:8001",
+    webSocketUrl: "ws://127.0.0.1:8001",
     isMainPage: false,
     error: '',
     city: 'Дзержинск',
-    phone: '8 800 550-09-72',
+    phone: '8 800 550 09 72',
     address: 'г. Дзержинск, пл. Дзержинского 2',
+    wa: 'https://wa.me/79870864156?text=',
+    vb: 'https://viber.click/79870864156',
+    
   },
 
   mutations: {
@@ -36,6 +42,15 @@ export default new Vuex.Store({
     setAddress(state, { address }) {
       Vue.set(state, "address", address);
     },
+    
+    setWA(state, { wa }) {
+      Vue.set(state, "wa", wa);
+    },
+    
+    setVB(state, { vb }) {
+      Vue.set(state, "vb", vb);
+    },
+    
     setAgeGroup(state, { ageGroup }) {
       Vue.set(state, "ageGroup", ageGroup);
     },

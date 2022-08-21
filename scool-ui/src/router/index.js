@@ -4,13 +4,29 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from "../views/Auth";
 import Profile from "../views/Profile/Profile";
+
 import Education from "../views/Education";
+import EducationNew from "../views/EducationNew";
 import EducationSingle from "../views/EducationSingle";
+import EducationBeginner from "../views/EducationBeginner";
+import EducationUser from "../views/EducationUser";
+import EducationProf from "../views/EducationProf";
+import EducationCheater from "../views/EducationCheater";
+import EducationEnglish from "../views/EducationEnglish";
+
 import ChessSingleCourse from "../views/ChessSingleCourse";
+
 import Events from "../views/Events";
+import EventsNew from "../views/EventsNew";
+
 import About from "../views/About";
+import AboutNew from "../views/AboutNew";
+
 import News from "../views/News";
+
 import Contacts from "../views/Contacts";
+import ContactsNew from "../views/ContactsNew";
+
 import MyCourses from "../views/Profile/MyCourses";
 import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
@@ -34,10 +50,15 @@ import GroupChatSettings from "../views/Messages/GroupChatSettings";
 import EventSingle from "../views/EventSingle";
 import Career from "../views/Career";
 import Requests from "../views/Requests";
+
 import Reviews from "../views/Reviews";
+import ReviewsNew from "../views/ReviewsNew";
+
 import Camp from "../views/Camp"
 import PageNotFound from "../views/PageNotFound"
 
+//Точка для тестирования новой верстки
+import NewHome from "../views/newHome.vue"
 
 Vue.use(VueRouter)
 
@@ -45,7 +66,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: NewHome,
+	meta:{
+    	layout: "082022-layout"
+    }    
   },
   {
     path: '/index.php',
@@ -56,10 +80,27 @@ const routes = [
     redirect: { name: 'Home' }
   },
   {
-    path: '/about',
+    path: '/newhome',
+    name: 'NewHome',
+    component: Home,
+  },
+  {
+    path: '/aboutold',
     name: 'About',
     component: About
   },
+  
+  {
+    path: '/about',
+    name: 'AboutNew',
+    component: AboutNew,
+	meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+  
+  
   {
     path: '/auth',
     name: "Auth",
@@ -183,34 +224,113 @@ const routes = [
     props: true
   },
   {
-    path: '/education',
-    name: 'Education',
+    path: '/educationold',
+    name: 'EducationOld',
     component: Education,
     props: true
   },
+
+  {
+    path: '/education',
+    name: 'Education',
+    component: EducationNew,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+
+  {
+    path: '/education/beginner',
+    name: 'EducationBeginner',
+    component: EducationBeginner,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/user',
+    name: 'EducationUser',
+    component: EducationUser,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/prof',
+    name: 'EducationProf',
+    component: EducationProf,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/cheater',
+    name: 'EducationCheater',
+    component: EducationCheater,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/english',
+    name: 'EducationEnglish',
+    component: EducationEnglish,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
   {
     path: '/education/:slug',
     name: 'EducationSingle',
     component: EducationSingle,
     props: true
   },
+  
   {
     path: '/chess/:slug',
     name: 'ChessSingle',
     component: ChessSingleCourse,
     props: true
   },
+  
   {
-    path: '/events',
+    path: '/eventsold',
     name: 'Events',
     component: Events
   },
+
+  {
+    path: '/events',
+    name: 'EventsNew',
+    component: EventsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+  
   {
     path: '/events/:slug',
     name: 'EventSingle',
     component: EventSingle,
     props: true
   },
+  
   {
     path: '/news',
     name: 'News',
@@ -222,21 +342,42 @@ const routes = [
     component: News,
     props: true
   },
+  
   {
-    path: '/contacts',
+    path: '/contactsold',
     name: 'Contacts',
     component: Contacts
   },
+
+  {
+    path: '/contacts',
+    name: 'ContactsNew',
+    component: ContactsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+  
   {
     path: '/career',
     name: 'Career',
     component: Career
   },
   {
-    path: '/reviews',
+    path: '/reviewsold',
     name: 'Reviews',
     component: Reviews
   },
+  
+  {
+    path: '/reviews',
+    name: 'ReviewsNew',
+    component: ReviewsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+    
   {
     path: '/send-request',
     name: 'Requests',
