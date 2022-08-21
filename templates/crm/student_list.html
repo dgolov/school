@@ -1,0 +1,51 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card-title mb-4">
+        <h4>Список студентов</h4>
+    </div>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="flex-grow-1 search-bar">
+                        <div class="input-group">
+                            <div class="input-group-prepend search-arrow-back">
+                                <button class="btn btn-search-back" type="button"><i class="bx bx-arrow-back"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control" placeholder="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-search" type="button"><i class="lni lni-search-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a type="button" href="{% url 'create_student' %}" class="btn btn-outline-primary m-1 px-5"
+                       style="float: right;"><i class="bx bx-user mr-1"></i>Добавить студента</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">ФИО</th>
+                        <th scope="col">Телефон</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for student in student_list %}
+                        <tr>
+                            <td><a href="/api/crm/students/{{ student.pk }}">{{ student }}</a></td>
+                            <td>{{ student.phone }}</td>
+                            <td>{{ student.user.email }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

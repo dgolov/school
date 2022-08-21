@@ -94,3 +94,27 @@ class FilterMixin:
         else:
             date_to = request.GET.get("date_to")
         return [date_from, date_to]
+
+
+class TeacherMixin:
+    """ Миксин для редактирования преподавателей
+    """
+    @staticmethod
+    def update_teacher_groups(teacher, request) -> None:
+        """ Добавляет группу в список групп преподавателю
+        :param teacher: преподаватель
+        :param request: Объект запроса содержит в себе список курсов
+        """
+        group_list = request.POST.getlist('groups')
+        for group in group_list:
+            teacher.group_list.add(group)
+
+    @staticmethod
+    def update_teacher_courses(teacher, request) -> None:
+        """ Добавляет группу в список групп преподавателю
+        :param teacher: преподаватель
+        :param request: Объект запроса содержит в себе список групп
+        """
+        course_list = request.POST.getlist('courses')
+        for course in course_list:
+            teacher.courses.add(course)

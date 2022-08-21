@@ -180,17 +180,19 @@ export default {
     },
 
     goTo(course) {
-      if (course.category.name !== "Шахматы") {
+      if (course.name == "Новичок") {
+    		window.location.href = '/education/beginner';
+    		return true;
+   	  }
+    	
+      if (course.category.name == "Шахматы") {
+  		window.location.href = 'https://f-academychess.ru';
+      } else {
         this.$router.push({
           name: "EducationSingle",
           params: { id: course.id, slug: course.slug },
         });
-      } else {
-        this.$router.push({
-          name: "ChessSingle",
-          params: { id: course.id, slug: course.slug },
-        });
-      }
+      } 
       window.scrollTo(0, 0);
     },
 
