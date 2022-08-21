@@ -14,7 +14,7 @@
       <input class="input" v-model="request_email" type="text" name="request_email" placeholder="Введите email..." required>
       <textarea class="input" v-model="comment"  name="comment"
                 placeholder="Комментарий..." required style="border-radius: 5px; padding: 10pt 20pt;"></textarea>
-      <button type="button" class="button button__accent w-100" @click="send()">Отправить заявку</button>
+      <button type="submit" class="button button__accent w-100" @click="send()">Отправить заявку</button>
     </form>
   </div>
 </div>
@@ -91,7 +91,7 @@ export default {
         course: course,
         event: event
       }
-      console.log(data)
+      
       axios
           .post(`${this.$store.getters.getServerUrl}/requests/`, data)
           .then((response) => {
