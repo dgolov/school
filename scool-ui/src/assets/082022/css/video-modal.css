@@ -1,0 +1,68 @@
+.video-frame {
+	width: 100%;
+	height: 100%;
+}
+
+.video-modal-place {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.video-modal-header {
+	position: relative;
+	width: 100%;
+}
+
+.video-modal-close {
+	color: #FFF;
+	position: absolute;
+	top: -35px;
+	right: 0;
+	width: 30px;
+	height: 30px;
+}
+
+.video-modal-close svg {
+	width: 30px;
+	height: 30px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.5;
+	stroke-linejoin: bevel;
+	stroke-linecap: round;
+	pointer-events: none;
+}
+
+.video-modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	width: 100vw;
+	height: 100vh;
+	max-width: 960px;
+	max-height: 540px;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.video-modal-response .video-modal-content {
+	max-width: 444px;
+	max-height: 790px;
+}
+
+
+.modal-mask {
+	position: fixed;
+	z-index: 9998;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, .8);
+	display: table;
+	transition: opacity .3s ease;
+}
