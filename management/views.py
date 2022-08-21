@@ -853,6 +853,72 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
         return HttpResponseRedirect(f'/api/crm/teachers')
 
 
+class StudentListView(ListView):
+    """ Список студентов в CRM
+    """
+    model = Student
+    template_name = 'crm/student_list.html'
+    context_object_name = 'student_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        context['title'] = 'Студенты'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager' \
+                or self.request.user.staff.user_group == 'hr':
+            return Student.objects.all()
+        else:
+            return None
+
+
+class StudentDetailView(DetailView):
+    """ Детальное представление студента в CRM
+    """
+    model = Student
+    template_name = 'crm/student_detail.html'
+    context_object_name = 'student'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StudentDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class CreateStudentView(FormView):
+    """ Регистрация новго студента в CRM
+    """
+    template_name = 'crm/create_student.html'
+    form_class = forms.CreateTeacherForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateStudentView, self).get_context_data()
+        context['title'] = 'Регистрация нового студента'
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email']
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Student.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group='student'
+            )
+        return HttpResponseRedirect('/api/crm/students')
+
+
 class StaffListView(ListView):
     """ Список сотрудников в CRM
     """
