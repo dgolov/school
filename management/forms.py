@@ -588,6 +588,36 @@ class CreateTeacherForm(forms.Form):
     )
 
 
+class UpdateTeacherForm(forms.ModelForm):
+    """ Форма редактирования преподавателя """
+    middle_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите отчество...'}
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите номер телефона...'}
+        )
+    )
+    education = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите образование...'}
+        )
+    )
+    professional_activity = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите профессиональную деятельность...'}
+        )
+    )
+
+    class Meta:
+        model = Teacher
+        fields = ('middle_name', 'phone', 'education', 'professional_activity')
+
+
 class CreateStaffForm(CreateTeacherForm):
     """ Форма регистрации сотрудника в CRM
     """

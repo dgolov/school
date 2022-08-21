@@ -52,6 +52,7 @@ urlpatterns = [
     path('teachers/', management.TeacherListView.as_view(), name='teachers'),
     path('teachers/<int:pk>/', management.TeacherDetailView.as_view(), name='teacher_detail'),
     path('teachers/create/', management.CreateTeacherView.as_view(), name='create_teacher'),
+    path('teachers/update/<int:pk>/', management.UpdateTeacherView.as_view(), name='update_teacher'),
     path('students/', management.TeacherListView.as_view(), name='students'),
     path('students/<int:pk>/', management.TeacherDetailView.as_view(), name='student_detail'),
     path('staffs/', management.StaffListView.as_view(), name='staffs'),

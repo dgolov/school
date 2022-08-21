@@ -22,7 +22,7 @@ from management.models import (
     CostCategory,
     Staff
 )
-from management.mixins import GroupMixin, CourseMixin, FilterMixin
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 from datetime import datetime
@@ -708,7 +708,7 @@ class CreateTimeTableView(CreateView):
 
 
 class UpdateTimeTableView(UpdateView):
-    """ Редактирование записа рассписания в CRM
+    """ Редактирование записи рассписания в CRM
     """
     model = Timetable
     template_name = 'crm/update_timetable.html'
@@ -825,6 +825,32 @@ class CreateTeacherView(FormView):
                 user_group='teacher'
             )
         return HttpResponseRedirect('/api/crm/teachers')
+
+
+class UpdateTeacherView(UpdateView, TeacherMixin):
+    """ Редактирование преподавателя в CRM
+    """
+    model = Teacher
+    template_name = 'crm/update_teacher.html'
+    form_class = forms.UpdateTeacherForm
+    context_object_name = 'teacher'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateTeacherView, self).get_context_data()
+        context['teacher'] = self.get_object()
+        context['title'] = 'Редактирование преподавателя'
+        context['group_list'] = Group.objects.all()
+        context['course_list'] = Course.objects.all()
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            teacher = self.get_object()
+            self.update_teacher_groups(teacher, self.request)
+            self.update_teacher_courses(teacher, self.request)
+            return HttpResponseRedirect(f'/api/crm/teachers/{teacher.pk}')
+        return HttpResponseRedirect(f'/api/crm/teachers')
 
 
 class StaffListView(ListView):
