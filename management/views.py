@@ -274,11 +274,11 @@ class RequestListView(FilterMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='online')
+            queryset = Request.objects.filter(type_request='online').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
             queryset = Request.objects.filter(
                 Q(manager=self.request.user.staff) |
-                Q(status='new')).filter(type_request='online')
+                Q(status='new')).filter(type_request='online').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -299,9 +299,10 @@ class OutCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(type_request='outgoing_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='outgoing_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -317,9 +318,10 @@ class InCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='incoming_call')
+            queryset = Request.objects.filter(type_request='incoming_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='incoming_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -335,9 +337,28 @@ class VisitListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='visit')
+            queryset = Request.objects.filter(type_request='visit').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='visit').filter(is_deleted=False)
+        else:
+            return None
+        return self.check_request_data(request=self.request, queryset=queryset)
+
+
+class DeletedRequestListView(RequestListView):
+    """ Список удаленных заявок в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DeletedRequestListView, self).get_context_data(**kwargs)
+        context['title'] = 'Заявки - Корзина'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            queryset = Request.objects.filter(is_deleted=True)
+        elif self.request.user.staff.user_group == 'sale_manager':
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(is_deleted=True)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -355,6 +376,18 @@ class RequestDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+    def post(self, request, *args, **kwargs):
+        redirect_url_dict = {
+            'incoming_call': 'in-calls',
+            'outgoing_call': 'out-calls',
+            'online': 'online-requests',
+            'visit': 'visits'
+        }
+        request = self.get_object()
+        request.is_deleted = True if not request.is_deleted else False
+        request.save()
+        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(request.type_request)}')
 
 
 class CreateRequestView(CreateView):
