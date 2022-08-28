@@ -23,7 +23,7 @@ from management.models import (
 from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class MainView(View):
@@ -733,8 +733,26 @@ class CreateTimeTableView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
+        days_of_week_list = self.request.POST.getlist('day_of_week')
+
+        if not days_of_week_list and form.is_valid():
             form.save()
+        else:
+            date = form.cleaned_data.get('date')
+            lesson = form.cleaned_data.get('lesson')
+            group = form.cleaned_data.get('group')
+            end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
+
+            while date.timestamp() <= end_date.timestamp():
+                if str(date.strftime("%A")).lower() in days_of_week_list:
+                    new_timetable = Timetable()
+                    new_timetable.date = date
+                    new_timetable.lesson = lesson
+                    new_timetable.group = group
+                    new_timetable.save()
+
+                date += timedelta(days=1)
+
         return HttpResponseRedirect('/api/crm/timetable')
 
 
