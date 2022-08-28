@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Sum
 from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -16,8 +16,6 @@ from management.models import (
     Vacancy,
     Interview,
     Request,
-    AdvertisingActivityCategory,
-    AdvertisingActivity,
     Cost,
     CostCategory,
     Staff
