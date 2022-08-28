@@ -4,14 +4,26 @@
         <div class="card radius-15">
             <div class="card-body">
                 <div class="row mb-4">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="d-flex align-items-center mb-3">
                             <h4 class="mb-0">Заявка {{ request.id }}</h4>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <a type="button" href="{% url 'update_request' pk=request.pk %}"
-                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать заявку</a>
+                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
+                    </div>
+                    <div class="col-md-3">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary m-1 px-5" style="float: right;">
+                                {% if request.is_deleted %}
+                                    Восстановить
+                                {% else %}
+                                    В корзину
+                                {% endif %}
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="row">

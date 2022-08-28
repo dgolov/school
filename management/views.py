@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Sum
 from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -16,8 +16,6 @@ from management.models import (
     Vacancy,
     Interview,
     Request,
-    AdvertisingActivityCategory,
-    AdvertisingActivity,
     Cost,
     CostCategory,
     Staff
@@ -25,7 +23,7 @@ from management.models import (
 from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class MainView(View):
@@ -276,11 +274,11 @@ class RequestListView(FilterMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='online')
+            queryset = Request.objects.filter(type_request='online').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
             queryset = Request.objects.filter(
                 Q(manager=self.request.user.staff) |
-                Q(status='new')).filter(type_request='online')
+                Q(status='new')).filter(type_request='online').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -301,9 +299,10 @@ class OutCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(type_request='outgoing_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='outgoing_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -319,9 +318,10 @@ class InCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='incoming_call')
+            queryset = Request.objects.filter(type_request='incoming_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='incoming_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -337,9 +337,28 @@ class VisitListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='visit')
+            queryset = Request.objects.filter(type_request='visit').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='visit').filter(is_deleted=False)
+        else:
+            return None
+        return self.check_request_data(request=self.request, queryset=queryset)
+
+
+class DeletedRequestListView(RequestListView):
+    """ Список удаленных заявок в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DeletedRequestListView, self).get_context_data(**kwargs)
+        context['title'] = 'Заявки - Корзина'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            queryset = Request.objects.filter(is_deleted=True)
+        elif self.request.user.staff.user_group == 'sale_manager':
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(is_deleted=True)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -357,6 +376,18 @@ class RequestDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+    def post(self, request, *args, **kwargs):
+        redirect_url_dict = {
+            'incoming_call': 'in-calls',
+            'outgoing_call': 'out-calls',
+            'online': 'online-requests',
+            'visit': 'visits'
+        }
+        request = self.get_object()
+        request.is_deleted = True if not request.is_deleted else False
+        request.save()
+        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(request.type_request)}')
 
 
 class CreateRequestView(CreateView):
@@ -702,8 +733,26 @@ class CreateTimeTableView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
+        days_of_week_list = self.request.POST.getlist('day_of_week')
+
+        if not days_of_week_list and form.is_valid():
             form.save()
+        else:
+            date = form.cleaned_data.get('date')
+            lesson = form.cleaned_data.get('lesson')
+            group = form.cleaned_data.get('group')
+            end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
+
+            while date.timestamp() <= end_date.timestamp():
+                if str(date.strftime("%A")).lower() in days_of_week_list:
+                    new_timetable = Timetable()
+                    new_timetable.date = date
+                    new_timetable.lesson = lesson
+                    new_timetable.group = group
+                    new_timetable.save()
+
+                date += timedelta(days=1)
+
         return HttpResponseRedirect('/api/crm/timetable')
 
 

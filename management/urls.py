@@ -16,6 +16,7 @@ urlpatterns = [
     path('out-calls/', management.OutCallListView.as_view(), name='out_calls'),
     path('in-calls/', management.InCallListView.as_view(), name='in_calls'),
     path('visits/', management.VisitListView.as_view(), name='visits'),
+    path('deleted-requests/', management.DeletedRequestListView.as_view(), name='deleted_requests'),
     path('requests/<int:pk>/', management.RequestDetailView.as_view(), name='requests_detail'),
     path('requests/create/', management.CreateRequestView.as_view(), name='create_request'),
     path('requests/update/<int:pk>/', management.UpdateRequestView.as_view(), name='update_request'),
