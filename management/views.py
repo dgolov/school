@@ -720,6 +720,10 @@ class TimeTableDetailView(DetailView):
         context['user'] = self.request.user
         return context
 
+    def post(self, request, *args, **kwargs):
+        print(123)
+        return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
+
 
 class CreateTimeTableView(CreateView):
     """ Регистрация новой записи в рассписание в CRM
@@ -736,8 +740,11 @@ class CreateTimeTableView(CreateView):
         days_of_week_list = self.request.POST.getlist('day_of_week')
 
         if not days_of_week_list and form.is_valid():
-            form.save()
-        else:
+            instance = form.save()
+            instance.material = self.request.FILES.get('file', None)
+            instance.save()
+
+        elif days_of_week_list:
             date = form.cleaned_data.get('date')
             lesson = form.cleaned_data.get('lesson')
             group = form.cleaned_data.get('group')
@@ -771,6 +778,15 @@ class UpdateTimeTableView(UpdateView):
 
     def get_success_url(self):
         return f'/api/crm/timetable/{self.get_object().pk}'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            print(self.request.FILES)
+            instance = form.save()
+            instance.material = self.request.FILES.get('file')
+            instance.save()
+        return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
+
 
 
 class AcademicPerformanceListView(ListView):
