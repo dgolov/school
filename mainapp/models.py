@@ -19,7 +19,7 @@ USER_GROUP_CHOICES = list(zip(USER_GROUP_CHOICES, USER_GROUP_CHOICES_RUS))
 def get_file_path(instance, filename):
     """ Построение пути к файлам материалов (используется в модели рассписания)
     """
-    return os.path.join('files', 'timetable', instance.lesson, instance.date, filename)
+    return os.path.join('files', 'timetable', str(instance.lesson.id), str(instance.date), filename)
 
 
 class IntegerRangeField(models.IntegerField):
