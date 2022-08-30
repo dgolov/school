@@ -31,6 +31,7 @@ import MyCourses from "../views/Profile/MyCourses";
 import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
 import TimeTable from "../views/Profile/TimeTable";
+import TimeTableDetail from "../views/Profile/TimeTableDetail";
 import AcademicPerformance from "../views/Profile/AcademicPerformance";
 import Chats from "../views/Messages/Chats";
 import Messages from "../views/Messages/Messages";
@@ -63,342 +64,324 @@ import NewHome from "../views/newHome.vue"
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: NewHome,
-	meta:{
-    	layout: "082022-layout"
-    }    
-  },
-  {
-    path: '/index.php',
-    redirect: { name: 'Home' }
-  },
-  {
-    path: '/index.html',
-    redirect: { name: 'Home' }
-  },
-  {
-    path: '/newhome',
-    name: 'NewHome',
-    component: Home,
-  },
-  {
-    path: '/aboutold',
-    name: 'About',
-    component: About
-  },
-  
-  {
-    path: '/about',
-    name: 'AboutNew',
-    component: AboutNew,
-	meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-  
-  
-  {
-    path: '/auth',
-    name: "Auth",
-    component: Auth,
-    props: true
-  },
-  {
-    path: '/profile',
-    name: 'MyProfile',
-    component: MyProfile,
-  },
-  {
-    path: '/profiles/:id',
-    name: 'Profile',
-    component: Profile,
-    props: true
-  },
-  {
-    path: '/profile/my-courses',
-    name: 'MyCourses',
-    component: MyCourses
-  },
-  {
-    path: '/profile/timetable',
-    name: 'TimeTable',
-    component: TimeTable
-  },
-  {
-    path: '/profile/chats',
-    name: 'Chats',
-    component: Chats
-  },
-  {
-    path: '/profile/chats/:id',
-    name: 'Messages',
-    component: Messages,
-    props: true
-  },
-  {
-    path: '/profile/chats/:id/settings',
-    name: 'GroupChatSettings',
-    component: GroupChatSettings,
-    props: true
-  },
-  {
-    path: "/profile/chats/create-group",
-    name: 'CreateGroupChat',
-    component: CreateGroupChat,
-    props: true
-  },
-  {
-    path: '/profiles/:id/friends',
-    name: 'Friends',
-    component: Friends,
-    props: true
-  },
-  {
-    path: '/profiles/:id/followers',
-    name: 'Followers',
-    component: Followers,
-    props: true
-  },
-  {
-    path: '/profiles/:id/subscriptions',
-    name: 'Subscriptions',
-    component: Subscriptions,
-    props: true
-  },
-  {
-    path: '/profile/friend-requests',
-    name: 'FriendRequests',
-    component: FriendRequests,
-  },
-  {
-    path: '/profiles/:id/photo',
-    name: 'Photo',
-    component: Photo,
-    props: true
-  },
-  {
-    path: '/profile/groups',
-    name: 'Groups',
-    component: Groups
-  },
-  {
-    path: '/profile/groups/:id',
-    name: 'GroupSingle',
-    component: GroupSingle,
-    props: true
-  },
-  {
-    path: '/profile/search',
-    name: 'Search',
-    component: Search
-  },
-  {
-    path: '/profile/settings',
-    name: 'Settings',
-    component: Settings
-  },
-  {
-    path: '/profile/games',
-    name: 'Games',
-    component: Games
-  },
-  {
-    path: '/profile/academic-performance',
-    name: 'AcademicPerformance',
-    component: AcademicPerformance
-  },
-  {
-    path: '/profile/my-courses/:id',
-    name: 'CourseSingle',
-    component: CourseSingle,
-    props: true
-  },
-  {
-    path: '/profile/my-courses/:courseId/lesson/:lessonId',
-    name: 'Lesson',
-    component: Lesson,
-    props: true
-  },
-  {
-    path: '/educationold',
-    name: 'EducationOld',
-    component: Education,
-    props: true
-  },
+    {
+        path: '/',
+        name: 'Home',
+        component: NewHome,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/index.php',
+        redirect: {name: 'Home'}
+    },
+    {
+        path: '/index.html',
+        redirect: {name: 'Home'}
+    },
+    {
+        path: '/newhome',
+        name: 'NewHome',
+        component: Home,
+    },
+    {
+        path: '/aboutold',
+        name: 'About',
+        component: About
+    },
+    {
+        path: '/about',
+        name: 'AboutNew',
+        component: AboutNew,
+        meta: {
+            layout: "082022-layout"
+        }
 
-  {
-    path: '/education',
-    name: 'Education',
-    component: EducationNew,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-  },
+    },
+    {
+        path: '/auth',
+        name: "Auth",
+        component: Auth,
+        props: true
+    },
+    {
+        path: '/profile',
+        name: 'MyProfile',
+        component: MyProfile,
+    },
+    {
+        path: '/profiles/:id',
+        name: 'Profile',
+        component: Profile,
+        props: true
+    },
+    {
+        path: '/profile/my-courses',
+        name: 'MyCourses',
+        component: MyCourses
+    },
+    {
+        path: '/profile/timetable',
+        name: 'TimeTable',
+        component: TimeTable
+    },
+    {
+        path: '/profile/timetable/:id',
+        name: 'TimeTableDetail',
+        component: TimeTableDetail,
+        props: true
+    },
+    {
+        path: '/profile/chats',
+        name: 'Chats',
+        component: Chats
+    },
+    {
+        path: '/profile/chats/:id',
+        name: 'Messages',
+        component: Messages,
+        props: true
+    },
+    {
+        path: '/profile/chats/:id/settings',
+        name: 'GroupChatSettings',
+        component: GroupChatSettings,
+        props: true
+    },
+    {
+        path: "/profile/chats/create-group",
+        name: 'CreateGroupChat',
+        component: CreateGroupChat,
+        props: true
+    },
+    {
+        path: '/profiles/:id/friends',
+        name: 'Friends',
+        component: Friends,
+        props: true
+    },
+    {
+        path: '/profiles/:id/followers',
+        name: 'Followers',
+        component: Followers,
+        props: true
+    },
+    {
+        path: '/profiles/:id/subscriptions',
+        name: 'Subscriptions',
+        component: Subscriptions,
+        props: true
+    },
+    {
+        path: '/profile/friend-requests',
+        name: 'FriendRequests',
+        component: FriendRequests,
+    },
+    {
+        path: '/profiles/:id/photo',
+        name: 'Photo',
+        component: Photo,
+        props: true
+    },
+    {
+        path: '/profile/groups',
+        name: 'Groups',
+        component: Groups
+    },
+    {
+        path: '/profile/groups/:id',
+        name: 'GroupSingle',
+        component: GroupSingle,
+        props: true
+    },
+    {
+        path: '/profile/search',
+        name: 'Search',
+        component: Search
+    },
+    {
+        path: '/profile/settings',
+        name: 'Settings',
+        component: Settings
+    },
+    {
+        path: '/profile/games',
+        name: 'Games',
+        component: Games
+    },
+    {
+        path: '/profile/academic-performance',
+        name: 'AcademicPerformance',
+        component: AcademicPerformance
+    },
+    {
+        path: '/profile/my-courses/:id',
+        name: 'CourseSingle',
+        component: CourseSingle,
+        props: true
+    },
+    {
+        path: '/profile/my-courses/:courseId/lesson/:lessonId',
+        name: 'Lesson',
+        component: Lesson,
+        props: true
+    },
+    {
+        path: '/educationold',
+        name: 'EducationOld',
+        component: Education,
+        props: true
+    },
+    {
+        path: '/education',
+        name: 'Education',
+        component: EducationNew,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/education/beginner',
+        name: 'EducationBeginner',
+        component: EducationBeginner,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
 
-  {
-    path: '/education/beginner',
-    name: 'EducationBeginner',
-    component: EducationBeginner,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-
-  {
-    path: '/education/user',
-    name: 'EducationUser',
-    component: EducationUser,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-
-  {
-    path: '/education/prof',
-    name: 'EducationProf',
-    component: EducationProf,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-
-  {
-    path: '/education/cheater',
-    name: 'EducationCheater',
-    component: EducationCheater,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-
-  {
-    path: '/education/english',
-    name: 'EducationEnglish',
-    component: EducationEnglish,
-    props: true,
-    meta:{
-    	layout: "082022-layout"
-    }    
-    
-  },
-
-  {
-    path: '/education/:slug',
-    name: 'EducationSingle',
-    component: EducationSingle,
-    props: true
-  },
-  
-  {
-    path: '/chess/:slug',
-    name: 'ChessSingle',
-    component: ChessSingleCourse,
-    props: true
-  },
-  
-  {
-    path: '/eventsold',
-    name: 'Events',
-    component: Events
-  },
-
-  {
-    path: '/events',
-    name: 'EventsNew',
-    component: EventsNew,
-    meta:{
-    	layout: "082022-layout"
-    }    
-  },
-  
-  {
-    path: '/events/:slug',
-    name: 'EventSingle',
-    component: EventSingle,
-    props: true
-  },
-  
-  {
-    path: '/news',
-    name: 'News',
-    component: News
-  },
-  {
-    path: '/news/:slug',
-    name: 'NewsSingle',
-    component: News,
-    props: true
-  },
-  
-  {
-    path: '/contactsold',
-    name: 'Contacts',
-    component: Contacts
-  },
-
-  {
-    path: '/contacts',
-    name: 'ContactsNew',
-    component: ContactsNew,
-    meta:{
-    	layout: "082022-layout"
-    }    
-  },
-  
-  {
-    path: '/career',
-    name: 'Career',
-    component: Career
-  },
-  {
-    path: '/reviewsold',
-    name: 'Reviews',
-    component: Reviews
-  },
-  
-  {
-    path: '/reviews',
-    name: 'ReviewsNew',
-    component: ReviewsNew,
-    meta:{
-    	layout: "082022-layout"
-    }    
-  },
-    
-  {
-    path: '/send-request',
-    name: 'Requests',
-    component: Requests,
-    props: true
-  },
-  {
-    path: '/summer-camp',
-    name: 'Camp',
-    component: Camp,
-    props: true
-  },
-  {
-    path: "*",
-    component: PageNotFound
-  }
+    },
+    {
+        path: '/education/user',
+        name: 'EducationUser',
+        component: EducationUser,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/education/prof',
+        name: 'EducationProf',
+        component: EducationProf,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/education/cheater',
+        name: 'EducationCheater',
+        component: EducationCheater,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/education/english',
+        name: 'EducationEnglish',
+        component: EducationEnglish,
+        props: true,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/education/:slug',
+        name: 'EducationSingle',
+        component: EducationSingle,
+        props: true
+    },
+    {
+        path: '/chess/:slug',
+        name: 'ChessSingle',
+        component: ChessSingleCourse,
+        props: true
+    },
+    {
+        path: '/eventsold',
+        name: 'Events',
+        component: Events
+    },
+    {
+        path: '/events',
+        name: 'EventsNew',
+        component: EventsNew,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/events/:slug',
+        name: 'EventSingle',
+        component: EventSingle,
+        props: true
+    },
+    {
+        path: '/news',
+        name: 'News',
+        component: News
+    },
+    {
+        path: '/news/:slug',
+        name: 'NewsSingle',
+        component: News,
+        props: true
+    },
+    {
+        path: '/contactsold',
+        name: 'Contacts',
+        component: Contacts
+    },
+    {
+        path: '/contacts',
+        name: 'ContactsNew',
+        component: ContactsNew,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/career',
+        name: 'Career',
+        component: Career
+    },
+    {
+        path: '/reviewsold',
+        name: 'Reviews',
+        component: Reviews
+    },
+    {
+        path: '/reviews',
+        name: 'ReviewsNew',
+        component: ReviewsNew,
+        meta: {
+            layout: "082022-layout"
+        }
+    },
+    {
+        path: '/send-request',
+        name: 'Requests',
+        component: Requests,
+        props: true
+    },
+    {
+        path: '/summer-camp',
+        name: 'Camp',
+        component: Camp,
+        props: true
+    },
+    {
+        path: "*",
+        component: PageNotFound
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  routes
+    mode: 'history',
+    routes
 })
 
 export default router

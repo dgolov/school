@@ -50,31 +50,19 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
-                        <h3>Преподаватель</h3>
+                        <h3>Материал</h3>
                         <table class="table table-sm table-borderless mt-md-0 mt-3">
                             <tbody>
                             <tr>
-                                <th>ФИО:</th>
+                                <th>Файл:</th>
                                 <td>
-                                    <a href="/api/crm/teachers/{{ timetable.lesson.course.teacher.id }}">
-                                        {{ timetable.lesson.course.teacher.get_fio }}
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Номер телефона:</th>
-                                <td>
-                                    <a href="tel: {{ timetable.lesson.course.teacher.phone }}">
-                                        {{ timetable.lesson.course.teacher.phone }}
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>email:</th>
-                                <td>
-                                    <a href="mailto: {{ timetable.lesson.course.teacher.user.email }}">
-                                        {{ timetable.lesson.course.teacher.user.email }}
-                                    </a>
+                                    {% if timetable.material %}
+                                        <a href="{{ timetable.material.url }}" download="">
+                                            Загрузить
+                                        </a>
+                                    {% else %}
+                                        Отсутствует
+                                    {% endif %}
                                 </td>
                             </tr>
                             </tbody>
