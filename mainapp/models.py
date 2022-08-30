@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -12,6 +14,12 @@ USER_GROUP_CHOICES_RUS = (
     'Студент'
 )
 USER_GROUP_CHOICES = list(zip(USER_GROUP_CHOICES, USER_GROUP_CHOICES_RUS))
+
+
+def get_file_path(instance, filename):
+    """ Построение пути к файлам материалов (используется в модели рассписания)
+    """
+    return os.path.join('files', 'timetable', instance.lesson, instance.date, filename)
 
 
 class IntegerRangeField(models.IntegerField):
@@ -453,6 +461,7 @@ class Timetable(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
     group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
     is_finished = models.BooleanField(default=False, verbose_name='Завершен')
+    material = models.FileField(blank=True, null=True, upload_to=get_file_path, verbose_name='Материал')
 
     def __str__(self):
         return f'{self.lesson} - {self.date}'

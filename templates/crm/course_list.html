@@ -30,12 +30,9 @@
                 <table class="table mb-0">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">id</th>
                         <th scope="col">Название</th>
                         <th scope="col">Категория</th>
-                        <th scope="col">Преподаватель</th>
-                        <th scope="col">Цена</th>
-                        <th scope="col">Доступен</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,9 +41,6 @@
                             <th scope="row"><a href="/api/crm/courses/{{ course.id }}">{{ course.id }}</a></th>
                             <td><a href="/api/crm/courses/{{ course.id }}">{{ course.name }}</a></td>
                             <td>{{ course.category }}</td>
-                            <td>{{ course.teacher }}</td>
-                            <td>{{ course.price }}</td>
-                            <td>{{ course.is_active }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
