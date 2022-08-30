@@ -254,18 +254,6 @@ class CourseSerializerFromTeacher(serializers.ModelSerializer):
         return students_serializer.data
 
 
-class GroupSerializer(serializers.ModelSerializer):
-    """ Сериализация модели групп
-    """
-    teacher = ProfileSerializer()
-
-    class Meta:
-        model = models.Group
-        fields = [
-            'id', 'name', 'teacher'
-        ]
-
-
 class GroupRetrieveSerializer(serializers.ModelSerializer):
     """ Детальная сериализация модели групп (со списком одногруппников)
     """
@@ -284,23 +272,6 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
         students = obj.student_groups.all()
         serializer = ProfileSerializer(students, many=True)
         return serializer.data
-
-
-class TeacherDetailSerializer(ProfileSerializerBase):
-    """ Сериализация модели преподавателей (видит потзователь и друзья)
-    """
-    avatar = PhotoSerializer()
-    courses = CourseSerializerFromTeacher(many=True, read_only=True)
-    group_list = GroupSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = models.Teacher
-        fields = [
-            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
-            'vk_slug', 'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
-            'group_list', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
-            'user_group', 'is_active'
-        ]
 
 
 class TeacherUpdateSerializer(ProfileSerializerBase):
@@ -481,6 +452,35 @@ class CourseSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
+class GroupSerializer(serializers.ModelSerializer):
+    """ Сериализация модели групп
+    """
+    courses = CourseSerializer(read_only=False, many=True)
+
+    class Meta:
+        model = models.Group
+        fields = [
+            'id', 'name', 'courses'
+        ]
+
+
+class TeacherDetailSerializer(ProfileSerializerBase):
+    """ Сериализация модели преподавателей (видит потзователь и друзья)
+    """
+    avatar = PhotoSerializer()
+    courses = CourseSerializerFromTeacher(many=True, read_only=True)
+    group_list = GroupSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Teacher
+        fields = [
+            'id', 'user', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'gender', 'phone', 'city',
+            'vk_slug', 'instagram_slug', 'date_of_birthday', 'education', 'professional_activity', 'about', 'courses',
+            'group_list', 'photos', 'avatar', 'friends', 'followers', 'friend_request_in', 'friend_request_out',
+            'user_group', 'is_active'
+        ]
+
+
 class LessonSerializer(serializers.ModelSerializer):
     """ Серилизация модели всех уроков (только список без подробностей, видео и тд)
     """
@@ -512,7 +512,7 @@ class TimetableSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Timetable
         fields = [
-            'id', 'date', 'lesson', 'group', 'is_finished'
+            'id', 'date', 'lesson', 'group', 'is_finished', 'material'
         ]
 
 

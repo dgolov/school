@@ -5,25 +5,10 @@
     <div class="header-page-wrapper d-none d-lg-block">
       <div class="chess-course">
         <div class="chess-course-img-wrapp">
-          <img
-            v-if="course.poster"
-            :src="`${course.poster}`"
-            alt=""
-            class="chess-course__img"
-            style="width: 45%;"
-          />
-          <img
-            v-else-if="course.category.age_group === 'adults'"
-            src="../assets/img/header/employment-course.jpg"
-            alt=""
-            class="chess-course__img"
-          />
-          <img
-            v-else
-            src="../assets/img/header/shutterstock_1337001122.jpg"
-            alt=""
-            class="chess-course__img"
-          />
+          <img v-if="course.poster" :src="`${course.poster}`" alt="" class="chess-course__img" style="width: 45%;"/>
+          <img v-else-if="course.category.age_group && course.category.age_group === 'adults'"
+               src="../assets/img/header/employment-course.jpg" alt="" class="chess-course__img"/>
+          <img v-else src="../assets/img/header/shutterstock_1337001122.jpg" alt="" class="chess-course__img"/>
         </div>
         <div class="header-page-inner">
           <h1 class="chess-course-title e-course-title">{{ course.name }}</h1>
@@ -61,25 +46,10 @@
 
     <div class="header-mobi d-none">
       <div class="chess-course-img-wrapp">
-        <img
-            v-if="course.poster"
-            :src="`${course.poster}`"
-            alt=""
-            class="chess-course__img"
-            style="width: 100%;"
-          />
-          <img
-            v-else-if="course.category.age_group === 'adults'"
-            src="../assets/img/header/employment-course.jpg"
-            alt=""
-            class="chess-course__img"
-          />
-          <img
-            v-else
-            src="../assets/img/header/shutterstock_1337001122.jpg"
-            alt=""
-            class="chess-course__img"
-          />
+        <img v-if="course.poster" :src="`${course.poster}`" alt="" class="chess-course__img" style="width: 100%;"/>
+        <img v-else-if="course.category.age_group === 'adults'" src="../assets/img/header/employment-course.jpg"
+            alt="" class="chess-course__img"/>
+        <img v-else src="../assets/img/header/shutterstock_1337001122.jpg" alt="" class="chess-course__img"/>
       </div>
       <div class="container">
         <div class="row">
@@ -108,17 +78,12 @@
               </div>
             </div>
             <p class="header-button-title hb-chess">Первое занятие бесплатно</p>
-            <button
-              class="button button-header button-chess"
-              type="button"
-              @click="
-                goTo('Requests', {
+            <button class="button button-header button-chess" type="button"
+              @click="goTo('Requests', {
                   purpose: 'free_lesson',
                   course: course.id,
                   event: 'null',
-                })
-              "
-            >
+                })">
               Записаться на пробное занятие
             </button>
           </div>
@@ -131,10 +96,7 @@
         <div class="row">
           <div class="col-lg-4 mb-3">
             <div class="owl owl-events">
-              <img
-                src="../assets/img/owl/owl-main.png"
-                class="owl__main owl__main-events"
-              />
+              <img src="../assets/img/owl/owl-main.png" class="owl__main owl__main-events"/>
               <span class="owl__frame-events owl-frame-employment"></span>
               <div class="owl-text owl-text-events owl-text-employment">
                 <p class="owl-desc owl-desc-events">
@@ -156,10 +118,7 @@
               </div>
               <div class="events-title__inner">
                 <span class="events-title__triangle"></span>
-                <h3
-                  class="events-title__subject"
-                  v-if="course.category.age_group === 'adults'"
-                >
+                <h3 class="events-title__subject" v-if="course.category.age_group === 'adults'">
                   Помощь в трудоустройстве
                 </h3>
                 <h3 class="events-title__subject" v-else>Забота о студентах</h3>
@@ -377,9 +336,7 @@
                   Обычно на позицию Junior претендуют выпускники, которые только закончили
                   профильное образование или имеют небольшой опыт в разработке.
                 </p>
-                <span class="level__price"
-                  >от {{ course.profession.salary_junior }} ₽ в месяц</span
-                >
+                <span class="level__price">от {{ course.profession.salary_junior }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
@@ -390,9 +347,7 @@
                   программирования и понимания стека технологий, могут справляться с
                   задачами самостоятельно.
                 </p>
-                <span class="level__price"
-                  >от {{ course.profession.salary_middle }} ₽ в месяц</span
-                >
+                <span class="level__price">от {{ course.profession.salary_middle }} ₽ в месяц</span>
               </div>
             </div>
             <div class="col-md-5 col-lg-4">
@@ -402,9 +357,7 @@
                   Это исключительный специалист, который в полной мере овладел стеком
                   технологий и языками программирования, необходимыми в его работе.
                 </p>
-                <span class="level__price"
-                  >от {{ course.profession.salary_senior }} ₽ в месяц</span
-                >
+                <span class="level__price">от {{ course.profession.salary_senior }} ₽ в месяц</span>
               </div>
             </div>
           </div>
@@ -418,13 +371,8 @@
           <div class="col-12">
             <h2 class="program-events-title mt-0 mb-4">Как проходит обучение</h2>
           </div>
-          <div
-            v-if="
-              course.category.age_group === 'children' ||
-              course.category.age_group === 'teens'
-            "
-            class="col-12 col-sm-5 col-lg-3"
-          >
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+            class="col-12 col-sm-5 col-lg-3">
             <div class="education-wrapp">
               <div class="header-desc">
                 <p class="education-text">
@@ -437,13 +385,8 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="
-              course.category.age_group === 'children' ||
-              course.category.age_group === 'teens'
-            "
-            class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0"
-          >
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+            class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0">
             <div class="education-wrapp">
               <div class="header-desc">
                 <p class="education-text">
@@ -457,13 +400,8 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="
-              course.category.age_group === 'children' ||
-              course.category.age_group === 'teens'
-            "
-            class="col-12 col-sm-5 col-lg-3"
-          >
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+            class="col-12 col-sm-5 col-lg-3">
             <div class="education-wrapp">
               <div class="header-desc">
                 <p class="education-text">
@@ -477,13 +415,8 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="
-              course.category.age_group === 'children' ||
-              course.category.age_group === 'teens'
-            "
-            class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0"
-          >
+          <div v-if="course.category.age_group === 'children' || course.category.age_group === 'teens'"
+            class="col-12 col-sm-5 offset-sm-1 col-lg-3 offset-lg-0">
             <div class="education-wrapp">
               <div class="header-desc">
                 <p class="education-text">
@@ -498,46 +431,22 @@
       </div>
       <div class="carousel-past-events">
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-one.jpg"
-            alt="слайд 1"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-one.jpg" alt="слайд 1" class="past-events-img"/>
         </div>
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-two.jpg"
-            alt="слайд 2"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-two.jpg" alt="слайд 2" class="past-events-img"/>
         </div>
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-three.jpg"
-            alt="слайд 3"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-three.jpg" alt="слайд 3" class="past-events-img"/>
         </div>
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-four.jpg"
-            alt="слайд 4"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-four.jpg" alt="слайд 4" class="past-events-img"/>
         </div>
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-five.jpg"
-            alt="слайд 5"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-five.jpg" alt="слайд 5" class="past-events-img"/>
         </div>
         <div class="gallery">
-          <img
-            src="../assets/img/education/education-six.jpg"
-            alt="слайд 5"
-            class="past-events-img"
-          />
+          <img src="../assets/img/education/education-six.jpg" alt="слайд 5" class="past-events-img"/>
         </div>
       </div>
     </section>
@@ -555,17 +464,8 @@
               <div class="col-3">
                 <div class="teacher">
                   <div class="teacher__avatar">
-                    <img
-                      v-if="teacher.avatar"
-                      :src="`${teacher.avatar.image}`"
-                      alt=" Фото преподавателя"
-                      class="profile-avatar"
-                    />
-                    <img
-                      v-else
-                      src="../assets/images/avatars/mike2.jpeg"
-                      class="center profile-avatar"
-                    />
+                    <img v-if="teacher.avatar" :src="`${teacher.avatar.image}`" alt=" Фото преподавателя" class="profile-avatar"/>
+                    <img v-else src="../assets/images/avatars/mike2.jpeg" class="center profile-avatar"/>
                   </div>
                   <h4 class="teacher__name">
                     {{ teacher.last_name }} {{ teacher.first_name }}
@@ -632,11 +532,8 @@
                   <div class="summary-wrapp-sm">
                     <div class="teacher__avatar summary-photo">
                       <span class="teacher__circle summary-circle">
-                        <img
-                          src="../assets/img/diploma/photo.png"
-                          alt=" Фото резюме"
-                          class="teacher__photo summary-icon"
-                      /></span>
+                        <img src="../assets/img/diploma/photo.png" alt=" Фото резюме" class="teacher__photo summary-icon"/>
+                      </span>
                     </div>
                     <div class="post-name-wrapp">
                       <p class="post mb-2">Должность:</p>
@@ -646,9 +543,7 @@
                   <span class="border-summary border-summary_sm"></span>
                   <div class="money-wrapp">
                     <p class="salary-from mb-2">Зарплата от:</p>
-                    <span class="money mt-1"
-                      >{{ course.profession.salary_resume }} ₽</span
-                    >
+                    <span class="money mt-1">{{ course.profession.salary_resume }} ₽</span>
                   </div>
                 </div>
                 <span class="border-summary b-s-sm"></span>
@@ -656,10 +551,7 @@
                 <div class="skilss-wrapp">
                   <p class="skilss-title">Профессиональные навыки:</p>
                   <ul class="skills skills-summary">
-                    <li
-                      class="skills__item skills__item_size"
-                      v-for="skill in course.profession.skills"
-                    >
+                    <li class="skills__item skills__item_size" v-for="skill in course.profession.skills">
                       {{ skill.text }}
                     </li>
                   </ul>
@@ -684,8 +576,6 @@
         </div>
       </div>
     </section>
-
-    <Reviews v-if="course.category.age_group === 'adults'"></Reviews>
 
     <Faq></Faq>
   </div>

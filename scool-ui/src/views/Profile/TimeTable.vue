@@ -38,7 +38,7 @@
                 <p>{{ reformatDateTime(timeTable.date) }}</p>
               </div>
               <div class="w-50">
-                <p>{{ timeTable.lesson.theme }}</p>
+                <a href="#" @click="goTo('TimeTableDetail', {id: timeTable.id})">{{ timeTable.lesson.theme }}</a>
               </div>
               <div class="w-25">
                 <a href="#" @click="goTo('CourseSingle', {id: timeTable.lesson.course.id})">

@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Sum
 from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -16,16 +16,14 @@ from management.models import (
     Vacancy,
     Interview,
     Request,
-    AdvertisingActivityCategory,
-    AdvertisingActivity,
     Cost,
     CostCategory,
     Staff
 )
-from management.mixins import GroupMixin, CourseMixin, FilterMixin
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class MainView(View):
@@ -276,11 +274,11 @@ class RequestListView(FilterMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='online')
+            queryset = Request.objects.filter(type_request='online').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
             queryset = Request.objects.filter(
                 Q(manager=self.request.user.staff) |
-                Q(status='new')).filter(type_request='online')
+                Q(status='new')).filter(type_request='online').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -301,9 +299,10 @@ class OutCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(type_request='outgoing_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='outgoing_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='outgoing_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -319,9 +318,10 @@ class InCallListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='incoming_call')
+            queryset = Request.objects.filter(type_request='incoming_call').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='incoming_call')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='incoming_call').filter(is_deleted=False)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -337,9 +337,28 @@ class VisitListView(RequestListView):
 
     def get_queryset(self):
         if self.request.user.staff.user_group == 'admin':
-            queryset = Request.objects.filter(type_request='visit')
+            queryset = Request.objects.filter(type_request='visit').filter(is_deleted=False)
         elif self.request.user.staff.user_group == 'sale_manager':
-            queryset = Request.objects.filter(manager=self.request.user.staff).filter(type_request='visit')
+            queryset = Request.objects.filter(
+                manager=self.request.user.staff).filter(type_request='visit').filter(is_deleted=False)
+        else:
+            return None
+        return self.check_request_data(request=self.request, queryset=queryset)
+
+
+class DeletedRequestListView(RequestListView):
+    """ Список удаленных заявок в CRM
+    """
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DeletedRequestListView, self).get_context_data(**kwargs)
+        context['title'] = 'Заявки - Корзина'
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin':
+            queryset = Request.objects.filter(is_deleted=True)
+        elif self.request.user.staff.user_group == 'sale_manager':
+            queryset = Request.objects.filter(manager=self.request.user.staff).filter(is_deleted=True)
         else:
             return None
         return self.check_request_data(request=self.request, queryset=queryset)
@@ -357,6 +376,18 @@ class RequestDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+    def post(self, request, *args, **kwargs):
+        redirect_url_dict = {
+            'incoming_call': 'in-calls',
+            'outgoing_call': 'out-calls',
+            'online': 'online-requests',
+            'visit': 'visits'
+        }
+        request = self.get_object()
+        request.is_deleted = True if not request.is_deleted else False
+        request.save()
+        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(request.type_request)}')
 
 
 class CreateRequestView(CreateView):
@@ -689,6 +720,10 @@ class TimeTableDetailView(DetailView):
         context['user'] = self.request.user
         return context
 
+    def post(self, request, *args, **kwargs):
+        print(123)
+        return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
+
 
 class CreateTimeTableView(CreateView):
     """ Регистрация новой записи в рассписание в CRM
@@ -702,13 +737,34 @@ class CreateTimeTableView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
+        days_of_week_list = self.request.POST.getlist('day_of_week')
+
+        if not days_of_week_list and form.is_valid():
+            instance = form.save()
+            instance.material = self.request.FILES.get('file', None)
+            instance.save()
+
+        elif days_of_week_list:
+            date = form.cleaned_data.get('date')
+            lesson = form.cleaned_data.get('lesson')
+            group = form.cleaned_data.get('group')
+            end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
+
+            while date.timestamp() <= end_date.timestamp():
+                if str(date.strftime("%A")).lower() in days_of_week_list:
+                    new_timetable = Timetable()
+                    new_timetable.date = date
+                    new_timetable.lesson = lesson
+                    new_timetable.group = group
+                    new_timetable.save()
+
+                date += timedelta(days=1)
+
         return HttpResponseRedirect('/api/crm/timetable')
 
 
 class UpdateTimeTableView(UpdateView):
-    """ Редактирование записа рассписания в CRM
+    """ Редактирование записи рассписания в CRM
     """
     model = Timetable
     template_name = 'crm/update_timetable.html'
@@ -722,6 +778,15 @@ class UpdateTimeTableView(UpdateView):
 
     def get_success_url(self):
         return f'/api/crm/timetable/{self.get_object().pk}'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            print(self.request.FILES)
+            instance = form.save()
+            instance.material = self.request.FILES.get('file')
+            instance.save()
+        return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
+
 
 
 class AcademicPerformanceListView(ListView):
@@ -825,6 +890,98 @@ class CreateTeacherView(FormView):
                 user_group='teacher'
             )
         return HttpResponseRedirect('/api/crm/teachers')
+
+
+class UpdateTeacherView(UpdateView, TeacherMixin):
+    """ Редактирование преподавателя в CRM
+    """
+    model = Teacher
+    template_name = 'crm/update_teacher.html'
+    form_class = forms.UpdateTeacherForm
+    context_object_name = 'teacher'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateTeacherView, self).get_context_data()
+        context['teacher'] = self.get_object()
+        context['title'] = 'Редактирование преподавателя'
+        context['group_list'] = Group.objects.all()
+        context['course_list'] = Course.objects.all()
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            teacher = self.get_object()
+            self.update_teacher_groups(teacher, self.request)
+            self.update_teacher_courses(teacher, self.request)
+            return HttpResponseRedirect(f'/api/crm/teachers/{teacher.pk}')
+        return HttpResponseRedirect(f'/api/crm/teachers')
+
+
+class StudentListView(ListView):
+    """ Список студентов в CRM
+    """
+    model = Student
+    template_name = 'crm/student_list.html'
+    context_object_name = 'student_list'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        context['title'] = 'Студенты'
+        context['user'] = self.request.user
+        return context
+
+    def get_queryset(self):
+        if self.request.user.staff.user_group == 'admin' or self.request.user.staff.user_group == 'education_manager' \
+                or self.request.user.staff.user_group == 'hr':
+            return Student.objects.all()
+        else:
+            return None
+
+
+class StudentDetailView(DetailView):
+    """ Детальное представление студента в CRM
+    """
+    model = Student
+    template_name = 'crm/student_detail.html'
+    context_object_name = 'student'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StudentDetailView, self).get_context_data(**kwargs)
+        context['title'] = self.get_object()
+        context['user'] = self.request.user
+        return context
+
+
+class CreateStudentView(FormView):
+    """ Регистрация новго студента в CRM
+    """
+    template_name = 'crm/create_student.html'
+    form_class = forms.CreateTeacherForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateStudentView, self).get_context_data()
+        context['title'] = 'Регистрация нового студента'
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email']
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Student.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group='student'
+            )
+        return HttpResponseRedirect('/api/crm/students')
 
 
 class StaffListView(ListView):
@@ -944,14 +1101,24 @@ class CreateGroupView(CreateView, GroupMixin):
         context = super(CreateGroupView, self).get_context_data()
         context['title'] = 'Добавление новой группы'
         context['student_list'] = Student.objects.all()
+        context['course_list'] = Course.objects.all()
+        context['teacher_list'] = Teacher.objects.all()
         return context
 
     def form_valid(self, form):
         if form.is_valid():
             new_group = form.save()
             new_group.manager = self.request.user.staff
+            courses_id_list = self.request.POST.getlist('courses')
+            for course_id in courses_id_list:
+                try:
+                    course = Course.objects.get(pk=int(course_id))
+                    new_group.courses.add(course)
+                except Course.DoesNotExist:
+                    continue
             new_group.save()
             self.update_students_group(new_group, self.request)
+            self.update_teachers_group(new_group, self.request)
         return HttpResponseRedirect('/api/crm/groups')
 
 

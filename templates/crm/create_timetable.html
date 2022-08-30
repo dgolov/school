@@ -6,11 +6,79 @@
                 <h4 class="mb-4">Добавление записи в рассписание</h4>
                 <hr/>
             </div>
-            <form method="POST" action="">
-                {% include 'crm/inc/timetable_form.html' %}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
-            </form>
+            <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Single"><span
+                            class="p-tab-name">Одна запись</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Multy"><span
+                            class="p-tab-name">Период</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                </ul>
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="Single">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% include 'crm/inc/timetable_form.html' %}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="Multy">
+                    <form method="POST" action="">
+                        <div class="col-md-12">
+                            <div class="form-group mt-12">
+                                <label>Дата и время первого занятия</label>
+                                {{ form.date }}
+                            </div>
+                            <div class="form-group mt-12">
+                                <label>Дата и время последнего занятия</label>
+                                <input type="date" class="form-control" name="end_date">
+                            </div>
+                            <div class="form-group mt-12">
+                                <label>Дни недели занятий</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="monday" id="1" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Понедельник</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="tuesday" id="2" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Вторник</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="wednesday" id="3" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Среда</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="thursday" id="4" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Четверг</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="friday" id="5" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Пятница</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="saturday" id="6" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Суббота</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="sunday" id="7" name="day_of_week">
+                                    <label class="form-check-label" for="defaultCheck1">Воскресенье</label>
+                                </div>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Урок</label>
+                                {{ form.lesson }}
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Группа</label>
+                                {{ form.group }}
+                            </div>
+                        </div>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

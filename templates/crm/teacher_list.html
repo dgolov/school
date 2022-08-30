@@ -30,7 +30,6 @@
                 <table class="table mb-0">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">ФИО</th>
                         <th scope="col">Телефон</th>
                         <th scope="col">Email</th>
@@ -40,7 +39,6 @@
                     <tbody>
                     {% for teacher in teacher_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/teachers/{{ teacher.pk }}">{{ teacher.id }}</a></th>
                             <td><a href="/api/crm/teachers/{{ teacher.pk }}">{{ teacher }}</a></td>
                             <td>{{ teacher.phone }}</td>
                             <td>{{ teacher.user.email }}</td>

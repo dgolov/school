@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-12">
+        <h5>Личные данные:</h5>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group mt-4">
+            <label>Фамилия</label>
+            <input class="form-control" type="text" placeholder="Укажите фамилию..." value="{{ teacher.user.last_name }}">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group mt-4">
+            <label>Имя</label>
+            <input class="form-control" type="text" placeholder="Укажите имя..." value="{{ teacher.user.first_name }}">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group mt-4">
+            <label>Отчетсво</label>
+            {{ form.middle_name }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group mt-4">
+            <label>Номер телефона</label>
+            {{ form.phone }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group mt-4">
+            <label>Электронная почта</label>
+            <input class="form-control" type="email" placeholder="Укажите электронную почту..." value="{{ teacher.user.email }}">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group mt-4">
+            <label>Образование</label>
+            {{ form.education }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group mt-4">
+            <label>Профессиональная деятельность</label>
+            {{ form.professional_activity }}
+        </div>
+    </div>
+</div>
