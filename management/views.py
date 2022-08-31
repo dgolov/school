@@ -984,6 +984,30 @@ class CreateStudentView(FormView):
         return HttpResponseRedirect('/api/crm/students')
 
 
+class UpdateStudentView(UpdateView):
+    """ Редактирование студента в CRM
+    """
+    model = Student
+    template_name = 'crm/update_student.html'
+    form_class = forms.UpdateStudentForm
+    context_object_name = 'student'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateStudentView, self).get_context_data()
+        context['title'] = 'Редактирование студента'
+        context['group_list'] = Group.objects.all().exclude(student_groups=self.get_object())
+        context['course_list'] = Course.objects.all().exclude(student_courses=self.get_object())
+        return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            print(1)
+            form.save()
+            # self.update_students_group(group, self.request)
+            return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
+        print(2)
+
+
 class StaffListView(ListView):
     """ Список сотрудников в CRM
     """
