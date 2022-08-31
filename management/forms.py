@@ -9,6 +9,7 @@ from mainapp.models import (
     Timetable,
     AcademicPerformance,
     Student,
+    StudentAgeGroup,
     Teacher
 )
 from management.models import (
@@ -586,6 +587,17 @@ class CreateTeacherForm(forms.Form):
             attrs={'class': 'form-control'}
         )
     )
+
+
+class UpdateStudentForm(forms.ModelForm):
+    """ Форма добавления групп и курсов студенту """
+    verification = forms.BooleanField(required=False)
+
+    is_active = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Student
+        fields = ('verification', 'is_active')
 
 
 class UpdateTeacherForm(forms.ModelForm):
