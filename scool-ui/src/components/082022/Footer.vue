@@ -2,20 +2,20 @@
   <div>
 	<div class="contacts-block">
 		<div class="container">
-			<form class="big">
-				<input type="text" v-model="fio" placeholder="Ваше имя" required>
+			<form class="big" @submit.prevent="sendRequest()">
+				<input type="text" v-model="fio" name="name" placeholder="Ваше имя">
 				<div class="row">
 					<div class="col-sm-6">
-						<input type="text" v-model="phone" placeholder="Ваш телефон" required>
+						<input type="text" v-model="phone" name="phone" placeholder="Ваш телефон">
 					</div>
 					<div class="col-sm-6">
-						<input type="text" v-model="email" placeholder="Ваш e-mail">
+						<input type="text" v-model="email" name="email" placeholder="Ваш e-mail">
 					</div>
 					<div class="col-sm-6">
 						<p>Нажимая на кнопку, я соглашаюсь на обработку персональных данных и с правилами пользования Платформой</p>
 					</div>
 					<div class="col-sm-6">
-						<button @click="sendRequest()" type="submit">Отправить</button>
+						<button type="submit">Отправить</button>
 					</div>
 				</div>
 				<div class="text">
@@ -25,20 +25,20 @@
 			</form>
 			<div class="row r">
 				<div class="col-lg-6">
-					<form>
-						<input type="text" v-model="fio" placeholder="Ваше имя">
+					<form  @submit.prevent="sendRequest()">
+						<input type="text" v-model="fio" name="name" placeholder="Ваше имя">
 						<div class="row">
 							<div class="col-sm-6">
-								<input v-model="phone" type="text" placeholder="Ваш телефон">
+								<input v-model="phone" name="phone" type="text" placeholder="Ваш телефон">
 							</div>
 							<div class="col-sm-6">
-								<input type="text" v-model="email" placeholder="Ваш e-mail">
+								<input type="text" v-model="email" name="email" placeholder="Ваш e-mail">
 							</div>
 							<div class="col-sm-6">
 								<p>Нажимая на кнопку, я соглашаюсь на обработку персональных данных и с правилами пользования Платформой</p>
 							</div>
 							<div class="col-sm-6">
-								<button @click="sendRequest()" type="submit">Отправить</button>
+								<button type="submit">Отправить</button>
 							</div>
 						</div>
 						<div class="text">
@@ -49,8 +49,10 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="map m1" id="mapNN">
+						<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A87cc24d5013f025063c014b1c23ad401d1cfd347455ef2d999759fdadd29621c&amp;source=constructor" width="100%" height="414" frameborder="0"></iframe>
 					</div>
 					<div class="map m2" id="mapDZ">
+						<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad18c832af74e9b9b0a9ef496a75ce63297a9ecf8dc34897fc8620255cda476b8&amp;source=constructor" width="100%" height="414" frameborder="0"></iframe>
 					</div>
 				</div>
 			</div>
@@ -128,6 +130,19 @@
 			</nav>
 		</div>
 	</footer>
+	
+	<div class="contact-footerform-sent" style="display: none;">
+		<h2 class="contact-form-caption">Ваша заявка успешно отправлена</h2>
+		<div class="contact-form-owl-block">
+			<div class="owl-owl"></div>
+			<div class="owl-content">
+				Спасибо за вашу заявку, в скором времени менеджер свяжется с вами.
+			</div> 
+			<img src="@/assets/082022/img/contact-form-owl-owlm.png" class="owl-owlm">
+			<br clear="all">
+		</div>
+	</div>
+	
   </div>
 </template>
 
@@ -141,6 +156,9 @@ export default {
 	    return { 
 	    	listCourses: [],
 	    	categoryList: [],
+	        typeRequest: 'online',
+	        status: 'new',
+	        date: '',
 	    }
   },
 	  
@@ -185,10 +203,15 @@ export default {
       },
       
       async sendRequest() {
+    	  
+          var name = '';
+          var phone = '';
+          var email = '';
+    	  
           const body = {
-            request_fio: this.fio,
-            request_phone: this.phone,
-            request_email: this.email,
+            request_fio: name = this.fio,
+            request_phone: phone = this.phone,
+            request_email: email = this.email,
             type_request: this.typeRequest,
             status: this.status,
             date: this.dates,
@@ -203,20 +226,67 @@ export default {
             event: null
           }
           
-          axios
+	        let $ = window.$;
+	        
+		    if (!name) name = '';
+		    if (!phone) phone = '';
+		    if (!email) email = '';
+		    
+		    var hasError = false;
+
+	        if (name == '' && !hasError) {
+	        	window.setModalFormError($('.common-modal-content .data-place'), 'Введите Ваше имя!');
+	        	hasError = true;
+	        }
+	        
+	        if (phone == '' && email == '' && !hasError) {
+	        	window.setModalFormError($('.common-modal-content .data-place'), 'Введите номер телефона или адрес электронной почты!');
+	        	hasError = true;
+	        } else {
+	        	if (phone != '' && !hasError) {
+	        		if (!window.validatePhone(phone)) {
+	    	        	window.setModalFormError($('.common-modal-content .data-place'), 'Проверьте, возможно вы ввели неверный номер телефона. ');
+	    	        	hasError = true;
+	        		} 
+	        	}
+	        	
+	        	if (email != '' && !hasError) {
+	        		if (!window.validateEmail(email)) {
+	    	        	window.setModalFormError($('.common-modal-content .data-place'), 'Проверьте, возможно вы ввели неверный email.');
+	    	        	hasError = true;
+	        		}	        		
+	        	}
+	        }
+	        
+	        if (hasError) {
+	        	clearTimeout(window.ModalFormErrorTimer);
+        		$('.common-modal').show();
+        		$('.common-modal .common-modal-close').show();
+        		return false;
+	        }
+
+            axios
               .post(`${this.$store.getters.getServerUrl}/requests/`, body)
               .then((response) => {
+            	  
                 this.$store.commit("setAuthUser", {
                   authUser: response.data,
                   isAuthenticated: true,
                 });
+                
+                let $ = window.$;
+                
+                $('.common-modal-content .data-place').html($('.contact-footerform-sent').html());
+                $('.contacts-block form input').val('');
+        		$('.common-modal').show();
+                
+                console.log(response);
+                
                 this.fio = null;
                 this.phone = null;
                 this.email = null;
               });
-        },
-
-	  
+          },
   },
 
 }

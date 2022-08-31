@@ -39,7 +39,7 @@
 					<div class="item">
 						<img src="../assets/082022/img/review/1.png">
 						<div class="name">
-							Жигалко Сергей
+							Жигалко Сергей Александрович
 						</div>
 						<div class="prof">
 							Международный гроссмейстер
@@ -71,7 +71,7 @@
 					<div class="item">
 						<img src="../assets/082022/img/review/4.png">
 						<div class="name">
-							Андрей Жигалко
+							Жигалко Андрей Александрович
 						</div>
 						<div class="prof">
 							Международный гроссмейстер

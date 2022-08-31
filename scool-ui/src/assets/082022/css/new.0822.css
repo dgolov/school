@@ -1769,7 +1769,7 @@ src: url('../fonts/digital_7.ttf');
   }
   .portfolio-block {
     padding: 57px 15px 45px 15px;
-    margin: 0 -15px;
+    /* margin: 0 -15px; */ 
   }
   .portfolio-block .name {
     margin-bottom: 0;

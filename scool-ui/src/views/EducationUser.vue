@@ -46,7 +46,7 @@
 				</div>
 				<div class="button">
 					<p>Первое занятие бесплатно</p>
-					<button class="buttonSendRequest">Записаться на пробное занятие</button>
+					<button class="GetCourceModal">Записаться на пробное занятие</button>
 				</div>
 			</div>
 			<div class="bottom-link">
@@ -190,7 +190,7 @@
 					<div>от 145 ₽ </div>
 				</div>
 				<p>Первое занятие бесплатно</p>
-				<button class="buttonSendRequest">Записаться на пробное занятие</button>
+				<button class="GetCourceModal">Записаться на пробное занятие</button>
 			</div>
 		</div>
 	</div>
@@ -241,19 +241,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="portfolio-block">
-			<div class="image i2">
-				<img src="../assets/082022/img/portfolio2.png">
-			</div>
-			<div class="name">
-				Ваше будущее портфолио
-			</div>
-			<div class="image i1">
-				<img src="../assets/082022/img/portfolio1.png">
-			</div>
-			<p>Каждый ученик получает сертификат Академии будущего «ХОД», который подтверждает прохождение курса. По результатам обучения каждый студент сформирует портфолио из работ, выполненных в процессе обучения</p>
+
+	<div class="portfolio-block container">
+		<div class="image i2">
+			<img src="../assets/082022/img/portfolio2.png">
 		</div>
+		<div class="name">
+			Ваше будущее портфолио
+		</div>
+		<div class="image i1">
+			<img src="../assets/082022/img/portfolio1.png">
+		</div>
+		<p>Каждый ученик получает сертификат Академии будущего «ХОД», который подтверждает прохождение курса. По результатам обучения каждый студент сформирует портфолио из работ, выполненных в процессе обучения</p>
 	</div>
 
 	<div class="principles-block">
@@ -482,7 +481,7 @@
 					<div class="prof">
 						<span>Преподаватель программирования, робототехники, web-разработки и др.</span>
 					</div>
-					Специальизация: Компьютерные сети.
+					Специализация: Компьютерные сети.
 					Педагогический стаж более 5 лет.
 					Педагогическое кредо: Научить детей учиться.
 				</div>
@@ -604,7 +603,7 @@
 				
 			</div>
 			<div class="bottom-button">
-				<button class="buttonSendRequest">Записаться на пробное занятие</button>
+				<button class="GetCourceModal">Записаться на пробное занятие</button>
 			</div>
 		</div>
 	</div>		

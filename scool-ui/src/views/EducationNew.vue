@@ -17,8 +17,8 @@
 					<img src="../assets/082022/img/edu/header.png">
 				</div>
 				<div class="buttons flex">
-					<button class="buttonGetCource">Получить консультацию</button>
-					<button class="buttonFindeCource">Подобрать курс</button>
+					<button class="GetCourceModal">Получить консультацию</button>
+					<button class="GetCourceModal">Подобрать курс</button>
 				</div>
 			</div>
 		</div>
@@ -61,11 +61,12 @@
 				</nav>
 				<div id="t1" class="tab-content">
 					<div class="row">
-						<div class="col-md-12 categoryFilter">
+						<div class="col-md-12" class="categoryFilter">
 							<a data-cat="all">Все</a>
 							<a data-cat="Шахматы">Шахматы</a>
 							<a data-cat="IT-обучение">IT-обучение</a>
 							<a data-cat="Иностранные языки">Иностранные языки</a>
+							<a data-cat="Общие дисциплины">Общие дисциплины</a>
 						</div>
 						<div class="col-md-6" @click="goToHref('https://f-academychess.ru/')" catname="Шахматы">
 							<div class="item" :style="{'background': '#ECB0BC url(' + require('../assets/082022/img/edu/courses/ch1.png') + ') right bottom no-repeat'}">
@@ -75,7 +76,7 @@
 									Шахматная школа
 									<p class="edu-course-desc">Обучение игре в шахматы с любого уровня, развитие памяти, внимания и логического мышления ребенка.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 
@@ -85,9 +86,21 @@
 								<div class="edu-course-category">Иностранные языки</div>
 								<div class="text">
 									Английский язык
-									<p class="edu-course-desc">Английский язык необходим для успешной карьеры. Изучения языка с детства повышает возможность владения им во взрослой жизни.</p>
+									<p class="edu-course-desc">Английский язык необходим для успешной карьеры. Изучение языка с детства повышает возможность владения им во взрослой жизни.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
+							</div>
+						</div>
+
+						<div class="col-md-6" @click="goToHref('/education/chinese')" catname="Иностранные языки">
+							<div class="item education-chinese" :style="{'background': '#B4EEC4 url(' + require('../assets/082022/img/edu/courses/ch7.png') + ') right bottom no-repeat'}">
+								<div class="edu-course-type">Курс</div>
+								<div class="edu-course-category">Иностранные языки</div>
+								<div class="text">
+									Китайский язык
+									<p class="edu-course-desc">Китайский язык сегодня актуален как никогда. Изучение языка с детства повышает возможность владения им во взрослой жизни.</p>
+								</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 						
@@ -99,7 +112,7 @@
 									Новичок
 									<p class="edu-course-desc">Обучение основам IT-технологий, английскому языку, шахматам и другим дисциплинам для комплексного развития ребёнка.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 
@@ -111,7 +124,7 @@
 									Пользователь
 									<p class="edu-course-desc">Обучение по выбранному направлению: Программирование, Дизайн или Мультимедиа.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 
@@ -121,9 +134,9 @@
 								<div class="edu-course-category">IT-обучение</div>
 								<div class="text">
 									Профессионал
-									<p class="edu-course-desc">Обучения по выбранному направлению: Программирование, Дизайн, Веб-разработка или Мультимедиа.</p>
+									<p class="edu-course-desc">Обучение по выбранному направлению: Программирование, Дизайн, Веб-разработка или Мультимедиа.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 
@@ -133,9 +146,32 @@
 								<div class="edu-course-category">IT-обучение</div>
 								<div class="text">
 									Читер
-									<p class="edu-course-desc">Обучения по выбранному направлению: Программирование, Дизайн, Веб-разработка или Мультимедиа, Создание игр, Блогинг.</p>
+									<p class="edu-course-desc">Обучение по выбранному направлению: Программирование, Дизайн, Веб-разработка или Мультимедиа, Создание игр, Блогинг.</p>
 								</div>
-								<div class="edu-course-lenght">9 месяца</div>
+								<div class="edu-course-lenght">9 месяцев</div>
+							</div>
+						</div>
+
+						<div class="col-md-6" @click="goToHref('/education/speedreading')" catname="Общие дисциплины">
+							<div class="item" :style="{'background': 'url(' + require('../assets/082022/img/edu/courses/ch8.png') + ') right center/cover no-repeat'}">
+								<div class="edu-course-type">Курс</div>
+								<div class="edu-course-category">Общие</div>
+								<div class="text">
+									Скорочтение
+									<p class="edu-course-desc">Обучение быстрому усвоению большого объёма информации при чтении, развитие памяти и внимания</p>
+								</div>
+								<div class="edu-course-lenght">9 месяцев</div>
+							</div>
+						</div>
+						<div class="col-md-6" @click="goToHref('/education/arithmetic')" catname="Общие дисциплины">
+							<div class="item" :style="{'background': 'url(' + require('../assets/082022/img/edu/courses/ch9.png') + ') right center/cover no-repeat'}">
+								<div class="edu-course-type">Курс</div>
+								<div class="edu-course-category">Общие</div>
+								<div class="text">
+									Ментальная арифметика
+									<p class="edu-course-desc">Обучение быстрому вычислению в уме многозначных цифр, развитие интеллекта, логики и внимания ребёнка</p>
+								</div>
+								<div class="edu-course-lenght">9 месяцев</div>
 							</div>
 						</div>
 
@@ -144,7 +180,7 @@
 				<div id="t2" class="tab-content">
 					<div class="row">
 
-						<div class="col-md-12 categoryFilter">
+						<div class="col-md-12" class="categoryFilter">
 							<a data-cat="all">Все</a>
 							<a data-cat="Шахматы">Шахматы</a>
 							<a data-cat="Программирование">IT-обучение</a>
@@ -688,6 +724,10 @@ export default {
 	.categoryFilter a.active {
 		background: linear-gradient(#fff 0 0) padding-box, linear-gradient(to right, #27AAE1, #D851FF) border-box;		
 		border: solid 2px transparent;
+	}
+	
+	.ways-block .tab-content .item.education-chinese {
+		color: yellow;
 	}
 
 </style>

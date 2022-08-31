@@ -15,8 +15,8 @@
 					<img src="../assets/082022/img/girl.png">
 				</div>
 				<div class="buttons flex">
-					<button class="buttonGetCource">Получить консультацию</button>
-					<button class="buttonFindeCource">Подобрать курс</button>
+					<button class="GetCourceModal">Получить консультацию</button>
+					<button class="GetCourceModal">Подобрать курс</button>
 				</div>
 			</div>
 			<div class="bottom-link">
@@ -277,7 +277,7 @@
 					<div class="date">
 						<span>{{ dateOpenDoors.getDate() }}</span>
 						{{ formatDate(dateOpenDoors, true) }}
-						<button @click="goToHref('/send-request')">Записаться</button>
+						<button @click="goToCourceModal()">Записаться</button>
 					</div>
 					<div class="text">
 						<div class="top-text">
@@ -295,7 +295,7 @@
 					<div class="button">
 						<img v-if="OpenDoorsImage" :src="OpenDoorsImage">
 						<img v-else src="../assets/082022/img/image.png">
-						<button @click="goToHref('/send-request')">Записаться</button>
+						<button @click="goToCourceModal()">Записаться</button>
 					</div>
 				</div>
 			</div>
@@ -473,7 +473,7 @@
 						</div>
 						
 						<div class="button">
-							<button class="buttonNewCource">Записаться</button>
+							<button class="GetCourceModal">Записаться</button>
 						</div>
 					</div>
 				</div>
@@ -597,6 +597,11 @@ export default {
 /*    	categoryList: [],
     	categoryListByAge: [],
 */
+
+        typeRequest: 'online',
+        status: 'new',
+        date: '',
+
     }
   },
   
@@ -616,11 +621,6 @@ export default {
 			$('.video-modal-content').width(videoWidth);
 		}
 		$('.video-modal-content').height(videoHeight);
-		
-		$('.buttonGetCource, .buttonFindeCource, .buttonNewCource, .buttonBannerOpenDoors').click(function() {
-			window.location.href = "/send-request";
-			return false;
-		});
 		
 		$('.buttonHsecamp').click(function() {
 			window.location.href = "https://facademy-hsecamp.ru/";
@@ -766,6 +766,11 @@ export default {
       
       goToHref(href) {
 		  window.location.href = href;
+      },
+      
+      goToCourceModal() {
+    	  let thisapp = this;
+		  window.CourceModalShow(thisapp);
       },
 	  
       goToCategory(name, ageGroup) {
