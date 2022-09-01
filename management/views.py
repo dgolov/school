@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.db import IntegrityError
 from django.db.models import Q, Sum
 from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
@@ -874,21 +876,25 @@ class CreateTeacherView(FormView):
 
     def form_valid(self, form):
         if form.is_valid():
-            new_user = User.objects.create(
-                username=form.cleaned_data['username'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                email=form.cleaned_data['email']
-            )
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            Teacher.objects.create(
-                user=new_user,
-                middle_name=form.cleaned_data['middle_name'],
-                phone=form.cleaned_data['phone'],
-                gender=form.cleaned_data['gender'],
-                user_group='teacher'
-            )
+            try:
+                new_user = User.objects.create(
+                    username=form.cleaned_data['username'],
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    email=form.cleaned_data['email']
+                )
+                new_user.set_password(form.cleaned_data['password'])
+                new_user.save()
+                Teacher.objects.create(
+                    user=new_user,
+                    middle_name=form.cleaned_data['middle_name'],
+                    phone=form.cleaned_data['phone'],
+                    gender=form.cleaned_data['gender'],
+                    user_group='teacher'
+                )
+            except IntegrityError:
+                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+                return HttpResponseRedirect('/api/crm/teachers/create')
         return HttpResponseRedirect('/api/crm/teachers')
 
 
@@ -966,21 +972,25 @@ class CreateStudentView(FormView):
 
     def form_valid(self, form):
         if form.is_valid():
-            new_user = User.objects.create(
-                username=form.cleaned_data['username'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                email=form.cleaned_data['email']
-            )
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            Student.objects.create(
-                user=new_user,
-                middle_name=form.cleaned_data['middle_name'],
-                phone=form.cleaned_data['phone'],
-                gender=form.cleaned_data['gender'],
-                user_group='student'
-            )
+            try:
+                new_user = User.objects.create(
+                    username=form.cleaned_data['username'],
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    email=form.cleaned_data['email']
+                )
+                new_user.set_password(form.cleaned_data['password'])
+                new_user.save()
+                Student.objects.create(
+                    user=new_user,
+                    middle_name=form.cleaned_data['middle_name'],
+                    phone=form.cleaned_data['phone'],
+                    gender=form.cleaned_data['gender'],
+                    user_group='student'
+                )
+            except IntegrityError:
+                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+                return HttpResponseRedirect('/api/crm/staffs/create')
         return HttpResponseRedirect('/api/crm/students')
 
 
@@ -1061,7 +1071,7 @@ class CreateStaffView(FormView):
 
     def form_valid(self, form):
         if form.is_valid():
-            if form.is_valid():
+            try:
                 new_user = User.objects.create(
                     username=form.cleaned_data['username'],
                     first_name=form.cleaned_data['first_name'],
@@ -1078,6 +1088,9 @@ class CreateStaffView(FormView):
                     gender=form.cleaned_data['gender'],
                     user_group=form.cleaned_data['user_group']
                 )
+            except IntegrityError:
+                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+                return HttpResponseRedirect('/api/crm/staffs/create')
         return HttpResponseRedirect('/api/crm/staffs')
 
 

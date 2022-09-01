@@ -4,6 +4,17 @@
         <div class="card-body">
             <div class="card-title">
                 <h4 class="mb-4">Регистрация нового сотрудника</h4>
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="danger"{% endif %}>
+                                    {{ message }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                 <hr/>
             </div>
             {% include 'crm/inc/create_staff_form.html' %}
