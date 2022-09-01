@@ -20,7 +20,7 @@ from management.models import (
     CostCategory,
     Staff
 )
-from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 from datetime import datetime, timedelta
@@ -984,7 +984,7 @@ class CreateStudentView(FormView):
         return HttpResponseRedirect('/api/crm/students')
 
 
-class UpdateStudentView(UpdateView):
+class UpdateStudentView(UpdateView, StudentMixin):
     """ Редактирование студента в CRM
     """
     model = Student
@@ -1001,11 +1001,10 @@ class UpdateStudentView(UpdateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            print(1)
-            form.save()
-            # self.update_students_group(group, self.request)
-            return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
-        print(2)
+            student = form.save()
+            self.update_student_groups(student, self.request)
+            self.update_student_courses(student, self.request)
+        return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
 
 
 class StaffListView(ListView):

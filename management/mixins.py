@@ -118,3 +118,29 @@ class TeacherMixin:
         course_list = request.POST.getlist('courses')
         for course in course_list:
             teacher.courses.add(course)
+
+
+class StudentMixin:
+    """ Миксин для редактирования студентов
+    """
+    @staticmethod
+    def update_student_groups(student, request) -> None:
+        """ Добавляет группу в список групп студента
+        :param student: студен
+        :param request: Объект запроса содержит в себе список курсов
+        """
+        group_list = request.POST.getlist('groups')
+        if group_list:
+            for group in group_list:
+                student.group_list.add(group)
+
+    @staticmethod
+    def update_student_courses(student, request) -> None:
+        """ Добавляет группу в список групп студента
+        :param student: студент
+        :param request: Объект запроса содержит в себе список групп
+        """
+        course_list = request.POST.getlist('courses')
+        if course_list:
+            for course in course_list:
+                student.courses.add(course)
