@@ -149,7 +149,7 @@ class StudentMixin:
                     student.group_list.add(group)
             messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
         except Exception as e:
-            messages.add_message(request, messages.SUCCESS, 'Ошибка добавления групп.')
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления групп.')
         return
 
     @staticmethod
@@ -165,7 +165,7 @@ class StudentMixin:
                     student.courses.add(course)
             messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
         except Exception as e:
-            messages.add_message(request, messages.SUCCESS, 'Ошибка добавления курсов.')
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления курсов.')
         return
 
     @staticmethod
