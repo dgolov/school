@@ -945,7 +945,7 @@ class StudentListView(ListView):
             return None
 
 
-class StudentDetailView(DetailView):
+class StudentDetailView(DetailView, StudentMixin):
     """ Детальное представление студента в CRM
     """
     model = Student
@@ -957,6 +957,18 @@ class StudentDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         return context
+
+    def post(self, request, *args, **kwargs):
+        """ Удаление курсов и групп в детальном представлении студента """
+        course_id = request.POST.get('delete-course', None)
+        group_id = request.POST.get('delete-group', None)
+
+        if course_id:
+            self.delete_course(request, self.get_object(), course_id)
+        elif group_id:
+            self.delete_group(request, self.get_object(), group_id)
+
+        return HttpResponseRedirect(f'/api/crm/students/{self.get_object().id}')
 
 
 class CreateStudentView(FormView):

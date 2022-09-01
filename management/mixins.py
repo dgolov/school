@@ -1,8 +1,9 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.db.models import Q
 
-from mainapp.models import Student, Teacher
+from mainapp.models import Student, Teacher, Course, Group
 from management.models import Client, Request
 
 
@@ -144,3 +145,33 @@ class StudentMixin:
         if course_list:
             for course in course_list:
                 student.courses.add(course)
+
+    @staticmethod
+    def delete_course(request, student, course_id) -> None:
+        """ Удаление курса из списка курсов студента
+        :param request: объект запроса
+        :param student: объект студента
+        :param course_id: id удаляемого курса
+        """
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления курса.')
+            return
+        student.courses.remove(course)
+        messages.add_message(request, messages.SUCCESS, f'Курс {course} успешно удален.')
+
+    @staticmethod
+    def delete_group(request, student, group_id) -> None:
+        """ Удаление группы из списка групп студена
+        :param request: объект запроса
+        :param student: объект студента
+        :param group_id: id удаляемой группы
+        """
+        try:
+            group = Group.objects.get(pk=group_id)
+        except Group.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления группы.')
+            return
+        student.group_list.remove(group)
+        messages.add_message(request, messages.SUCCESS, f'Группа {group} успешно удалена.')
