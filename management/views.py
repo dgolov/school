@@ -656,7 +656,7 @@ class UpdateCourseView(UpdateView, CourseMixin):
     def get_context_data(self, **kwargs):
         context = super(UpdateCourseView, self).get_context_data()
         context['title'] = 'Редактирование курса'
-        context['teachers'] = Teacher.objects.all()
+        context['teachers'] = Teacher.objects.all().exclude(course_teachers=self.get_object())
         return context
 
     def get_success_url(self):
