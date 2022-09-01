@@ -6,7 +6,7 @@
                 <div class="row mb-4">
                     <div class="col-md-8">
                         <div class="d-flex align-items-center mb-3">
-                            <h5 class="mb-0">{{ group}}</h5>
+                            <h5 class="mb-0">{{ group }}</h5>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -21,8 +21,8 @@
                                 <table class="table table-sm table-borderless mt-md-0 mt-3">
                                     <tbody>
                                     <tr>
-                                        <th>Преподаватель:</th>
-                                        <td><a href="#">{{ group.teacher }}</a></td>
+                                        <th>Менеджер:</th>
+                                        <td>{{ group.manager }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -38,6 +38,33 @@
                 <div class="row">
                     <div class="table-responsive">
                         {% include 'crm/inc/student_table.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Список курсов</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Название</th>
+                                <th scope="col">Категория</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for course in group.courses.all %}
+                                <tr>
+                                    <th scope="row">{{ course.id }}</th>
+                                    <td><a href="/api/crm/courses/{{ course.id }}">{{ course.name }}</a></td>
+                                    <td>{{ course.category }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

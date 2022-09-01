@@ -1,8 +1,9 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.db.models import Q
 
-from mainapp.models import Student, Teacher
+from mainapp.models import Student, Teacher, Course, Group
 from management.models import Client, Request
 
 
@@ -10,12 +11,11 @@ class GroupMixin:
     """ Миксин для создания и редактирования учебных груп в CRM
     """
     @staticmethod
-    def update_students_group(new_group, request) -> None:
+    def update_students_group(new_group, students_id_list) -> None:
         """ Добавляет группу в список групп выбранным студентам
         :param new_group: Созданная группа
-        :param request: Объект запроса содержит в себе список студентов
+        :param students_id_list: Cписок студентов
         """
-        students_id_list = request.POST.getlist('students')
         for student_id in students_id_list:
             try:
                 student = Student.objects.get(pk=int(student_id))
@@ -24,17 +24,29 @@ class GroupMixin:
                 continue
 
     @staticmethod
-    def update_teachers_group(new_group, request) -> None:
+    def update_teachers_group(new_group, teachers_id_list) -> None:
         """ Добавляет группу в список групп выбранным преподавателям
         :param new_group: Созданная группа
-        :param request: Объект запроса содержит в себе список преподавателей
+        :param teachers_id_list: Список преподавателей
         """
-        teachers_id_list = request.POST.getlist('teachers')
         for teacher_id in teachers_id_list:
             try:
                 teacher = Teacher.objects.get(pk=int(teacher_id))
                 teacher.group_list.add(new_group)
             except Student.DoesNotExist:
+                continue
+
+    @staticmethod
+    def update_courses_group(new_group, courses_id_list) -> None:
+        """ Добавляет список курсов в группу
+        :param new_group: Созданная группа
+        :param courses_id_list: Список курсов
+        """
+        for courses_id in courses_id_list:
+            try:
+                course = Course.objects.get(pk=int(courses_id))
+                new_group.courses.add(course)
+            except Course.DoesNotExist:
                 continue
 
 
@@ -45,8 +57,12 @@ class CourseMixin:
     def update_teachers(new_course, request) -> None:
         teachers_id_list = request.POST.getlist('teachers')
         for teacher_id in teachers_id_list:
-            teacher = Teacher.objects.get(pk=int(teacher_id))
+            try:
+                teacher = Teacher.objects.get(pk=int(teacher_id))
+            except Teacher.DoesNotExist:
+                continue
             new_course.teachers.add(teacher)
+            teacher.courses.add(new_course)
 
 
 class FilterMixin:
@@ -105,9 +121,15 @@ class TeacherMixin:
         :param teacher: преподаватель
         :param request: Объект запроса содержит в себе список курсов
         """
-        group_list = request.POST.getlist('groups')
-        for group in group_list:
-            teacher.group_list.add(group)
+        try:
+            group_list = request.POST.getlist('groups')
+            if group_list:
+                for group in group_list:
+                    teacher.group_list.add(group)
+                messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления групп.')
+        return
 
     @staticmethod
     def update_teacher_courses(teacher, request) -> None:
@@ -115,6 +137,79 @@ class TeacherMixin:
         :param teacher: преподаватель
         :param request: Объект запроса содержит в себе список групп
         """
-        course_list = request.POST.getlist('courses')
-        for course in course_list:
-            teacher.courses.add(course)
+        try:
+            course_list = request.POST.getlist('courses')
+            if course_list:
+                for course in course_list:
+                    teacher.courses.add(course)
+                    course.teachers.add(teacher)
+                messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления курсов.')
+        return
+
+
+class StudentMixin:
+    """ Миксин для редактирования студентов
+    """
+    @staticmethod
+    def update_student_groups(student, request) -> None:
+        """ Добавляет группу в список групп студента
+        :param student: студен
+        :param request: Объект запроса содержит в себе список курсов
+        """
+        try:
+            group_list = request.POST.getlist('groups')
+            if group_list:
+                for group in group_list:
+                    student.group_list.add(group)
+                messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления групп.')
+        return
+
+    @staticmethod
+    def update_student_courses(student, request) -> None:
+        """ Добавляет группу в список групп студента
+        :param student: студент
+        :param request: Объект запроса содержит в себе список групп
+        """
+        try:
+            course_list = request.POST.getlist('courses')
+            if course_list:
+                for course in course_list:
+                    student.courses.add(course)
+                messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления курсов.')
+        return
+
+    @staticmethod
+    def delete_course(request, student, course_id) -> None:
+        """ Удаление курса из списка курсов студента
+        :param request: объект запроса
+        :param student: объект студента
+        :param course_id: id удаляемого курса
+        """
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления курса.')
+            return
+        student.courses.remove(course)
+        messages.add_message(request, messages.SUCCESS, f'Курс {course} успешно удален.')
+
+    @staticmethod
+    def delete_group(request, student, group_id) -> None:
+        """ Удаление группы из списка групп студена
+        :param request: объект запроса
+        :param student: объект студента
+        :param group_id: id удаляемой группы
+        """
+        try:
+            group = Group.objects.get(pk=group_id)
+        except Group.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления группы.')
+            return
+        student.group_list.remove(group)
+        messages.add_message(request, messages.SUCCESS, f'Группа {group} успешно удалена.')
