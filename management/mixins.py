@@ -147,7 +147,7 @@ class StudentMixin:
             if group_list:
                 for group in group_list:
                     student.group_list.add(group)
-            messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
+                messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
         except Exception as e:
             messages.add_message(request, messages.ERROR, 'Ошибка добавления групп.')
         return
@@ -163,7 +163,7 @@ class StudentMixin:
             if course_list:
                 for course in course_list:
                     student.courses.add(course)
-            messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
+                messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
         except Exception as e:
             messages.add_message(request, messages.ERROR, 'Ошибка добавления курсов.')
         return
