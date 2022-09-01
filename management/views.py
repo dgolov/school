@@ -910,8 +910,8 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
         context = super(UpdateTeacherView, self).get_context_data()
         context['teacher'] = self.get_object()
         context['title'] = 'Редактирование преподавателя'
-        context['group_list'] = Group.objects.all().exclude(student_groups=self.get_object())
-        context['course_list'] = Course.objects.all().exclude(student_courses=self.get_object())
+        context['group_list'] = Group.objects.all().exclude(teacher_groups=self.get_object())
+        context['course_list'] = Course.objects.all().exclude(teacher_courses=self.get_object())
         return context
 
     def form_valid(self, form):
@@ -920,7 +920,9 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
             teacher = self.get_object()
             self.update_teacher_groups(teacher, self.request)
             self.update_teacher_courses(teacher, self.request)
-        return HttpResponseRedirect(f'/api/crm/teachers')
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
+        return HttpResponseRedirect(f'/api/crm/teachers/{self.get_object().pk}')
 
 
 class StudentListView(ListView):
