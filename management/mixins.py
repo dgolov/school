@@ -11,12 +11,11 @@ class GroupMixin:
     """ Миксин для создания и редактирования учебных груп в CRM
     """
     @staticmethod
-    def update_students_group(new_group, request) -> None:
+    def update_students_group(new_group, students_id_list) -> None:
         """ Добавляет группу в список групп выбранным студентам
         :param new_group: Созданная группа
-        :param request: Объект запроса содержит в себе список студентов
+        :param students_id_list: Cписок студентов
         """
-        students_id_list = request.POST.getlist('students')
         for student_id in students_id_list:
             try:
                 student = Student.objects.get(pk=int(student_id))
@@ -25,17 +24,29 @@ class GroupMixin:
                 continue
 
     @staticmethod
-    def update_teachers_group(new_group, request) -> None:
+    def update_teachers_group(new_group, teachers_id_list) -> None:
         """ Добавляет группу в список групп выбранным преподавателям
         :param new_group: Созданная группа
-        :param request: Объект запроса содержит в себе список преподавателей
+        :param teachers_id_list: Список преподавателей
         """
-        teachers_id_list = request.POST.getlist('teachers')
         for teacher_id in teachers_id_list:
             try:
                 teacher = Teacher.objects.get(pk=int(teacher_id))
                 teacher.group_list.add(new_group)
             except Student.DoesNotExist:
+                continue
+
+    @staticmethod
+    def update_courses_group(new_group, courses_id_list) -> None:
+        """ Добавляет список курсов в группу
+        :param new_group: Созданная группа
+        :param courses_id_list: Список курсов
+        """
+        for courses_id in courses_id_list:
+            try:
+                course = Course.objects.get(pk=int(courses_id))
+                new_group.courses.add(course)
+            except Course.DoesNotExist:
                 continue
 
 

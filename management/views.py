@@ -1085,6 +1085,7 @@ class StaffDetailView(DetailView):
         context = super(StaffDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
+
         if self.get_object().user_group == 'sale_manager':
             context['client_list'] = Client.objects.filter(manager=self.get_object())
             context['request_list'] = Request.objects.filter(manager=self.get_object())
@@ -1092,6 +1093,7 @@ class StaffDetailView(DetailView):
             context['group_list'] = Group.objects.filter(manager=self.get_object())
         elif self.get_object().user_group == 'hr':
             context['interview_list'] = Interview.objects.filter(manager=self.get_object())
+
         return context
 
 
@@ -1192,10 +1194,17 @@ class CreateGroupView(CreateView, GroupMixin):
                 except Course.DoesNotExist:
                     continue
             new_group.save()
-            self.update_students_group(new_group, self.request)
-            self.update_teachers_group(new_group, self.request)
+
+            teachers_id_list = self.request.POST.getlist('teachers', None)
+            students_id_list = self.request.POST.getlist('students', None)
+
+            if students_id_list:
+                self.update_students_group(new_group, students_id_list)
+            if teachers_id_list:
+                self.update_teachers_group(new_group, teachers_id_list)
         else:
             messages.add_message(self.request, messages.ERROR, 'Ошибка создания группы. Введены некорректные данные.')
+
         return HttpResponseRedirect('/api/crm/groups')
 
 
@@ -1210,14 +1219,26 @@ class UpdateGroupView(UpdateView, GroupMixin):
     def get_context_data(self, **kwargs):
         context = super(UpdateGroupView, self).get_context_data()
         context['title'] = 'Редактирование группы'
-        context['student_list'] = Student.objects.all()
+        context['student_list'] = Student.objects.all().exclude(group_list=self.get_object().id)
+        context['course_list'] = Course.objects.all().exclude(group_courses=self.get_object())
         return context
 
     def form_valid(self, form):
         if form.is_valid():
             group = form.save()
-            self.update_students_group(group, self.request)
-            return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
+            courses_id_list = self.request.POST.getlist('courses', None)
+            students_id_list = self.request.POST.getlist('students', None)
+
+            if students_id_list:
+                self.update_students_group(group, students_id_list)
+            if courses_id_list:
+                self.update_courses_group(group, courses_id_list)
+        else:
+            messages.add_message(
+                self.request, messages.ERROR, 'Ошибка редактирования группы. Введены некорректные данные.'
+            )
+
+        return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
 
 
 class CostCategoryListView(ListView):
