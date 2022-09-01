@@ -57,8 +57,12 @@ class CourseMixin:
     def update_teachers(new_course, request) -> None:
         teachers_id_list = request.POST.getlist('teachers')
         for teacher_id in teachers_id_list:
-            teacher = Teacher.objects.get(pk=int(teacher_id))
+            try:
+                teacher = Teacher.objects.get(pk=int(teacher_id))
+            except Teacher.DoesNotExist:
+                continue
             new_course.teachers.add(teacher)
+            teacher.courses.add(new_course)
 
 
 class FilterMixin:
@@ -138,6 +142,7 @@ class TeacherMixin:
             if course_list:
                 for course in course_list:
                     teacher.courses.add(course)
+                    course.teachers.add(teacher)
                 messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
         except Exception as e:
             messages.add_message(request, messages.ERROR, 'Ошибка добавления курсов.')
