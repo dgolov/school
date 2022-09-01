@@ -130,10 +130,15 @@ class StudentMixin:
         :param student: студен
         :param request: Объект запроса содержит в себе список курсов
         """
-        group_list = request.POST.getlist('groups')
-        if group_list:
-            for group in group_list:
-                student.group_list.add(group)
+        try:
+            group_list = request.POST.getlist('groups')
+            if group_list:
+                for group in group_list:
+                    student.group_list.add(group)
+            messages.add_message(request, messages.SUCCESS, 'Группы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.SUCCESS, 'Ошибка добавления групп.')
+        return
 
     @staticmethod
     def update_student_courses(student, request) -> None:
@@ -141,10 +146,15 @@ class StudentMixin:
         :param student: студент
         :param request: Объект запроса содержит в себе список групп
         """
-        course_list = request.POST.getlist('courses')
-        if course_list:
-            for course in course_list:
-                student.courses.add(course)
+        try:
+            course_list = request.POST.getlist('courses')
+            if course_list:
+                for course in course_list:
+                    student.courses.add(course)
+            messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.SUCCESS, 'Ошибка добавления курсов.')
+        return
 
     @staticmethod
     def delete_course(request, student, course_id) -> None:
