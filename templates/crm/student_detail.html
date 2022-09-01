@@ -180,7 +180,7 @@
                                     {% for course in student.courses.all %}
                                         <tr>
                                             <th scope="row">{{ course.id }}</th>
-                                            <td>{{ course }}</td>
+                                            <td><a href="/api/crm/courses/{{ course.id }}">{{ course }}</a></td>
                                             <td>{{ course.category }}</td>
                                             <td>
                                                 <form method="post">
@@ -216,7 +216,7 @@
                                     {% for group in student.group_list.all %}
                                         <tr>
                                             <th scope="row">{{ group.id }}</th>
-                                            <td>{{ group.name }}</td>
+                                            <td><a href="/api/crm/groups/{{ group.id }}"> {{ group.name }}</a></td>
                                             <td>{{ group.manager }}</td>
                                             <td>
                                                 <form method="post">
