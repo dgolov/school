@@ -15,6 +15,20 @@
                            class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
                     </div>
                 </div>
+                {% if messages %}
+                    <div {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="alert alert-danger"
+                    {% else %} class="alert alert-success"
+                    {% endif %} role="alert">
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                    {{ message }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <hr/>
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
