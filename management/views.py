@@ -135,6 +135,8 @@ class CreateClientView(CreateView):
             new_client = form.save()
             new_client.manager = self.request.user.staff
             new_client.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания клиента. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/clients')
 
 
@@ -203,6 +205,8 @@ class CreateContractView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/contracts')
 
 
@@ -258,6 +262,8 @@ class CreateOrderView(CreateView):
             payment = PaymentManager(order)
             payment.get_paid_uuid()
             payment.send_payment_url()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/orders')
 
 
@@ -416,7 +422,9 @@ class CreateRequestView(CreateView):
             new_request.save()
             new_request.client.last_status = new_request.result
             new_request.client.save()
-            return HttpResponseRedirect(self.success_urls[form.instance.type_request])
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        return HttpResponseRedirect(self.success_urls[form.instance.type_request])
 
 
 class UpdateRequestView(UpdateView):
@@ -488,6 +496,8 @@ class CreateVacancyView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/vacancy')
 
 
@@ -560,6 +570,8 @@ class CreateInterviewView(CreateView):
             form.save()
             form.instance.manager = self.request.user.staff
             form.instance.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/interview')
 
 
@@ -628,6 +640,8 @@ class CreateCourseView(CreateView, CourseMixin):
         if form.is_valid():
             course = form.save()
             self.update_teachers(course, self.request)
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/courses')
 
 
@@ -762,6 +776,9 @@ class CreateTimeTableView(CreateView):
 
                 date += timedelta(days=1)
 
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+
         return HttpResponseRedirect('/api/crm/timetable')
 
 
@@ -788,7 +805,6 @@ class UpdateTimeTableView(UpdateView):
             instance.material = self.request.FILES.get('file')
             instance.save()
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
-
 
 
 class AcademicPerformanceListView(ListView):
@@ -825,6 +841,8 @@ class CreateAcademicPerformanceView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/academic-performance')
 
 
@@ -895,6 +913,8 @@ class CreateTeacherView(FormView):
             except IntegrityError:
                 messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
                 return HttpResponseRedirect('/api/crm/teachers/create')
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/teachers')
 
 
@@ -1004,6 +1024,8 @@ class CreateStudentView(FormView):
             except IntegrityError:
                 messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
                 return HttpResponseRedirect('/api/crm/staffs/create')
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/students')
 
 
@@ -1027,6 +1049,8 @@ class UpdateStudentView(UpdateView, StudentMixin):
             student = form.save()
             self.update_student_groups(student, self.request)
             self.update_student_courses(student, self.request)
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
         return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
 
 
@@ -1104,6 +1128,8 @@ class CreateStaffView(FormView):
             except IntegrityError:
                 messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
                 return HttpResponseRedirect('/api/crm/staffs/create')
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/staffs')
 
 
@@ -1168,6 +1194,8 @@ class CreateGroupView(CreateView, GroupMixin):
             new_group.save()
             self.update_students_group(new_group, self.request)
             self.update_teachers_group(new_group, self.request)
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания группы. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/groups')
 
 
@@ -1239,6 +1267,8 @@ class CreateCostCategoryView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/cost-categories')
 
 
@@ -1307,6 +1337,8 @@ class CreateCostView(CreateView):
             new_cost = form.save()
             new_cost.user = self.request.user
             new_cost.save()
+        else:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/costs')
 
 
