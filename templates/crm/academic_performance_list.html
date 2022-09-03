@@ -30,7 +30,6 @@
                 <table class="table mb-0">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Студент</th>
                         <th scope="col">Урок</th>
                         <th scope="col">Тип оценки</th>
@@ -42,12 +41,7 @@
                     <tbody>
                     {% for academic_performance in academic_performance_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/vacancy/{{ academic_performance.id }}">
-                                {{ academic_performance.id }}</a>
-                            </th>
-                            <td><a href="/api/crm/vacancy/{{ academic_performance.id }}">
-                                    {{ academic_performance.student }}</a>
-                            </td>
+                            <td>{{ academic_performance.student }}</td>
                             <td>{{ academic_performance.lesson }}</td>
                             <td>{{ academic_performance.type_grade }}</td>
                             <td>{{ academic_performance.grade }}</td>
