@@ -147,7 +147,12 @@
                             class="p-tab-name">Успеваемость</span><i
                             class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable"><span
+                            class="p-tab-name">Рассписание</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
                 </ul>
+                {% include 'crm/inc/timetable_callendar.html' %}
                 <div class="tab-content mt-3">
                     <div class="tab-pane fade show active" id="About">
                         <div class="card shadow-none border mb-0 radius-15">
@@ -265,6 +270,17 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade active" id="TimeTable">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="row section-top-border">
+                                    <div class="col-md-12">
+                                        <div id='calendar'></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
