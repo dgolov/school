@@ -23,7 +23,7 @@
                                     <tr>
                                         <th>Менеджер:</th>
                                         <td>
-                                             {% if group.manager %}
+                                            {% if group.manager %}
                                                 {{ group.manager }}
                                             {% else %}
                                                 Не указано
@@ -38,83 +38,156 @@
                 </div>
             </div>
         </div>
-        <h4>Список студентов</h4>
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        {% include 'crm/inc/student_table.html' %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h4>Список преподавателей</h4>
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                            <tr>
-                                <th scope="col">ФИО</th>
-                                <th scope="col">Телефон</th>
-                                <th scope="col">Город</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for teacher in group.teacher_groups.all %}
-                                <tr>
-                                    <td><a href="/api/crm/teachers/{{ teacher.id }}">{{ teacher }}</a></td>
-                                    <td><a href="tel: {{ teacher.phone }}">{{ teacher.phone }}</a></td>
-                                    <td>
-                                        {% if teacher.city %}
-                                            {{ teacher.city }}
-                                        {% else %}
-                                            Не указано
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h4>Список курсов</h4>
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">Название</th>
-                                <th scope="col">Категория</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for course in group.courses.all %}
-                                <tr>
-                                    <th scope="row">{{ course.id }}</th>
-                                    <td><a href="/api/crm/courses/{{ course.id }}">{{ course.name }}</a></td>
-                                    <td>{{ course.category }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h4>Рассписание группы</h4>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Students"><span
+                    class="p-tab-name">Студенты</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Teachers"><span
+                    class="p-tab-name">Преподаватели</span><i
+                    class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses"><span
+                    class="p-tab-name">Курсы</span><i
+                    class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab"
+                                    href="#AcademicPerformance"><span
+                    class="p-tab-name">Успеваемость</span><i
+                    class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable"><span
+                    class="p-tab-name">Рассписание</span><i
+                    class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+        </ul>
         {% include 'crm/inc/timetable_callendar.html' %}
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row section-top-border">
-                    <div class="col-md-12">
-                        <div id='calendar'></div>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="Students">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Список студентов:</h4>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                {% include 'crm/inc/student_table.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Teachers">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Список преподавателей:</h4>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ФИО</th>
+                                        <th scope="col">Телефон</th>
+                                        <th scope="col">Город</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for teacher in group.teacher_groups.all %}
+                                        <tr>
+                                            <td><a href="/api/crm/teachers/{{ teacher.id }}">{{ teacher }}</a></td>
+                                            <td><a href="tel: {{ teacher.phone }}">{{ teacher.phone }}</a></td>
+                                            <td>
+                                                {% if teacher.city %}
+                                                    {{ teacher.city }}
+                                                {% else %}
+                                                    Не указано
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Courses">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Список курсов:</h4>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">id</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Категория</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for course in group.courses.all %}
+                                        <tr>
+                                            <th scope="row">{{ course.id }}</th>
+                                            <td><a href="/api/crm/courses/{{ course.id }}">{{ course.name }}</a></td>
+                                            <td>{{ course.category }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="AcademicPerformance">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Успеваемость:</h4>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">Студент</th>
+                                <th scope="col">Урок</th>
+                                <th scope="col">Тип оценки</th>
+                                <th scope="col">Оценка</th>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Преподаватель</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for academic_performance in academic_performance_list %}
+                                <tr>
+                                    <td>{{ academic_performance.student }}</td>
+                                    <td>{{ academic_performance.lesson }}</td>
+                                    <td>{{ academic_performance.type_grade }}</td>
+                                    <td>{{ academic_performance.grade }}</td>
+                                    <td>{{ academic_performance.date }}</td>
+                                    <td>{{ academic_performance.teacher }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade active" id="TimeTable">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Рассписание группы:</h4>
+                        </div>
+                        <div class="row section-top-border">
+                            <div class="col-md-12">
+                                <div id='calendar'></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
