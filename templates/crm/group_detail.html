@@ -22,7 +22,13 @@
                                     <tbody>
                                     <tr>
                                         <th>Менеджер:</th>
-                                        <td>{{ group.manager }}</td>
+                                        <td>
+                                             {% if group.manager %}
+                                                {{ group.manager }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -38,6 +44,39 @@
                 <div class="row">
                     <div class="table-responsive">
                         {% include 'crm/inc/student_table.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Список преподавателей</h4>
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">ФИО</th>
+                                <th scope="col">Телефон</th>
+                                <th scope="col">Город</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for teacher in group.teacher_groups.all %}
+                                <tr>
+                                    <td><a href="/api/crm/teachers/{{ teacher.id }}">{{ teacher }}</a></td>
+                                    <td><a href="tel: {{ teacher.phone }}">{{ teacher.phone }}</a></td>
+                                    <td>
+                                        {% if teacher.city %}
+                                            {{ teacher.city }}
+                                        {% else %}
+                                            Не указано
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
