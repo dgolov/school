@@ -977,6 +977,8 @@ class StudentDetailView(DetailView, StudentMixin):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
+        context['academic_performance_list'] = AcademicPerformance.objects.filter(student=self.get_object())
+        context['time_table_list'] = Timetable.objects.filter(group__student_groups=self.get_object())
         return context
 
     def post(self, request, *args, **kwargs):
@@ -1165,6 +1167,8 @@ class GroupDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         context['student_list'] = self.get_object().student_groups.all()
+        context['time_table_list'] = Timetable.objects.filter(group=self.get_object())
+        context['academic_performance_list'] = AcademicPerformance.objects.filter(student__group_list=self.get_object())
         return context
 
 
