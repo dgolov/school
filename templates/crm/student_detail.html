@@ -143,6 +143,10 @@
                             class="p-tab-name">Группы</span><i
                             class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#AcademicPerformance"><span
+                            class="p-tab-name">Успеваемость</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
                 </ul>
                 <div class="tab-content mt-3">
                     <div class="tab-pane fade show active" id="About">
@@ -226,6 +230,37 @@
                                                     </button>
                                                 </form>
                                             </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="AcademicPerformance">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Успеваемость:</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Урок</th>
+                                        <th scope="col">Тип оценки</th>
+                                        <th scope="col">Оценка</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Преподаватель</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for academic_performance in academic_performance_list %}
+                                        <tr>
+                                            <td>{{ academic_performance.lesson }}</td>
+                                            <td>{{ academic_performance.type_grade }}</td>
+                                            <td>{{ academic_performance.grade }}</td>
+                                            <td>{{ academic_performance.date }}</td>
+                                            <td>{{ academic_performance.teacher }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

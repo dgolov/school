@@ -41,7 +41,9 @@
                     <tbody>
                     {% for academic_performance in academic_performance_list %}
                         <tr>
-                            <td>{{ academic_performance.student }}</td>
+                            <td><a href="/api/crm/students/{{ academic_performance.student.id }}">
+                                    {{ academic_performance.student }}</a>
+                            </td>
                             <td>{{ academic_performance.lesson }}</td>
                             <td>{{ academic_performance.type_grade }}</td>
                             <td>{{ academic_performance.grade }}</td>
