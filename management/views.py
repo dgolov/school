@@ -1166,6 +1166,7 @@ class GroupDetailView(DetailView):
         context['title'] = self.get_object()
         context['user'] = self.request.user
         context['student_list'] = self.get_object().student_groups.all()
+        context['time_table_list'] = Timetable.objects.filter(group=self.get_object())
         return context
 
 
