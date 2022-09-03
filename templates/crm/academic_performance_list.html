@@ -41,14 +41,21 @@
                     <tbody>
                     {% for academic_performance in academic_performance_list %}
                         <tr>
-                            <td><a href="/api/crm/students/{{ academic_performance.student.id }}">
+                            <td>
+                                <a href="/api/crm/students/{{ academic_performance.student.id }}">
                                     {{ academic_performance.student }}</a>
                             </td>
-                            <td>{{ academic_performance.lesson }}</td>
+                            <td>
+                                <a href="/api/crm/courses/lessons/{{ academic_performance.lesson.id }}">
+                                    {{ academic_performance.lesson }}</a>
+                            </td>
                             <td>{{ academic_performance.type_grade }}</td>
                             <td>{{ academic_performance.grade }}</td>
                             <td>{{ academic_performance.date }}</td>
-                            <td>{{ academic_performance.teacher }}</td>
+                            <td>
+                                <a href="/api/crm/teachers/{{ academic_performance.teacher.id }}">
+                                    {{ academic_performance.teacher }}</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
