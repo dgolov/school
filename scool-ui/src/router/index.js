@@ -34,6 +34,7 @@ import MyCourses from "../views/Profile/MyCourses";
 import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
 import TimeTable from "../views/Profile/TimeTable";
+import TimeTableDetail from "../views/Profile/TimeTableDetail";
 import AcademicPerformance from "../views/Profile/AcademicPerformance";
 import Chats from "../views/Messages/Chats";
 import Messages from "../views/Messages/Messages";
@@ -130,6 +131,12 @@ const routes = [
     path: '/profile/timetable',
     name: 'TimeTable',
     component: TimeTable
+  },
+  {
+    path: '/profile/timetable/:id',
+    name: 'TimeTableDetail',
+    component: TimeTableDetail,
+    props: true
   },
   {
     path: '/profile/chats',
