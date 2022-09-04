@@ -17,7 +17,7 @@
             events: [
                 {% for time_table in time_table_list %}
                     {
-                        title: '{{ time_table.group }} {{ time_table.lesson }}',
+                        title: '{{ time_table.group }} {{ time_table.subject }}',
                         start: '{{ time_table.date|date:"Y-m-d H:i" }}',
                         end: false,
                         overlap: false,
