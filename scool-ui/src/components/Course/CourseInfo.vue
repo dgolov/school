@@ -9,9 +9,6 @@
         <p class="mb-0 mt-0">Режим занятий: </p>
         <p class="mb-0 mt-0">2 раза в неделю по 2 академических часа</p>
       </div>
-      <div class="info-section mt-4" style="width: 60%">
-        <h3 class="mt-0">от {{ course.price }} в месяц</h3>
-      </div>
     </div>
   </div>
 </template>
