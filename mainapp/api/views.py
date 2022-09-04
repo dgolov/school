@@ -391,8 +391,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
         if item_profile.user_group == 'student':
             return models.AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
-            teacher_groups = models.Group.objects.filter(teacher=item_profile)
-            teacher_students = models.Student.objects.filter(group_list__in=teacher_groups)
+            teacher_students = models.Student.objects.filter(group_list__in=item_profile.teacher.group_list.all())
             return models.AcademicPerformance.objects.filter(student__in=teacher_students)
 
     def create(self, request, *args, **kwargs):

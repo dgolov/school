@@ -10,7 +10,7 @@
               <div v-if="responseData" v-for="course in responseData" class="row course_container">
                 <div class="col-md-8">
                   <h4 class="left-align" v-if="course.is_active">
-                    <a v-if="course.is_active" href="#" @click="goToCourse(course.id)">{{ course.name }}</a>
+                    <a v-if="course.is_active" href="#" @click="goToCourse(course.slug)">{{ course.name }}</a>
                   </h4>
                   <h4 v-else class="left-align no-active">{{ course.name }}</h4>
                   <h6 class="left-align">{{ course.category.name }}</h6>

@@ -1,7 +1,7 @@
 <template>
   <div id="single-course">
     <navbar></navbar>
-    <div class="course past-events">
+    <div class="container course past-events">
       <course-info v-if="responseData" :course="responseData[0].course"></course-info>
       <div class="course__section">
         <div class="container pb-1">
