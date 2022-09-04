@@ -54,6 +54,7 @@ COPY ./entrypoint.sh $APP_HOME
 
 # copy project
 COPY . $APP_HOME
+RUN rm -rf $APP_HOME/scool-ui/ $APP_HOME/nginx/ $APP_HOME/env/
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
