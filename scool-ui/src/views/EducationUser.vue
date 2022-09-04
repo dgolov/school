@@ -43,6 +43,26 @@
 						<span class="s3">цена одно урока от</span>
 						<p class="small">от 145 ₽</p>
 					</div>
+					
+					<div class="item">
+						<button
+						  type="button"
+						  class="tinkoff-button"
+						  onclick="tinkoff.createDemo(
+						    {
+						      sum: 31500,
+						      items: [{name: 'Курс для детей Пользователь', price: 31500, quantity: 1}, ],
+						      demoFlow: 'sms',
+						      promoCode: 'default',
+						      shopId: '64e20d36-fcd4-47ec-b625-29fda7e58280',
+						      showcaseId: '3777cafe-c874-45f0-9571-01b7c9ad9f4c',
+						    },
+						    {view: 'modal'}
+						  )"
+						>Доступно в рассрочку</button>
+					</div>
+					
+					
 				</div>
 				<div class="button">
 					<p>Первое занятие бесплатно</p>
