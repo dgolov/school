@@ -17,8 +17,8 @@
                 </div>
                 {% if messages %}
                     <div {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="alert alert-danger"
-                            {% else %} class="alert alert-success"
-                            {% endif %} role="alert">
+                    {% else %} class="alert alert-success"
+                    {% endif %} role="alert">
                         <ul class="messages">
                             {% for message in messages %}
                                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
@@ -143,8 +143,13 @@
                             class="p-tab-name">Группы</span><i
                             class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#AcademicPerformance"><span
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab"
+                                            href="#AcademicPerformance"><span
                             class="p-tab-name">Успеваемость</span><i
+                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Attendance"><span
+                            class="p-tab-name">Посещаемость</span><i
                             class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable"><span
@@ -194,7 +199,8 @@
                                             <td>
                                                 <form method="post">
                                                     {% csrf_token %}
-                                                    <button class="btn btn-danger" type="submit" name="delete-course" value="{{ course.id }}">
+                                                    <button class="btn btn-danger" type="submit" name="delete-course"
+                                                            value="{{ course.id }}">
                                                         Удалить
                                                     </button>
                                                 </form>
@@ -230,7 +236,8 @@
                                             <td>
                                                 <form method="post">
                                                     {% csrf_token %}
-                                                    <button class="btn btn-danger" type="submit" name="delete-group" value="{{ group.id }}">
+                                                    <button class="btn btn-danger" type="submit" name="delete-group"
+                                                            value="{{ group.id }}">
                                                         Удалить
                                                     </button>
                                                 </form>
@@ -267,6 +274,38 @@
                                             <td>{{ academic_performance.date }}</td>
                                             <td>{{ academic_performance.teacher }}</td>
                                         </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Attendance">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Урок</th>
+                                        <th scope="col">Посещаемость</th>
+                                        <th scope="col">Дата урока</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for academic_performance in academic_performance_list %}
+                                        {% if academic_performance.late or academic_performance.absent %}
+                                            <tr>
+                                                <td>{{ academic_performance.lesson }}</td>
+                                                <td>
+                                                    {% if academic_performance.late %}
+                                                        Опоздал
+                                                    {% elif academic_performance.absent %}
+                                                        Отсутствовал
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ academic_performance.date }}</td>
+                                            </tr>
+                                        {% endif %}
                                     {% endfor %}
                                     </tbody>
                                 </table>

@@ -977,7 +977,9 @@ class StudentDetailView(DetailView, StudentMixin):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        context['academic_performance_list'] = AcademicPerformance.objects.filter(student=self.get_object())
+        context['academic_performance_list'] = AcademicPerformance.objects.\
+            filter(student=self.get_object()).\
+            order_by('-date')
         context['time_table_list'] = Timetable.objects.filter(group__student_groups=self.get_object())
         return context
 
