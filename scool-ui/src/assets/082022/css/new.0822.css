@@ -319,7 +319,19 @@ src: url('../fonts/digital_7.ttf');
 }
 .inner-first-block .text .prices {
   padding-bottom: 10px;
+  margin-right: -150px;
 }
+
+.inner-first-block .text .prices .tinkoff-button {
+	box-sizing: border-box;
+	width: 213px;
+	height: 61px;
+	background: rgba(255, 255, 255, 0.6);
+	border: 2px solid #00093C;
+	border-radius: 6px;	
+}
+
+
 .inner-first-block .text .prices .item {
   margin-bottom: 30px;
   position: relative;
@@ -2008,5 +2020,8 @@ src: url('../fonts/digital_7.ttf');
   }
   .reviews-page {
     padding: 80px 0 30px;
+  }
+  .inner-first-block .text .prices {
+  	margin-right: auto;
   }
 }
