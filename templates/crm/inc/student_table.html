@@ -1,7 +1,6 @@
 <table class="table mb-0">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">ФИО</th>
         <th scope="col">Телефон</th>
         <th scope="col">Город</th>
@@ -10,10 +9,15 @@
     <tbody>
     {% for student in student_list %}
         <tr>
-            <th scope="row">{{ student.id }}</th>
             <td><a href="/api/crm/students/{{ student.id }}">{{ student }}</a></td>
             <td><a href="tel: {{ student.phone }}">{{ student.phone }}</a></td>
-            <td>{{ student.city }}</td>
+            <td>
+                {% if student.city %}
+                    {{ student.city }}
+                {% else %}
+                    Не указано
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </tbody>

@@ -1,0 +1,31 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let calendarEl = document.getElementById('calendar');
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth timeGridWeek timeGridDay listWeek'
+            },
+            locale: 'ru',
+            initialDate: Date.now(),
+            navLinks: true,
+            businessHours: true,
+            editable: true,
+            selectable: true,
+            events: [
+                {% for time_table in time_table_list %}
+                    {
+                        title: '{{ time_table.group }} {{ time_table.lesson }}',
+                        start: '{{ time_table.date|date:"Y-m-d H:i" }}',
+                        end: false,
+                        overlap: false,
+                        url: '/api/crm/timetable/{{ time_table.id }}'
+                    },
+                {% endfor %}
+            ]
+        });
+        calendar.render();
+    });
+</script>

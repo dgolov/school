@@ -8,7 +8,10 @@
             </div>
             <form method="POST" action="">
                 {% include 'crm/inc/group_form.html' %}
-                {% include 'crm/inc/student_checkbox.html' %}
+                <div class="row">
+                    <div class="col-md-6">{% include 'crm/inc/student_checkbox.html' %}</div>
+                    <div class="col-md-6">{% include 'crm/inc/course_checkbox.html' %}</div>
+                </div>
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Изменить группу</button>
             </form>

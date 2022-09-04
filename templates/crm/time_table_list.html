@@ -26,31 +26,60 @@
                        style="float: right;">Добавить запись</a>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Урок</th>
-                        <th scope="col">Группа</th>
-                        <th scope="col">Дата</th>
-                        <th scope="col">Завершен</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for time_table in time_table_list %}
-                        <tr>
-                            <th scope="row">
-                                <a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.id }}</a>
-                            </th>
-                            <td><a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
-                            <td>{{ time_table.group }}</td>
-                            <td>{{ time_table.date }}</td>
-                            <td>{{ time_table.is_finished }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Calendar"><span
+                        class="p-tab-name">Календарь</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                </li>
+                <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#List"><span
+                        class="p-tab-name">Список</span><i
+                        class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                </li>
+            </ul>
+            {% include 'crm/inc/timetable_callendar.html' %}
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="Calendar">
+                    <div class="card shadow-none border mb-0 radius-15">
+                        <div class="card-body">
+                            <div class="row section-top-border">
+                                <div class="col-md-12">
+                                    <div id='calendar'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="List">
+                    <div class="card shadow-none border mb-0 radius-15">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Урок</th>
+                                        <th scope="col">Группа</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Завершен</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for time_table in time_table_list %}
+                                        <tr>
+                                            <th scope="row">
+                                                <a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.id }}</a>
+                                            </th>
+                                            <td><a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
+                                            <td>{{ time_table.group }}</td>
+                                            <td>{{ time_table.date }}</td>
+                                            <td>{{ time_table.is_finished }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -15,6 +15,20 @@
                            class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
                     </div>
                 </div>
+                {% if messages %}
+                    <div {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="alert alert-danger"
+                    {% else %} class="alert alert-success"
+                    {% endif %} role="alert">
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                    {{ message }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <hr/>
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
@@ -24,15 +38,33 @@
                                     <tbody>
                                     <tr>
                                         <th>Профессиональная деятельность:</th>
-                                        <td>{{ teacher.professional_activity }}</td>
+                                        <td>
+                                            {% if teacher.professional_activity %}
+                                                {{ teacher.professional_activity }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Образование:</th>
-                                        <td>{{ teacher.education }}</td>
+                                        <td>
+                                            {% if teacher.education %}
+                                                {{ teacher.education }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Дата рождения:</th>
-                                        <td>{{ teacher.date_of_birthday }}</td>
+                                        <td>
+                                            {% if teacher.date_of_birthday %}
+                                                {{ teacher.date_of_birthday }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -49,19 +81,37 @@
                             </tr>
                             <tr>
                                 <th>Email:</th>
-                                <td><a href="mailto: {{ teacher.email }}">{{ teacher.email }}</a></td>
+                                <td><a href="mailto: {{ teacher.user.email }}">{{ teacher.user.email }}</a></td>
                             </tr>
                             <tr>
                                 <th>Город:</th>
-                                <td>{{ teacher.city }}</td>
+                                <td>
+                                    {% if teacher.city %}
+                                        {{ teacher.city }}
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Профиль vk:</th>
-                                <td><a href="{{ teacher.vk_slug }}">{{ teacher.vk_slug }}</a></td>
+                                <td>
+                                    {% if teacher.vk_slug %}
+                                        <td><a href="{{ teacher.vk_slug }}">{{ teacher.vk_slug }}</a></td>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Профиль instagram:</th>
-                                <td><a href="{{ teacher.instagram_slug }}">{{ teacher.instagram_slug }}</a></td>
+                                <td>
+                                    {% if teacher.instagram_slug %}
+                                        <a href="{{ teacher.instagram_slug }}">{{ teacher.instagram_slug }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -109,7 +159,7 @@
                                     {% for course in teacher.courses.all %}
                                         <tr>
                                             <th scope="row">{{ course.id }}</th>
-                                            <td>{{ course }}</td>
+                                            <td><a href="/api/crm/courses/{{ course.id }}">{{ course }}</a></td>
                                             <td>{{ course.price }}</td>
                                         </tr>
                                     {% endfor %}
@@ -136,7 +186,7 @@
                                     {% for group in teacher.group_list.all %}
                                         <tr>
                                             <th scope="row">{{ group.id }}</th>
-                                            <td>{{ group.name }}</td>
+                                            <td><a href="/api/crm/groups/{{ course.id }}">{{ group.name }}</a></td>
                                             <td>{{ group.manager }}</td>
                                         </tr>
                                     {% endfor %}
