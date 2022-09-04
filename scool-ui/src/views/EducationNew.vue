@@ -61,7 +61,7 @@
 				</nav>
 				<div id="t1" class="tab-content">
 					<div class="row">
-						<div class="col-md-12" class="categoryFilter">
+						<div class="col-md-12 categoryFilter">
 							<a data-cat="all">Все</a>
 							<a data-cat="Шахматы">Шахматы</a>
 							<a data-cat="IT-обучение">IT-обучение</a>
@@ -180,7 +180,7 @@
 				<div id="t2" class="tab-content">
 					<div class="row">
 
-						<div class="col-md-12" class="categoryFilter">
+						<div class="col-md-12 categoryFilter">
 							<a data-cat="all">Все</a>
 							<a data-cat="Шахматы">Шахматы</a>
 							<a data-cat="Программирование">IT-обучение</a>
