@@ -486,9 +486,16 @@ class TimeTableForm(forms.ModelForm):
         )
     )
     lesson = forms.ModelChoiceField(
+        required=False,
         queryset=Lesson.objects.all(),
         widget=forms.Select(
             attrs={'class': 'form-control single-select select2-hidden-accessible'}
+        )
+    )
+    subject = forms.CharField(
+        label='Предмет',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите название предмета'}
         )
     )
     group = forms.ModelChoiceField(
@@ -500,7 +507,7 @@ class TimeTableForm(forms.ModelForm):
 
     class Meta:
         model = Timetable
-        fields = ('date', 'lesson', 'group')
+        fields = ('date', 'lesson', 'subject', 'group')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
