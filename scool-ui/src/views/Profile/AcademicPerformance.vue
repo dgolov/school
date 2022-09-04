@@ -31,13 +31,25 @@
                 <option disabled value="">Выберите оценку</option>
                 <option v-for="number in 10" :value="number">{{ number }}</option>
               </select>
-              <label v-if="student">Выберите тип оценки</label>
+              <label v-if="grade">Выберите тип оценки</label>
               <select v-model="gradeType" v-if="grade">
                 <option disabled value="">Выберите тип оценки</option>
                 <option :value="'homework'">Домашняя работа</option>
                 <option :value="'classwork'">Классная работа</option>
                 <option :value="'test'">Контрольная работа</option>
                 <option :value="'examination'">Экзамен</option>
+              </select>
+              <label v-if="gradeType">Опоздание</label>
+              <select v-model="late" v-if="gradeType">
+                <option disabled value="">Выберите значение</option>
+                <option :value="true">Дa</option>
+                <option :value="false">Нет</option>
+              </select>
+              <label v-if="gradeType">Отсутствие</label>
+              <select v-model="absent" v-if="gradeType">
+                <option disabled value="">Выберите значение</option>
+                <option :value="true">Да</option>
+                <option :value="false">Нет</option>
               </select>
               <button v-if="gradeType" class="gray-button" @click="sendGrade">Поставить оценку</button>
               <div class="row">
@@ -103,6 +115,8 @@ export default {
       student: 0,
       grade: 0,
       gradeType: '',
+      late: false,
+      absent: false
     }
   },
 
@@ -191,8 +205,8 @@ export default {
         "lesson": this.lessonId,
         "grade": this.grade,
         "type_grade": this.gradeType,
-        "late": false,
-        "absent": false
+        "late": this.late,
+        "absent": this.absent
       }
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
@@ -206,7 +220,6 @@ export default {
           })
           .catch((error) => {
             if (error.request.status === 401) {
-              // Если 403 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
               this.refreshToken();
             } else {
               console.log(error.request);
