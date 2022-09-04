@@ -84,16 +84,24 @@
 </template>
 
 <script>
+import NavLogin from "../NavLogin";
+
 import {redirect} from "../mixins/redirect";
 import {cityMixin} from "../mixins/cityMixin";
 
 export default {
   name: "Header",
   
+  components: {
+	    NavLogin,
+  },
+  
   data() {
 	return { 
-		user: this.$store.state.authUser,
-	    authenticated: this.$store.state.isAuthenticated,
+		user: {},
+	    authenticated: false,		
+		//user: this.$store.state.authUser,
+	    //authenticated: this.$store.state.isAuthenticated,
 	}
   },
   
@@ -102,7 +110,7 @@ export default {
   mounted: function() {  
 		let $ = window.$;
 		let store = this.$store;
-
+		
 		$(document).ready(function(){
 			$('.city input[name="city"], .city input[name="city2"]').each( function () {
 				var cityName = $(this).next('label').text();

@@ -6,7 +6,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    authUser: {},
+    authUser: {
+    	id: null,
+    	first_name: null,
+    	last_name:  null, 
+    },
     profileInfo: {},
     isAuthenticated: false,
     jwt: localStorage.getItem("token"),

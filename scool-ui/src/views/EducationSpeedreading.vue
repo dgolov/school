@@ -6,14 +6,14 @@
 			<div class="text">
 				<div class="name">
 					Курс
-					<span>НОВИЧОК</span>
+					<span>Скорочтение</span>
 				</div>
-				<p>Обучение основам IT-технологий, английскому языку, шахматам и другим дисциплинам для комплексного развития ребёнка.</p>
+				<p>Обучение быстрому усвоению большого объёма информации при чтении, развитие памяти и внимания</p>
 				<div class="children">
-					<img src="../assets/082022/img/children.png"> Для детей 7 — 12 лет
+					<img src="../assets/082022/img/children.png"> Для детей от 8 лет
 				</div>
 				<div class="image">
-					<img src="../assets/082022/img/boy.png">
+					<img src="../assets/082022/img/speedreading-header.png">
 				</div>
 				<div class="blocks flex">
 					<div class="item">
@@ -28,14 +28,14 @@
 							<img src="../assets/082022/img/inner-first2.svg">
 						</div>
 						Режим занятий:
-						<p>2 дня в неделю по 3 урока</p>
+						<p>1 раз в неделю по 2 ак. часа</p>
 					</div>
 				</div>
 				<div class="prices flex">
 					<div class="item">
 						<img src="../assets/082022/img/price1.svg">
 						<span class="s1">цена от</span>
-						<p>3 990 ₽</p>
+						<p>2 990 ₽</p>
 						<span class="s2">в месяц</span>
 					</div>
 					<div class="item">
@@ -43,26 +43,6 @@
 						<span class="s3">цена одно урока от</span>
 						<p class="small">от 145 ₽</p>
 					</div>
-					
-					<div class="item">
-						<button
-						  type="button"
-						  class="tinkoff-button"
-						  onclick="tinkoff.createDemo(
-						    {
-						      sum: 31500,
-						      items: [{name: 'Курс для детей НОВИЧОК', price: 31500, quantity: 1}, ],
-						      demoFlow: 'sms',
-						      promoCode: 'default',
-						      shopId: '64e20d36-fcd4-47ec-b625-29fda7e58280',
-						      showcaseId: '3777cafe-c874-45f0-9571-01b7c9ad9f4c',
-						    },
-						    {view: 'modal'}
-						  )"
-						>Доступно в рассрочку</button>
-					</div>
-					
-					
 				</div>
 				<div class="button">
 					<p>Первое занятие бесплатно</p>
@@ -71,64 +51,74 @@
 			</div>
 			<div class="bottom-link">
 				<img src="../assets/082022/img/round.svg" class="bg">
-				<a href="#learn"><img src="../assets/082022/img/arrow.svg"></a>
+				<a href="#owlblock"><img src="../assets/082022/img/arrow.svg"></a>
 			</div>
 		</div>
 	</div>
+	
 	<div class="you-learn-block">
-		<div id="learn" class="anchor"></div>
-		<img src="../assets/082022/img/you-learn-block.png" class="bg">
 		<div class="container">
 			<div class="list">
 				<div class="round">
-					<img src="../assets/082022/img/round.png">
-					<img src="../assets/082022/img/lines1.png" class="lines">
+					<img src="../assets/082022/img/round.png" style="visibility: hidden;">
+					<img src="../assets/082022/img/lines1.png" style="visibility: hidden;" class="lines">
 					<img src="../assets/082022/img/lines2.png" class="lines an1">
 					<img src="../assets/082022/img/lines3.png" class="lines an2">
 					<p>Вы научитесь</p>
 				</div>
-				<div class="mob-round">
-					<img src="../assets/082022/img/round2.png">
-				</div>
+				
+				<div class="mob-caption">Вы научитесь</div>
 				
 				<div class="item i10">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.8s">Работать с основными компьютерными программами</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.8s">Читать с более высокой скоростью</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.6s" src="../assets/082022/img/line10.svg">
 				</div>
 				<div class="item i9">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.4s">Осуществлять операции, необходимые для работы в Интернете</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.4s">Применять техники запоминания материала, лучше запоминать и понимать прочитанное</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3.2s" src="../assets/082022/img/line9.svg">
 				</div>
 				<div class="item i8">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3s">3D-моделированию, созданию игр и компьютерной графике</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="3s">Использовать алгоритм рационального чтения</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.8s" src="../assets/082022/img/line8.svg">
 				</div>
 				<div class="item i7">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.6s">Общаться на английском языке на бытовые темы</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.6s">Произносить и быстро понимать слова более высокой артикуляционной сложности</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.4s" src="../assets/082022/img/line7.svg">
 				</div>
 				<div class="item i6">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.2s">Играть в шахматы</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2.2s">Быстро запоминать стихи, 
+					<br>правила, даты, словарные 
+					<br>слова и определения</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="2s" src="../assets/082022/img/line6.svg">
 				</div>
+				
 				<div class="item i5">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.8s">Создавать игры</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.8s">
+					Извлекать и анализировать 
+					<br>информацию из различных 
+					<br>источников</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.6s" src="../assets/082022/img/line5.svg">
 				</div>
 				<div class="item i4">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.4s">Создавать графические рисунки</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.4s">
+					Обоснованно делать выводы, доказывать</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1.2s" src="../assets/082022/img/line4.svg">
 				</div>
+				<!--   
 				<div class="item i3">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1s">Анализировать, креативно мыслить, создавать прототипы</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1s">Правильно писать иероглифы, начиная с основных черт</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.8s" src="../assets/082022/img/line3.svg">
 				</div>
+				-->
 				<div class="item i2">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.6s">Работать в команде</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.6s">Логически рассуждать, пользуясь 
+					<br>приемами анализа, сравнения, 
+					<br>обобщения, классификации, 
+					<br>систематизации</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.4s" src="../assets/082022/img/line2.svg">
 				</div>
 				<div class="item i1">
-					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.2s">Снимать и монтировать видео</span>
+					<span class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.2s">Мыслить быстрее</span>
 					<img class="wow fadeInLeft" data-wow-duration="2s" src="../assets/082022/img/line1.svg">
 				</div>
 				
@@ -136,64 +126,50 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="program-block">
 		<div class="container">
 			<p>Эта программа подойдет тем, кто</p>
 			<div class="item i1">
 				<div class="text">
-					<span>Много времени проводит за компьютером</span>
-					и хочет это делать не только для развлечения, но и с пользой для своего развития
+					<span>Хочет научиться быстро читать</span>
 				</div>
 			</div>
 			<div class="item i2">
 				<div class="text">
-					<span>Мечтает стать айтишником</span>
-					и хочет примерить на себя профессию программиста, веб-разработчика или дизайнера.
+					<span>Хочет развивать внимание, память и мышление</span>
 				</div>
 			</div>
 			<div class="item i3">
 				<div class="text">
-					<span>Хочет научиться новому</span>
-					и готов пробовать разные направления IT-сферы, чтобы выбрать лучшее
+					<span>Хочет повысить успеваемость в школе</span>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div class="course-block">
 		<div class="container">
 			<div class="block-name">
 				Содержание курса
 			</div>
+			<!--  
+			<div class="course-block-text">Программа обучения включает в себя изучение лексики и грамматики английского языка через все виды речевой деятельности: говорение, письмо, аудирование и чтение. Тематическое содержание соответствует уровню овладения иностранным языком и возрасту обучающихся</div>
+			-->
 			<div class="flex">
 				<div class="item wow fadeInUp" data-wow-duration="2s">
-					<div class="icon">
-						<img src="../assets/082022/img/course1.svg">
-					</div>
-					<p><span>Базовый IT</span> - изучение основ взаимодействия с компьютером, программирования, графического дизайна и других ИТ-направлений</p>
+					<p><span>Упражнения на развитие артикуляции и дикции</span></p>
 				</div>
-				<div class="item wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.4s">
-					<div class="icon">
-						<img src="../assets/082022/img/course3.svg">
-					</div>
-					<p><span>Английский язык</span> - обучение коммуникации на английском языке c постепенным уклоном в техническую сферу</p>
+				<div class="item wow fadeInUp" data-wow-duration="2s">
+					<p><span>Упражнения на развитие внимания и его быстрого переключения</span></p>
 				</div>
-				<div class="item wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.2s">
-					<div class="icon">
-						<img src="../assets/082022/img/course2.svg">
-					</div>
-					<p><span>Шахматы</span> - обучение игре в шахматы с «нуля», развитие памяти, внимания и мышления ребенка</p>
+
+				<div class="item wow fadeInUp" data-wow-duration="2s">
+					<p><span>Упражнения на расширение поля зрения, синхронизация обоих полушарий</span></p>
 				</div>
-				<div class="item big wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.6s">
-					<div class="icon">
-						<img src="../assets/082022/img/course4.svg">
-					</div>
-					<p><span>Блогинг</span> - формирование навыков работы в фото и видео редакторах, развитие навыков публичного выступления и актерского мастерства, безопасное знакомство с миром социальных сетей</p>
-				</div>
-				<div class="item big wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.8s">
-					<div class="icon">
-						<img src="../assets/082022/img/course5.svg">
-					</div>
-					<p><span>Дизайн мышления</span> - развитие коммуникативных навыков, эффективной работе в команде, креативности, обучение основам прототипирования</p>
+				<div class="item wow fadeInUp" data-wow-duration="2s">
+					<p><span>Упражнения на развития зрительной памяти</span></p>
 				</div>
 			</div>
 			<div class="price-block">
@@ -207,6 +183,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="about-block">
 		<img src="../assets/082022/img/about-image1.svg" class="image i1">
 		<img src="../assets/082022/img/about-image2.svg" class="image i2">
@@ -253,8 +230,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
+	</div>	
 	<div class="portfolio-block container">
 		<div class="image i2">
 			<img src="../assets/082022/img/portfolio2.png">
@@ -268,7 +244,37 @@
 		<p>Каждый ученик получает сертификат Академии будущего «ХОД», который подтверждает прохождение курса. По результатам обучения каждый студент сформирует портфолио из работ, выполненных в процессе обучения</p>
 	</div>
 	
-	<div class="container">		
+	<div class="principles-block">
+		<div class="block-name">
+			Принципы обучения
+		</div>
+		
+		<div class="row principles-list">
+			<div class="col-md-6 item-position">
+				<div class="item">
+					Передовой подход к образовательному процессу
+				</div>
+			</div>
+			<div class="col-md-6 item-position">
+				<div class="item">
+					Только практикующие преподаватели
+				</div>
+			</div>
+			<div class="col-md-6 item-position">
+				<div class="item">
+					Непрерывное усовершенствование и пополнение базы курсов
+				</div>
+			</div>
+			<div class="col-md-6 item-position">
+				<div class="item">
+					Сопровождение на всех этапах обучения
+				</div>
+			</div>
+		</div>
+		
+	</div>
+		
+	<div class="container">
 		<div class="training-block">
 			<div class="block-name">
 				Как проходит обучение
@@ -293,29 +299,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="levels-block">
-			<div class="block-name">
-				Выберите подходящий для себя уровень
-			</div>
-			<div class="flex">
-				<div class="item goToPolzovatel">
-					<img src="../assets/082022/img/level1.png">
-					<span>Пользователь</span>
-					Обучение по выбранному направлению, возможно после прохождения программы «Новичок» или успешного прохождения входного тестирования
-				</div>
-				<div class="item goToProfessional">
-					<img src="../assets/082022/img/level2.png">
-					<span>Профессионал</span>
-					Обучение по выбранному направлению, возможно после прохождения программы «Пользователь» или успешного прохождения входного тестирования
-				</div>
-				<div class="item goToChiter">
-					<img src="../assets/082022/img/level3.png">
-					<span>Читер</span>
-					Обучение по выбранному направлению, возможно после прохождения программы «Профессионал» или успешного прохождения входного тестирования
-				</div>
-			</div>
-		</div>
-	</div>
+	</div>	
+
 	<div class="teachers-block">
 		<div class="container">
 			<div class="block-name">
@@ -611,22 +596,8 @@
 				<button class="GetCourceModal">Записаться на пробное занятие</button>
 			</div>
 		</div>
-	</div>
-	<div class="video-block">
-		<div class="container">
-			<div class="content">
-				<div class="video video-rk"><img src="../assets/082022/img/video2.png"></div>
-				<div>
-					<div class="name">
-						Видео от <img src="../assets/082022/img/rk.png">
-					</div>
-					<div class="vid video-rk"><img src="../assets/082022/img/video2.png"></div>
-					<p>ничего необычного, просто суслик на старте на космодроме Байконур</p>
-					<p><a href="beginner.html#">листайте дальше <img src="../assets/082022/img/smile.png"></a></p>
-				</div>
-			</div>
-		</div>
-	</div>
+	</div>	
+
 	<div class="lessons-block">
 		<div class="container">
 			<div class="block-name">
@@ -636,6 +607,8 @@
 				в современных аудиториях с удобством, комфортом и заботой о студентах
 			</div>
 		</div>
+	
+		
 		<div class="list">
 			<img src="../assets/082022/img/gallery/lesson1.png">
 			<img src="../assets/082022/img/gallery/lesson2.png">
@@ -653,7 +626,8 @@
 			<img src="../assets/082022/img/gallery/lesson14.png">
 			<img src="../assets/082022/img/gallery/lesson15.png">
 		</div>                              
-	</div>                                  
+	</div>  	
+
 	<div class="reviews-block">             
 		<div class="container">             
 			<div class="block-name">        
@@ -764,48 +738,27 @@
 			</div>
 			<div class="item">
 				<div class="name">
-					У меня нет опыта. Подойдет ли мне данный курс?
+					Что нужно ребенку для занятий?
 				</div>
 				<div class="text">
-					Наша система обучения построена таким образом,что наши студенты смогут беспрепятственно получить необходимые компетенции с «0». В нашу философию входит максимум практических занятий, через которые наши студенты прокачают свои скиллы на максимум возможностей. В профессию сможет погрузиться каждый студент, от вас потребуется желание, усердие и дисциплина, остальное - наша задача.
+					Для занятий понадобится тетрадь и ручка.
 				</div>
 			</div>
 			<div class="item">
 				<div class="name">
-					Нужно ли знать математику?
+					Где можно узнать расписание занятий?
 				</div>
 				<div class="text">
-					На этапе зарождения профессии – это было правдой. Но в мире все эволюционирует, в том числе и языки программирования. Языки стали высокотехнологичными, сложные математические функции и расчеты сегодня уже заложены в командах современных языков программирования. Например, один из самых популярных языков JAVA, айтишники называют «женским» языком. Потому самое главное качество программиста на JAVA – это память.
+					Расписание вы можете узнать в личном кабинете студента или позвонить менеджеру Академии.
 				</div>
 			</div>
 			<div class="item">
 				<div class="name">
-					Сколько часов в неделю мне нужно уделять курсу?
+					Что делать, если ребенок пропустит занятие?
 				</div>
 				<div class="text">
-					Помимо регламентированного времени,отведенного под занятия в Академии, вы должны уделить 3-4 часа в неделю на выполнение домашних заданий и 3-4 часа в неделю на индивидуальное развитие (чтение специализированной литературы,просмотр видео материала,участие в конференциях)
+					Занятия, пропущенные по уважительной причине, компенсируются посещением занятий с другой группой и специально организованного урока.
 				</div>
-			</div>
-			<div class="item">
-				<div class="name">
-					Кто будет помогать мне на курсе?
-				</div>
-				<div class="text">
-					Во время Вашего обучения Вы на 100% взаимодействуете с преподавателем. Также у каждой группы будет педагог - куратор и специалист учебного процесса, с которым происходит взаимодействие по административным вопросам.
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="timer-block">
-		<div class="container">
-			<div class="block-name">
-				До старта осталось:
-			</div>
-			<div id="timer" class="timer flex">
-				<div id="days"></div>
-				<div id="hours"></div>
-				<div id="minutes"></div>
-				<div id="seconds"></div>
 			</div>
 		</div>
 	</div>
@@ -848,17 +801,205 @@
 			</div>
 		</div>
    </div>
-
   </div>
 </template>
 
 <style scoped>
+	
+	.english-owl-block {
+		margin-top: 80px;
+	}
+	
+	.english-owl-block .owl-owl {
+		background: url('../assets/082022/img/owl-block-owl.png') no-repeat top right; 
+		float: left;
+		width: 430px;
+		height: 311px;
+	}
+	
+	.chinese-owl-block .owl-owl {
+		background: url('../assets/082022/img/owl-block-cowl.png') no-repeat top right; 
+	}
+	
+	.english-owl-block .owl-content {
+		background: linear-gradient(#fff 0 0) padding-box, linear-gradient(to right, #F7941D, #27AAE1) border-box;		
+		border: solid 2px transparent;
+		border-radius: 15px;
+		min-height: 220px;
+		padding: 20px 20px 20px 22px;
+		margin-left: 428px;
+	}
+	
+	@media (max-width: 769px) {
+		.english-owl-block .owl-owl {
+			background: url('../assets/082022/img/owl-block-owlm.png') no-repeat top center /cover; 
+			float: none;
+			width: 100%;
+			height: 220px;
+		}
 
+		.chinese-owl-block .owl-owl {
+			background: url('../assets/082022/img/owl-block-cowlm.png') no-repeat top center /cover; 
+			float: none;
+			width: 100%;
+			height: 220px;
+		}
+		
+		.english-owl-block .owl-content {
+			border-radius: 15px;
+			min-height: auto;
+			padding: 20px 20px 20px 20px;
+			margin-left: 0;
+		}
+	
+	}	
+	
+	.course-block-text {
+		text-align: center;
+		max-width: 630px;
+		margin: 0 auto;
+	}
+	
+	.course-block .item p {
+		padding: 35px 25px;
+		text-align: center;
+	}
+	
+	.course-block .item {
+		width: 48%;
+
+		background:
+			url('../assets/082022/img/course-block-item-bg1.png') left top no-repeat,
+			url('../assets/082022/img/course-block-item-bg2.png') right top no-repeat,
+			url('../assets/082022/img/course-block-item-bg3.png') right bottom no-repeat,
+			url('../assets/082022/img/course-block-item-bg4.png') left bottom no-repeat;
+			
+		min-height: 86px;
+		box-sizing: border-box;
+	}
+	
+	.course-block .item p span {
+		font-size: 20px;
+		font-weight: normal;
+	}
+	
+	.course-block .item .icon {
+		width: 120px;
+	}
+	
+	.inner-first-block {
+		background: url('../assets/082022/img/first-block-common-bg.png');
+	}
+
+	.you-learn-block .list .item.i1 {
+		top: 0;
+	}
+	
+	.you-learn-block .list {
+		background: url('../assets/082022/img/bg2-user.png');
+		background-position: center center;
+    	background-size: contain;
+    	background-repeat: no-repeat;
+	}
+	
+	.you-learn-block .mob-caption {
+		display: none;
+		font-style: normal;
+		font-weight: 700;
+		font-size: 24px;
+		line-height: 29px;
+		text-align: center;
+		width: 100%;
+		text-transform: uppercase;
+		padding: 147px 0 155px 0;
+	}
+	
+	.program-block {
+		background: url(../assets/082022/img/program-block-bg.png) 50%/cover;
+	}
+	
+	.principles-block {
+		min-height: 460px;
+		padding: 107px 19% 107px 45%;
+		box-sizing: border-box;
+		
+		background: url('../assets/082022/img/principles-bg.png') right center no-repeat, linear-gradient(90.28deg, #AAD3FE 40.24%, #CEE6FF 60.2%);
+		
+		border: 1px solid #000000;
+		border-left: none;
+		border-right: none;
+	}
+	
+	.principles-block .block-name {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 48px;
+		line-height: 59px;
+		margin-bottom: 52px;
+	}	
+	
+	.principles-list .item {
+		padding-left: 25px;
+		background: no-repeat top left url('../assets/082022/img/principles-list.png');
+		margin-bottom: 36px;
+	}
+	
+	.levels-block {
+		margin-top: 110px;
+	}
+	
+	.teachers-block {
+    	background: url('../assets/082022/img/teachers-block-bg.png') 50%/cover;
+    }
+
+	.reviews-block {
+    	background: url('../assets/082022/img/reviews-block-bg.png') 50%/cover;
+    }
+    
     .levels-block .item {
     	cursor: pointer;
     }
-
+    
+    .levels-block .flex .item-user img {
+    	top: -177px;
+    }
+    
 	@media (max-width: 575px) {
+	
+		.course-block .item {
+			width: 100%;
+		}
+		
+		.course-block .item p span {
+			font-size: 17px;
+		}
+	
+		.you-learn-block .list {
+			background: url('../assets/082022/img/first-block-common-bgm.png') top center no-repeat;
+		}
+
+		.you-learn-block .mob-caption {
+			display: block;
+		}
+	
+		.principles-block {
+			padding: 15px;
+			background: url('../assets/082022/img/principles-bgm.png') center 90px no-repeat, linear-gradient(90.28deg, #AAD3FE 40.24%, #CEE6FF 60.2%);
+		}
+	
+		.principles-block .block-name {
+			font-size: 30px;
+			margin-bottom: 236px
+		}	
+		
+		.inner-first-block .text .name span {
+    		font-size: 30px;
+		}
+		
+		.principles-list .item {
+			margin-bottom: 30px;
+		}
+	
 		#app {overflow: hidden;}
 	}
 </style>
@@ -866,8 +1007,8 @@
 <script>
 
 export default {
-  title: 'Академия будущего | Новичок',
-  name: "EducationnBeginer",
+  title: 'Академия будущего | Скорочтение',
+  name: "EducationSpeedreading",
 
   mixins: [],
 
@@ -967,11 +1108,6 @@ export default {
 				return false;
 			});
 			
-			$('.buttonSendRequest').click(function() {
-				window.location.href = "/send-request";
-				return false;
-			});
-			
 			$('.buttonAbout').click(function() {
 				window.location.href = "/about";
 				return false;
@@ -979,6 +1115,11 @@ export default {
 
 			$('.goToPolzovatel').click(function() {
 				window.location.href = "/education/user";
+				return false;
+			});
+
+			$('.goToBeginner').click(function() {
+				window.location.href = "/education/beginner";
 				return false;
 			});
 

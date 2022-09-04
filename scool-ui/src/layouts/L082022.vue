@@ -420,6 +420,10 @@
         	
         	let thisapp = this;
         	
+        	let tinkoffScript = document.createElement('script')
+            tinkoffScript.setAttribute('src', 'https://forma.tinkoff.ru/static/onlineScript.js')
+            document.head.appendChild(tinkoffScript)        	
+        	
     		$(document).ready(function(){
     			$('.tabs').tabs();
     			$("#header").sticky({topSpacing:0});
