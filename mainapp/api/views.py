@@ -355,7 +355,7 @@ class TimetableViewSet(viewsets.ModelViewSet):
             return models.Timetable.objects.filter(group__in=item_profile.teacher.group_list.all())
 
     def create(self, request, *args, **kwargs):
-        """ Добавить урок в рассписание """
+        """ Добавить урок в расписание """
         if request.user.profile.user_group == 'teacher' or request.user.profile.user_group == 'manager':
             data_check_status = check_correct_data_for_add_in_timetable(request.user.profile, request.data)
             if data_check_status != 202:
@@ -391,8 +391,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
         if item_profile.user_group == 'student':
             return models.AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
-            teacher_groups = models.Group.objects.filter(teacher=item_profile)
-            teacher_students = models.Student.objects.filter(group_list__in=teacher_groups)
+            teacher_students = models.Student.objects.filter(group_list__in=item_profile.teacher.group_list.all())
             return models.AcademicPerformance.objects.filter(student__in=teacher_students)
 
     def create(self, request, *args, **kwargs):

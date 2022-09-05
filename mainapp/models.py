@@ -458,7 +458,8 @@ class Timetable(models.Model):
     """ Модель рассписания занятий
     """
     date = models.DateTimeField(verbose_name='Дата и время урока')
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок', blank=True, null=True)
+    subject = models.CharField(max_length=100, verbose_name='Название предмета')
     group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
     is_finished = models.BooleanField(default=False, verbose_name='Завершен')
     material = models.FileField(blank=True, null=True, upload_to=get_file_path, verbose_name='Материал')
@@ -467,8 +468,8 @@ class Timetable(models.Model):
         return f'{self.lesson} - {self.date}'
 
     class Meta:
-        verbose_name = 'Рассписание урока'
-        verbose_name_plural = '02. Обучение - Рассписание занятий'
+        verbose_name = 'Расписание урока'
+        verbose_name_plural = '02. Обучение - Расписание занятий'
         ordering = ['-date']
 
 

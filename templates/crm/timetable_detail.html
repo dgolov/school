@@ -34,12 +34,24 @@
                                     </tr>
                                     <tr>
                                         <th>Урок:</th>
-                                        <td><a href="#">{{ timetable.lesson }}</a></td>
+                                        <td>
+                                            {% if timetable.lesson %}
+                                                <a href="/api/crm/courses/{{ timetable.lesson.course.pk }}/{{ timetable.lesson.pk }}">
+                                                    {{ timetable.lesson }}
+                                                </a>
+                                            {% else %}
+                                                Не указан
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Предмет:</th>
+                                        <td>{{ timetable.subject }}</td>
                                     </tr>
                                     <tr>
                                         <th>Группа</th>
                                         <td>
-                                            <a href="/api/crm/courses/{{ timetable.group.pk }}">
+                                            <a href="/api/crm/groups/{{ timetable.group.pk }}">
                                                 {{ timetable.group }}
                                             </a>
                                         </td>

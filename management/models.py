@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -160,14 +161,21 @@ class Request(models.Model):
         null=True
     )
     remind = models.DateField(verbose_name='Перезвонить / напомнить', blank=True, null=True)
+    loyalty = models.IntegerField(
+        default=50,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name='Лояльность'
+    )
     date = models.DateTimeField(verbose_name='Дата и время заявки', auto_now_add=True)
     comment = models.TextField(verbose_name='Комментарий менеджера', blank=True, null=True)
     city = models.ForeignKey('mainapp.City', on_delete=models.SET_NULL, verbose_name='Город', blank=True, null=True)
     is_deleted = models.BooleanField(default=False, verbose_name='В корзине')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата последнего изменения')
 
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = '04. Заявки'
+        ordering = ('-updated_at',)
 
     def __str__(self):
         return self.request_fio if self.request_fio else ''

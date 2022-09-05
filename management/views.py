@@ -85,6 +85,7 @@ class ClientsListView(FilterMixin, ListView):
     model = Client
     template_name = 'crm/clients_list.html'
     context_object_name = 'client_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ClientsListView, self).get_context_data(**kwargs)
@@ -163,6 +164,7 @@ class ContractListView(ListView):
     model = Contract
     template_name = 'crm/contracts_list.html'
     context_object_name = 'contracts_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ContractListView, self).get_context_data(**kwargs)
@@ -216,6 +218,7 @@ class OrderListView(ListView):
     model = Order
     template_name = 'crm/order_list.html'
     context_object_name = 'order_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(OrderListView, self).get_context_data(**kwargs)
@@ -273,6 +276,7 @@ class RequestListView(FilterMixin, ListView):
     model = Request
     template_name = 'crm/request_list.html'
     context_object_name = 'request_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(RequestListView, self).get_context_data(**kwargs)
@@ -392,10 +396,12 @@ class RequestDetailView(DetailView):
             'online': 'online-requests',
             'visit': 'visits'
         }
-        request = self.get_object()
-        request.is_deleted = True if not request.is_deleted else False
-        request.save()
-        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(request.type_request)}')
+        item_request = self.get_object()
+        is_deleted_flag = True if not item_request.is_deleted else False
+        item_request.is_deleted = is_deleted_flag
+        item_request.status = 'deleted' if is_deleted_flag else 'processed'
+        item_request.save()
+        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(item_request.type_request)}')
 
 
 class CreateRequestView(CreateView):
@@ -454,6 +460,7 @@ class VacancyListView(ListView):
     model = Vacancy
     template_name = 'crm/vacancy_list.html'
     context_object_name = 'vacancy_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(VacancyListView, self).get_context_data(**kwargs)
@@ -519,11 +526,12 @@ class UpdateVacancyView(UpdateView):
 
 
 class InterviewListView(ListView):
-    """ Список соеседований в CRM
+    """ Список собеседований в CRM
     """
     model = Interview
     template_name = 'crm/interview_list.html'
     context_object_name = 'interview_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(InterviewListView, self).get_context_data(**kwargs)
@@ -581,6 +589,7 @@ class CourseListView(ListView):
     model = Course
     template_name = 'crm/course_list.html'
     context_object_name = 'course_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
@@ -704,15 +713,16 @@ class UpdateLessonView(UpdateView):
 
 
 class TimeTableListView(ListView):
-    """ Рассписание в CRM
+    """ Расписание в CRM
     """
     model = Timetable
     template_name = 'crm/time_table_list.html'
     context_object_name = 'time_table_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TimeTableListView, self).get_context_data(**kwargs)
-        context['title'] = 'Рассписание'
+        context['title'] = 'Расписание'
         context['user'] = self.request.user
         return context
 
@@ -742,14 +752,14 @@ class TimeTableDetailView(DetailView):
 
 
 class CreateTimeTableView(CreateView):
-    """ Регистрация новой записи в рассписание в CRM
+    """ Регистрация новой записи в расписание в CRM
     """
     template_name = 'crm/create_timetable.html'
     form_class = forms.TimeTableForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
-        context['title'] = 'Добавление новой записи в рассписание'
+        context['title'] = 'Добавление новой записи в расписание'
         return context
 
     def form_valid(self, form):
@@ -763,6 +773,7 @@ class CreateTimeTableView(CreateView):
         elif days_of_week_list:
             date = form.cleaned_data.get('date')
             lesson = form.cleaned_data.get('lesson')
+            subject = form.cleaned_data.get('subject')
             group = form.cleaned_data.get('group')
             end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
 
@@ -771,6 +782,7 @@ class CreateTimeTableView(CreateView):
                     new_timetable = Timetable()
                     new_timetable.date = date
                     new_timetable.lesson = lesson
+                    new_timetable.subject = subject
                     new_timetable.group = group
                     new_timetable.save()
 
@@ -813,6 +825,7 @@ class AcademicPerformanceListView(ListView):
     model = AcademicPerformance
     template_name = 'crm/academic_performance_list.html'
     context_object_name = 'academic_performance_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AcademicPerformanceListView, self).get_context_data(**kwargs)
@@ -852,6 +865,7 @@ class TeacherListView(ListView):
     model = Teacher
     template_name = 'crm/teacher_list.html'
     context_object_name = 'teacher_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TeacherListView, self).get_context_data(**kwargs)
@@ -951,6 +965,7 @@ class StudentListView(ListView):
     model = Student
     template_name = 'crm/student_list.html'
     context_object_name = 'student_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StudentListView, self).get_context_data(**kwargs)
@@ -1064,6 +1079,7 @@ class StaffListView(ListView):
     model = Staff
     template_name = 'crm/staff_list.html'
     context_object_name = 'staff_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StaffListView, self).get_context_data(**kwargs)
@@ -1145,6 +1161,7 @@ class GroupListView(ListView):
     model = Group
     template_name = 'crm/group_list.html'
     context_object_name = 'group_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(GroupListView, self).get_context_data(**kwargs)
@@ -1253,6 +1270,7 @@ class CostCategoryListView(ListView):
     model = CostCategory
     template_name = 'crm/cost_categories_list.html'
     context_object_name = 'category_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CostCategoryListView, self).get_context_data(**kwargs)
@@ -1322,6 +1340,7 @@ class CostListView(ListView):
     model = Cost
     template_name = 'crm/cost_list.html'
     context_object_name = 'cost_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CostListView, self).get_context_data(**kwargs)

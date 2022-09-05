@@ -50,6 +50,11 @@
                     </tbody>
                 </table>
             </div>
+            {% if is_paginated %}
+                <div class="mt-4">
+                    {% include 'crm/inc/paginations.html' %}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
