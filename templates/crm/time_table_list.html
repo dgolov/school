@@ -55,7 +55,7 @@
                                 <table class="table mb-0">
                                     <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">id</th>
                                         <th scope="col">Урок</th>
                                         <th scope="col">Группа</th>
                                         <th scope="col">Дата</th>
@@ -69,7 +69,7 @@
                                                 <a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.id }}</a>
                                             </th>
                                             <td><a href="/api/crm/timetable/{{ time_table.id }}">{{ time_table.lesson }}</a></td>
-                                            <td>{{ time_table.group }}</td>
+                                            <td><a href="/api/crm/groups/{{ time_table.group.id }}">{{ time_table.group }}</a></td>
                                             <td>{{ time_table.date }}</td>
                                             <td>{{ time_table.is_finished }}</td>
                                         </tr>
