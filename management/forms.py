@@ -221,8 +221,14 @@ class CreateRequestForm(forms.ModelForm):
 
 
 class UpdateRequestForm(forms.ModelForm):
-    """ Форма регистрации новой заявки в CRM
+    """ Форма редактирования заявки в CRM
     """
+    client = forms.ModelChoiceField(
+        queryset=Client.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
     type_request = forms.CharField(
         widget=forms.Select(
             choices=Request.TYPE_CHOICES,
@@ -266,10 +272,15 @@ class UpdateRequestForm(forms.ModelForm):
             attrs={'class': 'form-control', 'value': "PUT"}
         )
     )
+    loyalty = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'type': 'range', 'class': 'form-control'}
+        )
+    )
 
     class Meta:
         model = Request
-        fields = ('type_request', 'status', 'course', 'purpose', 'result', 'remind', 'comment')
+        fields = ('type_request', 'status', 'course', 'purpose', 'loyalty', 'result', 'remind', 'comment')
 
 
 class VacancyForm(forms.ModelForm):

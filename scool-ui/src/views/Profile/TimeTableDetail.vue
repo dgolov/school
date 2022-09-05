@@ -5,7 +5,7 @@
       <div class="page">
         <div class="container mt-1">
           <div class="page__inner">
-            <profile-menu :header="'Рассписание'"></profile-menu>
+            <profile-menu :header="'Расписание'"></profile-menu>
             <div class="page__main">
               <h2>{{ responseData.lesson.theme }}</h2>
               <hr class="mb-4"/>
