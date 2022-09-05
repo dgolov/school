@@ -771,6 +771,7 @@ class CreateTimeTableView(CreateView):
         elif days_of_week_list:
             date = form.cleaned_data.get('date')
             lesson = form.cleaned_data.get('lesson')
+            subject = form.cleaned_data.get('subject')
             group = form.cleaned_data.get('group')
             end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
 
@@ -779,6 +780,7 @@ class CreateTimeTableView(CreateView):
                     new_timetable = Timetable()
                     new_timetable.date = date
                     new_timetable.lesson = lesson
+                    new_timetable.subject = subject
                     new_timetable.group = group
                     new_timetable.save()
 
