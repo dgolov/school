@@ -48,11 +48,10 @@
 						<button
 						  type="button"
 						  class="tinkoff-button"
-						  onclick="tinkoff.createDemo(
+						  onclick="tinkoff.create(
 						    {
 						      sum: 31500,
 						      items: [{name: 'Курс для детей Читер', price: 31500, quantity: 1}, ],
-						      demoFlow: 'sms',
 						      promoCode: 'default',
 						      shopId: '64e20d36-fcd4-47ec-b625-29fda7e58280',
 						      showcaseId: '3777cafe-c874-45f0-9571-01b7c9ad9f4c',

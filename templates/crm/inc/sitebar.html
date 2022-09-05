@@ -20,14 +20,14 @@
         {% if user.staff.user_group == 'admin' or user.staff.user_group == 'sale_manager' %}
             <li class="menu-label">Продажи</li>
             <li>
-                <a href="{% url 'out_calls' %}">
+                <a href="{% url 'in_calls' %}">
                     <div class="parent-icon icon-color-3"><i class="bx bx-phone-outgoing"></i>
                     </div>
                     <div class="menu-title">Входящие звонки</div>
                 </a>
             </li>
             <li>
-                <a href="{% url 'in_calls' %}">
+                <a href="{% url 'out_calls' %}">
                     <div class="parent-icon icon-color-2"><i class="bx bx-phone-incoming"></i>
                     </div>
                     <div class="menu-title">Исходящие звонки</div>
@@ -125,7 +125,7 @@
                     <a href="{% url 'timetable' %}">
                         <div class="parent-icon icon-color-4"><i class="bx bx-calendar"></i>
                         </div>
-                        <div class="menu-title">Рассписание</div>
+                        <div class="menu-title">Расписание</div>
                     </a>
                 </li>
                 <li>
@@ -180,7 +180,7 @@
         {% endif %}
         <li class="menu-label">Страницы</li>
         <li>
-            <a href="user-profile.html">
+            <a href="#">
                 <div class="parent-icon icon-color-4"><i class="bx bx-user-circle"></i>
                 </div>
                 <div class="menu-title">Профиль</div>

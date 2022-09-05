@@ -468,8 +468,8 @@ class Timetable(models.Model):
         return f'{self.lesson} - {self.date}'
 
     class Meta:
-        verbose_name = 'Рассписание урока'
-        verbose_name_plural = '02. Обучение - Рассписание занятий'
+        verbose_name = 'Расписание урока'
+        verbose_name_plural = '02. Обучение - Расписание занятий'
         ordering = ['-date']
 
 

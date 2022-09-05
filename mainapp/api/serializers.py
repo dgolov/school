@@ -517,7 +517,7 @@ class TimetableSerializer(serializers.ModelSerializer):
 
 
 class TimetableCreateSerializer(serializers.ModelSerializer):
-    """ Серилизация добавления урока рассписание занятий
+    """ Серилизация добавления урока расписание занятий
     """
 
     class Meta:
