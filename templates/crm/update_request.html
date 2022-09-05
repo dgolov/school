@@ -3,7 +3,7 @@
     <div class="card radius-15">
         <div class="card-body">
             <div class="card-title">
-                <h4 class="mb-4">Добавление новой заявки</h4>
+                <h4 class="mb-4">Редактирование заявки</h4>
                 <hr/>
             </div>
             {{ form.media }}
@@ -30,7 +30,7 @@
                     <div class="col-md-6">
                         <div class="form-group mt-4">
                             <label>Клиент:</label>
-                            <h5 style="display: inline">{{ request.client }}</h5>
+                            {{ form.client }}
                         </div>
                         <div class="form-group mt-4">
                             <label>Курс:</label>
@@ -39,6 +39,10 @@
                         <div class="form-group mt-4">
                             <label>Перезвонить / напомнить:</label>
                             {{ form.remind }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <label>Лояльность клиента:</label>
+                            {{ form.loyalty }}
                         </div>
                     </div>
                     <div class="col-md-12 mt-3">

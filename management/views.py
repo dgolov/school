@@ -396,10 +396,12 @@ class RequestDetailView(DetailView):
             'online': 'online-requests',
             'visit': 'visits'
         }
-        request = self.get_object()
-        request.is_deleted = True if not request.is_deleted else False
-        request.save()
-        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(request.type_request)}')
+        item_request = self.get_object()
+        is_deleted_flag = True if not item_request.is_deleted else False
+        item_request.is_deleted = is_deleted_flag
+        item_request.status = 'deleted' if is_deleted_flag else 'processed'
+        item_request.save()
+        return HttpResponseRedirect(f'/api/crm/{redirect_url_dict.get(item_request.type_request)}')
 
 
 class CreateRequestView(CreateView):
