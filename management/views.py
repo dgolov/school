@@ -85,6 +85,7 @@ class ClientsListView(FilterMixin, ListView):
     model = Client
     template_name = 'crm/clients_list.html'
     context_object_name = 'client_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ClientsListView, self).get_context_data(**kwargs)
@@ -163,6 +164,7 @@ class ContractListView(ListView):
     model = Contract
     template_name = 'crm/contracts_list.html'
     context_object_name = 'contracts_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ContractListView, self).get_context_data(**kwargs)
@@ -216,6 +218,7 @@ class OrderListView(ListView):
     model = Order
     template_name = 'crm/order_list.html'
     context_object_name = 'order_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(OrderListView, self).get_context_data(**kwargs)
@@ -273,6 +276,7 @@ class RequestListView(FilterMixin, ListView):
     model = Request
     template_name = 'crm/request_list.html'
     context_object_name = 'request_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(RequestListView, self).get_context_data(**kwargs)
@@ -454,6 +458,7 @@ class VacancyListView(ListView):
     model = Vacancy
     template_name = 'crm/vacancy_list.html'
     context_object_name = 'vacancy_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(VacancyListView, self).get_context_data(**kwargs)
@@ -519,11 +524,12 @@ class UpdateVacancyView(UpdateView):
 
 
 class InterviewListView(ListView):
-    """ Список соеседований в CRM
+    """ Список собеседований в CRM
     """
     model = Interview
     template_name = 'crm/interview_list.html'
     context_object_name = 'interview_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(InterviewListView, self).get_context_data(**kwargs)
@@ -581,6 +587,7 @@ class CourseListView(ListView):
     model = Course
     template_name = 'crm/course_list.html'
     context_object_name = 'course_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
@@ -709,6 +716,7 @@ class TimeTableListView(ListView):
     model = Timetable
     template_name = 'crm/time_table_list.html'
     context_object_name = 'time_table_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TimeTableListView, self).get_context_data(**kwargs)
@@ -813,6 +821,7 @@ class AcademicPerformanceListView(ListView):
     model = AcademicPerformance
     template_name = 'crm/academic_performance_list.html'
     context_object_name = 'academic_performance_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AcademicPerformanceListView, self).get_context_data(**kwargs)
@@ -852,6 +861,7 @@ class TeacherListView(ListView):
     model = Teacher
     template_name = 'crm/teacher_list.html'
     context_object_name = 'teacher_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TeacherListView, self).get_context_data(**kwargs)
@@ -951,6 +961,7 @@ class StudentListView(ListView):
     model = Student
     template_name = 'crm/student_list.html'
     context_object_name = 'student_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StudentListView, self).get_context_data(**kwargs)
@@ -1064,6 +1075,7 @@ class StaffListView(ListView):
     model = Staff
     template_name = 'crm/staff_list.html'
     context_object_name = 'staff_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StaffListView, self).get_context_data(**kwargs)
@@ -1145,6 +1157,7 @@ class GroupListView(ListView):
     model = Group
     template_name = 'crm/group_list.html'
     context_object_name = 'group_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(GroupListView, self).get_context_data(**kwargs)
@@ -1253,6 +1266,7 @@ class CostCategoryListView(ListView):
     model = CostCategory
     template_name = 'crm/cost_categories_list.html'
     context_object_name = 'category_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CostCategoryListView, self).get_context_data(**kwargs)
@@ -1322,6 +1336,7 @@ class CostListView(ListView):
     model = Cost
     template_name = 'crm/cost_list.html'
     context_object_name = 'cost_list'
+    paginate_by = 30
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CostListView, self).get_context_data(**kwargs)
