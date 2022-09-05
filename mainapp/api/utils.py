@@ -19,8 +19,8 @@ def get_serializer_to_display_the_profile(request, obj, detail_serializer_class)
 
 
 def check_correct_data_for_add_in_timetable(item_profile, data):
-    """ Проверка данных на добавление урока в рассписание
-    Данные преподавателя который редактирует рассписание должно совпадать с данными отправленными на сервер
+    """ Проверка данных на добавление урока в расписание
+    Данные преподавателя который редактирует расписание должно совпадать с данными отправленными на сервер
     """
     try:
         lesson = Lesson.objects.get(pk=data['lesson'])

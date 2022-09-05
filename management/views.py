@@ -713,7 +713,7 @@ class UpdateLessonView(UpdateView):
 
 
 class TimeTableListView(ListView):
-    """ Рассписание в CRM
+    """ Расписание в CRM
     """
     model = Timetable
     template_name = 'crm/time_table_list.html'
@@ -722,7 +722,7 @@ class TimeTableListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TimeTableListView, self).get_context_data(**kwargs)
-        context['title'] = 'Рассписание'
+        context['title'] = 'Расписание'
         context['user'] = self.request.user
         return context
 
@@ -752,14 +752,14 @@ class TimeTableDetailView(DetailView):
 
 
 class CreateTimeTableView(CreateView):
-    """ Регистрация новой записи в рассписание в CRM
+    """ Регистрация новой записи в расписание в CRM
     """
     template_name = 'crm/create_timetable.html'
     form_class = forms.TimeTableForm
 
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
-        context['title'] = 'Добавление новой записи в рассписание'
+        context['title'] = 'Добавление новой записи в расписание'
         return context
 
     def form_valid(self, form):
