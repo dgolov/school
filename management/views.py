@@ -760,6 +760,8 @@ class CreateTimeTableView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
         context['title'] = 'Добавление новой записи в расписание'
+        context['course_list'] = Course.objects.all()
+        context['lessons_list'] = Lesson.objects.all()
         return context
 
     def form_valid(self, form):
@@ -767,13 +769,48 @@ class CreateTimeTableView(CreateView):
 
         if not days_of_week_list and form.is_valid():
             instance = form.save()
+            lesson_id = self.request.POST.get('lesson', None)
+            if lesson_id:
+                try:
+                    lesson = Lesson.objects.get(pk=lesson_id)
+                except Lesson.DoesNotExist:
+                    messages.add_message(
+                        self.request, messages.ERROR, 'Ошибка создания записи. Выбраный урок не существует.'
+                    )
+                    return HttpResponseRedirect('/api/crm/timetable')
+            else:
+                messages.add_message(
+                    self.request, messages.ERROR, 'Ошибка создания записи. Не указана тема урока.'
+                )
+                return HttpResponseRedirect('/api/crm/timetable')
+            instance.date = form.cleaned_data.get('date')
+            instance.group = form.cleaned_data.get('group')
+            instance.lesson = lesson
+            instance.subject = lesson.theme
             instance.material = self.request.FILES.get('file', None)
-            instance.save()
+            try:
+                instance.save()
+            except Exception as e:
+                messages.add_message(
+                    self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.'
+                )
 
         elif days_of_week_list:
             date = form.cleaned_data.get('date')
-            lesson = form.cleaned_data.get('lesson')
-            subject = form.cleaned_data.get('subject')
+            lesson_id = self.request.POST.get('lesson', None)
+            if lesson_id:
+                try:
+                    lesson = Lesson.objects.get(pk=lesson_id)
+                except Lesson.DoesNotExist:
+                    messages.add_message(
+                        self.request, messages.ERROR, 'Ошибка создания записи. Выбраный урок не существует.'
+                    )
+                    return HttpResponseRedirect('/api/crm/timetable')
+            else:
+                messages.add_message(
+                    self.request, messages.ERROR, 'Ошибка создания записи. Не указана тема урока.'
+                )
+                return HttpResponseRedirect('/api/crm/timetable')
             group = form.cleaned_data.get('group')
             end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
 
@@ -782,7 +819,7 @@ class CreateTimeTableView(CreateView):
                     new_timetable = Timetable()
                     new_timetable.date = date
                     new_timetable.lesson = lesson
-                    new_timetable.subject = subject
+                    new_timetable.subject = lesson.theme
                     new_timetable.group = group
                     new_timetable.save()
 
@@ -805,6 +842,8 @@ class UpdateTimeTableView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateTimeTableView, self).get_context_data()
         context['title'] = 'Редактирование рассписания'
+        context['course_list'] = Course.objects.all()
+        context['lessons_list'] = Lesson.objects.all()
         return context
 
     def get_success_url(self):

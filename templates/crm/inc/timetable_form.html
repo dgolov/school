@@ -5,12 +5,19 @@
             {{ form.date }}
         </div>
         <div class="form-group mt-4">
-            <label>Урок</label>
-            {{ form.lesson }}
+            <label>Курс</label>
+            <select class="form-control" id="coursesSingle">
+                <option selected>Выберите курс</option>
+                {% for course in course_list %}
+                    <option value="{{ course.id }}">{{ course }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group mt-4">
-            <label>Предмет</label>
-            {{ form.subject }}
+            <label>Урок</label>
+            <select class="form-control" id="lessonsSingle" name="lesson">
+                <option selected>Выберите урок</option>
+            </select>
         </div>
         <div class="form-group mt-4">
             <label>Группа</label>
