@@ -931,6 +931,7 @@ class TeacherDetailView(DetailView):
         context = super(TeacherDetailView, self).get_context_data(**kwargs)
         context['title'] = self.get_object()
         context['user'] = self.request.user
+        context['time_table_list'] = Timetable.objects.filter(group__teacher_groups=self.get_object())
         return context
 
 
