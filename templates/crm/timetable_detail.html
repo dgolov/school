@@ -80,9 +80,11 @@
                             <tr>
                                 <th>Ссылка на материалы</th>
                                 <td>
-                                    <a href="{{ timetable.material_link }}">
-                                        {{ timetable.material_link }}
-                                    </a>
+                                    {% if timetable.material_link %}
+                                        <a href="{{ timetable.material_link }}">{{ timetable.material_link }}</a>
+                                    {% else %}
+                                        Отсутствует
+                                    {% endif %}
                                 </td>
                             </tr>
                             </tbody>
