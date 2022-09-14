@@ -1,5 +1,6 @@
 <template>
   <div id="info">
+    <h2>Курс {{course.name }}</h2>
     <div class="row mt-3">
       <div class="info-section" style="width: 30%">
         <p class="mb-0 mt-0">Срок обучения: </p>

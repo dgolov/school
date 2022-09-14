@@ -1,7 +1,7 @@
 <template>
   <div id="lesson-single">
     <navbar></navbar>
-    <div class="lesson past-events">
+    <div class="container lesson past-events">
       <course-info v-if="responseData" :course="responseData.course"></course-info>
       <div class="course__section">
         <div class="container pb-1">
@@ -27,6 +27,10 @@
               <a href="#" @click="responseData.materials" download class="course-text">Скачать материал к уроку</a>
               {{responseData.materials}}
             </div>
+          </div>
+          <hr v-if="responseData.material_link && (responseData.video_slug || responseData.materials)" />
+          <div v-if="responseData.material_link" class="mt-5 system-color">
+            <a :href="responseData.material_link" class="course-text">Ссылка на диск с материалами</a>
           </div>
         </div>
       </div>
