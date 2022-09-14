@@ -29,6 +29,12 @@
                   </a>
                 </div>
               </div>
+              <div class="row mt-4" v-if="responseData.material_link">
+                <div class="w-50">Ссылка на материалы</div>
+                <div class="w-50">
+                    <a :href="responseData.material_link" target="_blank">Перейти</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

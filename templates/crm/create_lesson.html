@@ -6,7 +6,7 @@
                 <h4 class="mb-4">Добавление нового урока</h4>
                 <hr/>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 {% include 'crm/inc/lesson_form.html' %}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>

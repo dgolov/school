@@ -45,8 +45,24 @@
                                         <td><a href="#">{{ lesson.video_slug }}</a></td>
                                     </tr>
                                     <tr>
-                                        <th>Материалы урока</th>
-                                        <td><a href="#">{{ lesson.materials }}</a></td>
+                                        <th>Материал урока</th>
+                                        <td>
+                                            {% if lesson.materials %}
+                                                <a href="{{ lesson.materials.url }}">Загрузить</a>
+                                            {% else %}
+                                                Отсутствует
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ссылка на материалы</th>
+                                        <td>
+                                            {% if lesson.material_link %}
+                                                <a href="{{ lesson.material_link }}">{{ lesson.material_link }}</a>
+                                            {% else %}
+                                                Отсутствует
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Доступный урок</th>

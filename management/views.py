@@ -691,8 +691,12 @@ class CreateLessonView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            form.save()
-        return HttpResponseRedirect('/api/crm/courses')
+            new_lesson = form.save()
+            materials = self.request.FILES.get('file', None)
+            if materials:
+                new_lesson.materials = materials
+                new_lesson.save()
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
 
 
 class UpdateLessonView(UpdateView):
@@ -708,8 +712,18 @@ class UpdateLessonView(UpdateView):
         context['title'] = 'Редактирование урока'
         return context
 
-    def get_success_url(self):
-        return f'/api/crm/courses/lessons/{self.get_object().pk}'
+    def form_valid(self, form):
+        if form.is_valid():
+            new_lesson = form.save()
+            materials = self.request.FILES.get('file', None)
+            print(materials)
+            if materials:
+                new_lesson.materials = materials
+                new_lesson.save()
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
+
+    # def get_success_url(self):
+    #     return f'/api/crm/courses/lessons/{self.get_object().pk}'
 
 
 class TimeTableListView(ListView):
@@ -812,6 +826,7 @@ class CreateTimeTableView(CreateView):
                 )
                 return HttpResponseRedirect('/api/crm/timetable')
             group = form.cleaned_data.get('group')
+            material_link = form.cleaned_data.get('material_link')
             end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
 
             while date.timestamp() <= end_date.timestamp():
@@ -821,6 +836,7 @@ class CreateTimeTableView(CreateView):
                     new_timetable.lesson = lesson
                     new_timetable.subject = lesson.theme
                     new_timetable.group = group
+                    new_timetable.material_link = material_link
                     new_timetable.save()
 
                 date += timedelta(days=1)
@@ -851,7 +867,6 @@ class UpdateTimeTableView(UpdateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            print(self.request.FILES)
             instance = form.save()
             instance.material = self.request.FILES.get('file')
             instance.save()

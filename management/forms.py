@@ -482,10 +482,16 @@ class LessonForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    material_link = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы урока...'}
+        )
+    )
 
     class Meta:
         model = Lesson
-        fields = ('course', 'theme', 'lesson_number', 'video_slug', 'description')
+        fields = ('course', 'theme', 'lesson_number', 'video_slug', 'description', 'material_link')
 
 
 class TimeTableForm(forms.ModelForm):
@@ -502,10 +508,16 @@ class TimeTableForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    material_link = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы...'}
+        )
+    )
 
     class Meta:
         model = Timetable
-        fields = ('date', 'group')
+        fields = ('date', 'group', 'material_link')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
