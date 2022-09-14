@@ -223,7 +223,7 @@ class LessonSerializerFromTeacher(serializers.ModelSerializer):
     class Meta:
         model = models.Lesson
         fields = [
-            'id', 'theme', 'lesson_number'
+            'id', 'theme', 'lesson_number', 'material_link', 'materials'
         ]
 
 
@@ -512,7 +512,7 @@ class TimetableSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Timetable
         fields = [
-            'id', 'date', 'lesson', 'subject', 'group', 'is_finished', 'material'
+            'id', 'date', 'lesson', 'subject', 'group', 'is_finished', 'material', 'material_link'
         ]
 
 
