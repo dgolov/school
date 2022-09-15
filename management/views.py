@@ -716,7 +716,6 @@ class UpdateLessonView(UpdateView):
         if form.is_valid():
             new_lesson = form.save()
             materials = self.request.FILES.get('file', None)
-            print(materials)
             if materials:
                 new_lesson.materials = materials
                 new_lesson.save()
@@ -761,7 +760,6 @@ class TimeTableDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        print(123)
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
