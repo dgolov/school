@@ -465,6 +465,7 @@ class Timetable(models.Model):
     is_finished = models.BooleanField(default=False, verbose_name='Завершен')
     material = models.FileField(blank=True, null=True, upload_to=get_file_path, verbose_name='Материал')
     material_link = models.CharField(max_length=150, verbose_name='Ссылка на материалы', blank=True, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, verbose_name='Преподаватель', blank=True, null=True)
 
     def __str__(self):
         return f'{self.lesson} - {self.date}'
