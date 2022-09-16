@@ -514,10 +514,16 @@ class TimeTableForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы...'}
         )
     )
+    teacher = forms.ModelChoiceField(
+        queryset=Teacher.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        )
+    )
 
     class Meta:
         model = Timetable
-        fields = ('date', 'group', 'material_link')
+        fields = ('date', 'group', 'material_link', 'teacher')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):

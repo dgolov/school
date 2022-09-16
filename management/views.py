@@ -772,8 +772,10 @@ class CreateTimeTableView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
         context['title'] = 'Добавление новой записи в расписание'
-        context['course_list'] = Course.objects.all()
-        context['lessons_list'] = Lesson.objects.all()
+        # context['course_list'] = Course.objects.all()
+        # context['lessons_list'] = Lesson.objects.all()
+        # context['teachers'] = Teacher.objects.all()
+        context['group_list'] = Group.objects.all()
         return context
 
     def form_valid(self, form):
@@ -858,6 +860,7 @@ class UpdateTimeTableView(UpdateView):
         context['title'] = 'Редактирование рассписания'
         context['course_list'] = Course.objects.all()
         context['lessons_list'] = Lesson.objects.all()
+        context['teachers'] = Teacher.objects.all()
         return context
 
     def get_success_url(self):
