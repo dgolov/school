@@ -225,6 +225,7 @@ class TimeTAbleMixin:
     material_link = None
     timetable_object = None
     file = None
+    teacher = None
 
     def _save_timetable(self):
         """ сохранение расписания """
@@ -234,6 +235,7 @@ class TimeTAbleMixin:
         new_timetable.date = self.date
         new_timetable.group = self.group
         new_timetable.lesson = self.lesson
+        new_timetable.teacher = self.teacher
         new_timetable.subject = self.lesson.theme
         if self.material_link:
             new_timetable.material_link = self.material_link
@@ -246,6 +248,7 @@ class TimeTAbleMixin:
         self.timetable_object.date = self.date
         self.timetable_object.group = self.group
         self.timetable_object.lesson = self.lesson
+        self.timetable_object.teacher = self.teacher
         self.timetable_object.subject = self.lesson.theme
         if self.material_link:
             self.timetable_object.material_link = self.material_link
@@ -271,6 +274,15 @@ class TimeTAbleMixin:
         except Group.DoesNotExist:
             return None
 
+    @staticmethod
+    def _get_teacher(teacher_id):
+        if not teacher_id:
+            return None
+        try:
+            return Teacher.objects.get(id=teacher_id)
+        except Teacher.DoesNotExist:
+            return None
+
     def processed_timetable(self, form, request, timetable_object=None):
         """ главная функция, обновляет, добавляет пирион записей, добавляет одиночные записи
         :param form: заполненая форма
@@ -291,6 +303,11 @@ class TimeTAbleMixin:
         self.group = self._get_group(group_id=request.POST.get('group', None))
         if not self.group:
             messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Группы не существует.')
+            return
+
+        self.teacher = self._get_teacher(teacher_id=request.POST.get('teacher', None))
+        if not self.teacher:
+            messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Преподавателя не существует.')
             return
 
         if not self.days_of_week_list and form.is_valid():
