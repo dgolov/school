@@ -470,6 +470,10 @@ class Timetable(models.Model):
     def __str__(self):
         return f'{self.lesson} - {self.date}'
 
+    def finish(self):
+        self.is_finished = not self.is_finished
+        self.save()
+
     class Meta:
         verbose_name = 'Расписание урока'
         verbose_name_plural = '02. Обучение - Расписание занятий'
