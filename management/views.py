@@ -760,6 +760,9 @@ class TimeTableDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        finish = request.POST.get('finish')
+        if finish:
+            self.get_object().finish()
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
