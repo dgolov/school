@@ -66,12 +66,18 @@
                                 </div>
                             </div>
                             <div class="form-group mt-4">
+                                <label>Группа</label>
+                                <select class="form-control" id="groups" name="group">
+                                    <option selected>Выберите группу</option>
+                                    {% for group in group_list %}
+                                        <option value="{{ group.id }}">{{ group }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group mt-4">
                                 <label>Курс</label>
                                 <select class="form-control" id="courses">
                                     <option selected>Выберите курс</option>
-                                    {% for course in course_list %}
-                                        <option value="{{ course.id }}">{{ course }}</option>
-                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group mt-4">
@@ -81,12 +87,10 @@
                                 </select>
                             </div>
                             <div class="form-group mt-4">
-                                <label>Группа</label>
-                                {{ form.group }}
-                            </div>
-                            <div class="form-group mt-4">
                                 <label>Преподаватель</label>
-                                {{ form.teacher }}
+                                <select class="form-control" id="teachers" name="teacher">
+                                    <option selected>Выберите преподавателя</option>
+                                </select>
                             </div>
                             <div class="form-group mt-4">
                                 <label>Ссылка на материалы</label>
@@ -107,12 +111,36 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
     <script>
         $(function () {
+            let courseId = null;
+            let groupId = null;
+            $('#groups').change(function () {
+                groupId = $('#groups :selected').val();
+                $("#courses").empty();
+                {% for course in course_list %}
+                    {% for group in course.group_courses.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#courses').append('<option value="{{ course.id }}">{{ course }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+                $("#teachers").empty();
+                {% for teacher in teachers %}
+                    {% for group in teacher.group_list.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#teachers').append('<option value="{{ teacher.id }}">{{ teacher }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+            });
+
             $('#courses').change(function () {
+                courseId = $('#courses :selected').val();
                 $("#lessons").empty();
-                let courseId = $('#courses :selected').val();
                 {% for lesson in lessons_list %}
                     if ({{ lesson.course.id }} == courseId) {
                         $('#lessons').append('<option value="{{ lesson.id }}">{{ lesson }}</option>');
@@ -121,12 +149,34 @@
             })
         });
     </script>
+
     <script>
         $(function () {
+            let courseId = null;
+            let groupId = null;
+            $('#groupsSingle').change(function () {
+                groupId = $('#groupsSingle :selected').val();
+                $("#coursesSingle").empty();
+                {% for course in course_list %}
+                    {% for group in course.group_courses.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#coursesSingle').append('<option value="{{ course.id }}">{{ course }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+                $("#teachersSingle").empty();
+                {% for teacher in teachers %}
+                    {% for group in teacher.group_list.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#teachersSingle').append('<option value="{{ teacher.id }}">{{ teacher }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+            });
+
             $('#coursesSingle').change(function () {
-                console.log(123)
+                courseId = $('#coursesSingle :selected').val();
                 $("#lessonsSingle").empty();
-                let courseId = $('#coursesSingle :selected').val();
                 {% for lesson in lessons_list %}
                     if ({{ lesson.course.id }} == courseId) {
                     $('#lessonsSingle').append('<option value="{{ lesson.id }}">{{ lesson }}</option>');
@@ -135,4 +185,5 @@
             })
         });
     </script>
+
 {% endblock %}
