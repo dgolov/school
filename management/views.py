@@ -22,10 +22,10 @@ from management.models import (
     CostCategory,
     Staff
 )
-from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin, TimeTAbleMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 class MainView(View):
@@ -763,7 +763,7 @@ class TimeTableDetailView(DetailView):
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
-class CreateTimeTableView(CreateView):
+class CreateTimeTableView(CreateView, TimeTAbleMixin):
     """ Регистрация новой записи в расписание в CRM
     """
     template_name = 'crm/create_timetable.html'
@@ -779,75 +779,11 @@ class CreateTimeTableView(CreateView):
         return context
 
     def form_valid(self, form):
-        days_of_week_list = self.request.POST.getlist('day_of_week')
-
-        if not days_of_week_list and form.is_valid():
-            instance = form.save()
-            lesson_id = self.request.POST.get('lesson', None)
-            if lesson_id:
-                try:
-                    lesson = Lesson.objects.get(pk=lesson_id)
-                except Lesson.DoesNotExist:
-                    messages.add_message(
-                        self.request, messages.ERROR, 'Ошибка создания записи. Выбраный урок не существует.'
-                    )
-                    return HttpResponseRedirect('/api/crm/timetable')
-            else:
-                messages.add_message(
-                    self.request, messages.ERROR, 'Ошибка создания записи. Не указана тема урока.'
-                )
-                return HttpResponseRedirect('/api/crm/timetable')
-            instance.date = form.cleaned_data.get('date')
-            instance.group = form.cleaned_data.get('group')
-            instance.lesson = lesson
-            instance.subject = lesson.theme
-            instance.material = self.request.FILES.get('file', None)
-            try:
-                instance.save()
-            except Exception as e:
-                messages.add_message(
-                    self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.'
-                )
-
-        elif days_of_week_list:
-            date = form.cleaned_data.get('date')
-            lesson_id = self.request.POST.get('lesson', None)
-            if lesson_id:
-                try:
-                    lesson = Lesson.objects.get(pk=lesson_id)
-                except Lesson.DoesNotExist:
-                    messages.add_message(
-                        self.request, messages.ERROR, 'Ошибка создания записи. Выбраный урок не существует.'
-                    )
-                    return HttpResponseRedirect('/api/crm/timetable')
-            else:
-                messages.add_message(
-                    self.request, messages.ERROR, 'Ошибка создания записи. Не указана тема урока.'
-                )
-                return HttpResponseRedirect('/api/crm/timetable')
-            group = form.cleaned_data.get('group')
-            material_link = form.cleaned_data.get('material_link')
-            end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
-
-            while date.timestamp() <= end_date.timestamp():
-                if str(date.strftime("%A")).lower() in days_of_week_list:
-                    new_timetable = Timetable()
-                    new_timetable.date = date
-                    new_timetable.lesson = lesson
-                    new_timetable.subject = lesson.theme
-                    new_timetable.group = group
-                    new_timetable.material_link = material_link
-                    new_timetable.save()
-
-                date += timedelta(days=1)
-
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
-
+        self.processed_timetable(form, self.request)
         return HttpResponseRedirect('/api/crm/timetable')
 
 
-class UpdateTimeTableView(UpdateView):
+class UpdateTimeTableView(UpdateView, TimeTAbleMixin):
     """ Редактирование записи рассписания в CRM
     """
     model = Timetable
@@ -861,16 +797,14 @@ class UpdateTimeTableView(UpdateView):
         context['course_list'] = Course.objects.all()
         context['lessons_list'] = Lesson.objects.all()
         context['teachers'] = Teacher.objects.all()
+        context['group_list'] = Group.objects.all()
         return context
 
     def get_success_url(self):
         return f'/api/crm/timetable/{self.get_object().pk}'
 
     def form_valid(self, form):
-        if form.is_valid():
-            instance = form.save()
-            instance.material = self.request.FILES.get('file')
-            instance.save()
+        self.processed_timetable(form, self.request, timetable_object=self.get_object())
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
