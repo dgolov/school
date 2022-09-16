@@ -515,7 +515,7 @@ class AcademicPerformance(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
     date = models.DateField(auto_now_add=True, verbose_name='Дата оценки')
     type_grade = models.CharField(max_length=50, verbose_name='Тип оценки', choices=TYPE_CHOICES)
-    grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка')
+    grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка', blank=True, null=True)
     late = models.BooleanField(default=False, verbose_name='Опоздание')
     absent = models.BooleanField(default=False, verbose_name='Отсутствие')
 
