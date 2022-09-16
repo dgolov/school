@@ -502,28 +502,16 @@ class TimeTableForm(forms.ModelForm):
             attrs={'class': 'form-control', 'type': "datetime-local"}
         )
     )
-    group = forms.ModelChoiceField(
-        queryset=Group.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
-        )
-    )
     material_link = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы...'}
         )
     )
-    teacher = forms.ModelChoiceField(
-        queryset=Teacher.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
-        )
-    )
 
     class Meta:
         model = Timetable
-        fields = ('date', 'group', 'material_link', 'teacher')
+        fields = ('date', 'material_link')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
