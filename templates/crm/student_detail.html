@@ -268,7 +268,11 @@
                                     <tbody>
                                     {% for academic_performance in academic_performance_list %}
                                         <tr>
-                                            <td>{{ academic_performance.lesson }}</td>
+                                            <td>
+                                                <a href="/api/crm/courses/lessons/{{ academic_performance.lesson.pk }}">
+                                                    {{ academic_performance.lesson }}
+                                                </a>
+                                            </td>
                                             <td>{{ academic_performance.type_grade }}</td>
                                             <td>{{ academic_performance.grade }}</td>
                                             <td>{{ academic_performance.date }}</td>
@@ -295,7 +299,11 @@
                                     {% for academic_performance in academic_performance_list %}
                                         {% if academic_performance.late or academic_performance.absent %}
                                             <tr>
-                                                <td>{{ academic_performance.lesson }}</td>
+                                                <td>
+                                                    <a href="/api/crm/courses/lessons/{{ academic_performance.lesson.pk }}">
+                                                        {{ academic_performance.lesson }}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     {% if academic_performance.late %}
                                                         Опоздал
