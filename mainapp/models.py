@@ -188,6 +188,13 @@ class Teacher(Profile):
         related_name='teacher_courses'
     )
 
+    def get_student_count(self):
+        student_count = set()
+        for group in self.group_list.all():
+            for student in group.student_groups.all():
+                student_count.add(student)
+        return len(student_count)
+
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = '01. Пользователи - Преподаватели'

@@ -880,11 +880,27 @@ class TeacherDetailView(DetailView):
     template_name = 'crm/teacher_detail.html'
     context_object_name = 'teacher'
 
+    @staticmethod
+    def get_academic_performance_average(academic_performance, academic_performance_count):
+        academic_performance_sum = 0
+        for item in academic_performance:
+            academic_performance_sum += item.grade
+        return academic_performance_sum / academic_performance_count
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TeacherDetailView, self).get_context_data(**kwargs)
+        academic_performance = AcademicPerformance.objects.filter(teacher=self.get_object())
+        academic_performance_count = academic_performance.count()
+        time_table = Timetable.objects.filter(group__teacher_groups=self.get_object())
+
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        context['time_table_list'] = Timetable.objects.filter(group__teacher_groups=self.get_object())
+        context['time_table_list'] = time_table
+        context['time_table_finished'] = time_table.filter(is_finished=True).count()
+        context['academic_performance_list'] = academic_performance
+        context['academic_performance_count'] = academic_performance_count
+        context['academic_performance_average'] = 'Отсутствует' if not academic_performance_count \
+            else self.get_academic_performance_average(academic_performance, academic_performance_count)
         return context
 
 
