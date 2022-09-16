@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.db.models import Q
 
-from mainapp.models import Student, Teacher, Course, Group
+from mainapp.models import Student, Teacher, Course, Group, Timetable, Lesson
 from management.models import Client, Request
 
 
@@ -213,3 +213,106 @@ class StudentMixin:
             return
         student.group_list.remove(group)
         messages.add_message(request, messages.SUCCESS, f'Группа {group} успешно удалена.')
+
+
+class TimeTAbleMixin:
+    """ Миксин расписания уроков
+    """
+    date = None
+    days_of_week_list = None
+    lesson = None
+    group = None
+    material_link = None
+    timetable_object = None
+    file = None
+
+    def _save_timetable(self):
+        """ сохранение расписания """
+        if self.timetable_object:
+            return self._update_timetable()
+        new_timetable = Timetable()
+        new_timetable.date = self.date
+        new_timetable.group = self.group
+        new_timetable.lesson = self.lesson
+        new_timetable.subject = self.lesson.theme
+        if self.material_link:
+            new_timetable.material_link = self.material_link
+        if self.file:
+            new_timetable.material = self.file
+        new_timetable.save()
+
+    def _update_timetable(self):
+        """ обновление расписания """
+        self.timetable_object.date = self.date
+        self.timetable_object.group = self.group
+        self.timetable_object.lesson = self.lesson
+        self.timetable_object.subject = self.lesson.theme
+        if self.material_link:
+            self.timetable_object.material_link = self.material_link
+        if self.file:
+            self.timetable_object.material = self.file
+        self.timetable_object.save()
+
+    @staticmethod
+    def _get_lesson(lesson_id):
+        if not lesson_id:
+            return None
+        try:
+            return Lesson.objects.get(pk=lesson_id)
+        except Lesson.DoesNotExist:
+            return None
+
+    @staticmethod
+    def _get_group(group_id):
+        if not group_id:
+            return None
+        try:
+            return Group.objects.get(id=group_id)
+        except Group.DoesNotExist:
+            return None
+
+    def processed_timetable(self, form, request, timetable_object=None):
+        """ главная функция, обновляет, добавляет пирион записей, добавляет одиночные записи
+        :param form: заполненая форма
+        :param request: объект запроса
+        :param timetable_object: объект расписания (для обновления)
+        :return: None
+        """
+        self.date = form.cleaned_data.get('date', None)
+        self.days_of_week_list = request.POST.getlist('day_of_week', None)
+        self.material_link = form.cleaned_data.get('material_link', None)
+        self.timetable_object = timetable_object
+
+        self.lesson = self._get_lesson(lesson_id=request.POST.get('lesson', None))
+        if not self.lesson:
+            messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Не указана тема урока.')
+            return
+
+        self.group = self._get_group(group_id=request.POST.get('group', None))
+        if not self.group:
+            messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Группы не существует.')
+            return
+
+        if not self.days_of_week_list and form.is_valid():
+            self.file = request.FILES.get('file', None)
+            try:
+                self._save_timetable()
+            except Exception as e:
+                messages.add_message(
+                    request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.'
+                )
+
+        elif self.days_of_week_list:
+            end_date = datetime.strptime(request.POST.get('end_date'), "%Y-%m-%d")
+            while self.date.timestamp() <= end_date.timestamp():
+                if str(self.date.strftime("%A")).lower() in self.days_of_week_list:
+                    try:
+                        self._save_timetable()
+                    except Exception as e:
+                        messages.add_message(
+                            request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.'
+                        )
+                self.date += timedelta(days=1)
+
+        else:
+            messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
