@@ -276,7 +276,11 @@
                                             <td>{{ academic_performance.type_grade }}</td>
                                             <td>{{ academic_performance.grade }}</td>
                                             <td>{{ academic_performance.date }}</td>
-                                            <td>{{ academic_performance.teacher }}</td>
+                                            <td>
+                                                <a href="/api/crm/teachers/{{ academic_performance.teacher.pk }}">
+                                                    {{ academic_performance.teacher }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
