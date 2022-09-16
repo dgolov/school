@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Type
 
 from django.contrib import messages
 from django.db.models import Q
@@ -333,3 +334,55 @@ class TimeTAbleMixin:
 
         else:
             messages.add_message(request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+
+
+class StatisticMixin:
+    """ Миксин для подсчета статистики по студентам и преподавателям
+    """
+    @staticmethod
+    def get_academic_performance_average(academic_performance, academic_performance_count: int) -> Type[int or str]:
+        """ Высчитывает средний бал успеваемости по студенту или по преподавателю
+            исходя из полученых или поставленых оценок
+        :param academic_performance: Оценки отфильтрованные по пользователю
+        :param academic_performance_count: Количество оценок по пользователю
+        :return: Средний бал
+        """
+        academic_performance_sum = 0
+
+        try:
+            for item in academic_performance:
+                academic_performance_sum += item.grade
+            return academic_performance_sum / academic_performance_count
+        except Exception as e:
+            return 'Отсутствует'
+
+    @staticmethod
+    def get_average_statistic(academic_performance, academic_performance_count: int) -> Type[dict or None]:
+        """ Вычисляет статистику по посещаемости: количество пропусков и опозданий и процент пропусков и опозданий
+        :param academic_performance: Оценки отфильтрованные по студенту (посещаемость входит в успеваемость)
+        :param academic_performance_count: Количество оценок по студенту
+        :return: словарь статистики
+        """
+        average_statistic = {
+            'late_count': 0,
+            'absent_count': 0,
+            'percent_late': 0,
+            'percent_absent': 0,
+        }
+        if not academic_performance_count or not academic_performance:
+            return average_statistic
+
+        try:
+            for item in academic_performance:
+                if item.late:
+                    average_statistic['late_count'] += 1
+                elif item.absent:
+                    average_statistic['absent_count'] += 1
+        except Exception as e:
+            return None
+
+        average_statistic['percent_late'] = average_statistic['late_count'] / academic_performance_count * 100
+        average_statistic['percent_absent'] = average_statistic['absent_count'] / academic_performance_count * 100
+
+        return average_statistic
+

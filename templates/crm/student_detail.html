@@ -132,34 +132,102 @@
                     </div>
                 </div>
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#About"><span
-                            class="p-tab-name">О себе</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#Statistic">
+                            <span class="p-tab-name">Статистика</span>
+                            <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses"><span
-                            class="p-tab-name">Курсы</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses">
+                            <span class="p-tab-name">Курсы</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Groups"><span
-                            class="p-tab-name">Группы</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Groups">
+                            <span class="p-tab-name">Группы</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab"
-                                            href="#AcademicPerformance"><span
-                            class="p-tab-name">Успеваемость</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#AcademicPerformance">
+                            <span class="p-tab-name">Успеваемость</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Attendance"><span
-                            class="p-tab-name">Посещаемость</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Attendance">
+                            <span class="p-tab-name">Посещаемость</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable"><span
-                            class="p-tab-name">Расписание</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable">
+                            <span class="p-tab-name">Расписание</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#About">
+                            <span class="p-tab-name">О себе</span>
+                            <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                        </a>
                     </li>
                 </ul>
                 {% include 'crm/inc/timetable_callendar.html' %}
                 <div class="tab-content mt-3">
-                    <div class="tab-pane fade show active" id="About">
+                    <div class="tab-pane fade show active" id="Statistic">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Статистика:</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Количество завершенных уроков:</th>
+                                        <td>{{ time_table_finished }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Всего уроков (запланировано):</th>
+                                        <td>{{ time_table_list.count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество курсов:</th>
+                                        <td>{{ student.courses.count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество полученных оценок:</th>
+                                        <td>{{ academic_performance_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Средний бал студента:</th>
+                                        <td>{{ academic_performance_average }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество опозданий:</th>
+                                        <td>{{ late_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Процент опозданий:</th>
+                                        <td>{{ percent_late }} %</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество пропусков:</th>
+                                        <td>{{ absent_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Процент пропусков:</th>
+                                        <td>{{ percent_absent }} %</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество учебных групп:</th>
+                                        <td>{{ student.group_list.count }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="About">
                         <div class="card shadow-none border mb-0 radius-15">
                             <div class="card-body">
                                 <div class="d-sm-flex align-items-center mb-3">

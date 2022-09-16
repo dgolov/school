@@ -11,18 +11,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 
 from management.classes import PaymentManager
 from management import forms
-from management.models import (
-    Client,
-    Contract,
-    Order,
-    Vacancy,
-    Interview,
-    Request,
-    Cost,
-    CostCategory,
-    Staff
-)
-from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin, TimeTAbleMixin
+from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, CostCategory, Staff
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin, TimeTAbleMixin, \
+    StatisticMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
 from datetime import datetime
@@ -873,19 +864,12 @@ class TeacherListView(ListView):
             return None
 
 
-class TeacherDetailView(DetailView):
+class TeacherDetailView(DetailView, StatisticMixin):
     """ Детальное представление преподавателя в CRM
     """
     model = Teacher
     template_name = 'crm/teacher_detail.html'
     context_object_name = 'teacher'
-
-    @staticmethod
-    def get_academic_performance_average(academic_performance, academic_performance_count):
-        academic_performance_sum = 0
-        for item in academic_performance:
-            academic_performance_sum += item.grade
-        return academic_performance_sum / academic_performance_count
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TeacherDetailView, self).get_context_data(**kwargs)
@@ -990,7 +974,7 @@ class StudentListView(ListView):
             return None
 
 
-class StudentDetailView(DetailView, StudentMixin):
+class StudentDetailView(DetailView, StudentMixin, StatisticMixin):
     """ Детальное представление студента в CRM
     """
     model = Student
@@ -999,12 +983,25 @@ class StudentDetailView(DetailView, StudentMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
+        time_table = Timetable.objects.filter(group__student_groups=self.get_object())
+        academic_performance = AcademicPerformance.objects.filter(student=self.get_object())
+        academic_performance_count = academic_performance.count()
+        average_statistic = {}
+        if academic_performance_count:
+            average_statistic = self.get_average_statistic(academic_performance, academic_performance_count)
+
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        context['academic_performance_list'] = AcademicPerformance.objects.\
-            filter(student=self.get_object()).\
-            order_by('-date')
-        context['time_table_list'] = Timetable.objects.filter(group__student_groups=self.get_object())
+        context['academic_performance_list'] = academic_performance.order_by('-date')
+        context['academic_performance_count'] = academic_performance.count()
+        context['academic_performance_average'] = 'Отсутствует' if not academic_performance_count \
+            else self.get_academic_performance_average(academic_performance, academic_performance_count)
+        context['time_table_list'] = time_table
+        context['time_table_finished'] = time_table.filter(is_finished=True).count()
+        context['late_count'] = average_statistic.get('late_count', 0)
+        context['absent_count'] = average_statistic.get('absent_count', 0)
+        context['percent_late'] = average_statistic.get('percent_late', 0)
+        context['percent_absent'] = average_statistic.get('percent_absent', 0)
         return context
 
     def post(self, request, *args, **kwargs):
