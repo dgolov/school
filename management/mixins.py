@@ -349,18 +349,27 @@ class StatisticMixin:
         """
         academic_performance_sum = 0
 
-        try:
-            for item in academic_performance:
+        print(academic_performance)
+
+        print(1)
+        for item in academic_performance:
+            try:
                 academic_performance_sum += item.grade
+            except TypeError:
+                academic_performance_count -= 1
+                continue
+
+        try:
             return academic_performance_sum / academic_performance_count
         except Exception as e:
+            print(e)
             return 'Отсутствует'
 
     @staticmethod
-    def get_average_statistic(academic_performance, academic_performance_count: int) -> Type[dict or None]:
+    def get_average_statistic(academic_performance, time_table_count: int) -> Type[dict or None]:
         """ Вычисляет статистику по посещаемости: количество пропусков и опозданий и процент пропусков и опозданий
         :param academic_performance: Оценки отфильтрованные по студенту (посещаемость входит в успеваемость)
-        :param academic_performance_count: Количество оценок по студенту
+        :param time_table_count: Количество занятий по студенту
         :return: словарь статистики
         """
         average_statistic = {
@@ -369,7 +378,7 @@ class StatisticMixin:
             'percent_late': 0,
             'percent_absent': 0,
         }
-        if not academic_performance_count or not academic_performance:
+        if not time_table_count or not academic_performance:
             return average_statistic
 
         try:
@@ -381,8 +390,8 @@ class StatisticMixin:
         except Exception as e:
             return None
 
-        average_statistic['percent_late'] = average_statistic['late_count'] / academic_performance_count * 100
-        average_statistic['percent_absent'] = average_statistic['absent_count'] / academic_performance_count * 100
+        average_statistic['percent_late'] = average_statistic['late_count'] / time_table_count * 100
+        average_statistic['percent_absent'] = average_statistic['absent_count'] / time_table_count * 100
 
         return average_statistic
 

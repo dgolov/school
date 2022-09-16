@@ -989,20 +989,21 @@ class StudentDetailView(DetailView, StudentMixin, StatisticMixin):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         time_table = Timetable.objects.filter(group__student_groups=self.get_object())
+        time_table_count = time_table.filter(is_finished=True).count()
         academic_performance = AcademicPerformance.objects.filter(student=self.get_object())
         academic_performance_count = academic_performance.count()
         average_statistic = {}
         if academic_performance_count:
-            average_statistic = self.get_average_statistic(academic_performance, academic_performance_count)
+            average_statistic = self.get_average_statistic(academic_performance, time_table_count)
 
         context['title'] = self.get_object()
         context['user'] = self.request.user
         context['academic_performance_list'] = academic_performance.order_by('-date')
-        context['academic_performance_count'] = academic_performance.count()
+        context['academic_performance_count'] = academic_performance.filter(grade__gt=0).count()
         context['academic_performance_average'] = 'Отсутствует' if not academic_performance_count \
             else self.get_academic_performance_average(academic_performance, academic_performance_count)
         context['time_table_list'] = time_table
-        context['time_table_finished'] = time_table.filter(is_finished=True).count()
+        context['time_table_finished'] = time_table_count
         context['late_count'] = average_statistic.get('late_count', 0)
         context['absent_count'] = average_statistic.get('absent_count', 0)
         context['percent_late'] = average_statistic.get('percent_late', 0)
