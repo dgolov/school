@@ -11,21 +11,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 
 from management.classes import PaymentManager
 from management import forms
-from management.models import (
-    Client,
-    Contract,
-    Order,
-    Vacancy,
-    Interview,
-    Request,
-    Cost,
-    CostCategory,
-    Staff
-)
-from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin
+from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, CostCategory, Staff
+from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin, TimeTAbleMixin, \
+    StatisticMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 class MainView(View):
@@ -132,12 +123,13 @@ class CreateClientView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_client = form.save()
-            new_client.manager = self.request.user.staff
-            new_client.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания клиента. Введены некорректные данные.')
+        new_client = form.save()
+        new_client.manager = self.request.user.staff
+        new_client.save()
+        return HttpResponseRedirect('/api/crm/clients')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания клиента. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/clients')
 
 
@@ -205,10 +197,11 @@ class CreateContractView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.save()
+        return HttpResponseRedirect('/api/crm/contracts')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/contracts')
 
 
@@ -259,14 +252,15 @@ class CreateOrderView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.instance.price = form.instance.course.price
-            order = form.save()
-            payment = PaymentManager(order)
-            payment.get_paid_uuid()
-            payment.send_payment_url()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.instance.price = form.instance.course.price
+        order = form.save()
+        payment = PaymentManager(order)
+        payment.get_paid_uuid()
+        payment.send_payment_url()
+        return HttpResponseRedirect('/api/crm/orders')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/orders')
 
 
@@ -422,14 +416,15 @@ class CreateRequestView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_request = form.save()
-            new_request.manager = self.request.user.staff
-            new_request.save()
-            new_request.client.last_status = new_request.result
-            new_request.client.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        new_request = form.save()
+        new_request.manager = self.request.user.staff
+        new_request.save()
+        new_request.client.last_status = new_request.result
+        new_request.client.save()
+        return HttpResponseRedirect(self.success_urls[form.instance.type_request])
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect(self.success_urls[form.instance.type_request])
 
 
@@ -447,11 +442,10 @@ class UpdateRequestView(UpdateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-            form.instance.manager = self.request.user.staff
-            form.instance.save()
-            return HttpResponseRedirect(f'/api/crm/requests/{self.get_object().pk}')
+        form.save()
+        form.instance.manager = self.request.user.staff
+        form.instance.save()
+        return HttpResponseRedirect(f'/api/crm/requests/{self.get_object().pk}')
 
 
 class VacancyListView(ListView):
@@ -501,10 +495,11 @@ class CreateVacancyView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.save()
+        return HttpResponseRedirect('/api/crm/vacancy')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/vacancy')
 
 
@@ -574,12 +569,13 @@ class CreateInterviewView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-            form.instance.manager = self.request.user.staff
-            form.instance.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.save()
+        form.instance.manager = self.request.user.staff
+        form.instance.save()
+        return HttpResponseRedirect('/api/crm/interview')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/interview')
 
 
@@ -646,11 +642,12 @@ class CreateCourseView(CreateView, CourseMixin):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            course = form.save()
-            self.update_teachers(course, self.request)
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        course = form.save()
+        self.update_teachers(course, self.request)
+        return HttpResponseRedirect('/api/crm/courses')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/courses')
 
 
@@ -672,10 +669,9 @@ class UpdateCourseView(UpdateView, CourseMixin):
         return f'/api/crm/courses/{self.get_object().pk}'
 
     def form_valid(self, form):
-        if form.is_valid():
-            course = form.save()
-            self.update_teachers(course, self.request)
-            return HttpResponseRedirect(f'/api/crm/courses/{self.get_object().pk}')
+        course = form.save()
+        self.update_teachers(course, self.request)
+        return HttpResponseRedirect(f'/api/crm/courses/{self.get_object().pk}')
 
 
 class CreateLessonView(CreateView):
@@ -690,9 +686,12 @@ class CreateLessonView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect('/api/crm/courses')
+        new_lesson = form.save()
+        materials = self.request.FILES.get('file', None)
+        if materials:
+            new_lesson.materials = materials
+            new_lesson.save()
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
 
 
 class UpdateLessonView(UpdateView):
@@ -708,8 +707,16 @@ class UpdateLessonView(UpdateView):
         context['title'] = 'Редактирование урока'
         return context
 
-    def get_success_url(self):
-        return f'/api/crm/courses/lessons/{self.get_object().pk}'
+    def form_valid(self, form):
+        new_lesson = form.save()
+        materials = self.request.FILES.get('file', None)
+        if materials:
+            new_lesson.materials = materials
+            new_lesson.save()
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
+
+    # def get_success_url(self):
+    #     return f'/api/crm/courses/lessons/{self.get_object().pk}'
 
 
 class TimeTableListView(ListView):
@@ -747,11 +754,13 @@ class TimeTableDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        print(123)
+        finish = request.POST.get('finish')
+        if finish:
+            self.get_object().finish()
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
-class CreateTimeTableView(CreateView):
+class CreateTimeTableView(CreateView, TimeTAbleMixin):
     """ Регистрация новой записи в расписание в CRM
     """
     template_name = 'crm/create_timetable.html'
@@ -760,41 +769,18 @@ class CreateTimeTableView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateTimeTableView, self).get_context_data()
         context['title'] = 'Добавление новой записи в расписание'
+        context['course_list'] = Course.objects.all()
+        context['lessons_list'] = Lesson.objects.all()
+        context['teachers'] = Teacher.objects.all()
+        context['group_list'] = Group.objects.all()
         return context
 
     def form_valid(self, form):
-        days_of_week_list = self.request.POST.getlist('day_of_week')
-
-        if not days_of_week_list and form.is_valid():
-            instance = form.save()
-            instance.material = self.request.FILES.get('file', None)
-            instance.save()
-
-        elif days_of_week_list:
-            date = form.cleaned_data.get('date')
-            lesson = form.cleaned_data.get('lesson')
-            subject = form.cleaned_data.get('subject')
-            group = form.cleaned_data.get('group')
-            end_date = datetime.strptime(self.request.POST.get('end_date'), "%Y-%m-%d")
-
-            while date.timestamp() <= end_date.timestamp():
-                if str(date.strftime("%A")).lower() in days_of_week_list:
-                    new_timetable = Timetable()
-                    new_timetable.date = date
-                    new_timetable.lesson = lesson
-                    new_timetable.subject = subject
-                    new_timetable.group = group
-                    new_timetable.save()
-
-                date += timedelta(days=1)
-
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
-
+        self.processed_timetable(form, self.request)
         return HttpResponseRedirect('/api/crm/timetable')
 
 
-class UpdateTimeTableView(UpdateView):
+class UpdateTimeTableView(UpdateView, TimeTAbleMixin):
     """ Редактирование записи рассписания в CRM
     """
     model = Timetable
@@ -805,17 +791,17 @@ class UpdateTimeTableView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateTimeTableView, self).get_context_data()
         context['title'] = 'Редактирование рассписания'
+        context['course_list'] = Course.objects.all()
+        context['lessons_list'] = Lesson.objects.all()
+        context['teachers'] = Teacher.objects.all()
+        context['group_list'] = Group.objects.all()
         return context
 
     def get_success_url(self):
         return f'/api/crm/timetable/{self.get_object().pk}'
 
     def form_valid(self, form):
-        if form.is_valid():
-            print(self.request.FILES)
-            instance = form.save()
-            instance.material = self.request.FILES.get('file')
-            instance.save()
+        self.processed_timetable(form, self.request, timetable_object=self.get_object())
         return HttpResponseRedirect(f'/api/crm/timetable/{self.get_object().pk}')
 
 
@@ -852,10 +838,11 @@ class CreateAcademicPerformanceView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.save()
+        return HttpResponseRedirect('/api/crm/academic-performance')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/academic-performance')
 
 
@@ -881,7 +868,7 @@ class TeacherListView(ListView):
             return None
 
 
-class TeacherDetailView(DetailView):
+class TeacherDetailView(DetailView, StatisticMixin):
     """ Детальное представление преподавателя в CRM
     """
     model = Teacher
@@ -890,8 +877,18 @@ class TeacherDetailView(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TeacherDetailView, self).get_context_data(**kwargs)
+        academic_performance = AcademicPerformance.objects.filter(teacher=self.get_object())
+        academic_performance_count = academic_performance.count()
+        time_table = Timetable.objects.filter(group__teacher_groups=self.get_object())
+
         context['title'] = self.get_object()
         context['user'] = self.request.user
+        context['time_table_list'] = time_table
+        context['time_table_finished'] = time_table.filter(is_finished=True).count()
+        context['academic_performance_list'] = academic_performance
+        context['academic_performance_count'] = academic_performance_count
+        context['academic_performance_average'] = 'Отсутствует' if not academic_performance_count \
+            else self.get_academic_performance_average(academic_performance, academic_performance_count)
         return context
 
 
@@ -907,28 +904,28 @@ class CreateTeacherView(FormView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            try:
-                new_user = User.objects.create(
-                    username=form.cleaned_data['username'],
-                    first_name=form.cleaned_data['first_name'],
-                    last_name=form.cleaned_data['last_name'],
-                    email=form.cleaned_data['email']
-                )
-                new_user.set_password(form.cleaned_data['password'])
-                new_user.save()
-                Teacher.objects.create(
-                    user=new_user,
-                    middle_name=form.cleaned_data['middle_name'],
-                    phone=form.cleaned_data['phone'],
-                    gender=form.cleaned_data['gender'],
-                    user_group='teacher'
-                )
-            except IntegrityError:
-                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
-                return HttpResponseRedirect('/api/crm/teachers/create')
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
+        try:
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email']
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Teacher.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group='teacher'
+            )
+        except IntegrityError:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+        return HttpResponseRedirect('/api/crm/teachers')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/teachers')
 
 
@@ -949,13 +946,14 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-            teacher = self.get_object()
-            self.update_teacher_groups(teacher, self.request)
-            self.update_teacher_courses(teacher, self.request)
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
+        form.save()
+        teacher = self.get_object()
+        self.update_teacher_groups(teacher, self.request)
+        self.update_teacher_courses(teacher, self.request)
+        return HttpResponseRedirect(f'/api/crm/teachers/{self.get_object().pk}')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
         return HttpResponseRedirect(f'/api/crm/teachers/{self.get_object().pk}')
 
 
@@ -981,7 +979,7 @@ class StudentListView(ListView):
             return None
 
 
-class StudentDetailView(DetailView, StudentMixin):
+class StudentDetailView(DetailView, StudentMixin, StatisticMixin):
     """ Детальное представление студента в CRM
     """
     model = Student
@@ -990,12 +988,26 @@ class StudentDetailView(DetailView, StudentMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
+        time_table = Timetable.objects.filter(group__student_groups=self.get_object())
+        time_table_count = time_table.filter(is_finished=True).count()
+        academic_performance = AcademicPerformance.objects.filter(student=self.get_object())
+        academic_performance_count = academic_performance.count()
+        average_statistic = {}
+        if academic_performance_count:
+            average_statistic = self.get_average_statistic(academic_performance, time_table_count)
+
         context['title'] = self.get_object()
         context['user'] = self.request.user
-        context['academic_performance_list'] = AcademicPerformance.objects.\
-            filter(student=self.get_object()).\
-            order_by('-date')
-        context['time_table_list'] = Timetable.objects.filter(group__student_groups=self.get_object())
+        context['academic_performance_list'] = academic_performance.order_by('-date')
+        context['academic_performance_count'] = academic_performance.filter(grade__gt=0).count()
+        context['academic_performance_average'] = 'Отсутствует' if not academic_performance_count \
+            else self.get_academic_performance_average(academic_performance, academic_performance_count)
+        context['time_table_list'] = time_table
+        context['time_table_finished'] = time_table_count
+        context['late_count'] = average_statistic.get('late_count', 0)
+        context['absent_count'] = average_statistic.get('absent_count', 0)
+        context['percent_late'] = average_statistic.get('percent_late', 0)
+        context['percent_absent'] = average_statistic.get('percent_absent', 0)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -1023,28 +1035,28 @@ class CreateStudentView(FormView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            try:
-                new_user = User.objects.create(
-                    username=form.cleaned_data['username'],
-                    first_name=form.cleaned_data['first_name'],
-                    last_name=form.cleaned_data['last_name'],
-                    email=form.cleaned_data['email']
-                )
-                new_user.set_password(form.cleaned_data['password'])
-                new_user.save()
-                Student.objects.create(
-                    user=new_user,
-                    middle_name=form.cleaned_data['middle_name'],
-                    phone=form.cleaned_data['phone'],
-                    gender=form.cleaned_data['gender'],
-                    user_group='student'
-                )
-            except IntegrityError:
-                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
-                return HttpResponseRedirect('/api/crm/staffs/create')
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
+        try:
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email']
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Student.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group='student'
+            )
+        except IntegrityError:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+        return HttpResponseRedirect('/api/crm/staffs/create')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/students')
 
 
@@ -1064,12 +1076,13 @@ class UpdateStudentView(UpdateView, StudentMixin):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            student = form.save()
-            self.update_student_groups(student, self.request)
-            self.update_student_courses(student, self.request)
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
+        student = form.save()
+        self.update_student_groups(student, self.request)
+        self.update_student_courses(student, self.request)
+        return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
         return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
 
 
@@ -1129,29 +1142,30 @@ class CreateStaffView(FormView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            try:
-                new_user = User.objects.create(
-                    username=form.cleaned_data['username'],
-                    first_name=form.cleaned_data['first_name'],
-                    last_name=form.cleaned_data['last_name'],
-                    email=form.cleaned_data['email'],
-                    is_staff=True
-                )
-                new_user.set_password(form.cleaned_data['password'])
-                new_user.save()
-                Staff.objects.create(
-                    user=new_user,
-                    middle_name=form.cleaned_data['middle_name'],
-                    phone=form.cleaned_data['phone'],
-                    gender=form.cleaned_data['gender'],
-                    user_group=form.cleaned_data['user_group']
-                )
-            except IntegrityError:
-                messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
-                return HttpResponseRedirect('/api/crm/staffs/create')
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
+        try:
+            new_user = User.objects.create(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email'],
+                is_staff=True
+            )
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Staff.objects.create(
+                user=new_user,
+                middle_name=form.cleaned_data['middle_name'],
+                phone=form.cleaned_data['phone'],
+                gender=form.cleaned_data['gender'],
+                user_group=form.cleaned_data['user_group']
+            )
+        except IntegrityError:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
+            return HttpResponseRedirect('/api/crm/staffs/create')
+        return HttpResponseRedirect('/api/crm/staffs')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/staffs')
 
 
@@ -1206,28 +1220,28 @@ class CreateGroupView(CreateView, GroupMixin):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_group = form.save()
-            new_group.manager = self.request.user.staff
-            courses_id_list = self.request.POST.getlist('courses')
-            for course_id in courses_id_list:
-                try:
-                    course = Course.objects.get(pk=int(course_id))
-                    new_group.courses.add(course)
-                except Course.DoesNotExist:
-                    continue
-            new_group.save()
+        new_group = form.save()
+        new_group.manager = self.request.user.staff
+        courses_id_list = self.request.POST.getlist('courses')
+        for course_id in courses_id_list:
+            try:
+                course = Course.objects.get(pk=int(course_id))
+                new_group.courses.add(course)
+            except Course.DoesNotExist:
+                continue
+        new_group.save()
 
-            teachers_id_list = self.request.POST.getlist('teachers', None)
-            students_id_list = self.request.POST.getlist('students', None)
+        teachers_id_list = self.request.POST.getlist('teachers', None)
+        students_id_list = self.request.POST.getlist('students', None)
 
-            if students_id_list:
-                self.update_students_group(new_group, students_id_list)
-            if teachers_id_list:
-                self.update_teachers_group(new_group, teachers_id_list)
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания группы. Введены некорректные данные.')
+        if students_id_list:
+            self.update_students_group(new_group, students_id_list)
+        if teachers_id_list:
+            self.update_teachers_group(new_group, teachers_id_list)
+        return HttpResponseRedirect('/api/crm/groups')
 
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания группы. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/groups')
 
 
@@ -1247,20 +1261,19 @@ class UpdateGroupView(UpdateView, GroupMixin):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            group = form.save()
-            courses_id_list = self.request.POST.getlist('courses', None)
-            students_id_list = self.request.POST.getlist('students', None)
+        group = form.save()
+        courses_id_list = self.request.POST.getlist('courses', None)
+        students_id_list = self.request.POST.getlist('students', None)
 
-            if students_id_list:
-                self.update_students_group(group, students_id_list)
-            if courses_id_list:
-                self.update_courses_group(group, courses_id_list)
-        else:
-            messages.add_message(
-                self.request, messages.ERROR, 'Ошибка редактирования группы. Введены некорректные данные.'
-            )
+        if students_id_list:
+            self.update_students_group(group, students_id_list)
+        if courses_id_list:
+            self.update_courses_group(group, courses_id_list)
 
+        return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка редактирования группы. Введены некорректные данные.')
         return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().pk}')
 
 
@@ -1310,10 +1323,11 @@ class CreateCostCategoryView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        form.save()
+        return HttpResponseRedirect('/api/crm/cost-categories')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/cost-categories')
 
 
@@ -1379,12 +1393,13 @@ class CreateCostView(CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_cost = form.save()
-            new_cost.user = self.request.user
-            new_cost.save()
-        else:
-            messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
+        new_cost = form.save()
+        new_cost.user = self.request.user
+        new_cost.save()
+        return HttpResponseRedirect('/api/crm/costs')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка создания записи. Введены некорректные данные.')
         return HttpResponseRedirect('/api/crm/costs')
 
 

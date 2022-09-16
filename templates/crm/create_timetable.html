@@ -7,23 +7,16 @@
                 <hr/>
             </div>
             <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Single"><span
-                            class="p-tab-name">Одна запись</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Multy"><span
-                            class="p-tab-name">Период</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
-                    </li>
-                </ul>
+                <li class="nav-item"><a class="nav-link active" id="profile-tab" data-toggle="tab" href="#Multi"><span
+                        class="p-tab-name">Период</span><i
+                        class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Single"><span
+                        class="p-tab-name">Одна запись</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                </li>
+            </ul>
             <div class="tab-content mt-3">
-                <div class="tab-pane fade show active" id="Single">
-                    <form method="POST" action="" enctype="multipart/form-data">
-                        {% include 'crm/inc/timetable_form.html' %}
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
-                    </form>
-                </div>
-                <div class="tab-pane fade" id="Multy">
+                <div class="tab-pane fade show active" id="Multi">
                     <form method="POST" action="">
                         <div class="col-md-12">
                             <div class="form-group mt-12">
@@ -37,47 +30,80 @@
                             <div class="form-group mt-12">
                                 <label>Дни недели занятий</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="monday" id="1" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="monday" id="1"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Понедельник</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="tuesday" id="2" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="tuesday" id="2"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Вторник</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="wednesday" id="3" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="wednesday" id="3"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Среда</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="thursday" id="4" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="thursday" id="4"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Четверг</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="friday" id="5" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="friday" id="5"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Пятница</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="saturday" id="6" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="saturday" id="6"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Суббота</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="sunday" id="7" name="day_of_week">
+                                    <input class="form-check-input" type="checkbox" value="sunday" id="7"
+                                           name="day_of_week">
                                     <label class="form-check-label" for="defaultCheck1">Воскресенье</label>
                                 </div>
                             </div>
                             <div class="form-group mt-4">
-                                <label>Урок</label>
-                                {{ form.lesson }}
-                            </div>
-                            <div class="form-group mt-4">
-                                <label>Предмет</label>
-                                {{ form.subject }}
-                            </div>
-                            <div class="form-group mt-4">
                                 <label>Группа</label>
-                                {{ form.group }}
+                                <select class="form-control" id="groups" name="group">
+                                    <option selected>Выберите группу</option>
+                                    {% for group in group_list %}
+                                        <option value="{{ group.id }}">{{ group }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Курс</label>
+                                <select class="form-control" id="courses">
+                                    <option selected>Выберите курс</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Урок</label>
+                                <select class="form-control" id="lessons" name="lesson">
+                                    <option selected>Выберите урок</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Преподаватель</label>
+                                <select class="form-control" id="teachers" name="teacher">
+                                    <option selected>Выберите преподавателя</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label>Ссылка на материалы</label>
+                                {{ form.material_link }}
                             </div>
                         </div>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="Single">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% include 'crm/inc/timetable_form.html' %}
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Сохранить</button>
                     </form>
@@ -85,4 +111,79 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            let courseId = null;
+            let groupId = null;
+            $('#groups').change(function () {
+                groupId = $('#groups :selected').val();
+                $("#courses").empty();
+                {% for course in course_list %}
+                    {% for group in course.group_courses.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#courses').append('<option value="{{ course.id }}">{{ course }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+                $("#teachers").empty();
+                {% for teacher in teachers %}
+                    {% for group in teacher.group_list.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#teachers').append('<option value="{{ teacher.id }}">{{ teacher }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+            });
+
+            $('#courses').change(function () {
+                courseId = $('#courses :selected').val();
+                $("#lessons").empty();
+                {% for lesson in lessons_list %}
+                    if ({{ lesson.course.id }} == courseId) {
+                        $('#lessons').append('<option value="{{ lesson.id }}">{{ lesson }}</option>');
+                    }
+                {% endfor %}
+            })
+        });
+    </script>
+
+    <script>
+        $(function () {
+            let courseId = null;
+            let groupId = null;
+            $('#groupsSingle').change(function () {
+                groupId = $('#groupsSingle :selected').val();
+                $("#coursesSingle").empty();
+                {% for course in course_list %}
+                    {% for group in course.group_courses.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#coursesSingle').append('<option value="{{ course.id }}">{{ course }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+                $("#teachersSingle").empty();
+                {% for teacher in teachers %}
+                    {% for group in teacher.group_list.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#teachersSingle').append('<option value="{{ teacher.id }}">{{ teacher }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+            });
+
+            $('#coursesSingle').change(function () {
+                courseId = $('#coursesSingle :selected').val();
+                $("#lessonsSingle").empty();
+                {% for lesson in lessons_list %}
+                    if ({{ lesson.course.id }} == courseId) {
+                    $('#lessonsSingle').append('<option value="{{ lesson.id }}">{{ lesson }}</option>');
+                }
+                {% endfor %}
+            })
+        });
+    </script>
+
 {% endblock %}

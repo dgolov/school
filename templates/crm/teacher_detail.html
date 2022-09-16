@@ -118,20 +118,86 @@
                     </div>
                 </div>
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#About"><span
-                            class="p-tab-name">О себе</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#Statistic">
+                            <span class="p-tab-name">Статистика</span>
+                            <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses"><span
-                            class="p-tab-name">Курсы</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Courses">
+                            <span class="p-tab-name">Курсы</span><i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Groups"><span
-                            class="p-tab-name">Группы</span><i
-                            class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Groups">
+                            <span class="p-tab-name">Группы</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable">
+                            <span class="p-tab-name">Расписание</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#AcademicPerformance">
+                            <span class="p-tab-name">Оценки</span>
+                            <i class="bx bxs-user-rectangle font-24 d-sm-none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#About">
+                            <span class="p-tab-name">О себе</span>
+                            <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                        </a>
                     </li>
                 </ul>
+                {% include 'crm/inc/timetable_callendar.html' %}
                 <div class="tab-content mt-3">
-                    <div class="tab-pane fade show active" id="About">
+                    <div class="tab-pane fade show active" id="Statistic">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Статистика:</h4>
+                                </div>
+                                <table class="table table-sm table-borderless mt-md-0 mt-3">
+                                    <tbody>
+                                    <tr>
+                                        <th>Количество проведенных уроков:</th>
+                                        <td>{{ time_table_finished }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Всего уроков (запланировано):</th>
+                                        <td>{{ time_table_list.count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество курсов:</th>
+                                        <td>{{ teacher.courses.count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество студентов:</th>
+                                        <td>{{ teacher.get_student_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество поставленных оценок:</th>
+                                        <td>{{ academic_performance_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Средний бал студентов:</th>
+                                        <td>{{ academic_performance_average }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Количество учебных групп:</th>
+                                        <td>{{ teacher.group_list.count }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="About">
                         <div class="card shadow-none border mb-0 radius-15">
                             <div class="card-body">
                                 <div class="d-sm-flex align-items-center mb-3">
@@ -152,7 +218,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Название</th>
-                                        <th scope="col">Цена</th>
+                                        <th scope="col">Категория</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -160,7 +226,7 @@
                                         <tr>
                                             <th scope="row">{{ course.id }}</th>
                                             <td><a href="/api/crm/courses/{{ course.id }}">{{ course }}</a></td>
-                                            <td>{{ course.price }}</td>
+                                            <td>{{ course.category }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -186,12 +252,62 @@
                                     {% for group in teacher.group_list.all %}
                                         <tr>
                                             <th scope="row">{{ group.id }}</th>
-                                            <td><a href="/api/crm/groups/{{ course.id }}">{{ group.name }}</a></td>
+                                            <td><a href="/api/crm/groups/{{ group.id }}">{{ group.name }}</a></td>
                                             <td>{{ group.manager }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="AcademicPerformance">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Успеваемость:</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Урок</th>
+                                        <th scope="col">Тип оценки</th>
+                                        <th scope="col">Оценка</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Студент</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for academic_performance in academic_performance_list %}
+                                        <tr>
+                                            <td>
+                                                <a href="/api/crm/courses/lessons/{{ academic_performance.lesson.pk }}">
+                                                    {{ academic_performance.lesson }}
+                                                </a>
+                                            </td>
+                                            <td>{{ academic_performance.type_grade }}</td>
+                                            <td>{{ academic_performance.grade }}</td>
+                                            <td>{{ academic_performance.date }}</td>
+                                            <td>
+                                                <a href="/api/crm/students/{{ academic_performance.student.pk }}">
+                                                    {{ academic_performance.student }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade active" id="TimeTable">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="row section-top-border">
+                                    <div class="col-md-12">
+                                        <div id='calendar'></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

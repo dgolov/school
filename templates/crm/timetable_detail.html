@@ -45,16 +45,28 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Предмет:</th>
+                                        <th>Название в расписании:</th>
                                         <td>{{ timetable.subject }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Группа</th>
+                                        <th>Группа:</th>
                                         <td>
                                             <a href="/api/crm/groups/{{ timetable.group.pk }}">
                                                 {{ timetable.group }}
                                             </a>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Преподаватель:</th>
+                                        <td>
+                                            <a href="/api/crm/teachers/{{ timetable.teacher.id }}">
+                                                {{ timetable.teacher }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Завершен:</th>
+                                        <td>{{ timetable.is_finished }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -77,8 +89,34 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                            <tr>
+                                <th>Ссылка на материалы</th>
+                                <td>
+                                    {% if timetable.material_link %}
+                                        <a href="{{ timetable.material_link }}">{{ timetable.material_link }}</a>
+                                    {% else %}
+                                        Отсутствует
+                                    {% endif %}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% if timetable.is_finished %}
+                                <button type="submit" name="finish" value="false" class="btn btn-primary w-100">
+                                    Возобновить урок
+                                </button>
+                            {% else %}
+                                <button type="submit" name="finish" value="true" class="btn btn-primary w-100">
+                                    Завершить урок
+                                </button>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
             </div>

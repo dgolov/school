@@ -13,4 +13,40 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            let courseId = null;
+            let groupId = null;
+            $('#groupsSingle').change(function () {
+                groupId = $('#groupsSingle :selected').val();
+                $("#coursesSingle").empty();
+                {% for course in course_list %}
+                    {% for group in course.group_courses.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#coursesSingle').append('<option value="{{ course.id }}">{{ course }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+                $("#teachersSingle").empty();
+                {% for teacher in teachers %}
+                    {% for group in teacher.group_list.all %}
+                        if ({{ group.id }} == groupId) {
+                            $('#teachersSingle').append('<option value="{{ teacher.id }}">{{ teacher }}</option>');
+                        }
+                    {% endfor %}
+                {% endfor %}
+            });
+
+            $('#coursesSingle').change(function () {
+                courseId = $('#coursesSingle :selected').val();
+                $("#lessonsSingle").empty();
+                {% for lesson in lessons_list %}
+                    if ({{ lesson.course.id }} == courseId) {
+                    $('#lessonsSingle').append('<option value="{{ lesson.id }}">{{ lesson }}</option>');
+                }
+                {% endfor %}
+            })
+        });
+    </script>
 {% endblock %}

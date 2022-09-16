@@ -482,10 +482,16 @@ class LessonForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    material_link = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы урока...'}
+        )
+    )
 
     class Meta:
         model = Lesson
-        fields = ('course', 'theme', 'lesson_number', 'video_slug', 'description')
+        fields = ('course', 'theme', 'lesson_number', 'video_slug', 'description', 'material_link')
 
 
 class TimeTableForm(forms.ModelForm):
@@ -496,29 +502,16 @@ class TimeTableForm(forms.ModelForm):
             attrs={'class': 'form-control', 'type': "datetime-local"}
         )
     )
-    lesson = forms.ModelChoiceField(
+    material_link = forms.CharField(
         required=False,
-        queryset=Lesson.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control single-select select2-hidden-accessible'}
-        )
-    )
-    subject = forms.CharField(
-        label='Предмет',
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'Введите название предмета'}
-        )
-    )
-    group = forms.ModelChoiceField(
-        queryset=Group.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control', 'placeholder': 'Вставьте ссылку на материалы...'}
         )
     )
 
     class Meta:
         model = Timetable
-        fields = ('date', 'lesson', 'subject', 'group')
+        fields = ('date', 'material_link')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
@@ -542,21 +535,25 @@ class CreateAcademicPerformanceForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
-    type_grade = forms.BooleanField(
+    type_grade = forms.CharField(
         widget=forms.Select(
             choices=AcademicPerformance.TYPE_CHOICES,
             attrs={'class': 'form-control'}
         )
     )
     grade = forms.IntegerField(
+        required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
         )
     )
 
+    late = forms.BooleanField(required=False)
+    absent = forms.BooleanField(required=False)
+
     class Meta:
         model = AcademicPerformance
-        fields = ('student', 'teacher', 'lesson', 'type_grade', 'grade')
+        fields = ('student', 'teacher', 'lesson', 'type_grade', 'grade', 'late', 'absent')
 
 
 class CreateTeacherForm(forms.Form):
