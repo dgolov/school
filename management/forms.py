@@ -502,12 +502,6 @@ class TimeTableForm(forms.ModelForm):
             attrs={'class': 'form-control', 'type': "datetime-local"}
         )
     )
-    group = forms.ModelChoiceField(
-        queryset=Group.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}
-        )
-    )
     material_link = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -517,7 +511,7 @@ class TimeTableForm(forms.ModelForm):
 
     class Meta:
         model = Timetable
-        fields = ('date', 'group', 'material_link')
+        fields = ('date', 'material_link')
 
 
 class CreateAcademicPerformanceForm(forms.ModelForm):
@@ -541,21 +535,25 @@ class CreateAcademicPerformanceForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
-    type_grade = forms.BooleanField(
+    type_grade = forms.CharField(
         widget=forms.Select(
             choices=AcademicPerformance.TYPE_CHOICES,
             attrs={'class': 'form-control'}
         )
     )
     grade = forms.IntegerField(
+        required=False,
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
         )
     )
 
+    late = forms.BooleanField(required=False)
+    absent = forms.BooleanField(required=False)
+
     class Meta:
         model = AcademicPerformance
-        fields = ('student', 'teacher', 'lesson', 'type_grade', 'grade')
+        fields = ('student', 'teacher', 'lesson', 'type_grade', 'grade', 'late', 'absent')
 
 
 class CreateTeacherForm(forms.Form):

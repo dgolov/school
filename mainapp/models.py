@@ -188,6 +188,13 @@ class Teacher(Profile):
         related_name='teacher_courses'
     )
 
+    def get_student_count(self):
+        student_count = set()
+        for group in self.group_list.all():
+            for student in group.student_groups.all():
+                student_count.add(student)
+        return len(student_count)
+
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = '01. Пользователи - Преподаватели'
@@ -465,9 +472,14 @@ class Timetable(models.Model):
     is_finished = models.BooleanField(default=False, verbose_name='Завершен')
     material = models.FileField(blank=True, null=True, upload_to=get_file_path, verbose_name='Материал')
     material_link = models.CharField(max_length=150, verbose_name='Ссылка на материалы', blank=True, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, verbose_name='Преподаватель', blank=True, null=True)
 
     def __str__(self):
         return f'{self.lesson} - {self.date}'
+
+    def finish(self):
+        self.is_finished = not self.is_finished
+        self.save()
 
     class Meta:
         verbose_name = 'Расписание урока'
@@ -503,7 +515,7 @@ class AcademicPerformance(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок')
     date = models.DateField(auto_now_add=True, verbose_name='Дата оценки')
     type_grade = models.CharField(max_length=50, verbose_name='Тип оценки', choices=TYPE_CHOICES)
-    grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка')
+    grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка', blank=True, null=True)
     late = models.BooleanField(default=False, verbose_name='Опоздание')
     absent = models.BooleanField(default=False, verbose_name='Отсутствие')
 
