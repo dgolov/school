@@ -39,7 +39,11 @@
                                     {% if request.course %}
                                         <tr>
                                             <th>Курс:</th>
-                                            <td><a href="#">{{ request.course }}</a></td>
+                                            <td>
+                                                <a href="/api/crm/courses/{{ request.course.id }}">
+                                                    {{ request.course }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% elif request.event %}
                                         <tr>
