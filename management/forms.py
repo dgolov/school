@@ -224,6 +224,7 @@ class UpdateRequestForm(forms.ModelForm):
     """ Форма редактирования заявки в CRM
     """
     client = forms.ModelChoiceField(
+        required=False,
         queryset=Client.objects.all(),
         widget=forms.Select(
             attrs={'class': 'form-control'}

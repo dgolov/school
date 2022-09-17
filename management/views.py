@@ -436,6 +436,11 @@ class UpdateRequestView(UpdateView):
     form_class = forms.UpdateRequestForm
     context_object_name = 'request'
 
+    def get_initial(self):
+        base_initial = super().get_initial()
+        base_initial['client'] = self.get_object().client.pk
+        return base_initial
+
     def get_context_data(self, **kwargs):
         context = super(UpdateRequestView, self).get_context_data()
         context['title'] = 'Редактирование заявки'
