@@ -209,7 +209,12 @@ class CreateContractView(CreateView):
         return context
 
     def form_valid(self, form):
-        form.save()
+        instance = form.save()
+        try:
+            instance.manager = self.request.user.staff
+            instance.save()
+        except Exception as e:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка. Не удалось привязать менеджера к договору')
         return HttpResponseRedirect('/api/crm/contracts')
 
     def form_invalid(self, form):
