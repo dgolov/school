@@ -29,16 +29,28 @@ class MainView(View):
         return render(request, 'crm/index.html', context)
 
     def get_context_data(self):
-        return {
+        context = {
             'user': self.request.user,
             'title': "Академия будущего",
-            'orders_count': Order.objects.filter(payed=True).count(),
+            'orders_count': 0,
             'students_count': Student.objects.all().count(),
-            'requests_count': Request.objects.all().count(),
-            'contracts_count': Contract.objects.all().count(),
+            'requests_count': 0,
+            'contracts_count': 0,
             'orders_groups': Order.objects.filter(payed=True, date_and_time__year=datetime.now().year).annotate(
                 date=TruncMonth('date_and_time')).values('date').annotate(total_price=Sum('price')),
         }
+
+        if self.request.user.staff.user_group in ('admin', 'sale_manager'):
+            if self.request.user.staff.user_group == 'admin':
+                requests = Request.objects.all()
+                contracts = Contract.objects.all()
+            else:
+                requests = Request.objects.filter(manager=self.request.user.staff)
+                contracts = Contract.objects.filter(manager=self.request.user.staff)
+            context['orders_count'] = Order.objects.filter(payed=True).count()
+            context['requests_count'] = requests.count()
+            context['contracts_count'] = contracts.count()
+        return context
 
 
 class ProfileLoginView(View):
