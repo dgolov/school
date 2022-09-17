@@ -214,10 +214,15 @@ class CreateRequestForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите комментарий менеджера...'}
         )
     )
+    loyalty = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'type': 'range', 'class': 'form-control'}
+        )
+    )
 
     class Meta:
         model = Request
-        fields = ('client', 'type_request', 'status', 'course', 'purpose', 'result', 'remind', 'comment')
+        fields = ('client', 'type_request', 'status', 'course', 'purpose', 'loyalty', 'result', 'remind', 'comment')
 
 
 class UpdateRequestForm(forms.ModelForm):
