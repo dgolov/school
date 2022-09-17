@@ -92,13 +92,21 @@
                                     {% if request.request_phone %}
                                         <tr>
                                             <th>Номер телефона из заявки</th>
-                                            <td>{{ request.request_phone }}</td>
+                                            <td>
+                                                <a href="tel: {{ request.request_phone }}">
+                                                    {{ request.request_phone }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endif %}
                                     {% if request.request_email %}
                                         <tr>
                                             <th>Email из заявки</th>
-                                            <td>{{ request.request_email }}</td>
+                                            <td>
+                                                <a href="mailto: {{ request.request_email }}">
+                                                    {{ request.request_email }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endif %}
                                     </tbody>
@@ -112,15 +120,33 @@
                             <tbody>
                             <tr>
                                 <th>ФИО:</th>
-                                <td><a href="/api/crm/clients/{{ request.client.id }}">{{ request.client }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="/api/crm/clients/{{ request.client.id }}">{{ request.client }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Номер телефона:</th>
-                                <td><a href="tel: {{ request.client.phone }}">{{ request.client.phone }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="tel: {{ request.client.phone }}">{{ request.client.phone }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>email:</th>
-                                <td><a href="mailto: {{ client.email }}">{{ request.client.email }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="mailto: {{ client.email }}">{{ request.client.email }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Лояльность клиента:</th>
