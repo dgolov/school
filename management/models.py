@@ -51,6 +51,7 @@ class Client(models.Model):
 class Contract(models.Model):
     """ Модель договор
     """
+    manager = models.ForeignKey('Staff', on_delete=models.SET_NULL, verbose_name='Менеджер', blank=True, null=True)
     number = models.PositiveIntegerField(verbose_name='Номер договора')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент', related_name='client_contract')
     student = models.ForeignKey(
