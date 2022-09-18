@@ -44,7 +44,7 @@
                             <td><a href="/api/crm/staffs/{{ staff.pk }}">{{ staff }}</a></td>
                             <td>{{ staff.phone }}</td>
                             <td>{{ staff.user.email }}</td>
-                            <td>{{ staff.user_group }}</td>
+                            <td>{{ staff.get_user_group_display }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
