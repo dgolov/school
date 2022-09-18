@@ -16,12 +16,14 @@ from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
     StatisticMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class MainView(View):
     """ Представление главной страницы CRM
     """
+    filters = None
+
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return HttpResponseRedirect('/api/crm/auth')
@@ -29,16 +31,37 @@ class MainView(View):
         return render(request, 'crm/index.html', context)
 
     def get_context_data(self):
-        return {
+        context = {
             'user': self.request.user,
             'title': "Академия будущего",
-            'orders_count': Order.objects.filter(payed=True).count(),
+            'orders_count': 0,
             'students_count': Student.objects.all().count(),
-            'requests_count': Request.objects.all().count(),
-            'contracts_count': Contract.objects.all().count(),
+            'requests_count': 0,
+            'contracts_count': 0,
+            'requests_todo': None,
+            'requests_new': None,
             'orders_groups': Order.objects.filter(payed=True, date_and_time__year=datetime.now().year).annotate(
                 date=TruncMonth('date_and_time')).values('date').annotate(total_price=Sum('price')),
         }
+
+        if self.request.user.staff.user_group in ('admin', 'sale_manager'):
+            if self.request.user.staff.user_group == 'admin':
+                requests = Request.objects.filter(is_deleted=False)
+                contracts = Contract.objects.all()
+            else:
+                requests = Request.objects.filter(manager=self.request.user.staff).filter(is_deleted=False)
+                contracts = Contract.objects.filter(manager=self.request.user.staff)
+            context['orders_count'] = Order.objects.filter(payed=True).count()
+            context['requests_count'] = requests.count()
+            if not self.filters:
+                context['requests_todo'] = requests.filter(remind__gte=datetime.now().date()).\
+                    filter(remind__lte=datetime.now().date() + timedelta(days=3))[0:10]
+            else:
+                context['requests_todo'] = requests.filter(remind__gte=datetime.now().date()). \
+                    filter(remind__lte=datetime.now().date() + timedelta(days=3))
+            context['requests_new'] = requests.filter(status='new')[0:10]
+            context['contracts_count'] = contracts.count()
+        return context
 
 
 class ProfileLoginView(View):
@@ -197,7 +220,12 @@ class CreateContractView(CreateView):
         return context
 
     def form_valid(self, form):
-        form.save()
+        instance = form.save()
+        try:
+            instance.manager = self.request.user.staff
+            instance.save()
+        except Exception as e:
+            messages.add_message(self.request, messages.ERROR, 'Ошибка. Не удалось привязать менеджера к договору')
         return HttpResponseRedirect('/api/crm/contracts')
 
     def form_invalid(self, form):
@@ -435,6 +463,11 @@ class UpdateRequestView(UpdateView):
     template_name = 'crm/update_request.html'
     form_class = forms.UpdateRequestForm
     context_object_name = 'request'
+
+    def get_initial(self):
+        base_initial = super().get_initial()
+        base_initial['client'] = self.get_object().client.pk
+        return base_initial
 
     def get_context_data(self, **kwargs):
         context = super(UpdateRequestView, self).get_context_data()

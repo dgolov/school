@@ -36,46 +36,79 @@
                                         <th>Дата:</th>
                                         <td>{{ request.date }}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Курс:</th>
-                                        <td><a href="#">{{ request.course }}</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Мероприятие:</th>
-                                        <td><a href="#">{{ request.event }}</a></td>
-                                    </tr>
+                                    {% if request.course %}
+                                        <tr>
+                                            <th>Курс:</th>
+                                            <td>
+                                                <a href="/api/crm/courses/{{ request.course.id }}">
+                                                    {{ request.course }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% elif request.event %}
+                                        <tr>
+                                            <th>Мероприятие:</th>
+                                            <td><a href="#">{{ request.event }}</a></td>
+                                        </tr>
+                                    {% endif %}
                                     <tr>
                                         <th>Тип заявки</th>
-                                        <td><a href="#">{{ request.type_request }}</a></td>
+                                        <td>{{ request.get_type_request_display }}</td>
                                     </tr>
                                     <tr>
                                         <th>Статус заявки</th>
-                                        <td><a href="#">{{ request.status }}</a></td>
+                                        <td>{{ request.get_status_display }}</td>
                                     </tr>
                                     <tr>
                                         <th>Цель заявки</th>
-                                        <td><a href="#">{{ request.purpose }}</a></td>
+                                        <td>{{ request.get_purpose_display }}</td>
                                     </tr>
                                     <tr>
                                         <th>Результат заявки</th>
-                                        <td><a href="#">{{ request.result }}</a></td>
+                                        <td>
+                                            {% if request.result %}
+                                                {{ request.get_result_display }}
+                                            {% else %}
+                                                Отсутствует
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Перезвонить / напомнить</th>
-                                        <td><a href="#">{{ request.remind }}</a></td>
+                                        <td>
+                                            {% if request.remind %}
+                                                {{ request.remind }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <th>ФИО</th>
-                                        <td><a href="#">{{ request.request_fio }}</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Номер телефона</th>
-                                        <td><a href="#">{{ request.request_phone }}</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Email</th>
-                                        <td><a href="#">{{ request.request_email }}</a></td>
-                                    </tr>
+                                    {% if request.request_fio %}
+                                        <tr>
+                                            <th>ФИО из заявки</th>
+                                            <td>{{ request.request_fio }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if request.request_phone %}
+                                        <tr>
+                                            <th>Номер телефона из заявки</th>
+                                            <td>
+                                                <a href="tel: {{ request.request_phone }}">
+                                                    {{ request.request_phone }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if request.request_email %}
+                                        <tr>
+                                            <th>Email из заявки</th>
+                                            <td>
+                                                <a href="mailto: {{ request.request_email }}">
+                                                    {{ request.request_email }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>
@@ -87,15 +120,33 @@
                             <tbody>
                             <tr>
                                 <th>ФИО:</th>
-                                <td><a href="/api/crm/clients/{{ request.client.id }}">{{ request.client }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="/api/crm/clients/{{ request.client.id }}">{{ request.client }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Номер телефона:</th>
-                                <td><a href="tel: {{ request.client.phone }}">{{ request.client.phone }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="tel: {{ request.client.phone }}">{{ request.client.phone }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>email:</th>
-                                <td><a href="mailto: {{ client.email }}">{{ request.client.email }}</a></td>
+                                <td>
+                                    {% if request.client %}
+                                        <a href="mailto: {{ client.email }}">{{ request.client.email }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Лояльность клиента:</th>

@@ -34,15 +34,23 @@
                         <th scope="col">Клиент</th>
                         <th scope="col">Курс</th>
                         <th scope="col">Дата</th>
+                        <th scope="col">Менеджер</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for contract in contracts_list %}
                         <tr>
-                            <th scope="row"><a href="/api/crm/contracts/{{ contract.id }}">{{ contract.id }}</a></th>
+                            <th scope="row"><a href="/api/crm/contracts/{{ contract.id }}">{{ contract.number }}</a></th>
                             <td><a href="/api/crm/contracts/{{ contract.id }}">{{ contract.client }}</a></td>
                             <td>{{ contract.course }}</td>
                             <td>{{ contract.date }}</td>
+                            <td>
+                                {% if contract.manager %}
+                                    {{ contract.manager }}
+                                {% else %}
+                                    Отсутствует
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
