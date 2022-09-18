@@ -1,0 +1,144 @@
+<div class="card radius-15 mb-4">
+    <div class="card-body">
+        <h2 class="mb-4">Список дел:</h2>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#New">
+                    <span class="p-tab-name">Новые заявки</span>
+                    <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Remind">
+                    <span class="p-tab-name">Позвонить/напомнить</span>
+                    <i class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+        </ul>
+        <p class="my-4">
+            В списке дел отображаются последние 10 записей, для поиска других записей перейдите в соответствующие
+            разделы заявок, или примените фильтры.
+        </p>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="New">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Новые заявки:</h4>
+                        </div>
+                        {% if requests_new %}
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Клиент</th>
+                                    <th scope="col">Тип заявки</th>
+                                    <th scope="col">Статус</th>
+                                    <th scope="col">Курс/Мероприятие</th>
+                                    <th scope="col">Результат</th>
+                                    <th scope="col">Дата</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for request in requests_new %}
+                                    <tr>
+                                        {% if request.client %}
+                                            <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a>
+                                            </td>
+                                        {% elif request.request_fio %}
+                                            <td>
+                                                <a href="/api/crm/requests/{{ request.pk }}">{{ request.request_fio }}</a>
+                                            </td>
+                                        {% else %}
+                                            <td><a href="/api/crm/requests/{{ request.pk }}">Не указан</a></td>
+                                        {% endif %}
+                                        <td>{{ request.get_type_request_display }}</td>
+                                        <td>{{ request.get_status_display }}</td>
+                                        <td>
+                                            {% if request.course %}
+                                                {{ request.course }}
+                                            {% elif request.event %}
+                                                {{ request.event }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.result %}
+                                                {{ request.get_result_display }}
+                                            {% else %}
+                                                Отсутствует
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ request.date }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="mt-3 ml-3">Новые заявки отсутствуют</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Remind">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Позвонить / напомнить:</h4>
+                        </div>
+                        {% if requests_todo %}
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Клиент</th>
+                                    <th scope="col">Тип заявки</th>
+                                    <th scope="col">Статус</th>
+                                    <th scope="col">Курс/Мероприятие</th>
+                                    <th scope="col">Результат</th>
+                                    <th scope="col">Перезвонить/напомнить</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for request in requests_todo %}
+                                    <tr>
+                                        {% if request.client %}
+                                            <td><a href="/api/crm/requests/{{ request.pk }}">{{ request.client }}</a>
+                                            </td>
+                                        {% elif request.request_fio %}
+                                            <td>
+                                                <a href="/api/crm/requests/{{ request.pk }}">{{ request.request_fio }}</a>
+                                            </td>
+                                        {% else %}
+                                            <td><a href="/api/crm/requests/{{ request.pk }}">Не указан</a></td>
+                                        {% endif %}
+                                        <td>{{ request.get_type_request_display }}</td>
+                                        <td>{{ request.get_status_display }}</td>
+                                        <td>
+                                            {% if request.course %}
+                                                {{ request.course }}
+                                            {% elif request.event %}
+                                                {{ request.event }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.result %}
+                                                {{ request.get_result_display }}
+                                            {% else %}
+                                                Отсутствует
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ request.remind }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="mt-3 ml-3">Дела перезвонить/напомнить на близжайшие дни отсутствуют</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

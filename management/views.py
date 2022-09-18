@@ -16,12 +16,14 @@ from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin
     StatisticMixin
 from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class MainView(View):
     """ Представление главной страницы CRM
     """
+    filters = None
+
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return HttpResponseRedirect('/api/crm/auth')
@@ -36,19 +38,28 @@ class MainView(View):
             'students_count': Student.objects.all().count(),
             'requests_count': 0,
             'contracts_count': 0,
+            'requests_todo': None,
+            'requests_new': None,
             'orders_groups': Order.objects.filter(payed=True, date_and_time__year=datetime.now().year).annotate(
                 date=TruncMonth('date_and_time')).values('date').annotate(total_price=Sum('price')),
         }
 
         if self.request.user.staff.user_group in ('admin', 'sale_manager'):
             if self.request.user.staff.user_group == 'admin':
-                requests = Request.objects.all()
+                requests = Request.objects.filter(is_deleted=False)
                 contracts = Contract.objects.all()
             else:
-                requests = Request.objects.filter(manager=self.request.user.staff)
+                requests = Request.objects.filter(manager=self.request.user.staff).filter(is_deleted=False)
                 contracts = Contract.objects.filter(manager=self.request.user.staff)
             context['orders_count'] = Order.objects.filter(payed=True).count()
             context['requests_count'] = requests.count()
+            if not self.filters:
+                context['requests_todo'] = requests.filter(remind__gte=datetime.now().date()).\
+                    filter(remind__lte=datetime.now().date() + timedelta(days=3))[0:10]
+            else:
+                context['requests_todo'] = requests.filter(remind__gte=datetime.now().date()). \
+                    filter(remind__lte=datetime.now().date() + timedelta(days=3))
+            context['requests_new'] = requests.filter(status='new')[0:10]
             context['contracts_count'] = contracts.count()
         return context
 
