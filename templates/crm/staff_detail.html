@@ -15,11 +15,17 @@
                                     <tbody>
                                     <tr>
                                         <th>Группа:</th>
-                                        <td>{{ staff.user_group }}</td>
+                                        <td>{{ staff.get_user_group_display }}</td>
                                     </tr>
                                     <tr>
                                         <th>Дата рождения:</th>
-                                        <td>{{ staff.date_of_birthday }}</td>
+                                        <td>
+                                            {% if staff.date_of_birthday %}
+                                                {{ staff.date_of_birthday }}
+                                            {% else %}
+                                                Не указано
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -36,11 +42,23 @@
                             </tr>
                             <tr>
                                 <th>Email:</th>
-                                <td><a href="mailto: {{ staff.email }}">{{ staff.email }}</a></td>
+                                <td>
+                                    {% if staff.email %}
+                                        <a href="mailto: {{ staff.email }}">{{ staff.email }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Город:</th>
-                                <td>{{ staff.city }}</td>
+                                <td>
+                                    {% if staff.city %}
+                                        {{ staff.city }}
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             </tbody>
                         </table>

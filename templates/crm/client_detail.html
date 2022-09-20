@@ -31,7 +31,13 @@
                             </tr>
                             <tr>
                                 <th>Последний статус заявок:</th>
-                                <td>{{ client.last_status }}</td>
+                                <td>
+                                    {% if client.last_status %}
+                                        {{ client.get_last_status_display }}
+                                    {% else %}
+                                        Отсутствует
+                                    {% endif %}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -80,7 +86,7 @@
                         <div class="card shadow-none border mb-0 radius-15">
                             <div class="card-body">
                                 <div class="d-sm-flex align-items-center mb-3">
-                                    <h4 class="mb-0">Договоры</h4>
+                                    <h4 class="mb-0">Договора</h4>
                                 </div>
                                 <table class="table mb-0">
                                     <thead>
@@ -96,7 +102,7 @@
                                     {% for contract in contracts %}
                                         <tr>
                                             <th scope="row">
-                                                <a href="/api/crm/contracts/{{ contract.id }}/">{{ contract.id }}</a>
+                                                <a href="/api/crm/contracts/{{ contract.id }}/">{{ contract.number }}</a>
                                             </th>
                                             <td>
                                                 <a href="/api/crm/contracts/{{ contract.id }}/">{{ contract.client }}</a>
@@ -179,12 +185,12 @@
                                             <td>
                                                 <a href="/api/crm/requests/{{ request.id }}/">{{ request.client }}</a>
                                             </td>
-                                            <td>{{ request.type_request }}</td>
-                                            <td>{{ request.status }}</td>
+                                            <td>{{ request.get_type_request_display }}</td>
+                                            <td>{{ request.get_status_display }}</td>
                                             <td>
                                                 <a href="/api/crm/courses/{{ request.course.id }}/">{{ request.course }}</a>
                                             </td>
-                                            <td>{{ request.result }}</td>
+                                            <td>{{ request.get_result_display }}</td>
                                             <td>{{ request.date }}</td>
                                         </tr>
                                     {% endfor %}

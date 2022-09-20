@@ -36,6 +36,8 @@
                         <th scope="col">Оценка</th>
                         <th scope="col">Дата</th>
                         <th scope="col">Преподаватель</th>
+                        <th scope="col">Опоздание</th>
+                        <th scope="col">Припуск</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,12 +51,24 @@
                                 <a href="/api/crm/courses/lessons/{{ academic_performance.lesson.id }}">
                                     {{ academic_performance.lesson }}</a>
                             </td>
-                            <td>{{ academic_performance.type_grade }}</td>
-                            <td>{{ academic_performance.grade }}</td>
+                            <td>{{ academic_performance.get_type_grade_display }}</td>
+                            <td>
+                                {% if academic_performance.grade %}
+                                    {{ academic_performance.grade }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
                             <td>{{ academic_performance.date }}</td>
                             <td>
                                 <a href="/api/crm/teachers/{{ academic_performance.teacher.id }}">
                                     {{ academic_performance.teacher }}</a>
+                            </td>
+                            <td>
+                                {% if academic_performance.late %} + {% else %} - {% endif %}
+                            </td>
+                            <td>
+                                {% if academic_performance.absent %} + {% else %} - {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
