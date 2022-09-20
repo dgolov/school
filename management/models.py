@@ -31,13 +31,18 @@ class Client(models.Model):
     email = models.EmailField(verbose_name='Электронная почта', blank=True, null=True)
     city = models.CharField(max_length=50, verbose_name='Город', blank=True, null=True)
     date = models.DateField(verbose_name='Дата занесения в базу', auto_now_add=True, blank=True, null=True)
-    # contract = models.BooleanField(verbose_name='Заключен договор', default=False)
     last_status = models.CharField(
         max_length=50,
         verbose_name='Последний статус по заявкам',
         blank=True,
         null=True,
         choices=RESULT_CHOICES,
+    )
+    students = models.ManyToManyField(
+        'mainapp.Student',
+        verbose_name='Студенты',
+        blank=True,
+        related_name='client_students'
     )
 
     def __str__(self):
@@ -90,6 +95,7 @@ class Order(models.Model):
     date_and_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время заказа')
     course = models.ForeignKey('mainapp.Course', on_delete=models.CASCADE, verbose_name='Курс')
     price = models.IntegerField(verbose_name='Оплаченная сумма', blank=True, null=True)
+    is_deleted = models.BooleanField(default=False, verbose_name='В корзине')
 
     class Meta:
         verbose_name = 'Заказ'

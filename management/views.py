@@ -1,3 +1,5 @@
+import smtplib
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -284,7 +286,13 @@ class CreateOrderView(CreateView):
         order = form.save()
         payment = PaymentManager(order)
         payment.get_paid_uuid()
-        payment.send_payment_url()
+        try:
+            payment.send_payment_url()
+        except smtplib.SMTPAuthenticationError:
+            messages.add_message(
+                self.request, messages.ERROR,
+                'Не удалось отправить письмо клиенту. Ошибка авторизации на почтовом сервере'
+            )
         return HttpResponseRedirect('/api/crm/orders')
 
     def form_invalid(self, form):

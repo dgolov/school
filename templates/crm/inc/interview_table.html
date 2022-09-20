@@ -19,7 +19,7 @@
                 </td>
                 <td>{{ interview.vacancy }}</td>
                 <td>{{ interview.vacancy.salary }}</td>
-                <td>{{ interview.result }}</td>
+                <td>{{ interview.get_result_display }}</td>
                 <td>{{ interview.date }}</td>
             </tr>
         {% endfor %}

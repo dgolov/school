@@ -26,7 +26,7 @@
                                     </tr>
                                     <tr>
                                         <th>Результат</th>
-                                        <td>{{ interview.result }}</td>
+                                        <td>{{ interview.get_result_display }}</td>
                                     </tr>
                                     <tr>
                                         <th>Дата</th>
@@ -47,7 +47,13 @@
                             </tr>
                             <tr>
                                 <th>Возраст:</th>
-                                <td>{{ interview.age }}</td>
+                                <td>
+                                    {% if interview.age %}
+                                        {{ interview.age }}
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Номер телефона:</th>
@@ -55,15 +61,33 @@
                             </tr>
                             <tr>
                                 <th>email:</th>
-                                <td><a href="mailto: {{ interview.email }}">{{ interview.email }}</a></td>
+                                <td>
+                                    {% if interview.email %}
+                                        <a href="mailto: {{ interview.email }}">{{ interview.email }}</a>
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Место учебы:</th>
-                                <td>{{ interview.place_of_study }}</td>
+                                <td>
+                                    {% if interview.place_of_study %}
+                                        {{ interview.place_of_study }}
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Место работы:</th>
-                                <td>{{ interview.place_of_work }}</td>
+                                <td>
+                                    {% if interview.place_of_work %}
+                                        {{ interview.place_of_work }}
+                                    {% else %}
+                                        Не указано
+                                    {% endif %}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
