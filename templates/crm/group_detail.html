@@ -70,7 +70,40 @@
                         </div>
                         <div class="row">
                             <div class="table-responsive">
-                                {% include 'crm/inc/student_table.html' %}
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ФИО</th>
+                                        <th scope="col">Телефон</th>
+                                        <th scope="col">Город</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for student in student_list %}
+                                        <tr>
+                                            <td><a href="/api/crm/students/{{ student.id }}">{{ student }}</a></td>
+                                            <td><a href="tel: {{ student.phone }}">{{ student.phone }}</a></td>
+                                            <td>
+                                                {% if student.city %}
+                                                    {{ student.city }}
+                                                {% else %}
+                                                    Не указано
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-danger" type="submit" name="delete-student"
+                                                            value="{{ student.id }}">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -127,6 +160,7 @@
                                         <th scope="col">id</th>
                                         <th scope="col">Название</th>
                                         <th scope="col">Категория</th>
+                                        <th scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -135,6 +169,15 @@
                                             <th scope="row">{{ course.id }}</th>
                                             <td><a href="/api/crm/courses/{{ course.id }}">{{ course.name }}</a></td>
                                             <td>{{ course.category }}</td>
+                                            <td>
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-danger" type="submit" name="delete-course"
+                                                            value="{{ course.id }}">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

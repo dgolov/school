@@ -38,6 +38,36 @@ class GroupMixin:
                 continue
 
     @staticmethod
+    def delete_student(request, group, student_id) -> None:
+        """ Удаление группы из списка групп студена
+        :param request: объект запроса
+        :param group: объект студента
+        :param student_id: id удаляемой группы
+        """
+        try:
+            student = Student.objects.get(pk=student_id)
+        except Student.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления студента.')
+            return
+        student.group_list.remove(group)
+        messages.add_message(request, messages.SUCCESS, f'Студент {student} успешно удален из группы.')
+
+    @staticmethod
+    def delete_course(request, group, course_id) -> None:
+        """ Удаление курса из списка курсов студента
+        :param request: объект запроса
+        :param group: объект группы
+        :param course_id: id удаляемого курса
+        """
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления курса.')
+            return
+        group.courses.remove(course)
+        messages.add_message(request, messages.SUCCESS, f'Курс {course} успешно удален.')
+
+    @staticmethod
     def update_courses_group(new_group, courses_id_list) -> None:
         """ Добавляет список курсов в группу
         :param new_group: Созданная группа
@@ -83,11 +113,12 @@ class FilterMixin:
             )
         if request.GET.getlist("status") and queryset.model == Request:
             queryset = queryset.filter(status__in=request.GET.getlist("status"))
+        if request.GET.get("result"):
+            queryset = queryset.filter(result=request.GET.get("result"))
         if request.GET.getlist("last_status") and queryset.model == Client:
             queryset = queryset.filter(last_status__in=request.GET.getlist("last_status"))
         if request.GET.get("date_from") or request.GET.get("date_to"):
             date_range = self.check_date(request)
-            print(date_range)
             if date_range:
                 queryset = queryset.filter(date__range=date_range)
         return queryset
