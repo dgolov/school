@@ -1229,7 +1229,7 @@ class GroupListView(ListView):
             return Group.objects.all() if self.request.user.is_staff else None
 
 
-class GroupDetailView(DetailView):
+class GroupDetailView(DetailView, GroupMixin):
     """ Детальное представление учебной группы  в CRM
     """
     model = Group
@@ -1244,6 +1244,15 @@ class GroupDetailView(DetailView):
         context['time_table_list'] = Timetable.objects.filter(group=self.get_object())
         context['academic_performance_list'] = AcademicPerformance.objects.filter(student__group_list=self.get_object())
         return context
+
+    def post(self, request, *args, **kwargs):
+        """ Удаление студентов в детальном представлении группы """
+        student_id = request.POST.get('delete-student', None)
+
+        if student_id:
+            self.delete_student(request, self.get_object(), student_id)
+
+        return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().id}')
 
 
 class CreateGroupView(CreateView, GroupMixin):
