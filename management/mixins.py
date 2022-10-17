@@ -113,11 +113,12 @@ class FilterMixin:
             )
         if request.GET.getlist("status") and queryset.model == Request:
             queryset = queryset.filter(status__in=request.GET.getlist("status"))
+        if request.GET.get("result"):
+            queryset = queryset.filter(result=request.GET.get("result"))
         if request.GET.getlist("last_status") and queryset.model == Client:
             queryset = queryset.filter(last_status__in=request.GET.getlist("last_status"))
         if request.GET.get("date_from") or request.GET.get("date_to"):
             date_range = self.check_date(request)
-            print(date_range)
             if date_range:
                 queryset = queryset.filter(date__range=date_range)
         return queryset

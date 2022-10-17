@@ -23,7 +23,17 @@
                                     <label class="form-check-label mr-3">Новые</label>
                                 </div>
                             {% endif %}
-                            <button class="btn btn-light m-1 px-5" type="submit" style="display: inline;">
+                            <select class="form-control w-25 mt-2" name="result">
+                                <option disabled selected>Результат заявки</option>
+                                <]="contract">Заключен договор</option>
+                                <option value="meeting">Назначена встреча</option>
+                                <option value="waiting_call">Ждет звонка</option>
+                                <option value="will_think">Будет думать</option>
+                                <option value="refusal">Отказ</option>
+                                <option value="dissatisfied">Недовольный клиент</option>
+                                <option value="no_connection">Нет ответа</option>
+                            </select>
+                            <button class="btn btn-light m-1 px-5 mt-3" type="submit" style="display: inline;">
                                 Применить фильтры
                             </button>
                         </div>
