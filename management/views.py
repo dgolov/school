@@ -1248,9 +1248,12 @@ class GroupDetailView(DetailView, GroupMixin):
     def post(self, request, *args, **kwargs):
         """ Удаление студентов в детальном представлении группы """
         student_id = request.POST.get('delete-student', None)
+        course_id = request.POST.get('delete-course', None)
 
         if student_id:
             self.delete_student(request, self.get_object(), student_id)
+        elif course_id:
+            self.delete_course(request, self.get_object(), course_id)
 
         return HttpResponseRedirect(f'/api/crm/groups/{self.get_object().id}')
 

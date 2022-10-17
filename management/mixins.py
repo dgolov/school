@@ -53,6 +53,21 @@ class GroupMixin:
         messages.add_message(request, messages.SUCCESS, f'Студент {student} успешно удален из группы.')
 
     @staticmethod
+    def delete_course(request, group, course_id) -> None:
+        """ Удаление курса из списка курсов студента
+        :param request: объект запроса
+        :param group: объект группы
+        :param course_id: id удаляемого курса
+        """
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления курса.')
+            return
+        group.courses.remove(course)
+        messages.add_message(request, messages.SUCCESS, f'Курс {course} успешно удален.')
+
+    @staticmethod
     def update_courses_group(new_group, courses_id_list) -> None:
         """ Добавляет список курсов в группу
         :param new_group: Созданная группа
