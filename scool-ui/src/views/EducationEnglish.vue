@@ -36,7 +36,7 @@
 					<div class="item">
 						<img src="../assets/082022/img/price1.svg">
 						<span class="s1">цена от</span>
-						<p>3 990 ₽</p>
+						<p>2 600 ₽</p>
 						<span class="s2">в месяц</span>
 					</div>
 					<div class="item">
