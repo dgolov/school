@@ -95,6 +95,9 @@ export default {
       axios
           .post(`${this.$store.getters.getServerUrl}/requests/`, data)
           .then((response) => {
+        	  
+        	  console.log(response, `${this.$store.getters.getServerUrl}/requests/`)
+        	  
             this.success = true
             this.request_fio = null
             this.request_phone = null
