@@ -74,9 +74,14 @@ export default new Vuex.Store({
     removeToken(state) {
       localStorage.removeItem("token");
       localStorage.removeItem("refresh_token");
+      
       state.jwt = null;
       state.refreshJwt = null;
       state.isAuthenticated = false;
+      
+      Vue.set(state, "profileInfo", '');
+      Vue.set(state, "authUser", '');
+      
     },
   },
 

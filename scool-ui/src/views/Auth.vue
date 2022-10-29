@@ -169,7 +169,8 @@ export default {
                 authUser: response.data,
                 isAuthenticated: true,
               });
-              this.goTo('Profile', {id: this.$store.state.authUser.id})
+              //this.goTo('Profile', {id: this.$store.state.authUser.id})
+              window.location.href = '/profiles/';
             });
           })
           .catch((error) => {

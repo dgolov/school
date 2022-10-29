@@ -59,6 +59,7 @@ services:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
       - vue_dist:/app/dist
+      - /var/www/html:/var/www/html
     depends_on:
       - web
       - vue

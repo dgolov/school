@@ -69,14 +69,52 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'MyProfile',
-    component: MyProfile,
+    name: 'Home',
+    component: NewHome,
+	meta:{
+    	layout: "082022-layout"
+    }    
   },
+  {
+    path: '/index.php',
+    redirect: { name: 'Home' }
+  },
+  {
+    path: '/index.html',
+    redirect: { name: 'Home' }
+  },
+  {
+    path: '/newhome',
+    name: 'NewHome',
+    component: Home,
+  },
+  {
+    path: '/aboutold',
+    name: 'About',
+    component: About
+  },
+  
+  {
+    path: '/about',
+    name: 'AboutNew',
+    component: AboutNew,
+	meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+  
+  
   {
     path: '/auth',
     name: "Auth",
     component: Auth,
     props: true
+  },
+  {
+    path: '/profile',
+    name: 'MyProfile',
+    component: MyProfile,
   },
   {
     path: '/profiles/:id',
@@ -193,6 +231,206 @@ const routes = [
     path: '/profile/my-courses/:courseId/lesson/:lessonId',
     name: 'Lesson',
     component: Lesson,
+    props: true
+  },
+  {
+    path: '/educationold',
+    name: 'EducationOld',
+    component: Education,
+    props: true
+  },
+
+  {
+    path: '/education',
+    name: 'Education',
+    component: EducationNew,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+
+  {
+    path: '/education/beginner',
+    name: 'EducationBeginner',
+    component: EducationBeginner,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/user',
+    name: 'EducationUser',
+    component: EducationUser,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/prof',
+    name: 'EducationProf',
+    component: EducationProf,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/cheater',
+    name: 'EducationCheater',
+    component: EducationCheater,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/english',
+    name: 'EducationEnglish',
+    component: EducationEnglish,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/chinese',
+    name: 'EducationChinese',
+    component: EducationChinese,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/speedreading',
+    name: 'EducationSpeedreading',
+    component: EducationSpeedreading,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/arithmetic',
+    name: 'EducationArithmetic',
+    component: EducationArithmetic,
+    props: true,
+    meta:{
+    	layout: "082022-layout"
+    }    
+    
+  },
+
+  {
+    path: '/education/:slug',
+    name: 'EducationSingle',
+    component: EducationSingle,
+    props: true
+  },
+  
+  {
+    path: '/chess/:slug',
+    name: 'ChessSingle',
+    component: ChessSingleCourse,
+    props: true
+  },
+  
+  {
+    path: '/eventsold',
+    name: 'Events',
+    component: Events
+  },
+
+  {
+    path: '/events',
+    name: 'EventsNew',
+    component: EventsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+  
+  {
+    path: '/events/:slug',
+    name: 'EventSingle',
+    component: EventSingle,
+    props: true
+  },
+  
+  {
+    path: '/news',
+    name: 'News',
+    component: News
+  },
+  {
+    path: '/news/:slug',
+    name: 'NewsSingle',
+    component: News,
+    props: true
+  },
+  
+  {
+    path: '/contactsold',
+    name: 'Contacts',
+    component: Contacts
+  },
+
+  {
+    path: '/contacts',
+    name: 'ContactsNew',
+    component: ContactsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+  
+  {
+    path: '/career',
+    name: 'Career',
+    component: Career
+  },
+  {
+    path: '/reviewsold',
+    name: 'Reviews',
+    component: Reviews
+  },
+  
+  {
+    path: '/reviews',
+    name: 'ReviewsNew',
+    component: ReviewsNew,
+    meta:{
+    	layout: "082022-layout"
+    }    
+  },
+    
+  {
+    path: '/send-request',
+    name: 'Requests',
+    component: Requests,
+    props: true
+  },
+  {
+    path: '/summer-camp',
+    name: 'Camp',
+    component: Camp,
     props: true
   },
   {

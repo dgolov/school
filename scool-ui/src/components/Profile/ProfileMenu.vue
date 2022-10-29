@@ -87,7 +87,8 @@ export default {
         isAuthenticated: false,
       });
       this.$store.commit("removeToken")
-      this.goTo('Home')
+      //this.goTo('Home')
+      window.location.href = '/';
     },
   }
 }
