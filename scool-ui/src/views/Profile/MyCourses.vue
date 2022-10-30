@@ -1,28 +1,72 @@
 <template>
   <div id="my-courses">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
-              <div v-if="responseData" v-for="course in responseData" class="row course_container">
-                <div class="col-md-8">
-                  <h4 class="left-align" v-if="course.is_active">
-                    <a v-if="course.is_active" href="#" @click="goToCourse(course.slug)">{{ course.name }}</a>
-                  </h4>
-                  <h4 v-else class="left-align no-active">{{ course.name }}</h4>
-                  <h6 class="left-align">{{ course.category.name }}</h6>
+    <div class="cabinet-page">
+      <div class="container">
+        <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
+              <div class="courses">
+                <div class="list-name">
+                  Доступные курсы
                 </div>
-                <div class="col-md-4 left-align pt-4 system-color">
-                  <div>
-                    <a v-if="course.is_active" href="#" @click="goToCourse(course.id)">Описание курса</a>
-                    <p v-else class="no-active">Курс недоступен</p>
+                <div v-if="responseData" class="list flex">
+                  <div v-for="course in responseData" class="item"
+                       style="background: linear-gradient(123.33deg, #B398FF 17.28%, #FFCAE0 73.82%);">
+                    <!--                    <img src="img/course1.png">-->
+                    <div class="flex">
+                      <div class="top-text">
+                        Курс
+                      </div>
+                      <div class="top-text">
+                        {{ course.category.name }}
+                      </div>
+                    </div>
+                    <div class="text">
+                      <span>{{ course.name }}</span>
+                      <p v-if="course.description.length <= 150">{{ course.description }}</p>
+                      <p v-else>{{ course.description.substr(0, 150) }}...</p>
+                    </div>
+                    <div class="time">
+                      {{ course.duration }} месяцев
+                    </div>
+                  </div>
+                </div>
+                <div class="list-name">
+                  Другие курсы
+                </div>
+                <div v-if="allCourses && responseData" class="list flex">
+                  <div v-if="isNotAvailableCourse(course)"
+                       v-for="course in allCourses"
+                       class="item"
+                       style="background: linear-gradient(110.82deg, #C6D5FF 3.65%, #7C9CF1 86.46%);">
+<!--                    <img src="img/course3.png">-->
+                    <div class="flex">
+                      <div class="top-text">
+                        Курс
+                      </div>
+                      <div class="top-text">
+                        {{ course.category.name }}
+                      </div>
+                    </div>
+                    <div class="text">
+                      <span>{{ course.name }}</span>
+                      <p v-if="course.description.length <= 150">{{ course.description }}</p>
+                      <p v-else>{{ course.description.substr(0, 150) }}...</p>
+                    </div>
+                    <div class="time">
+                      {{ course.duration }} месяцев
+                    </div>
                   </div>
                 </div>
               </div>
-              <h6 v-if="responseData.length === 0" class="mt-5">У вас нет доступных курсов</h6>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3"></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
             </div>
           </div>
         </div>
@@ -37,6 +81,7 @@ import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import axios from "axios";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -44,7 +89,18 @@ export default {
 
   data() {
     return {
-      header: 'Доступные курсы',
+      header: 'MyCourses',
+      base: {
+        baseURL: this.$store.state.backendUrl,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.jwt}`,
+          "Content-Type": "application/json",
+        },
+        xhrFields: {
+          withCredentials: true,
+        },
+      },
+      allCourses: {},
     }
   },
 
@@ -55,21 +111,42 @@ export default {
   mixins: [requestsMixin, redirect],
 
   created() {
-    this.courseList = this.createGetRequest('/courses/available/')
+    this.createGetRequest('/courses/available/')
+    this.GetAllCourses()
   },
 
   methods: {
     goToCourse(id) {
       this.$router.push({name: 'CourseSingle', params: {id: id}})
-    }
+    },
+
+    createBackgroundString(color) {
+      return `background: linear-gradient(123.33deg, ${color} 17.28%, #FFCAE0 73.82%))`;
+    },
+
+    async GetAllCourses(url) {
+      const axiosInstance = axios.create(this.base);
+
+      await axiosInstance({
+        url: "/courses/",
+        method: "get",
+        params: {},
+      })
+          .then((response) => this.allCourses = response.data)
+    },
+
+    isNotAvailableCourse(itemCourse) {
+      for (let course of this.responseData) {
+        if (course.id === itemCourse.id) {
+          return false
+        }
+      }
+      return true
+    },
   },
 }
 </script>
 
 
 <style scoped>
-.course_container {
-  border-bottom: 2px solid #f7f7f7;
-  padding-bottom: 10px;
-}
 </style>
