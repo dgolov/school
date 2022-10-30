@@ -18,7 +18,6 @@
           </a>
         </li>
         <li>
-
           <a href="#">
             <span><img src="../../assets/images/cabinet/img/cabinet-menu4.svg"></span> Успеваемость
           </a>
