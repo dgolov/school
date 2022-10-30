@@ -71,6 +71,9 @@ const routes = [
     path: '/',
     name: 'MyProfile',
     component: MyProfile,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/auth',
@@ -82,118 +85,181 @@ const routes = [
     path: '/profiles/:id',
     name: 'Profile',
     component: Profile,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses',
     name: 'MyCourses',
-    component: MyCourses
+    component: MyCourses,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/timetable',
     name: 'TimeTable',
-    component: TimeTable
+    component: TimeTable,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/timetable/:id',
     name: 'TimeTableDetail',
     component: TimeTableDetail,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats',
     name: 'Chats',
-    component: Chats
+    component: Chats,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats/:id',
     name: 'Messages',
     component: Messages,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats/:id/settings',
     name: 'GroupChatSettings',
     component: GroupChatSettings,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: "/profile/chats/create-group",
     name: 'CreateGroupChat',
     component: CreateGroupChat,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/friends',
     name: 'Friends',
     component: Friends,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/followers',
     name: 'Followers',
     component: Followers,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/subscriptions',
     name: 'Subscriptions',
     component: Subscriptions,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/friend-requests',
     name: 'FriendRequests',
     component: FriendRequests,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/photo',
     name: 'Photo',
     component: Photo,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/groups',
     name: 'Groups',
-    component: Groups
+    component: Groups,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/groups/:id',
     name: 'GroupSingle',
     component: GroupSingle,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/search',
     name: 'Search',
-    component: Search
+    component: Search,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/settings',
     name: 'Settings',
-    component: Settings
+    component: Settings,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/games',
     name: 'Games',
-    component: Games
+    component: Games,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/academic-performance',
     name: 'AcademicPerformance',
-    component: AcademicPerformance
+    component: AcademicPerformance,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses/:id',
     name: 'CourseSingle',
     component: CourseSingle,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses/:courseId/lesson/:lessonId',
     name: 'Lesson',
     component: Lesson,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: "*",
