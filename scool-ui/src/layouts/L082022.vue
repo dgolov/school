@@ -71,7 +71,6 @@
 </template>
 
 <style>
-
 .contact-form-owl-block {
   background: no-repeat left center url('../assets/082022/img/contact-form-owl-block-bg.png');
   background-size: 60%;
@@ -274,10 +273,7 @@ form.contact-form .text span {
   .contact-form-owl-block {
     background: none;
   }
-
-
 }
-
 </style>
 
 <script>
@@ -324,7 +320,6 @@ window.setModalFormError = function setModalFormError(formPlace, message) {
     formPlace.find('.form-container').show();
     formPlace.parent().find('.common-modal-close').show();
   }, 1500);
-
 }
 
 window.CourceModalShow = function CourceModalShow(thisapp) {
@@ -389,7 +384,6 @@ window.CourceModalShow = function CourceModalShow(thisapp) {
             isAuthenticated: true,
           });
         });
-
     $('.common-modal-content .data-place').html($('.contact-form-sent').html());
     return false;
   })
@@ -440,14 +434,11 @@ export default {
         window.location.href = "/send-request";
         return false;
       });
-
-
     });
 
     $('.GetCourceModal').click(function () {
       window.CourceModalShow(thisapp);
       return false;
-
     });
 
     $('.common-modal-close').click(function () {
@@ -507,7 +498,6 @@ export default {
       $(this).toggleClass('active');
       $(this).next('.text').slideToggle();
     });
-
   },
 }
 </script>
