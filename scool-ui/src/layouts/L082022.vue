@@ -428,7 +428,7 @@ export default {
 
     $(document).ready(function () {
       $('.tabs').tabs();
-      $("#header").sticky({topSpacing: 0});
+      // $("#header").sticky({topSpacing: 0});
 
       $('.buttonGetCource, .buttonFindeCource').click(function () {
         window.location.href = "/send-request";
