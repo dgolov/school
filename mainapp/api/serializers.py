@@ -257,14 +257,13 @@ class CourseSerializerFromTeacher(serializers.ModelSerializer):
 class GroupRetrieveSerializer(serializers.ModelSerializer):
     """ Детальная сериализация модели групп (со списком одногруппников)
     """
-    teacher = ProfileSerializer()
     manager = EducationalManagerSerializer()
     students = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'teacher', 'manager', 'students'
+            'id', 'name', 'manager', 'students'
         ]
 
     @staticmethod
@@ -456,12 +455,19 @@ class GroupSerializer(serializers.ModelSerializer):
     """ Сериализация модели групп
     """
     courses = CourseSerializer(read_only=False, many=True)
+    students = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'courses'
+            'id', 'name', 'courses', 'students'
         ]
+
+    @staticmethod
+    def get_students(obj):
+        students = obj.student_groups.all()
+        serializer = ProfileSerializer(students, many=True)
+        return serializer.data
 
 
 class TeacherDetailSerializer(ProfileSerializerBase):
