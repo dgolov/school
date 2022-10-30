@@ -4,7 +4,7 @@
       <div class="container">
         <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
         <div class="row">
-          <profile-menu></profile-menu>
+          <profile-menu :header="header"></profile-menu>
           <profile-info v-if="responseData" :profile="responseData"></profile-info>
           <div v-if="responseData" class="col-xl-2 col-lg-3"></div>
           <loader v-else object="#ff9633" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
@@ -33,7 +33,7 @@ export default {
 
   data() {
     return {
-      header: 'Личный кабинет',
+      header: 'MyProfile',
       responseData: null
     }
   },
