@@ -194,7 +194,7 @@ export default {
 
   data() {
     return {
-      header: 'Группы'
+      header: 'Groups'
     }
   },
 
