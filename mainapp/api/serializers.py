@@ -259,17 +259,24 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
     """
     manager = EducationalManagerSerializer()
     students = serializers.SerializerMethodField()
+    teachers = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'manager', 'students'
+            'id', 'name', 'manager', 'students', 'teachers',
         ]
 
     @staticmethod
     def get_students(obj):
         students = obj.student_groups.all()
         serializer = ProfileSerializer(students, many=True)
+        return serializer.data
+
+    @staticmethod
+    def get_teachers(obj):
+        teachers = obj.teacher_groups.all()
+        serializer = ProfileSerializer(teachers, many=True)
         return serializer.data
 
 
@@ -456,17 +463,24 @@ class GroupSerializer(serializers.ModelSerializer):
     """
     courses = CourseSerializer(read_only=False, many=True)
     students = serializers.SerializerMethodField()
+    teachers = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'courses', 'students'
+            'id', 'name', 'courses', 'students', 'teachers'
         ]
 
     @staticmethod
     def get_students(obj):
         students = obj.student_groups.all()
         serializer = ProfileSerializer(students, many=True)
+        return serializer.data
+
+    @staticmethod
+    def get_teachers(obj):
+        teachers = obj.teacher_groups.all()
+        serializer = ProfileSerializer(teachers, many=True)
         return serializer.data
 
 
