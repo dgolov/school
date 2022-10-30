@@ -1,24 +1,17 @@
 <template>
-  <div v-if="profile" class="page__main">
-    <div class="row">
-      <profile-header :profile="profile"></profile-header>
-      <profile-avatar :profile="profile"></profile-avatar>
-    </div>
-    <div v-if="isFriend(profile.user) || profile.id === $store.state.authUser.id" id="profile_info">
-      <profile-statistic-block :profile="profile"></profile-statistic-block>
-      <hr/>
-      <div class="left-align mt-5">
-        <profile-main-block :profile="profile"></profile-main-block>
-        <hr/>
-        <h3 class="mb-4">Контактная информация:</h3>
-        <profile-contacts-block :profile="profile"></profile-contacts-block>
-        <hr/>
-        <h3 class="mb-4">Личная информация:</h3>
-        <profile-about-block :profile="profile"></profile-about-block>
+  <div v-if="profile" class="col-xl-10 col-lg-9">
+    <div class="cabinet-content">
+      <div class="user-info">
+        <profile-header :profile="profile"></profile-header>
+        <div v-if="isFriend(profile.user) || profile.id === $store.state.authUser.id">
+          <profile-main-block :profile="profile"></profile-main-block>
+          <profile-contacts-block :profile="profile"></profile-contacts-block>
+          <profile-about-block :profile="profile"></profile-about-block>
+        </div>
+        <div v-else id="hide_profile_info">
+          <hide-profile-block></hide-profile-block>
+        </div>
       </div>
-    </div>
-    <div v-else id="hide_profile_info">
-      <hide-profile-block></hide-profile-block>
     </div>
   </div>
 </template>
