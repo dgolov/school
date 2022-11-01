@@ -39,7 +39,7 @@
             </a>
           </div>
         </div>
-        <h6 v-if="profiles.length === 0" class="mt-5">{{ headerName }} отсутствуют</h6>
+        <small v-if="profiles.length === 0" class="mt-5">{{ headerName }} отсутствуют</small>
       </div>
     </div>
   </div>
