@@ -1,18 +1,15 @@
 <template>
-  <div id="friends">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
-              <form>
-                <input type='text' placeholder="Поиск">
-              </form>
-              <friends-list :header="header" :profiles="responseData.followers"
-                            @reLoad="createGetRequest(`/profile/${id}/followers/`)"></friends-list>
-            </div>
+  <div class="cabinet-page">
+    <div class="container">
+      <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <div class="row">
+        <profile-menu :header="header"></profile-menu>
+        <friends-list :header="header" :profiles="responseData.followers"
+                      @reLoad="createGetRequest(`/profile/${id}/followers/`)"></friends-list>
+        <div class="col-xl-2 col-lg-3"></div>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-copy">
+            © Академия будущего «ХОД», 2022
           </div>
         </div>
       </div>
@@ -39,7 +36,7 @@ export default {
 
   data() {
     return {
-      header: 'Подписчики'
+      header: 'Followers'
     }
   },
 
