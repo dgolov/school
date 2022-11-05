@@ -278,7 +278,7 @@ form.contact-form .text span {
 
 <script>
 import Header from "../components/082022/Header";
-import Footer from "../components/082022/Footer";
+// import Footer from "../components/082022/Footer";
 
 window.$ = require('jquery');
 window.JQuery = window.$;
@@ -394,8 +394,7 @@ export default {
   name: "L082022",
 
   components: {
-    Header,
-    Footer
+    Header
   },
 
   data() {
