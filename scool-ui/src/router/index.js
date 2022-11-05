@@ -1,35 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue'
 import Auth from "../views/Auth";
 import Profile from "../views/Profile/Profile";
-
-import Education from "../views/Education";
-import EducationNew from "../views/EducationNew";
-import EducationSingle from "../views/EducationSingle";
-import EducationBeginner from "../views/EducationBeginner";
-import EducationUser from "../views/EducationUser";
-import EducationProf from "../views/EducationProf";
-import EducationCheater from "../views/EducationCheater";
-import EducationEnglish from "../views/EducationEnglish";
-import EducationChinese from "../views/EducationChinese";
-import EducationSpeedreading from "../views/EducationSpeedreading";
-import EducationArithmetic from "../views/EducationArithmetic";
-
-import ChessSingleCourse from "../views/ChessSingleCourse";
-
-import Events from "../views/Events";
-import EventsNew from "../views/EventsNew";
-
-import About from "../views/About";
-import AboutNew from "../views/AboutNew";
-
-import News from "../views/News";
-
-import Contacts from "../views/Contacts";
-import ContactsNew from "../views/ContactsNew";
-
 import MyCourses from "../views/Profile/MyCourses";
 import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
@@ -51,18 +24,7 @@ import CreateGroupChat from "../views/Messages/CreateGroupChat";
 import Settings from "../views/Profile/Settings";
 import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
-import EventSingle from "../views/EventSingle";
-import Career from "../views/Career";
-import Requests from "../views/Requests";
-
-import Reviews from "../views/Reviews";
-import ReviewsNew from "../views/ReviewsNew";
-
-import Camp from "../views/Camp"
 import PageNotFound from "../views/PageNotFound"
-
-//Точка для тестирования новой верстки
-import NewHome from "../views/newHome.vue"
 
 Vue.use(VueRouter)
 
