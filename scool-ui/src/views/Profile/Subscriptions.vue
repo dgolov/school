@@ -27,6 +27,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import FriendsList from "../../components/Profile/FriendsList";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -36,7 +37,9 @@ export default {
     Navbar, ProfileMenu, FriendsList
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   data() {
     return {

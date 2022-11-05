@@ -2,7 +2,7 @@
   <div id="profile">
     <div class="cabinet-page">
       <div class="container">
-        <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
         <div class="row">
           <profile-menu :header="header"></profile-menu>
           <profile-info v-if="responseData" :profile="responseData"></profile-info>
@@ -26,6 +26,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfileInfo from "../../components/Profile/ProfileInfo";
 import {redirect} from "../../components/mixins/redirect";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -46,7 +47,9 @@ export default {
     this.createGetRequest(`/profile/${this.$store.state.authUser.id}/`)
   },
 
-  mixins: [redirect, requestsMixin],
+  mixins: [
+      redirect, requestsMixin, openMenu
+  ],
 }
 </script>
 

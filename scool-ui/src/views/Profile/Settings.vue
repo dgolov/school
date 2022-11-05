@@ -74,6 +74,7 @@ import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
 import ProfileAvatar from "../../components/Profile/ProfileAvatar";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -133,7 +134,9 @@ export default {
     }
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   methods: {
     showForm() {

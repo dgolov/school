@@ -1,7 +1,7 @@
 <template>
   <div class="cabinet-page">
     <div class="container">
-      <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
       <div class="row">
         <profile-menu :header="header"></profile-menu>
         <friends-list :header="header" :profiles="responseData.friends"
@@ -25,6 +25,7 @@ import FriendsMenu from "../../components/Profile/FriendsMenu";
 import FriendsList from "../../components/Profile/FriendsList";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -48,7 +49,9 @@ export default {
     this.createGetRequest(`/profile/${String(this.id)}/friends/`)
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 }
 </script>
 

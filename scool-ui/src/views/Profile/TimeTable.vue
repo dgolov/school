@@ -65,6 +65,7 @@ import {redirect} from "../../components/mixins/redirect";
 import {getDateTime} from "../../components/mixins/getDateTime";
 import DatePicker from "vue2-datepicker";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -94,7 +95,9 @@ export default {
     }
   },
 
-  mixins: [requestsMixin, redirect, getDateTime],
+  mixins: [
+      requestsMixin, redirect, getDateTime, openMenu
+  ],
 
   created() {
     this.createGetRequest('/timetable/')

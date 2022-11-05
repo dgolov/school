@@ -75,6 +75,7 @@ import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
 import EditPhotoModal from "../../components/Modal/EditPhotoModal";
 import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 
 export default {
@@ -107,7 +108,9 @@ export default {
     this.likeImage = this.getSelfLikeImage()
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   methods: {
     showUploadModal() {
