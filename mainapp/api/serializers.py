@@ -448,7 +448,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
-            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city'
+            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city', 'start_date', 'end_date',
         ]
 
     @staticmethod
