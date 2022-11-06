@@ -30,8 +30,11 @@
               </div>
               <div class="item">
                 <p>Описание:</p>
-                <div class="text">
+                <div class="text" v-if="responseData.description">
                   {{ responseData.description }}
+                </div>
+                <div class="text" v-else>
+                  Отсутсвует
                 </div>
               </div>
             </div>
@@ -44,9 +47,15 @@
               </div>
               <div class="flex">
                 <div class="item" v-for="student in responseData.students.slice(0, 9)">
-                  <img v-if="student.avatar" class="profile-avatar left" :src="`${student.avatar.image}`">
-                  <img v-else src="../../assets/images/avatars/mike2.jpeg" class="profile-avatar left">
-                  <p>{{ student.first_name }} {{ student.last_name }}</p>
+                  <img v-if="student.avatar" class="profile-avatar left"
+                       :src="`${student.avatar.image}`"
+                       @click="goTo('Profile', {id: student.id})">
+                  <img v-else src="../../assets/images/avatars/mike2.jpeg"
+                       class="profile-avatar left"
+                       @click="goTo('Profile', {id: student.id})">
+                  <p @click="goTo('Profile', {id: student.id})">
+                    {{ student.first_name }} {{ student.last_name }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -59,9 +68,14 @@
               </div>
               <div class="flex">
                 <div class="item" v-for="teacher in responseData.teachers.slice(0, 9)">
-                  <img v-if="teacher.avatar" class="profile-avatar left" :src="`${teacher.avatar.image}`">
-                  <img v-else src="../../assets/images/avatars/mike2.jpeg" class="profile-avatar left">
-                  <p>{{ teacher.first_name }} {{ teacher.last_name }}</p>
+                  <img v-if="teacher.avatar" class="profile-avatar left"
+                       :src="`${teacher.avatar.image}`"
+                       @click="goTo('Profile', {id: teacher.id})">
+                  <img v-else src="../../assets/images/avatars/mike2.jpeg"
+                       class="profile-avatar left" @click="goTo('Profile', {id: teacher.id})">
+                  <p @click="goTo('Profile', {id: teacher.id})">
+                    {{ teacher.first_name }} {{ teacher.last_name }}
+                  </p>
                 </div>
               </div>
             </div>
