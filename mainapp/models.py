@@ -355,7 +355,7 @@ class Course(models.Model):
         blank=True,
         related_name='course_teachers'
     )
-    price = models.IntegerField(verbose_name='Цена')
+    price = models.IntegerField(verbose_name='Цена', blank=True, null=True)
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     content = models.TextField(verbose_name='Содержание', blank=True, null=True)
     activity_mode = models.CharField(max_length=50, verbose_name='Режим заниятий', blank=True, null=True)
