@@ -414,11 +414,6 @@ class CourseForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
-    price = forms.IntegerField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'Введите цену курса...'}
-        )
-    )
     duration = forms.IntegerField(
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
@@ -428,12 +423,6 @@ class CourseForm(forms.ModelForm):
         widget=forms.Select(
             choices=Course.TYPE_CHOICES,
             attrs={'class': 'form-control single-select select2-hidden-accessible'}
-        )
-    )
-    color_hex = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
         )
     )
     complexity = forms.CharField(
@@ -448,12 +437,29 @@ class CourseForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    lesson_count = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    start_date = forms.DateField(
+        required=False,
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
+    end_date = forms.DateField(
+        required=False,
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
 
     class Meta:
         model = Course
         fields = (
-            'category', 'name', 'price', 'duration', 'education_type', 'description', 'poster', 'video_presentation',
-            'complexity', 'color_hex'
+            'category', 'name', 'duration', 'education_type', 'description', 'poster', 'video_presentation',
+            'complexity', 'start_date', 'end_date', 'lesson_count'
         )
 
 
