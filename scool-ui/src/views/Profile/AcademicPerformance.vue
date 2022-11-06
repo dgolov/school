@@ -29,13 +29,13 @@
                     </td>
                     <td>
                       <div class="slider">
-                        <p>8 из 12</p>
-                        <div><span style="width: 66%;"></span></div>
+                        <p>{{ getLessonCount(course) }} из {{ course.lesson_count }}</p>
+                        <div><span :style="{width: getLessonPercent(course)}"></span></div>
                       </div>
                     </td>
                     <td>
                       <div class="prog color1">
-                        <span>4</span>
+                        <span>{{ getAverageGrade(course) }}</span>
                       </div>
                     </td>
                     <td>
@@ -139,6 +139,38 @@ export default {
   },
 
   methods: {
+    getAverageGrade(course) {
+      let sumGrade = 0;
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          sumGrade += item.grade
+          count += 1
+        }
+      }
+      return sumGrade / count
+    },
+
+    getLessonCount(course) {
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          count += 1
+        }
+      }
+      return count
+    },
+
+    getLessonPercent(course) {
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          count += 1
+        }
+      }
+      return count / course.lesson_count * 100 + '%'
+    },
+
     setClassList(grade) {
       let classList = this.defaultClassList
       if (grade < 4) {
