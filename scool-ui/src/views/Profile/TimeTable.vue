@@ -1,60 +1,25 @@
 <template>
-<div id="timetable">
-  <navbar></navbar>
-  <div class="step landing__section main-section past-events">
-    <div class="page">
-      <div class="container mt-1">
-        <div class="page__inner">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
           <profile-menu :header="header"></profile-menu>
-          <div class="page__main">
-            <button v-if="addButton" class="gray-button" @click="addToTimeTable">Добавить запись в расписание</button>
-            <button v-if="cancelButton" class="red-button" @click="cancelAdd">Отмена</button>
-            <label v-if="showAddGroup">Выберите группу</label>
-            <select v-if="showAddGroup" v-model="groupId">
-              <option disabled value="">Выберите группу</option>
-              <option v-for="group in groupList" :value="group.id">{{group.name}}</option>
-            </select>
-            <label v-if="groupId">Выберите курс</label>
-            <select v-if="groupId" v-model="selectedCourse">
-              <option disabled value="">Выберите курс</option>
-              <option v-for="course in courseList" :value="course">{{course.name}}</option>
-            </select>
-            <label v-if="selectedCourse">Выберите тему урока</label>
-            <select v-model="lessonId" v-if="selectedCourse">
-              <option disabled value="">Выберите урок</option>
-              <option v-for="lesson in selectedCourse.lessons" :value="lesson.id">{{lesson.theme}}</option>
-            </select>
-            <label v-if="lessonId">Укажите дату урока</label>
-            <date-picker v-if="lessonId" v-model="date" style="width: 100%;" type="datetime"></date-picker>
-            <button v-if="date" class="gray-button" @click="sendData">Добавить</button>
-            <div class="row">
-              <div class="w-25"><h5 class="system-color">Дата и время</h5></div>
-              <div class="w-50"><h5 class="system-color">Тема урока</h5></div>
-              <div class="w-25"><h5 class="system-color">Название курса</h5></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
+              <FullCalendar :options="calendarOptions" />
             </div>
-            <hr class="mb-4"/>
-            <div v-for="timeTable in responseData" :class="setClassList(timeTable.is_finished)" :id="timeTable.id">
-              <div class="w-25">
-                <p>{{ reformatDateTime(timeTable.date) }}</p>
-              </div>
-              <div class="w-50">
-                <a href="#" @click="goTo('TimeTableDetail', {id: timeTable.id})">
-                  {{ timeTable.subject }}
-                </a>
-              </div>
-              <div class="w-25">
-                <a href="#" @click="goTo('CourseSingle', {id: timeTable.lesson.course.id})">
-                  {{ timeTable.lesson.course.name }}
-                </a>
-              </div>
+          </div>
+          <div class="col-xl-2 col-lg-3"></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
             </div>
-            <h6 v-if="responseData.length === 0" class="mt-5">Записи в расписании отсутствуют</h6>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -67,6 +32,14 @@ import DatePicker from "vue2-datepicker";
 import axios from "axios";
 import {openMenu} from "../../components/mixins/openMenu";
 
+import '@fullcalendar/core/vdom'
+import FullCalendar from '@fullcalendar/vue'
+import ruLocale from '@fullcalendar/core/locales/ru'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import listPlugin from '@fullcalendar/list'
+import interactionPlugin from '@fullcalendar/interaction'
+
+
 export default {
   title: 'Академия будущего | Личный кабинет',
   name: "TimeTable",
@@ -74,12 +47,13 @@ export default {
   components: {
     Navbar,
     ProfileMenu,
-    DatePicker
+    DatePicker,
+    FullCalendar
   },
 
   data(){
     return {
-      header: 'Расписание',
+      header: 'TimeTable',
       defaultClassList: "row row_list pt-4 ",
       finished: 'finished',
       courseList: [],
@@ -92,6 +66,22 @@ export default {
       groupId: 0,
       lessonId: 0,
       date: '',
+      calendarOptions: {
+        plugins: [ dayGridPlugin, interactionPlugin, listPlugin ],
+        initialView: 'listWeek',
+        headerToolbar: {
+          left: "prev,next today",
+          center: 'title',
+          right: 'dayGridMonth,listWeek',
+        },
+        weekends: true,
+        events: [
+        ],
+        locale: ruLocale,
+        select: (arg) => {
+          console.log(arg.start)
+        }
+      }
     }
   },
 
@@ -106,6 +96,7 @@ export default {
       this.courseList = this.$store.state.profileInfo.courses
       this.groupList = this.$store.state.profileInfo.group_list
     }
+    this.loadEvents()
   },
 
   methods: {
@@ -115,6 +106,19 @@ export default {
         classList += this.finished
       }
       return classList
+    },
+
+    async loadEvents() {
+      await this.createGetRequest('/timetable/')
+      if (this.responseData) {
+        for (let event of this.responseData) {
+          let eventDate = Date.parse(event.date)
+          this.calendarOptions.events.push({
+            title: event.lesson.theme,
+            date: eventDate
+          })
+        }
+      }
     },
 
     addToTimeTable() {
@@ -167,7 +171,4 @@ export default {
 </script>
 
 <style scoped>
-.finished {
-  background-color: #e5ebf1;
-}
 </style>
