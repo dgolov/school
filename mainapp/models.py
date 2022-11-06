@@ -70,7 +70,7 @@ class Group(models.Model):
 class Photo(models.Model):
     """ Модель галереи пользователей
     """
-    image = models.ImageField(upload_to='images/photos', verbose_name='Изображение', max_length=None)
+    image = models.ImageField(upload_to='images/photos', verbose_name='Изображение')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
     likes = models.ManyToManyField('Profile', verbose_name='Лайки', blank=True, related_name='likes')
     for_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, verbose_name='Пользователь')
