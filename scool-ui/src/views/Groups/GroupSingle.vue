@@ -8,7 +8,6 @@
           <div class="cabinet-content">
             <div class="user-info">
               <div class="top-info">
-<!--                <div><img src="img/avatar4.png"></div>-->
                 <div>
                   <div class="name">
                     <span>{{ responseData.name }}</span>
@@ -32,7 +31,7 @@
               <div class="item">
                 <p>Описание:</p>
                 <div class="text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis urna risus, ac tempus massa tempus et. Nunc blandit commodo ante, vel varius lacus bibendum ut. Praesent tincidunt sodales felis, sit amet commodo justo tincidunt id. Aliquam dignissim est quis feugiat commodo. Integer feugiat faucibus mi, vitae dapibus augue euismod sit amet. Cras eget aliquet urna. Nulla et nisi eu nisl tempus convallis vel dictum nisi. Mauris condimentum velit iaculis volutpat consequat. Ut neque mi, placerat non quam eu, suscipit pretium eros. Pellentesque at laoreet augue.
+                  {{ responseData.description }}
                 </div>
               </div>
             </div>
@@ -66,101 +65,7 @@
                 </div>
               </div>
             </div>
-<!--            <div class="media">-->
-<!--              <div class="flex">-->
-<!--                <div class="top-text">-->
-<!--                  Фотоальбомы <span>6</span>-->
-<!--                </div>-->
-<!--                <a href="#" class="top-link">Все фотографии</a>-->
-<!--              </div>-->
-<!--              <div class="list">-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div>Название альбома</div>-->
-<!--                    <div>12</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div>Название альбома</div>-->
-<!--                    <div>12</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div>Название альбома</div>-->
-<!--                    <div>12</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div>Название альбома</div>-->
-<!--                    <div>12</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div>Название альбома</div>-->
-<!--                    <div>12</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="media">-->
-<!--              <div class="flex">-->
-<!--                <div class="top-text">-->
-<!--                  Видео <span>2</span>-->
-<!--                </div>-->
-<!--                <a href="#" class="top-link">Все видео</a>-->
-<!--              </div>-->
-<!--              <div class="list">-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media2.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div></div>-->
-<!--                    <div>13:24</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media2.png">-->
-<!--                  <div class="flex">-->
-<!--                    <div></div>-->
-<!--                    <div>13:24</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
           </div>
-<!--          <div class="cabinet-content other">-->
-<!--            <div class="user-info">-->
-<!--              <div class="top-info small">-->
-<!--                <div><img src="img/avatar5.png"></div>-->
-<!--                <div>-->
-<!--                  <div class="name">-->
-<!--                    <span>Название группы</span>-->
-<!--                    дата записи-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="media">-->
-<!--              <div class="list">-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                </div>-->
-<!--                <div class="item">-->
-<!--                  <img src="img/media.png">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis urna risus, ac tempus massa tempus et. Nunc blandit commodo ante, vel varius lacus bibendum ut. Praesent tincidunt sodales felis, sit amet commodo justo tincidunt id. Aliquam dignissim est quis feugiat commodo. Integer feugiat faucibus mi, vitae dapibus augue euismod sit amet. Cras eget aliquet urna. Nulla et nisi eu nisl tempus convallis vel dictum nisi. Mauris condimentum velit iaculis volutpat consequat. Ut neque mi, placerat non quam eu, suscipit pretium eros. Pellentesque at laoreet augue.</p>-->
-<!--              <a class="like">322</a>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
         <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>
         <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
