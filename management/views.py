@@ -732,7 +732,7 @@ class CreateLessonView(CreateView):
         if materials:
             new_lesson.materials = materials
             new_lesson.save()
-        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{new_lesson.pk}')
 
 
 class UpdateLessonView(UpdateView):
@@ -1230,7 +1230,7 @@ class GroupListView(ListView):
 
 
 class GroupDetailView(DetailView, GroupMixin):
-    """ Детальное представление учебной группы  в CRM
+    """ Детальное представление учебной группы в CRM
     """
     model = Group
     template_name = 'crm/group_detail.html'

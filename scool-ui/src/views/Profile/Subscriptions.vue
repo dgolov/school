@@ -1,6 +1,5 @@
 <template>
   <div id="subscriptions">
-    <navbar></navbar>
     <div class="step landing__section main-section past-events">
       <div class="page">
         <div class="container mt-1">
@@ -27,6 +26,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import FriendsList from "../../components/Profile/FriendsList";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -36,7 +36,9 @@ export default {
     Navbar, ProfileMenu, FriendsList
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   data() {
     return {

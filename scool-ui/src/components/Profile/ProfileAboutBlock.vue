@@ -1,40 +1,29 @@
 <template>
-  <div id="student-about">
-    <div v-if="profile.user_group === 'student'" class="row my-3">
-      <div class="col-md-3"><h6>Увлечения:</h6></div>
-      <div class="col-md-9 left-align">
-        <a v-if="profile.hobbies" href="#">{{ profile.hobbies }}</a>
-        <p v-else class="my-0">-</p>
-      </div>
-    </div>
-    <div v-if="profile.user_group === 'teacher'" class="row my-3">
-      <div class="col-md-3"><h6>Образование:</h6></div>
-      <div class="col-md-9 left-align">
-        <a v-if="profile.education" href="#">{{ profile.education }}</a>
-        <p v-else class="my-0">-</p>
-      </div>
-    </div>
-    <div v-if="profile.user_group === 'student'" class="row mt-3">
-      <div class="col-md-3"><h6>Мечта:</h6></div>
-      <div class="col-md-9 left-align">
-        <a v-if="profile.dream" href="#">{{ profile.dream }}</a>
-        <p v-else class="my-0">-</p>
-      </div>
-    </div>
-    <div v-if="profile.user_group === 'teacher'" class="row my-3">
-      <div class="col-md-3"><h6>Профессиональная деятельность:</h6></div>
-      <div class="col-md-9 left-align">
-        <a v-if="profile.professional_activity" href="#">{{ profile.professional_activity }}</a>
-        <p v-else class="my-0">-</p>
-      </div>
-    </div>
-    <div class="row my-3 mb-4">
-      <div class="col-md-3"><h6>О себе:</h6></div>
-      <div class="col-md-9 left-align ">
-        <p v-if="profile.about" class="my-0">{{ profile.about }}</p>
-        <p v-else class="my-0">-</p>
-      </div>
-    </div>
+  <div class="item">
+    <p>Личная информация:</p>
+    <table>
+      <tr>
+        <td>О себе:</td>
+        <td v-if="profile.about">{{ profile.about }}</td>
+        <td v-else>Не указано</td>
+      </tr>
+      <tr v-if="profile.user_group === 'student' && profile.hobbies">
+        <td>Увлечения:</td>
+        <td>{{ profile.hobbies }}</td>
+      </tr>
+      <tr v-if="profile.user_group === 'student' && profile.dream">
+        <td>Мечта:</td>
+        <td>{{ profile.dream }}</td>
+      </tr>
+      <tr v-if="profile.user_group === 'teacher' && profile.education">
+        <td>Образование:</td>
+        <td>{{ profile.education }}</td>
+      </tr>
+      <tr v-if="profile.user_group === 'teacher' && profile.professional_activity">
+        <td>Профессиональная деятельность:</td>
+        <td>{{ profile.professional_activity }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 

@@ -270,7 +270,7 @@ class CoursesViewSet(viewsets.ModelViewSet):
         'delete': [IsAdminUser],
         'create': [IsAdminUser],
     }
-    lookup_field = 'slug'
+    lookup_field = 'id'
 
     @action(detail=True, renderer_classes=[JSONRenderer])
     def lessons(self, request, *args, **kwargs):

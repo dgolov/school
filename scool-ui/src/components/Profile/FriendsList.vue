@@ -1,56 +1,47 @@
 <!--Для отображения друзей, подписчиков, подписок (для списка в поиске и в группах другой алгоритм запросов на бэк-->
 <template>
-  <div v-if="profiles" id="profile-list">
+  <div v-if="profiles" class="col-xl-10 col-lg-9">
     <message-modal v-if="modalVisible" @close="modalVisible = false" :id="modalData"></message-modal>
-    <div v-for="profile in profiles" class="row row_list">
-      <div class="col-md-3 mt-3">
-        <img v-if="profile.avatar" class="center small_avatar"
-             :src="profile.avatar">
-        <img v-else class="center small_avatar" src="../../assets/images/avatars/mike2.jpeg">
-      </div>
-      <div class="col-md-5">
-        <h4 class="left-align">
-          <a href="#" @click="goTo('Profile', {id: profile.profile_id})">
-            {{ profile.first_name }} {{ profile.last_name }}
-          </a>
-        </h4>
-        <h6 class="left-align">{{ getUserGroup(profile.user_group) }}</h6>
-      </div>
-      <div class="col-md-4 left-align pt-4">
-        <div v-if="isFriend(profile.id)">
-          <button @click="showMessageModal(profile.profile_id)"
-                  style="margin: 0; border: none; padding: 0; color: #000000;">
-            <img src="../../assets/images/icons/send-message.svg" class="friends_button">
-            Написать сообщение
-          </button>
+    <div class="cabinet-content">
+      <div class="groups">
+        <div class="flex">
+          <div class="top-text">{{ headerName }}</div>
+          <form>
+            <input v-if="header === 'Friends'" type="text" placeholder="Поиск друзей">
+            <input v-if="header === 'Followers'" type="text" placeholder="Поиск подписчиков">
+            <button></button>
+          </form>
         </div>
-        <div v-if="isFriend(profile.id)">
-          <a href="#" @click="removeFriend(profile, 'user')">
-            <img src="../../assets/images/icons/delete.svg" class="friends_button">
-            Удалить из друзей
-          </a>
+        <div v-for="profile in profiles" class="item">
+          <div>
+            <img v-if="profile.avatar" class="center small_avatar"
+                 :src="profile.avatar">
+            <img v-else class="center small_avatar" src="../../assets/images/avatars/mike2.jpeg">
+          </div>
+          <div>
+            <span>
+              <a href="#" @click="goTo('Profile', {id: profile.profile_id})">
+                {{ profile.first_name }} {{ profile.last_name }}
+              </a>
+            </span>
+            <a href="#" v-if="isFriend(profile.profile_id)" @click="showMessageModal(profile.profile_id)">Написать сообщение</a>
+            <a class="unsubscribe" v-if="isFriend(profile.profile_id)" @click="removeFriend(profile, 'user')">
+              Удалить из друзей
+            </a>
+            <a class="unsubscribe" v-else-if="isFollower(profile.id)" @click="addFriendRequest(profile, 'user')">
+              Принять дружбу
+            </a>
+            <a class="unsubscribe" v-else-if="isSubscription(profile.id)" @click="unsubscribe(profile, 'user')">
+              Отписаться
+            </a>
+            <a class="unsubscribe" v-else-if="profile.id !== $store.state.authUser.user" @click="addFriend(profile, 'user')">
+              Добавить в друзья
+            </a>
+          </div>
         </div>
-        <div v-else-if="isFollower(profile.id)">
-          <a href="#" @click="addFriendRequest(profile, 'user')">
-            <img src="../../assets/images/icons/user_add.png" class="friends_button">
-            Принять дружбу
-          </a>
-        </div>
-        <div v-else-if="isSubscription(profile.id)">
-          <a href="#" @click="unsubscribe(profile, 'user')">
-            <img src="../../assets/images/icons/delete.svg" class="friends_button">
-            Отписаться
-          </a>
-        </div>
-        <div v-else-if="profile.id !== $store.state.authUser.user">
-          <a href="#" @click="addFriend(profile, 'user')">
-            <img src="../../assets/images/icons/user_add.png" class="friends_button">
-            Добавить в друзья
-          </a>
-        </div>
+        <small v-if="profiles.length === 0" class="mt-5">{{ headerName }} отсутствуют</small>
       </div>
     </div>
-    <h6 v-if="profiles.length === 0" class="mt-5">{{ header }} отсутствуют</h6>
   </div>
 </template>
 
@@ -67,6 +58,7 @@ export default {
     return {
       modalVisible: false,
       modalData: null,
+      headerName: ''
     }
   },
 
@@ -80,6 +72,17 @@ export default {
   },
 
   mixins: [redirect, friendMixin],
+
+  created() {
+    if (this.header === 'Friends') {
+      this.headerName = 'Друзья';
+    } else if (this.header === 'Followers') {
+      this.headerName = 'Подписчики';
+    }
+    else {
+      this.headerName = 'Пользователи';
+    }
+  },
 
   methods: {
     showMessageModal(id) {
@@ -105,8 +108,4 @@ export default {
 
 
 <style scoped>
-.friends_button {
-  width: 15px;
-  margin-right: 5px;
-}
 </style>

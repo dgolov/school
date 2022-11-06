@@ -5,6 +5,7 @@ import {redirect} from "./redirect";
 export const requestsMixin = {
     data() {
         return {
+            isLoaded: false,
             base: {
                 baseURL: this.$store.state.backendUrl,
                 headers: {
@@ -49,6 +50,7 @@ export const requestsMixin = {
                 // Если запрос данных профиля, то сохраняем их в state
                 this.$store.commit("setProfileInfo", {profileInfo: this.responseData});
             }
+            this.isLoaded = true;
         },
 
         async refreshToken() {

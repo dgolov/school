@@ -1,34 +1,48 @@
 <template>
-<div id="groups">
-  <navbar></navbar>
-  <div class="step landing__section main-section past-events">
-    <div class="page">
-      <div class="container mt-1">
-        <div class="page__inner">
-          <profile-menu :header="header"></profile-menu>
-          <div class="page__main">
-            <group-search></group-search>
-            <groups-header></groups-header>
-            <hr/>
-            <div v-for="group in responseData" class="row row_list mt-3">
-              <div class="w-50">
-                <a href="#" class="left-align" @click="goTo('GroupSingle', {id: group.id})">
-                  {{ group.name }}
-                </a>
+  <div class="cabinet-page">
+    <div class="container">
+      <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <div class="row">
+        <profile-menu :header="header"></profile-menu>
+        <div v-if="isLoaded" class="col-xl-10 col-lg-9">
+          <div class="cabinet-content">
+            <div class="groups">
+              <div class="flex">
+                <div class="top-text">
+                  Группы
+                </div>
+                <form>
+                  <input type="text" placeholder="Поиск групп">
+                  <button></button>
+                </form>
               </div>
-              <div class="w-50">
-                <a href="#" class="left-align" @click="goTo('Profile', {id: group.teacher.id})">
-                  {{ group.teacher.last_name }} {{ group.teacher.first_name }} {{ group.teacher.middle_name }}
-                </a>
+              <div v-for="group in responseData" class="item">
+<!--                <div><img src="img/group.png"></div>-->
+                <div>
+                  <span>
+                    <a @click="goTo('GroupSingle', {id: group.id})">{{ group.name }}</a>
+                  </span>
+                  {{ group.students.length }} участников
+                  <a class="unsubscribe" @click="goTo('GroupSingle', {id: group.id})">
+                    Подробнее
+                  </a>
+                </div>
               </div>
+              <p v-if="responseData.length === 0" class="mt-5">Вы не состоите ни в одной группе</p>
             </div>
-            <h6 v-if="responseData.length === 0" class="mt-5">Вы не состоите ни в одной группе</h6>
+          </div>
+        </div>
+        <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>
+        <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+                objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-copy">
+            © Академия будущего «ХОД», 2022
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 
@@ -39,6 +53,7 @@ import GroupsHeader from "../../components/Groups/GroupsHeader";
 import GroupSearch from "../../components/Groups/GroupSearch";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -50,11 +65,13 @@ export default {
 
   data() {
     return {
-      header: 'Группы'
+      header: 'Groups'
     }
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   created() {
     this.createGetRequest('/groups/')
