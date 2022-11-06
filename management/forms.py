@@ -676,10 +676,16 @@ class GroupForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={'class': 'form-control'}
+        )
+    )
 
     class Meta:
         model = Group
-        fields = ('name', )
+        fields = ('name', 'description')
 
 
 class CostCategoryForm(forms.ModelForm):

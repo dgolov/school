@@ -1230,7 +1230,7 @@ class GroupListView(ListView):
 
 
 class GroupDetailView(DetailView, GroupMixin):
-    """ Детальное представление учебной группы  в CRM
+    """ Детальное представление учебной группы в CRM
     """
     model = Group
     template_name = 'crm/group_detail.html'
