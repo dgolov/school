@@ -385,6 +385,7 @@ class Course(models.Model):
     header = models.CharField(max_length=50, verbose_name='Заголовок h1', blank=True, null=True)
     start_date = models.DateField(verbose_name='Дата начала занятий', blank=True, null=True)
     end_date = models.DateField(verbose_name='Дата завершения занятий', blank=True, null=True)
+    lesson_count = models.PositiveIntegerField(verbose_name='Количество уроков', default=1)
 
     def __str__(self):
         return self.name
