@@ -13,7 +13,8 @@
                 </div>
                 <div v-if="responseData" class="list flex">
                   <div v-for="course in responseData" class="item"
-                       style="background: linear-gradient(123.33deg, #B398FF 17.28%, #FFCAE0 73.82%);">
+                       style="background: linear-gradient(123.33deg, #B398FF 17.28%, #FFCAE0 73.82%);"
+                       @click="goToCourse(course.id)">
                     <!--                    <img src="img/course1.png">-->
                     <div class="flex">
                       <div class="top-text">
