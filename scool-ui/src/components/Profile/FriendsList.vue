@@ -24,8 +24,8 @@
                 {{ profile.first_name }} {{ profile.last_name }}
               </a>
             </span>
-            <a href="#" v-if="isFriend(profile.id)" @click="showMessageModal(profile.profile_id)">Написать сообщение</a>
-            <a class="unsubscribe" v-if="isFriend(profile.id)" @click="removeFriend(profile, 'user')">
+            <a href="#" v-if="isFriend(profile.profile_id)" @click="showMessageModal(profile.profile_id)">Написать сообщение</a>
+            <a class="unsubscribe" v-if="isFriend(profile.profile_id)" @click="removeFriend(profile, 'user')">
               Удалить из друзей
             </a>
             <a class="unsubscribe" v-else-if="isFollower(profile.id)" @click="addFriendRequest(profile, 'user')">
