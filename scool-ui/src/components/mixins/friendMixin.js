@@ -33,8 +33,8 @@ export const friendMixin = {
             const myFriends = this.$store.state.profileInfo.friends
             // Проверяет является ли пользователь другом
             // myFriends - список друзей текущего пользователя
-            for (let friendId of myFriends) {
-                if (friendId === profileID) {
+            for (let friend of myFriends) {
+                if (friend.profile_id === profileID) {
                     return true;
                 }
             }

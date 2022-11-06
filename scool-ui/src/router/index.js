@@ -1,35 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue'
 import Auth from "../views/Auth";
 import Profile from "../views/Profile/Profile";
-
-import Education from "../views/Education";
-import EducationNew from "../views/EducationNew";
-import EducationSingle from "../views/EducationSingle";
-import EducationBeginner from "../views/EducationBeginner";
-import EducationUser from "../views/EducationUser";
-import EducationProf from "../views/EducationProf";
-import EducationCheater from "../views/EducationCheater";
-import EducationEnglish from "../views/EducationEnglish";
-import EducationChinese from "../views/EducationChinese";
-import EducationSpeedreading from "../views/EducationSpeedreading";
-import EducationArithmetic from "../views/EducationArithmetic";
-
-import ChessSingleCourse from "../views/ChessSingleCourse";
-
-import Events from "../views/Events";
-import EventsNew from "../views/EventsNew";
-
-import About from "../views/About";
-import AboutNew from "../views/AboutNew";
-
-import News from "../views/News";
-
-import Contacts from "../views/Contacts";
-import ContactsNew from "../views/ContactsNew";
-
 import MyCourses from "../views/Profile/MyCourses";
 import CourseSingle from "../views/Profile/CourseSingle";
 import Lesson from "../views/Profile/Lesson";
@@ -51,18 +24,7 @@ import CreateGroupChat from "../views/Messages/CreateGroupChat";
 import Settings from "../views/Profile/Settings";
 import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
-import EventSingle from "../views/EventSingle";
-import Career from "../views/Career";
-import Requests from "../views/Requests";
-
-import Reviews from "../views/Reviews";
-import ReviewsNew from "../views/ReviewsNew";
-
-import Camp from "../views/Camp"
 import PageNotFound from "../views/PageNotFound"
-
-//Точка для тестирования новой верстки
-import NewHome from "../views/newHome.vue"
 
 Vue.use(VueRouter)
 
@@ -71,6 +33,9 @@ const routes = [
     path: '/',
     name: 'MyProfile',
     component: MyProfile,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/auth',
@@ -82,118 +47,181 @@ const routes = [
     path: '/profiles/:id',
     name: 'Profile',
     component: Profile,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses',
     name: 'MyCourses',
-    component: MyCourses
+    component: MyCourses,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/timetable',
     name: 'TimeTable',
-    component: TimeTable
+    component: TimeTable,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/timetable/:id',
     name: 'TimeTableDetail',
     component: TimeTableDetail,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats',
     name: 'Chats',
-    component: Chats
+    component: Chats,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats/:id',
     name: 'Messages',
     component: Messages,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/chats/:id/settings',
     name: 'GroupChatSettings',
     component: GroupChatSettings,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: "/profile/chats/create-group",
     name: 'CreateGroupChat',
     component: CreateGroupChat,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/friends',
     name: 'Friends',
     component: Friends,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/followers',
     name: 'Followers',
     component: Followers,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/subscriptions',
     name: 'Subscriptions',
     component: Subscriptions,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/friend-requests',
     name: 'FriendRequests',
     component: FriendRequests,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id/photo',
     name: 'Photo',
     component: Photo,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/groups',
     name: 'Groups',
-    component: Groups
+    component: Groups,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/groups/:id',
     name: 'GroupSingle',
     component: GroupSingle,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/search',
     name: 'Search',
-    component: Search
+    component: Search,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/settings',
     name: 'Settings',
-    component: Settings
+    component: Settings,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/games',
     name: 'Games',
-    component: Games
+    component: Games,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/academic-performance',
     name: 'AcademicPerformance',
-    component: AcademicPerformance
+    component: AcademicPerformance,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses/:id',
     name: 'CourseSingle',
     component: CourseSingle,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profile/my-courses/:courseId/lesson/:lessonId',
     name: 'Lesson',
     component: Lesson,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: "*",

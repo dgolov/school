@@ -1,12 +1,12 @@
 <template>
   <div class="row mt-3">
-    <div class="col-md-9">
+    <div class="col-md-9 my-2">
       <form>
-        <input v-model="value" type='text' class="w-100">
+        <input v-model="value" type='text' class="w-100 input-field" placeholder="">
       </form>
     </div>
-    <div class="col-md-3">
-      <button class="gray-button filter-button" style="height: 68%;" @click="setNewValue">Изменить</button>
+    <div class="col-md-3 my-2">
+      <button class="gray-button filter-button" style="height: 100%;" @click="setNewValue">Изменить</button>
     </div>
   </div>
 </template>
@@ -33,5 +33,10 @@ export default {
 
 
 <style scoped>
-
+.input-field {
+  background-color: #ededed;
+  height: 100%;
+  border-radius: 5px;
+  padding: 10px;
+}
 </style>

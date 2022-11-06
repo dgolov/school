@@ -376,10 +376,6 @@ ul.menu-items {
 	padding: 0;
 }
 
-.menu {
-	background: #fff;
-}
-
 .menu-logo {
 	background: url('../img/menu/menu-logo.svg') no-repeat;
 	width: 100px;
@@ -1124,32 +1120,6 @@ ul.town {
 .herd {
 	background-color: #00093C;
 	display: contents;
-}
-
-.header {
-	height: 480px;
-	margin: auto;
-	background:
-		url('../img/header/header.jpg') 1121px 0 repeat-y,
-		url('../img/header/points-header.svg') 80px 40px,
-		#00093C;
-	position: relative;
-}
-
-.header::before {
-	content: '';
-	background:
-		url('../img/header/figures-header-one.svg') 274px 120px no-repeat,
-		url('../img/header/figures-header-two.svg') 220px 403px no-repeat,
-		url('../img/header/figures-header-three.svg') 655px 370px no-repeat,
-		url('../img/header/figures-header-four.svg') 1070px 20px no-repeat,
-		url('../img/header/figures-header-five.svg') 900px 235px no-repeat,
-		url('../img/header/figures-header-six.svg') 1250px 119px no-repeat,
-		url('../img/header/figures-header-seven.svg') 1522px 92px no-repeat,
-		url('../img/header/figures-header-eight.svg') 1641px 275px no-repeat;
-	position: absolute;
-	width: 100%;
-	height: 550px;
 }
 
 @media (max-width: 1720px) {

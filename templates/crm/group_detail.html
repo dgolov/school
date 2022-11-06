@@ -30,6 +30,14 @@
                                             {% endif %}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Дата создания:</th>
+                                        <td>{% if group.created_at %} {{ group.created_at }} {% else %} - {% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата последнего обновления:</th>
+                                        <td>{% if group.updated_at %} {{ group.updated_at }} {% else %} - {% endif %}</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -57,6 +65,10 @@
             </li>
             <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#TimeTable"><span
                     class="p-tab-name">Расписание</span><i
+                    class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#Description"><span
+                    class="p-tab-name">Описание</span><i
                     class="bx bxs-user-rectangle font-24 d-sm-none"></i></a>
             </li>
         </ul>
@@ -217,6 +229,16 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Description">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Описание:</h4>
+                        </div>
+                        <p>{% if group.description %} {{ group.description }} {% else %} Отсутствует {% endif %}</p>
                     </div>
                 </div>
             </div>

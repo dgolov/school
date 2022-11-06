@@ -9,10 +9,6 @@
             {{ form.name }}
         </div>
         <div class="form-group mt-4">
-            <label>Цена</label>
-            {{ form.price }}
-        </div>
-        <div class="form-group mt-4">
             <label>Тип обучения</label>
             {{ form.education_type }}
         </div>
@@ -25,8 +21,16 @@
             {{ form.duration }}
         </div>
         <div class="form-group mt-4">
-            <label>Цвет блока курса</label>
-            {{ form.color_hex }}
+            <label>Начало обучения</label>
+            {{ form.start_date }}
+        </div>
+        <div class="form-group mt-4">
+            <label>Конец обучения</label>
+            {{ form.end_date }}
+        </div>
+        <div class="form-group mt-4">
+            <label>Количество уроков</label>
+            {{ form.lesson_count }}
         </div>
     </div>
     <div class="col-md-6">

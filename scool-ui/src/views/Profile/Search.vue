@@ -1,33 +1,26 @@
 <template>
-  <div id="search">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
-              <div class="row">
-                <div class="col-md-9">
-                  <form>
-                    <input type='text' placeholder="Поиск" class="w-100">
-                  </form>
-                </div>
-                <div class="col-md-3">
-                  <button class="gray-button filter-button">Фильтр</button>
-                </div>
-              </div>
-              <div class="row my-3">
-                <div class="col-md-6">
-                  <a href="#" @click="getStudents()">Студенты</a>
-                </div>
-                <div class="col-md-6">
-                  <a href="#" @click="getTeachers()">Преподаватели</a>
-                </div>
-              </div>
-              <hr/>
-              <profiles-list :profiles="responseData" @reLoad="reloadList()"></profiles-list>
+  <div class="cabinet-page">
+    <div class="container">
+      <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <div class="row">
+        <profile-menu :header="header"></profile-menu>
+        <div v-if="isLoaded" class="col-xl-10 col-lg-9">
+          <div class="row mb-5 mt-3">
+            <div class="col-md-6 px-5">
+              <a href="#" class="user-menu" @click="getStudents()">Студенты</a>
             </div>
+            <div class="col-md-6 px-5">
+              <a href="#" class="user-menu" @click="getTeachers()">Преподаватели</a>
+            </div>
+          </div>
+          <profiles-list :profiles="responseData" @reLoad="reloadList()"></profiles-list>
+        </div>
+        <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>
+        <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+                objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-copy">
+            © Академия будущего «ХОД», 2022
           </div>
         </div>
       </div>
@@ -42,6 +35,7 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 import ProfilesList from "../../components/Profile/ProfilesList";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -54,7 +48,7 @@ export default {
 
   data() {
     return {
-      header: 'Поиск',
+      header: 'Search',
       searchUserGroup: ''
     }
   },
@@ -64,7 +58,9 @@ export default {
     this.searchUserGroup = 'students';
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   methods: {
     getTeachers() {
@@ -88,7 +84,7 @@ export default {
 
 
 <style scoped>
-.filter-button {
-  height: 68%;
+.user-menu {
+  text-decoration: none;
 }
 </style>

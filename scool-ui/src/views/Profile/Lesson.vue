@@ -1,6 +1,5 @@
 <template>
   <div id="lesson-single">
-    <navbar></navbar>
     <div class="container lesson past-events">
       <course-info v-if="responseData" :course="responseData.course"></course-info>
       <div class="course__section">
@@ -43,6 +42,7 @@ import Navbar from "../../components/Navbar";
 import CourseInfo from "../../components/Course/CourseInfo";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -57,7 +57,9 @@ export default {
     lessonId: String
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   created() {
     this.createGetRequest(`/courses/${this.courseId}/lessons/${this.lessonId}/`)

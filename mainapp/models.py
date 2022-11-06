@@ -48,6 +48,16 @@ class Group(models.Model):
         blank=True,
         null=True
     )
+    description = models.TextField(verbose_name='Описание группы', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='images/photos/group',
+        verbose_name='Изображение группы',
+        max_length=None,
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -60,7 +70,7 @@ class Group(models.Model):
 class Photo(models.Model):
     """ Модель галереи пользователей
     """
-    image = models.ImageField(upload_to='images/photos', verbose_name='Изображение', max_length=None)
+    image = models.ImageField(upload_to='images/photos', verbose_name='Изображение')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
     likes = models.ManyToManyField('Profile', verbose_name='Лайки', blank=True, related_name='likes')
     for_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, verbose_name='Пользователь')
@@ -345,7 +355,7 @@ class Course(models.Model):
         blank=True,
         related_name='course_teachers'
     )
-    price = models.IntegerField(verbose_name='Цена')
+    price = models.IntegerField(verbose_name='Цена', blank=True, null=True)
     description = models.TextField(verbose_name='Описание', blank=True, null=True)
     content = models.TextField(verbose_name='Содержание', blank=True, null=True)
     activity_mode = models.CharField(max_length=50, verbose_name='Режим заниятий', blank=True, null=True)
@@ -357,7 +367,6 @@ class Course(models.Model):
         null=True
     )
     who_is = models.TextField(verbose_name='Блок кто такой', blank=True, null=True)
-    # skills = models.ManyToManyField('Skill', blank=True, verbose_name='Вы научитесь', related_name='skills')
     poster = models.ImageField(upload_to='images/posters', verbose_name='Изображение курса', blank=True, null=True)
     video_presentation = models.SlugField(verbose_name='Ссылка на видеопрезентацию курса', blank=True, null=True)
     color_hex = models.CharField(max_length=10, verbose_name='Цвет блока курса (hex)', blank=True, null=True)
@@ -374,6 +383,9 @@ class Course(models.Model):
     title = models.CharField(max_length=150, verbose_name='Title', blank=True, null=True)
     html_desc = models.TextField(verbose_name='Описание для поисковиков', blank=True, null=True)
     header = models.CharField(max_length=50, verbose_name='Заголовок h1', blank=True, null=True)
+    start_date = models.DateField(verbose_name='Дата начала занятий', blank=True, null=True)
+    end_date = models.DateField(verbose_name='Дата завершения занятий', blank=True, null=True)
+    lesson_count = models.PositiveIntegerField(verbose_name='Количество уроков', default=1)
 
     def __str__(self):
         return self.name

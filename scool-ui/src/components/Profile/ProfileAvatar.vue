@@ -1,8 +1,8 @@
 <template>
-  <div class="col-md-6">
-    <img v-if="profile.avatar" class="center profile-avatar"
+  <div>
+    <img v-if="profile.avatar" class="profile-avatar left"
          :src="`${profile.avatar.image}`">
-    <img v-else src="../../assets/images/avatars/mike2.jpeg" class="center profile-avatar">
+    <img v-else src="../../assets/images/avatars/mike2.jpeg" class="profile-avatar left">
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
   height: 160px;
   border: 0;
   border-radius: 50%;
-  margin: 30px auto;
+  margin: 0 auto;
   text-align: center;
 }
 </style>
