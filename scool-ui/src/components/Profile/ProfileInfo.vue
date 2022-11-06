@@ -17,7 +17,7 @@
           <div class="top-text">
             Друзья <span>{{ profile.friends.length }}</span>
           </div>
-          <a href="#" class="top-link">Все друзья</a>
+          <a href="#" @click="goTo('Friends', {id: profile.id})" class="top-link">Все друзья</a>
         </div>
         <div class="flex">
           <div class="item" v-for="friend in profile.friends.slice(0, 9)">
