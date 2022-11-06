@@ -62,7 +62,7 @@
           </a>
         </li>
         <li>
-          <a href="#" @click="goTo('Games')" :class="getActive('Games')">
+          <a href="#">
             <span><img src="../../assets/images/cabinet/img/cabinet-menu12.svg"></span> Игры
           </a>
         </li>
