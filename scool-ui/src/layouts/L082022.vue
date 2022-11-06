@@ -278,7 +278,6 @@ form.contact-form .text span {
 
 <script>
 import Header from "../components/082022/Header";
-// import Footer from "../components/082022/Footer";
 
 window.$ = require('jquery');
 window.JQuery = window.$;
@@ -352,23 +351,23 @@ window.CourceModalShow = function CourceModalShow(thisapp) {
     if (!phone) phone = '';
     if (!email) email = '';
 
-    if (name == '') {
+    if (name === '') {
       window.setModalFormError($('.common-modal-content .data-place'), 'Введите Ваше имя!');
       return false;
     }
 
-    if (phone == '' && email == '') {
+    if (phone === '' && email === '') {
       window.setModalFormError($('.common-modal-content .data-place'), 'Введите номер телефона или адрес электронной почты!');
       return false;
     } else {
-      if (phone != '') {
+      if (phone !== '') {
         if (!window.validatePhone(phone)) {
           window.setModalFormError($('.common-modal-content .data-place'), 'Проверьте, возможно вы ввели неверный номер телефона. ');
           return false;
         }
       }
 
-      if (email != '') {
+      if (email !== '') {
         if (!window.validateEmail(email)) {
           window.setModalFormError($('.common-modal-content .data-place'), 'Проверьте, возможно вы ввели неверный email.');
           return false;
@@ -406,6 +405,7 @@ export default {
   },
 
   created() {
+    import('@/assets/css/style.css');
     import('@/assets/082022/css/bootstrap.min.css');
     import('@/assets/082022/css/slick.css');
     import('@/assets/082022/css/style.css');
@@ -414,7 +414,6 @@ export default {
     import('@/assets/082022/css/video-modal.css');
     import('@/assets/082022/css/common-modal.css');
     import('@/assets/css/cabinet.css');
-
   },
 
   mounted: function () {
