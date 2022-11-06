@@ -264,7 +264,7 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'manager', 'students', 'teachers',
+            'id', 'name', 'manager', 'students', 'teachers', 'description', 'created_at', 'updated_at', 'image'
         ]
 
     @staticmethod
