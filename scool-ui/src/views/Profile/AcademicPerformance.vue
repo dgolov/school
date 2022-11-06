@@ -148,7 +148,11 @@ export default {
           count += 1
         }
       }
-      return sumGrade / count
+      let result = sumGrade / count
+      if (!result) {
+        return '-'
+      }
+      return result
     },
 
     getLessonCount(course) {
