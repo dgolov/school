@@ -1,12 +1,12 @@
 <template>
-  <div id="messages">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
               <div class="row">
                 <div class="chat_header px-4" v-if="responseData.length > 0">
                   <a v-if="responseData && !responseData[0].dialog.is_group" href="#" class="pt-3"
@@ -38,18 +38,24 @@
               </div>
               <hr/>
               <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-9 py-3">
                   <form>
-                    <input v-model="input_text" id='input_text' type='text'
-                           placeholder="Введите сообщение..." class="w-100">
+                    <input style="background-color: #f7f7f7; height: 100%;" v-model="input_text" id='input_text' type='text'
+                           placeholder="Введите сообщение..." class="w-100 py-2">
                   </form>
                 </div>
-                <div class="col-md-3">
-                  <button class="gray-button" style="height: 68%;" @click="sendMessage()">
+                <div class="col-md-3 mt-2">
+                  <button class="btn gray-button" @click="sendMessage()">
                     Отправить
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3"></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
             </div>
           </div>
         </div>
@@ -66,6 +72,7 @@ import {redirect} from "../../components/mixins/redirect";
 import {getDateTime} from "../../components/mixins/getDateTime";
 import {dialogMixin} from "../../components/mixins/dialogMixin";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -77,7 +84,7 @@ export default {
 
   data() {
     return {
-      header: 'Сообщения',
+      header: 'Chats',
       in_message_date: 'in_message_date',
       in_message: 'in_message',
       in_message_text: 'in_message_text',
@@ -98,7 +105,9 @@ export default {
     id: String
   },
 
-  mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
+  mixins: [
+      requestsMixin, redirect, getDateTime, dialogMixin, openMenu
+  ],
 
   created() {
     this.createGetRequest(`/dialogs/${String(this.id)}/`)

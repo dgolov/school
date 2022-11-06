@@ -1,18 +1,18 @@
 <template>
-  <div id="groupChatSettings">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="container page__main">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
               <div class="container">
                 <div class="row">
                   <div class="col-md-10">
                     <div class="row"></div>
-                    <div class="w-100">
-                      <h1 style="text-align: left; margin: 0 25px;">{{ chatName }}</h1>
+                    <div class="w-100 mb-3">
+                      <h3 style="text-align: left;">{{ chatName }}</h3>
                     </div>
                     <div class="w-100">
                       <button class="system-color button-charge" @click="showForm('chatNameForm')">
@@ -34,7 +34,7 @@
               <hr/>
               <div v-if="showParticipants">
                 <div class="pb-5 row_list">
-                  <h3 style="display: inline; margin-top: 20px;">Участники беседы</h3>
+                  <h5 style="display: inline; margin-top: 20px;">Участники беседы</h5>
                   <a href="#" class="system-color" style="float: right; font-size: 12px;" @click="showInviteArea()">
                     Пригласить новых участников
                   </a>
@@ -46,20 +46,20 @@
                     <img v-else class="center small_avatar" src="../../assets/images/avatars/mike2.jpeg">
                   </div>
                   <div class="col-md-5">
-                    <h4 class="left-align">
+                    <p class="left-align mt-4">
                       <a href="#" @click="goTo('Profile', {id: profile.id})">
                         {{ profile.first_name }} {{ profile.last_name }}
                       </a>
-                    </h4>
+                    </p>
                     <p v-if="isGroupFounder(profile.id)" class="left-align group_founder_text">Основатель</p>
                     <h6 class="left-align"></h6>
                   </div>
                   <div class="col-md-4 left-align pt-4">
                     <div v-if="isFriend(profile.user)">
-                      <button style="margin: 0; border: none; padding: 0; color: #000000;">
+                      <a href="#" style="margin: 0; border: none; padding: 0;">
                         <img src="../../assets/images/icons/send-message.svg" class="friends_button">
                         Написать сообщение
-                      </button>
+                      </a>
                     </div>
                     <div v-if="isFriend(profile.user)">
                       <a href="#" @click="removeFriend(profile, 'user')">
@@ -109,6 +109,12 @@
               </div>
             </div>
           </div>
+          <div class="col-xl-2 col-lg-3"></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -125,6 +131,7 @@ import {redirect} from "../../components/mixins/redirect";
 import {friendMixin} from "../../components/mixins/friendMixin";
 import {groupChatMixin} from "../../components/mixins/groupChatMixin";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -145,7 +152,7 @@ export default {
       inviteParticipants: [],
       showParticipants: true,
       showInvite: false,
-      header: 'Сообщения'
+      header: 'Chats'
     }
   },
 
@@ -154,7 +161,9 @@ export default {
     dialog: Object,
   },
 
-  mixins: [redirect, friendMixin, groupChatMixin],
+  mixins: [
+      redirect, friendMixin, groupChatMixin, openMenu
+  ],
 
   created() {
     if (!this.dialog) {
