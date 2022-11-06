@@ -1,6 +1,5 @@
 <template>
   <div id="lesson-single">
-    <navbar></navbar>
     <div class="container lesson past-events">
       <course-info v-if="responseData" :course="responseData.course"></course-info>
       <div class="course__section">

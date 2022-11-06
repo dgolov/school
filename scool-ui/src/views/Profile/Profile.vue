@@ -8,7 +8,7 @@
           <profile-info v-if="responseData" :profile="responseData"
                         @reLoad="createGetRequest(`/profile/${id}`)"></profile-info>
           <div v-if="responseData" class="col-xl-2 col-lg-3"></div>
-          <loader v-else object="#ff9633" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+          <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
                   objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
           <div class="col-xl-10 col-lg-9">
             <div class="cabinet-copy">

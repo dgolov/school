@@ -1,6 +1,5 @@
 <template>
   <div id="friends">
-    <navbar></navbar>
     <div class="step landing__section main-section past-events">
       <div class="page">
         <div class="container mt-1">
