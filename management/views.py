@@ -732,7 +732,7 @@ class CreateLessonView(CreateView):
         if materials:
             new_lesson.materials = materials
             new_lesson.save()
-        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{new_lesson.pk}')
 
 
 class UpdateLessonView(UpdateView):
