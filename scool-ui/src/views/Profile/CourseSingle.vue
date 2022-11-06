@@ -1,19 +1,47 @@
 <template>
-  <div id="single-course">
-    <navbar></navbar>
-    <div class="container course past-events">
-      <course-info v-if="responseData" :course="responseData[0].course"></course-info>
-      <div class="course__section">
-        <div class="container pb-1">
-          <h2 class="my-4 system-color">Программа курса:</h2>
-          <p>Здесь собраны все доступные уроки с пожизненным доступом к видео и материалам с прошедших вебинаров</p>
-          <hr/>
-          <ol class="lesson-list">
-            <li v-if="responseData" v-for="lesson in responseData" class="py-3">
-              <a v-if="lesson.is_active" href="#" @click="goToLesson(lesson.course.id, lesson.id)">{{lesson.theme}}</a>
-              <p v-else class="no-active" style="margin: 0;">{{lesson.theme}} (Урок недоступен)</p>
-            </li>
-          </ol>
+  <div class="cabinet-page">
+    <div class="container">
+      <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <div class="row">
+        <profile-menu :header="header"></profile-menu>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-content">
+            <div class="course">
+              <div class="top-text">
+                <a href="#">Назад</a>
+                {{ responseData[0].course.name }}
+              </div>
+              <div class="tbl">
+                <table>
+                  <tr>
+                    <td>Дата начала:</td>
+                    <td v-if="responseData[0].course.start_date">{{ responseData[0].course.start_date }}</td>
+                    <td v-else>Не указано</td>
+                  </tr>
+                  <tr>
+                    <td>Дата завершения:</td>
+                    <td v-if="responseData[0].course.end_date">{{ responseData[0].course.end_date }}</td>
+                    <td v-else>Не указано</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="info">
+                <div class="name">
+                  Содержание курса:
+                </div>
+                <p>{{ responseData[0].course.description }}</p>
+                <ul>
+                  <li v-for="lesson in responseData">{{ lesson.theme }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3"></div>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-copy">
+            © Академия будущего «ХОД», 2022
+          </div>
         </div>
       </div>
     </div>
@@ -26,17 +54,19 @@ import CourseInfo from "../../components/Course/CourseInfo";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import {openMenu} from "../../components/mixins/openMenu";
+import ProfileMenu from "../../components/Profile/ProfileMenu";
 
 export default {
   title: 'Академия будущего | Обучение',
   name: "CourseSingle",
 
   components: {
-    Navbar, CourseInfo
+    Navbar, CourseInfo, ProfileMenu
   },
 
   props: {
-    id: String
+    id: String,
+    header: 'MyCourses',
   },
 
   mixins: [
