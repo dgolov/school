@@ -1,18 +1,21 @@
 <template>
-  <div id="settings">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="container page__main">
-              <p class="bold center" style="color: gray">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
+              <div class="list-name bold">
+                Настройки профиля
+              </div>
+              <p class="center my-3" style="color: gray">
                 Для сохранения изменений данных профиля нажмите кнопку "Применить изменения" внизу страницы</p>
               <p class="bold" style="color: green">{{ successMessage }}</p>
               <div class="row">
                 <div class="col-md-8 px-5 py-5">
-                  <button class="gray-button upload-photo-button" @click="showUploadModal">Изменить фото профиля</button>
+                  <button class="gray-button upload-photo-button mb-1" @click="showUploadModal">Изменить фото профиля</button>
                   <button class="red-button upload-photo-button" @click="deleteAvatar">Удалить фото профиля</button>
                   <upload-photo-modal ref="uploadModal" :mode="'avatar'" @reLoad="setSuccessMessage"></upload-photo-modal>
                 </div>
@@ -20,7 +23,7 @@
                   <profile-avatar :profile="$store.state.profileInfo"></profile-avatar>
                 </div>
               </div>
-              <h3 class="system-color">Основные настройки</h3>
+              <h3 class="system-color mt-5">Основные настройки</h3>
               <hr/>
               <settings-field :value="lastName" :label="'Фамилия'" @setValue="lastName = $event.value"></settings-field>
               <settings-field :value="firstName" :label="'Имя'" @setValue="firstName = $event.value"></settings-field>
@@ -34,14 +37,14 @@
                 <date-picker v-if="showDateOfBirthDay" v-model="dateOfBirthDay" valueType="format" class="date-of-birthday-field">
                 </date-picker>
               </div>
-              <h3 class="system-color">Контактные данные</h3>
+              <h3 class="system-color mt-5">Контактные данные</h3>
               <hr/>
               <settings-field :value="phone" :label="'Номер телефона'" @setValue="phone = $event.value"></settings-field>
               <settings-field :value="email" :label="'Электронная почта'" @setValue="email = $event.value"></settings-field>
               <settings-field :value="city" :label="'Город'" @setValue="city = $event.value"></settings-field>
               <settings-field :value="vkSlug" :label="'Профиль vk.com'" @setValue="vkSlug = $event.value"></settings-field>
               <settings-field :value="instagramSlug" :label="'Профиль instagram'" @setValue="instagramSlug = $event.value"></settings-field>
-              <h3 class="system-color">Личная информация</h3>
+              <h3 class="system-color mt-5">Личная информация</h3>
               <hr/>
               <settings-field v-if="userGroup === 'student'" :value="hobbies" :label="'Увлечения'"
                               @setValue="hobbies = $event.value"></settings-field>
@@ -52,13 +55,20 @@
               <settings-field v-else-if="userGroup === 'teacher'" :value="professionalActivity" :label="'Профессиональная деятельность'"
                               @setValue="professionalActivity = $event.value"></settings-field>
               <settings-field :value="about" :label="'О себе'" @setValue="about = $event.value"></settings-field>
-              <button class="gray-button w-100 mt-4" @click="sendSettings">Применить изменения</button>
+              <button class="btn gray-button w-100 mt-5" @click="sendSettings">Применить изменения</button>
+              <div v-if="responseData" class="col-xl-2 col-lg-3"></div>
+            </div>
+          </div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 
@@ -251,5 +261,10 @@ export default {
   width: 100%;
   height: 40px;
   margin-top: 20px;
+}
+
+.upload-photo-button {
+  height: 68%;
+  width: 100%;
 }
 </style>
