@@ -1,6 +1,5 @@
 <template>
   <div id="auth">
-    <navbar></navbar>
     <div class="auth past-events">
       <div class="container">
         <h3 class="center bold" v-if="message">{{ message }}</h3>
@@ -8,31 +7,22 @@
           <div class="auth__media">
             <img src="../assets/images/owl-auth.svg">
           </div>
-          <div class="auth__auth">
-            <div class="container mb-4">
-              <div class="row groups">
-                <div class="col-md-6 center group-active" id="signIn">
-                  <div class="group-text">
-                    <button @click="setAuthMode('signIn')">Вход</button>
-                  </div>
-                </div>
-                <div class="col-md-6 center" id="signUp">
-                  <div class="group-text">
-                    <button @click="setAuthMode('signUp')">Регистрация</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          <div class="auth__auth white-block">
             <div id="signInForm" v-if="signIn">
+              <h3 class="mb-4">Вход</h3>
               <p v-if="error.status" class="error">{{ error.message }}</p>
-              <p>Введите свой адрес электронной почты и пароль, чтобы продолжить</p>
               <form action="#" method="get" autocompelete="new-password" class="form" id="formLogin">
-                <label>Логин</label>
-                <input v-model="userName" type="text" name="login" placeholder="Введите имя пользователя..." required>
-                <label>Пароль</label>
-                <input v-model="password" type="password" name="password" placeholder="Введите пароль" autocomplete="off" required>
-                <button type="button" class="button button__accent w-50" @click="login()">Войти</button>
+                <div class="mb-3">
+                  <label class="form-label" for="UserNameField">Логин</label>
+                  <input v-model="userName" class="form-control" type="text" name="login" id="UserNameField"
+                         placeholder="Введите имя пользователя..." required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="PasswordField">Пароль</label>
+                  <input v-model="password" class="form-control" type="password" name="password" id="PasswordField"
+                         placeholder="Введите пароль" autocomplete="off" required>
+                </div>
+                <button type="button" class="my-4 button button__accent w-50" @click="login()">Войти</button>
               </form>
               <h6 class="left-align"><a href="#">Забыли пароль?</a></h6>
               <h6 class="left-align">У вас еще нет аккаунта?
@@ -41,42 +31,47 @@
             </div>
 
             <div id="signOutForm" v-if="signOut">
-              <h1 class="auth__title">Регистрация</h1>
-              <p>Заполните краткую анкету чтобы зарегистрироваться на сайте</p>
+              <h3 class="mb-4">Регистрация</h3>
               <form action="#" class="form">
-                <label>Логин</label>
-                <input v-model="userName" type="text" name="email" id='login' placeholder="Введите имя пользователя">
-                <label>Пароль</label>
-                <input v-model="password" type="password" name="password"
+                <label class="form-label mt-2">Логин</label>
+                <input v-model="userName" class="form-control" type="text" name="email" id='login'
+                       placeholder="Введите имя пользователя">
+                <label class="form-label mt-2">Пароль</label>
+                <input v-model="password" type="password" name="password" class="form-control"
                        id='password' placeholder="Введите пароль" autocomplete="off">
-                <label>Повтор пароля</label>
-                <input v-model="password2" type="password" name="password"
+                <label class="form-label mt-2">Повтор пароля</label>
+                <input v-model="password2" type="password" name="password" class="form-control"
                        id='password2' placeholder="Повторите пароль" autocomplete="off">
-                <label>Электронная почта</label>
-                <input v-model="email" type="email" name="email" id='email' placeholder="Введите email">
-                <label>Фамилия</label>
-                <input v-model="lastName" type="text" name="last_name" id='last_name' placeholder="Введите фамилию">
-                <label>Имя</label>
-                <input v-model="firstName" type="text" name="first_name" id='first_name' placeholder="Введите имя">
-                <label>Отчество</label>
-                <input v-model="middleName" type="text" name="middle_name" id='middle_name'
+                <label class="form-label mt-2">Электронная почта</label>
+                <input v-model="email" type="email" name="email" id='email'
+                       placeholder="Введите email" class="form-control">
+                <label class="form-label mt-2">Фамилия</label>
+                <input v-model="lastName" type="text" name="last_name" id='last_name' class="form-control"
+                       placeholder="Введите фамилию">
+                <label class="form-label mt-2">Имя</label>
+                <input v-model="firstName" type="text" name="first_name" id='first_name' class="form-control"
+                       placeholder="Введите имя">
+                <label class="form-label mt-2">Отчество</label>
+                <input v-model="middleName" type="text" name="middle_name" id='middle_name' class="form-control"
                        placeholder="Введите отчество">
-                <label>Телефон</label>
-                <input v-model="phone" type="text" name="phone" id='phone' placeholder="Введите номер телефона">
-                <label>Пол</label>
-                <div class="gender-field">
-                  <input type="radio" id="one" value="m" v-model="gender">
-                  <label for="one">Мужской</label>
+                <label class="form-label mt-2">Телефон</label>
+                <input v-model="phone" type="text" name="phone" id='phone' class="form-control"
+                       placeholder="Введите номер телефона">
+                <div class="mt-4">
+                  <label class="form-label">Пол</label>
+                  <div class="gender-field">
+                    <input type="radio" id="one" value="m" v-model="gender" class="form-check-input">
+                    <label class="form-check-label" for="one">Мужской</label>
+                  </div>
+                  <div class="gender-field">
+                    <input type="radio" id="two" value="f" v-model="gender" class="form-check-input">
+                    <label class="form-check-label" for="two">Женский</label>
+                  </div>
                 </div>
-                <div class="gender-field">
-                  <input type="radio" id="two" value="f" v-model="gender">
-                  <label for="two">Женский</label>
-                </div>
-                <hr/>
                 <ul v-if="error.status" class="error">
                   <li v-for="message in error.messageList">{{ message }}</li>
                 </ul>
-                <button type="button" class="button button__accent mt-4" @click="singUp">Зарегистрироваться</button>
+                <button type="button" class="button button__accent my-4" @click="singUp">Зарегистрироваться</button>
                 <h6 class="left-align mb-5">
                   Уже зарегистрированы? <a href="#" @click="setAuthMode('signIn')">Войти</a>
                 </h6>
@@ -283,5 +278,11 @@ export default {
 
 .error {
   color: red;
+}
+
+.white-block {
+  background-color: #fff;
+  padding: 40px 80px;
+  border-radius: 15px;
 }
 </style>
