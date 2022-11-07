@@ -579,7 +579,7 @@ class CreateTeacherForm(forms.Form):
     )
     password = forms.CharField(
         label='Пароль',
-        widget=forms.PasswordInput(
+        widget=forms.TextInput(
             attrs={'class': 'form-control', 'placeholder': 'Пароль...'}
         )
     )
@@ -666,6 +666,37 @@ class CreateStaffForm(CreateTeacherForm):
             attrs={'class': 'form-control'}
         )
     )
+
+
+class UpdateStaffForm(forms.ModelForm):
+    """ Форма регистрации сотрудника в CRM
+    """
+    middle_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите отчество...'}
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите номер телефона...'}
+        )
+    )
+    gender = forms.CharField(
+        widget=forms.Select(
+            choices=Teacher.GENDER_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    user_group = forms.CharField(
+        widget=forms.Select(
+            choices=Staff.USER_GROUP_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    class Meta:
+        model = Staff
+        fields = ('user_group', 'middle_name', 'phone', 'gender')
 
 
 class GroupForm(forms.ModelForm):
