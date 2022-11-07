@@ -1,0 +1,15 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-4">Удаление сотрудника</h4>
+                <hr/>
+            </div>
+            <form method="post">{% csrf_token %}
+                <p>Вы уверены, что хотите удалить сотрудника: "{{ object }}"?</p>
+                <input class="btn btn-primary" type="submit" value="Да">
+            </form>
+        </div>
+    </div>
+{% endblock %}

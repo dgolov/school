@@ -41,7 +41,10 @@ const routes = [
     path: '/auth',
     name: "Auth",
     component: Auth,
-    props: true
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
   },
   {
     path: '/profiles/:id',
