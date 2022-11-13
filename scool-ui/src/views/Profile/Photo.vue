@@ -1,16 +1,16 @@
 <template>
-  <div v-if="responseData" id="photo">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div v-if="isLoaded" class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
               <div class="col-md-12">
                 <div>
                   <button v-if="Number(id) === $store.state.authUser.id"
-                          class="gray-button upload-photo-button"
+                          class="btn gray-button upload-photo-button mb-3"
                           @click="showUploadModal">Загрузить фото</button>
                   <upload-photo-modal ref="uploadModal" :mode="'gallery'"
                                       @reLoad="createGetRequest(`/profile/${id}/gallery/`)"></upload-photo-modal>
@@ -59,6 +59,14 @@
               <h6 v-else class="mt-5">Вы не добавили ни одной фотографии</h6>
             </div>
           </div>
+          <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>
+          <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+                  objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +83,7 @@ import UploadPhotoModal from "../../components/Modal/UploadPhotoModal";
 import EditPhotoModal from "../../components/Modal/EditPhotoModal";
 import DeletePhotoModal from "../../components/Modal/DeletePhotoModal";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 
 export default {
@@ -88,7 +97,7 @@ export default {
   data() {
     return {
       slideIndex: 1,
-      header: 'Галерея',
+      header: 'Photo',
       photos: 0,
       likeImage: ''
     }
@@ -107,7 +116,9 @@ export default {
     this.likeImage = this.getSelfLikeImage()
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+      requestsMixin, redirect, openMenu
+  ],
 
   methods: {
     showUploadModal() {

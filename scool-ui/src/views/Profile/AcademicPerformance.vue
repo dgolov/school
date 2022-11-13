@@ -1,84 +1,81 @@
 <template>
-  <div id="academic-performance">
-    <navbar></navbar>
-    <div class="step landing__section past-events" style="background-color: #f7f7f7">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
-              <button v-if="addButton" class="gray-button" @click="addToTimeTable">Поставить оценку</button>
-              <button v-if="cancelButton" class="red-button" @click="cancelAdd">Отмена</button>
-              <label v-if="showAddCourse">Выберите курс</label>
-              <select v-if="showAddCourse" v-model="selectedCourse">
-                <option disabled value="">Выберите курс</option>
-                <option v-for="course in courseList" :value="course">{{course.name}}</option>
-              </select>
-              <label v-if="selectedCourse">Выберите тему урока</label>
-              <select v-model="lessonId" v-if="selectedCourse">
-                <option disabled value="">Выберите урок</option>
-                <option v-for="lesson in selectedCourse.lessons" :value="lesson.id">{{lesson.theme}}</option>
-              </select>
-              <label v-if="lessonId">Выберите студента</label>
-              <select v-if="lessonId" v-model="student">
-                <option disabled value="">Выберите студента</option>
-                <option v-for="student in selectedCourse.students" :value="student.id">
-                  {{ student.first_name }} {{ student.last_name }}
-                </option>
-              </select>
-              <label v-if="student">Выберите оценку</label>
-              <select v-model="grade" v-if="student">
-                <option disabled value="">Выберите оценку</option>
-                <option v-for="number in 10" :value="number">{{ number }}</option>
-              </select>
-              <label v-if="grade">Выберите тип оценки</label>
-              <select v-model="gradeType" v-if="grade">
-                <option disabled value="">Выберите тип оценки</option>
-                <option :value="'homework'">Домашняя работа</option>
-                <option :value="'classwork'">Классная работа</option>
-                <option :value="'test'">Контрольная работа</option>
-                <option :value="'examination'">Экзамен</option>
-              </select>
-              <label v-if="gradeType">Опоздание</label>
-              <select v-model="late" v-if="gradeType">
-                <option disabled value="">Выберите значение</option>
-                <option :value="true">Дa</option>
-                <option :value="false">Нет</option>
-              </select>
-              <label v-if="gradeType">Отсутствие</label>
-              <select v-model="absent" v-if="gradeType">
-                <option disabled value="">Выберите значение</option>
-                <option :value="true">Да</option>
-                <option :value="false">Нет</option>
-              </select>
-              <button v-if="gradeType" class="gray-button" @click="sendGrade">Поставить оценку</button>
-              <div class="row">
-                <div class="w-25"><h5 class="system-color">Дата</h5></div>
-                <div class="w-50"><h5 class="system-color">Тема урока</h5></div>
-                <div class="w-25"><h5 class="system-color">Оценка</h5></div>
+  <div class="cabinet-page">
+    <div class="container">
+      <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <div class="row">
+        <profile-menu :header="header"></profile-menu>
+        <div v-if="isLoaded" class="col-xl-10 col-lg-9">
+          <div class="cabinet-content">
+            <div class="results">
+              <div class="top-text">
+                Успеваемость
               </div>
-              <hr class="mb-4"/>
-              <div v-for="performance in responseData" :class="setClassList(performance.grade)" :id="performance.id">
-                <div class="row">
-                  <div class="w-25">
-                    <p class="date">{{ performance.date }}</p>
-                  </div>
-                  <div class="w-50">
-                    <p class="small_text">Курс: <a href="">{{ performance.lesson.course.name }}</a></p>
-                    <p>{{ performance.lesson.theme }}</p>
-                  </div>
-                  <div class="w-25">
-                    <p class="small_text pt-2">{{ getTypeGrade(performance.type_grade) }}</p>
-                    <p><b>{{ performance.grade }}</b>
-                      <a v-if="$store.state.profileInfo.user_group === 'teacher'" href=""
-                         @click="goTo('Profile', {id: performance.student.id})">
-                        ({{ performance.student.first_name }} {{ performance.student.last_name }})
-                      </a></p>
-                  </div>
-                </div>
-              </div>
-              <h6 v-if="responseData.length === 0" class="mt-5">{{ nullText }}</h6>
+              <table>
+                <thead>
+                <tr>
+                  <td>Название курса:</td>
+                  <td>Пройдено уроков:</td>
+                  <td>Средний балл:</td>
+                  <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <template v-for="course in courseList">
+                  <tr>
+                    <td>
+                      <div class="name">
+                        <div>{{ course.name }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="slider">
+                        <p>{{ getLessonCount(course) }} из {{ course.lesson_count }}</p>
+                        <div><span :style="{width: getLessonPercent(course)}"></span></div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="prog color1">
+                        <span>{{ getAverageGrade(course) }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <a class="link" @click="openAcademicPerformance"></a>
+                    </td>
+                  </tr>
+                  <tr class="info">
+                    <td colspan="4">
+                      <table>
+                        <thead>
+                        <tr>
+                          <td>Дата</td>
+                          <td>Тема урока</td>
+                          <td>Оценка</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <template v-for="performance in responseData">
+                            <tr v-if="performance.lesson.course.id === course.id">
+                              <td class="w-30">{{ performance.date }}</td>
+                              <td class="w-50">{{ performance.lesson.theme }}</td>
+                              <td :class="setClassList(performance.grade)">{{ performance.grade }}</td>
+                            </tr>
+                          </template>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </template>
+                </tbody>
+              </table>
             </div>
+          </div>
+        </div>
+        <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>
+        <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+                objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
+        <div class="col-xl-10 col-lg-9">
+          <div class="cabinet-copy">
+            © Академия будущего «ХОД», 2022
           </div>
         </div>
       </div>
@@ -91,8 +88,8 @@ import Navbar from "../../components/Navbar";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
-import {friendMixin} from "../../components/mixins/friendMixin";
 import axios from "axios";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -100,10 +97,10 @@ export default {
 
   data() {
     return {
-      header: 'Успеваемость',
-      classSuccess: 'success',
-      classNormal: 'normal',
-      classBad: 'bad',
+      header: 'AcademicPerformance',
+      classSuccess: 'w-20 color1',
+      classNormal: 'w-20 color3',
+      classBad: 'w-20 color2',
       defaultClassList: 'row row_list pt-4 ',
       nullText: '',
       courseList: [],
@@ -124,22 +121,60 @@ export default {
     Navbar, ProfileMenu
   },
 
-  mixins: [requestsMixin, redirect],
+  mixins: [
+    requestsMixin, redirect, openMenu
+  ],
 
   created() {
     this.createGetRequest('/performance/')
+    this.GetCourses()
     if (this.$store.state.profileInfo.user_group === 'student') {
       this.nullText = "Вы пока еще не получили ни одной оценки";
     } else if (this.$store.state.profileInfo.user_group === 'teacher') {
       this.nullText = "Вы пока еще не поставили ни одной оценки";
       this.addButton = true;
-      this.courseList = this.$store.state.profileInfo.courses
     } else {
       this.nullText = "Оценки отсутствуют";
     }
   },
 
   methods: {
+    getAverageGrade(course) {
+      let sumGrade = 0;
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          sumGrade += item.grade
+          count += 1
+        }
+      }
+      let result = sumGrade / count
+      if (!result) {
+        return '-'
+      }
+      return result
+    },
+
+    getLessonCount(course) {
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          count += 1
+        }
+      }
+      return count
+    },
+
+    getLessonPercent(course) {
+      let count = 0;
+      for (let item of this.responseData) {
+        if (item.lesson.course.id === course.id) {
+          count += 1
+        }
+      }
+      return count / course.lesson_count * 100 + '%'
+    },
+
     setClassList(grade) {
       let classList = this.defaultClassList
       if (grade < 4) {
@@ -155,7 +190,7 @@ export default {
     getImage(url) {
       // Некоторые данные приходят с сервера с абсолютным адресом, некоторые с относительным, вероятно из-за ViewSets
       // Данный метод временно решает эту проблему
-      if (url.indexOf('http://127.0.0.1:8000') === -1) {
+      if (url.indexOf('${this.$store.state.backendUrl}') === -1) {
         return `${this.$store.getters.getServerUrl}${url}`
       } else {
         return url
@@ -182,21 +217,23 @@ export default {
       this.date = ''
     },
 
-    getTypeGrade(type_grade) {
-      switch (type_grade) {
-        case ('homework'): {
-          return 'Домашняя работа'
-        }
-        case ('classwork'): {
-          return 'Классная работа'
-        }
-        case ('test'): {
-          return 'Контрольная работа'
-        }
-        case ('examination'): {
-          return 'Экзамен'
-        }
-      }
+    openAcademicPerformance() {
+      $('.cabinet-page .cabinet-content .results table tbody tr td .link').click(function() {
+        $(this).toggleClass('active');
+        $(this).parent().parent().toggleClass('active');
+        $(this).parent().parent().next('.info').toggle();
+      });
+    },
+
+    async GetCourses() {
+      const axiosInstance = axios.create(this.base);
+
+      await axiosInstance({
+        url: "/courses/available/",
+        method: "get",
+        params: {},
+      })
+          .then((response) => this.courseList = response.data)
     },
 
     async sendGrade() {
@@ -231,29 +268,4 @@ export default {
 </script>
 
 <style scoped>
-.success {
-  background-color: #bae5c6;
-}
-
-.normal {
-  background-color: #f7f1d0;
-}
-
-.bad {
-  background-color: #ffd6d6;
-}
-
-.small_text {
-  color: gray;
-  font-size: 12px;
-  margin: 0;
-}
-
-.date {
-  margin-top: 7px;
-}
-
-.main-section {
-  background-color: #f7f7f7;
-}
 </style>

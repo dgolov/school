@@ -414,11 +414,6 @@ class CourseForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
-    price = forms.IntegerField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'Введите цену курса...'}
-        )
-    )
     duration = forms.IntegerField(
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
@@ -428,12 +423,6 @@ class CourseForm(forms.ModelForm):
         widget=forms.Select(
             choices=Course.TYPE_CHOICES,
             attrs={'class': 'form-control single-select select2-hidden-accessible'}
-        )
-    )
-    color_hex = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
         )
     )
     complexity = forms.CharField(
@@ -448,12 +437,29 @@ class CourseForm(forms.ModelForm):
             attrs={'class': 'form-control'}
         )
     )
+    lesson_count = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    start_date = forms.DateField(
+        required=False,
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
+    end_date = forms.DateField(
+        required=False,
+        widget=AdminDateWidget(
+            attrs={'class': 'form-control', 'type': "date"}
+        )
+    )
 
     class Meta:
         model = Course
         fields = (
-            'category', 'name', 'price', 'duration', 'education_type', 'description', 'poster', 'video_presentation',
-            'complexity', 'color_hex'
+            'category', 'name', 'duration', 'education_type', 'description', 'poster', 'video_presentation',
+            'complexity', 'start_date', 'end_date', 'lesson_count'
         )
 
 
@@ -573,7 +579,7 @@ class CreateTeacherForm(forms.Form):
     )
     password = forms.CharField(
         label='Пароль',
-        widget=forms.PasswordInput(
+        widget=forms.TextInput(
             attrs={'class': 'form-control', 'placeholder': 'Пароль...'}
         )
     )
@@ -662,6 +668,37 @@ class CreateStaffForm(CreateTeacherForm):
     )
 
 
+class UpdateStaffForm(forms.ModelForm):
+    """ Форма регистрации сотрудника в CRM
+    """
+    middle_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Введите отчество...'}
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Укажите номер телефона...'}
+        )
+    )
+    gender = forms.CharField(
+        widget=forms.Select(
+            choices=Teacher.GENDER_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+    user_group = forms.CharField(
+        widget=forms.Select(
+            choices=Staff.USER_GROUP_CHOICES,
+            attrs={'class': 'form-control'}
+        )
+    )
+
+    class Meta:
+        model = Staff
+        fields = ('user_group', 'middle_name', 'phone', 'gender')
+
+
 class GroupForm(forms.ModelForm):
     """ Форма добавления и редактирования учебной группы в CRM
     """
@@ -670,10 +707,16 @@ class GroupForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': 'Введите название курса...'}
         )
     )
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={'class': 'form-control'}
+        )
+    )
 
     class Meta:
         model = Group
-        fields = ('name', )
+        fields = ('name', 'description')
 
 
 class CostCategoryForm(forms.ModelForm):

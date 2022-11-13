@@ -1,9 +1,7 @@
 <template>
-  <div class="row my-3" id="hide-block">
-    <div class="center">
+  <div class="item" id="hide-block">
       <img src="../../assets/images/icons/padlock.svg" class="padlock">
       <p class="mt-3">Для просмотра подробной информации добавьте пользователя в друзья.</p>
-    </div>
   </div>
 </template>
 
@@ -18,6 +16,8 @@ export default {
 <style scoped>
 #hide-block {
   color: gray;
+  text-align: center;
+  padding: 80px 0;
 }
 
 .padlock {

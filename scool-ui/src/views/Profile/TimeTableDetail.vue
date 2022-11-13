@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navbar></navbar>
     <div class="step landing__section main-section past-events">
       <div class="page">
         <div class="container mt-1">
@@ -50,6 +49,7 @@ import DatePicker from "vue2-datepicker";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import {getDateTime} from "../../components/mixins/getDateTime";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   name: "TimeTableDetail",
@@ -64,7 +64,9 @@ export default {
     id: String,
   },
 
-  mixins: [requestsMixin, redirect, getDateTime],
+  mixins: [
+      requestsMixin, redirect, getDateTime, openMenu
+  ],
 
   created() {
     this.createGetRequest(`/timetable/${this.id}`)

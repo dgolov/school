@@ -15,13 +15,6 @@ Vue.component("082022-layout", Layout082022);
 
 Vue.config.productionTip = true
 
-// Make BootstrapVue available throughout your project
-// import  'bootstrap/dist/css/bootstrap.css'
-// import  'bootstrap-vue/dist/bootstrap-vue.css'
-// Optionally install the BootstrapVue icon components plugin
-
-// Vue.use(BootstrapVue)
-// Vue.use(IconsPlugin)
 Vue.use(VueAxios, axios)
 Vue.use(loader);
 Vue.mixin(titleMixin)

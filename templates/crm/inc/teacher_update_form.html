@@ -5,13 +5,15 @@
     <div class="col-md-4">
         <div class="form-group mt-4">
             <label>Фамилия</label>
-            <input class="form-control" type="text" placeholder="Укажите фамилию..." value="{{ teacher.user.last_name }}">
+            <input class="form-control" type="text" placeholder="Укажите фамилию..." value="{{ teacher.user.last_name }}"
+                   name="last_name" id="last_name">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group mt-4">
             <label>Имя</label>
-            <input class="form-control" type="text" placeholder="Укажите имя..." value="{{ teacher.user.first_name }}">
+            <input class="form-control" type="text" placeholder="Укажите имя..." value="{{ teacher.user.first_name }}"
+                   name="first_name" id="first_name">
         </div>
     </div>
     <div class="col-md-4">
@@ -29,7 +31,8 @@
     <div class="col-md-6">
         <div class="form-group mt-4">
             <label>Электронная почта</label>
-            <input class="form-control" type="email" placeholder="Укажите электронную почту..." value="{{ teacher.user.email }}">
+            <input class="form-control" type="email" placeholder="Укажите электронную почту..." value="{{ teacher.user.email }}"
+                   name="email" id="email">
         </div>
     </div>
     <div class="col-md-6">

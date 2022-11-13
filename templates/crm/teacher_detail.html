@@ -10,9 +10,13 @@
                             <h4 class="mb-0">{{ teacher.get_fio }}</h4>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <a type="button" href="{% url 'update_teacher' pk=teacher.pk %}"
                            class="btn btn-outline-primary m-1 px-5" style="float: right;">Редактировать</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a type="button" href="{% url 'delete_teacher' pk=teacher.pk %}"
+                           class="btn btn-outline-primary m-1 px-5" style="float: right;">Удалить</a>
                     </div>
                 </div>
                 {% if messages %}

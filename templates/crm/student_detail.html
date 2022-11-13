@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-7 border-right">
                         <div class="d-md-flex align-items-center">
-                            <div class="ml-md-4 flex-grow-1">
+                            <div class="ml-md-4 flex-grow-1 mt-4 mb-3">
                                 <h3>Информация</h3>
                                 <table class="table table-sm table-borderless mt-md-0 mt-3">
                                     <tbody>
@@ -79,10 +79,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-5 mt-4">
+                    <div class="col-12 col-lg-5 mt-4 mb-3">
                         <h3>Контакты</h3>
                         <table class="table table-sm table-borderless mt-md-0 mt-3">
                             <tbody>
+                            <tr>
+                                <th>Логин:</th>
+                                <td>{{ student.user.username }}</td>
+                            </tr>
                             <tr>
                                 <th>Номер телефона:</th>
                                 <td><a href="tel: {{ student.phone }}">{{ student.phone }}</a></td>
@@ -90,8 +94,8 @@
                             <tr>
                                 <th>Email:</th>
                                 <td>
-                                    {% if student.email %}
-                                        <a href="mailto: {{ student.email }}">{{ student.email }}</a>
+                                    {% if student.user.email %}
+                                        <a href="mailto: {{ student.user.email }}">{{ student.user.email }}</a>
                                     {% else %}
                                         Не указано
                                     {% endif %}

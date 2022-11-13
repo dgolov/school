@@ -63,6 +63,7 @@ class ProfileSerializerBase(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
+    friends = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Profile
@@ -83,6 +84,12 @@ class ProfileSerializerBase(serializers.ModelSerializer):
     @staticmethod
     def get_email(obj):
         return obj.user.email
+
+    @staticmethod
+    def get_friends(obj):
+        query_set = models.User.objects.filter(profile__friends=obj.user)
+        friends_serializer = UserSerializer(query_set, many=True)
+        return friends_serializer.data
 
 
 class AvatarSerializer(serializers.ModelSerializer):
@@ -257,20 +264,26 @@ class CourseSerializerFromTeacher(serializers.ModelSerializer):
 class GroupRetrieveSerializer(serializers.ModelSerializer):
     """ Детальная сериализация модели групп (со списком одногруппников)
     """
-    teacher = ProfileSerializer()
     manager = EducationalManagerSerializer()
     students = serializers.SerializerMethodField()
+    teachers = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'teacher', 'manager', 'students'
+            'id', 'name', 'manager', 'students', 'teachers', 'description', 'created_at', 'updated_at', 'image'
         ]
 
     @staticmethod
     def get_students(obj):
         students = obj.student_groups.all()
         serializer = ProfileSerializer(students, many=True)
+        return serializer.data
+
+    @staticmethod
+    def get_teachers(obj):
+        teachers = obj.teacher_groups.all()
+        serializer = ProfileSerializer(teachers, many=True)
         return serializer.data
 
 
@@ -442,7 +455,8 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
-            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city'
+            'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city', 'start_date', 'end_date',
+            'lesson_count'
         ]
 
     @staticmethod
@@ -456,12 +470,26 @@ class GroupSerializer(serializers.ModelSerializer):
     """ Сериализация модели групп
     """
     courses = CourseSerializer(read_only=False, many=True)
+    students = serializers.SerializerMethodField()
+    teachers = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Group
         fields = [
-            'id', 'name', 'courses'
+            'id', 'name', 'courses', 'students', 'teachers'
         ]
+
+    @staticmethod
+    def get_students(obj):
+        students = obj.student_groups.all()
+        serializer = ProfileSerializer(students, many=True)
+        return serializer.data
+
+    @staticmethod
+    def get_teachers(obj):
+        teachers = obj.teacher_groups.all()
+        serializer = ProfileSerializer(teachers, many=True)
+        return serializer.data
 
 
 class TeacherDetailSerializer(ProfileSerializerBase):

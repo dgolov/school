@@ -8,8 +8,9 @@ from django.db.models import Q, Sum
 from django.db.models.functions import TruncMonth
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, DeleteView
 
 from management.classes import PaymentManager
 from management import forms
@@ -732,7 +733,7 @@ class CreateLessonView(CreateView):
         if materials:
             new_lesson.materials = materials
             new_lesson.save()
-        return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
+        return HttpResponseRedirect(f'/api/crm/courses/lessons/{new_lesson.pk}')
 
 
 class UpdateLessonView(UpdateView):
@@ -755,9 +756,6 @@ class UpdateLessonView(UpdateView):
             new_lesson.materials = materials
             new_lesson.save()
         return HttpResponseRedirect(f'/api/crm/courses/lessons/{self.get_object().pk}')
-
-    # def get_success_url(self):
-    #     return f'/api/crm/courses/lessons/{self.get_object().pk}'
 
 
 class TimeTableListView(ListView):
@@ -988,7 +986,21 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
 
     def form_valid(self, form):
         form.save()
+        first_name = self.request.POST.get('first_name', None)
+        last_name = self.request.POST.get('last_name', None)
+        email = self.request.POST.get('email', None)
         teacher = self.get_object()
+
+        if first_name:
+            teacher.user.first_name = first_name
+            teacher.user.save()
+        if last_name:
+            teacher.user.last_name = last_name
+            teacher.user.save()
+        if email:
+            teacher.user.email = email
+            teacher.user.save()
+
         self.update_teacher_groups(teacher, self.request)
         self.update_teacher_courses(teacher, self.request)
         return HttpResponseRedirect(f'/api/crm/teachers/{self.get_object().pk}')
@@ -996,6 +1008,19 @@ class UpdateTeacherView(UpdateView, TeacherMixin):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
         return HttpResponseRedirect(f'/api/crm/teachers/{self.get_object().pk}')
+
+
+class DeleteTeacherView(DeleteView):
+    """ Удаление преподавателя в CRM
+    """
+    model = Teacher
+    template_name = 'crm/delete_teacher.html'
+    success_url = reverse_lazy('teachers')
+
+    def get_context_data(self, **kwargs):
+        context = super(DeleteTeacherView, self).get_context_data()
+        context['title'] = 'Удаление преподавателя'
+        return context
 
 
 class StudentListView(ListView):
@@ -1094,7 +1119,7 @@ class CreateStudentView(FormView):
             )
         except IntegrityError:
             messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Пользователь уже существует.')
-        return HttpResponseRedirect('/api/crm/staffs/create')
+        return HttpResponseRedirect('/api/crm/students/create')
 
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, 'Ошибка регистрации. Введены некорректные данные.')
@@ -1210,6 +1235,55 @@ class CreateStaffView(FormView):
         return HttpResponseRedirect('/api/crm/staffs')
 
 
+class UpdateStaffView(UpdateView):
+    """ Редактирование сотрудника в CRM
+    """
+    model = Staff
+    template_name = 'crm/update_staff.html'
+    form_class = forms.UpdateStaffForm
+    context_object_name = 'staff'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateStaffView, self).get_context_data()
+        context['title'] = 'Редактирование сотрудника'
+        return context
+
+    def form_valid(self, form):
+        staff = form.save()
+        first_name = self.request.POST.get('first_name', None)
+        last_name = self.request.POST.get('last_name', None)
+        email = self.request.POST.get('email', None)
+
+        if first_name:
+            staff.user.first_name = first_name
+            staff.user.save()
+        if last_name:
+            staff.user.last_name = last_name
+            staff.user.save()
+        if email:
+            staff.user.email = email
+            staff.user.save()
+
+        return HttpResponseRedirect(f'/api/crm/staffs/{self.get_object().pk}')
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 'Ошибка обновления пользователя.')
+        return HttpResponseRedirect(f'/api/crm/staffs/{self.get_object().pk}')
+
+
+class DeleteStaffView(DeleteView):
+    """ Удаление сотрудника в CRM
+    """
+    model = Staff
+    template_name = 'crm/delete_staff.html'
+    success_url = reverse_lazy('staffs')
+
+    def get_context_data(self, **kwargs):
+        context = super(DeleteStaffView, self).get_context_data(**kwargs)
+        context['title'] = 'Удаление сотрудника'
+        return context
+
+
 class GroupListView(ListView):
     """ Список учебных групп в CRM
     """
@@ -1230,7 +1304,7 @@ class GroupListView(ListView):
 
 
 class GroupDetailView(DetailView, GroupMixin):
-    """ Детальное представление учебной группы  в CRM
+    """ Детальное представление учебной группы в CRM
     """
     model = Group
     template_name = 'crm/group_detail.html'

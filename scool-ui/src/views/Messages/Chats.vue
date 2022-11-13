@@ -1,20 +1,18 @@
 <template>
-  <div id="chats">
-    <navbar></navbar>
-    <div class="step landing__section main-section past-events">
-      <div class="page">
-        <div class="container mt-1">
-          <div class="page__inner">
-            <profile-menu :header="header"></profile-menu>
-            <div class="page__main">
-              <div class="row">
+  <div id="profile">
+    <div class="cabinet-page">
+      <div class="container">
+        <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+        <div class="row">
+          <profile-menu :header="header"></profile-menu>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-content">
+              <div class="row mb-4">
                 <div class="col-md-9">
-                  <form>
-                    <input type='text' placeholder="Поиск" class="w-100">
-                  </form>
+                  <div class="list-name bold mb-4">Чаты</div>
                 </div>
                 <div class="col-md-3">
-                  <button class="gray-button create-button;" @click="goTo('CreateGroupChat')"
+                  <button class="btn gray-button create-button;" @click="goTo('CreateGroupChat')"
                           @reLoad="createGetRequest('dialogs');">
                     Создать группу
                   </button>
@@ -47,6 +45,12 @@
               <h6 v-if="responseData.length === 0" class="mt-5">Список сообщений пуст</h6>
             </div>
           </div>
+          <div class="col-xl-2 col-lg-3"></div>
+          <div class="col-xl-10 col-lg-9">
+            <div class="cabinet-copy">
+              © Академия будущего «ХОД», 2022
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -60,6 +64,7 @@ import {requestsMixin} from "../../components/mixins/requestsMixin";
 import {redirect} from "../../components/mixins/redirect";
 import {getDateTime} from "../../components/mixins/getDateTime";
 import {dialogMixin} from "../../components/mixins/dialogMixin";
+import {openMenu} from "../../components/mixins/openMenu";
 
 export default {
   title: 'Академия будущего | Личный кабинет',
@@ -67,7 +72,7 @@ export default {
 
   data() {
     return {
-      header: 'Сообщения',
+      header: 'Chats',
       messagesAreaClass: 'messages_area',
       newMessagesAreaClass: 'new_messages_area',
       last_message_area_didnt_read: 'last_message_area_didnt_read',
@@ -79,7 +84,9 @@ export default {
     Navbar, ProfileMenu
   },
 
-  mixins: [requestsMixin, redirect, getDateTime, dialogMixin],
+  mixins: [
+      requestsMixin, redirect, getDateTime, dialogMixin, openMenu
+  ],
 
   created() {
     this.createGetRequest('/dialogs/');
