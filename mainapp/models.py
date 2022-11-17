@@ -155,6 +155,19 @@ class StudentAgeGroup(models.Model):
         verbose_name_plural = '01. Пользователи - Возрастные группы'
 
 
+class Achievement(models.Model):
+    """ Модель ачивок
+    """
+    name = models.CharField(max_length=100, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание')
+    image_disable = models.ImageField(upload_to='images/achievement', verbose_name='Изображение не активной награды')
+    image_enable = models.ImageField(upload_to='images/achievement', verbose_name='Изображение активной награды')
+
+    class Meta:
+        verbose_name = 'Ачивки'
+        verbose_name_plural = '01. Пользователи - Ачивки'
+
+
 class Student(Profile):
     """ Модель обучающихся
     """
@@ -173,6 +186,12 @@ class Student(Profile):
         blank=True,
         verbose_name='Доступные курсы',
         related_name='student_courses'
+    )
+    achievement = models.ManyToManyField(
+        Achievement,
+        blank=True,
+        verbose_name='ачивки',
+        related_name='achievement'
     )
 
     class Meta:
