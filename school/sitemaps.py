@@ -5,7 +5,7 @@ from mainapp.models import Course, Event
 
 
 class Site:
-    domain = 'f-academy.ru'
+    domain = 'crm.f-academy.ru'
 
 
 class MainSitemap(Sitemap):

@@ -7,6 +7,6 @@ Disallow: /connectors/
 Disallow: /index.php
 Disallow: *?
 
-Host: https://f-academy.ru/
+Host: https://crm.f-academy.ru/
 
-Sitemap: https://f-academy.ru/sitemap.xml
+Sitemap: https://crm.f-academy.ru/sitemap.xml
