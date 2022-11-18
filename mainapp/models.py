@@ -92,6 +92,9 @@ class Achievement(models.Model):
     image_disable = models.ImageField(upload_to='images/achievement', verbose_name='Изображение не активной награды')
     image_enable = models.ImageField(upload_to='images/achievement', verbose_name='Изображение активной награды')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Ачивки'
         verbose_name_plural = '01. Пользователи - Ачивки'
