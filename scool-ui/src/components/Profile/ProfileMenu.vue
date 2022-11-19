@@ -72,7 +72,8 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="#" @click="goTo('Achievement', {id: $store.state.authUser.id})"
+             :class="getActive('Achievement')">
             <span><img src="../../assets/images/cabinet/img/cabinet-menu14.svg"></span> Награды
           </a>
         </li>

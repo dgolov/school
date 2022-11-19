@@ -34,7 +34,7 @@ class BuyingCourseManager:
             # Покупать курсы можно только с правами соответствующими возрастной категории студента
             # return {"message": "Not suitable age category"}, status.HTTP_403_FORBIDDEN
         response = self.get_paid_status_from_yookassa()
-        print(response)
+        # print(response)
         # add_order.delay(self.profile.id, course.id, response)
         # student.courses.add(course)
         return response, status.HTTP_201_CREATED

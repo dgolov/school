@@ -415,7 +415,7 @@ class CourseForm(forms.ModelForm):
         )
     )
     duration = forms.IntegerField(
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={'class': 'form-control'}
         )
     )
@@ -438,7 +438,7 @@ class CourseForm(forms.ModelForm):
         )
     )
     lesson_count = forms.IntegerField(
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={'class': 'form-control'}
         )
     )

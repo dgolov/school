@@ -95,11 +95,20 @@ class ProfileSerializerBase(serializers.ModelSerializer):
 class AvatarSerializer(serializers.ModelSerializer):
     """ Серилизация аватарки
     """
-
     class Meta:
         model = models.Photo
         fields = [
             'id', 'image',
+        ]
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    """ Серилизация ачивки
+    """
+    class Meta:
+        model = models.Achievement
+        fields = [
+            'id', 'name', 'description', 'image_disable', 'image_enable'
         ]
 
 
@@ -108,12 +117,14 @@ class ProfileSerializer(ProfileSerializerBase):
         Для отображения пользователя в общем списке (не друзей)
     """
     avatar = AvatarSerializer()
+    achievement = AchievementSerializer(many=True)
 
     class Meta:
         model = models.Profile
         fields = [
             'id', 'user', 'username', 'first_name', 'last_name', 'middle_name', 'gender', 'avatar', 'user_group',
-            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about', 'is_show'
+            'friends', 'followers', 'friend_request_in', 'friend_request_out', 'is_active', 'about', 'is_show',
+            'achievement'
         ]
 
 
@@ -402,6 +413,22 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Category
         fields = '__all__'
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    """ Серилизация модели ачивок
+    """
+    class Meta:
+        model = models.Achievement
+        fields = '__all__'
+
+
+class ProfileAchievementSerializer(serializers.ModelSerializer):
+    """ Серилизация модели ачивок пользователя
+    """
+    class Meta:
+        model = models.Profile
+        fields = ['achievement']
 
 
 class SkillSerializer(serializers.ModelSerializer):

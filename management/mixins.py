@@ -4,7 +4,7 @@ from typing import Type
 from django.contrib import messages
 from django.db.models import Q
 
-from mainapp.models import Student, Teacher, Course, Group, Timetable, Lesson
+from mainapp.models import Student, Teacher, Course, Group, Timetable, Lesson, Achievement
 from management.models import Client, Request
 
 
@@ -217,6 +217,22 @@ class StudentMixin:
         return
 
     @staticmethod
+    def update_student_achievements(student, request) -> None:
+        """ Добавляет ачивку в список ачивок студента
+        :param student: студент
+        :param request: Объект запроса содержит в себе список ачивок
+        """
+        try:
+            achievement_list = request.POST.getlist('achievements')
+            if achievement_list:
+                for achievement in achievement_list:
+                    student.achievement.add(achievement)
+                messages.add_message(request, messages.SUCCESS, 'Ачивки успешно добавлены.')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, 'Ошибка добавления ачивок.')
+        return
+
+    @staticmethod
     def delete_course(request, student, course_id) -> None:
         """ Удаление курса из списка курсов студента
         :param request: объект запроса
@@ -245,6 +261,21 @@ class StudentMixin:
             return
         student.group_list.remove(group)
         messages.add_message(request, messages.SUCCESS, f'Группа {group} успешно удалена.')
+
+    @staticmethod
+    def delete_achievement(request, student, achievement_id) -> None:
+        """ Удаление ачивки из списка групп студена
+        :param request: объект запроса
+        :param student: объект студента
+        :param achievement_id: id удаляемой ачивки
+        """
+        try:
+            achievement = Achievement.objects.get(pk=achievement_id)
+        except Achievement.DoesNotExist:
+            messages.add_message(request, messages.ERROR, 'Ошибка удаления ачивки.')
+            return
+        student.achievement.remove(achievement)
+        messages.add_message(request, messages.SUCCESS, f'Ачивка {achievement} успешно удалена.')
 
 
 class TimeTAbleMixin:
@@ -380,9 +411,6 @@ class StatisticMixin:
         """
         academic_performance_sum = 0
 
-        print(academic_performance)
-
-        print(1)
         for item in academic_performance:
             try:
                 academic_performance_sum += item.grade
@@ -393,7 +421,6 @@ class StatisticMixin:
         try:
             return academic_performance_sum / academic_performance_count
         except Exception as e:
-            print(e)
             return 'Отсутствует'
 
     @staticmethod

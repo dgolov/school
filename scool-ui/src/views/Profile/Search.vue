@@ -5,14 +5,6 @@
       <div class="row">
         <profile-menu :header="header"></profile-menu>
         <div v-if="isLoaded" class="col-xl-10 col-lg-9">
-          <div class="row mb-5 mt-3">
-            <div class="col-md-6 px-5">
-              <a href="#" class="user-menu" @click="getStudents()">Студенты</a>
-            </div>
-            <div class="col-md-6 px-5">
-              <a href="#" class="user-menu" @click="getTeachers()">Преподаватели</a>
-            </div>
-          </div>
           <profiles-list :profiles="responseData" @reLoad="reloadList()"></profiles-list>
         </div>
         <div v-if="isLoaded" class="col-xl-2 col-lg-3"></div>

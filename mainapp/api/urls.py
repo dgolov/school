@@ -43,6 +43,8 @@ urlpatterns = [
     path('profile/upload-avatar/', views.UploadAvatarView.as_view(), name='upload_avatar'),
     path('profile/set-avatar/', views.SetAvatarView.as_view(), name='set_avatar'),
     path('profile/like-photo/', views.LikePhotoView.as_view(), name='like-photo'),
+    path('profile/achievement/', views.AchievementListView.as_view(), name='achievement'),
+    path('profile/<int:pk>/achievement/', views.StudentAchievementListView.as_view(), name='student_achievement'),
     # Courses
     path('categories/', views.CategoryListView.as_view(), name='categories'),
     path('courses/buy/', views.BuyingACourseView.as_view(), name='buy-course'),
