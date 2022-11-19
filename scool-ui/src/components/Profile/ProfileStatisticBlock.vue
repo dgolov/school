@@ -1,11 +1,15 @@
 <template>
   <div class="counts">
     <div class="count">
-      <span>{{ profile.friends.length }}</span>
+      <a href="#" @click="goTo('Friends', {id: profile.id})" class="statistic-link">
+        <span>{{ profile.friends.length }}</span>
+      </a>
       Друзья
     </div>
     <div class="count">
-      <span>{{ profile.followers.length }}</span>
+      <a href="#" @click="goTo('Followers', {id: profile.id})" class="statistic-link">
+        <span>{{ profile.followers.length }}</span>
+      </a>
       Подписчики
     </div>
     <div class="count">
@@ -13,7 +17,9 @@
       Подписки
     </div>
     <div class="count">
-      <span>{{ profile.photos.length }}</span>
+      <a href="#" @click="goTo('Photo', {id: profile.id})" class="statistic-link">
+        <span>{{ profile.photos.length }}</span>
+      </a>
       Фотографии
     </div>
   </div>
@@ -34,4 +40,7 @@ export default {
 
 
 <style scoped>
+.statistic-link {
+  text-decoration: none;
+}
 </style>
