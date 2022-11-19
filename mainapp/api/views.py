@@ -136,6 +136,7 @@ class PersonalProfileView(viewsets.ModelViewSet):
 
 class FriendsListView(ListAPIView):
     """ Эндпоинт друзей профиля """
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.FriendsSerializer
 
     def list(self, request, *args, **kwargs):
@@ -218,10 +219,17 @@ class FriendResponseView(APIView, AddFriendMixin):
 
 
 class AchievementListView(ListAPIView):
-    """ Эндпоинт списка категорий курсов
+    """ Эндпоинт списка всех ачивок
     """
+    permission_classes = [IsAuthenticated]
     queryset = models.Achievement.objects.all()
     serializer_class = serializers.AchievementSerializer
+
+
+class StudentAchievementListView(FriendsListView):
+    """ Эндпоинт списка ачивок студента
+    """
+    serializer_class = serializers.ProfileAchievementSerializer
 
 
 # GROUPS
