@@ -22,7 +22,7 @@
         <div class="flex">
           <div class="item" v-for="friend in profile.friends.slice(0, 9)">
             <img v-if="friend.avatar" class="profile-avatar left"
-                 :src="`${friend.avatar.image}`"
+                 :src="`${friend.avatar}`"
                  @click="goTo('Profile', {id: friend.profile_id})">
             <img v-else src="../../assets/images/avatars/mike2.jpeg"
                  class="profile-avatar left" @click="goTo('Profile', {id: friend.profile_id})">
