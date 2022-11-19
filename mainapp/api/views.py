@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
@@ -51,6 +51,8 @@ class StudentsViewSet(BaseProfileViewSet):
     """
     queryset = models.Student.objects.all()
     detail_serializer_class = serializers.ProfileSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('user__first_name', 'middle_name', 'user__last_name')
 
 
 class TeachersViewSet(BaseProfileViewSet):
@@ -224,6 +226,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.GroupSerializer
     serializer_class_by_action = {'retrieve': serializers.GroupRetrieveSerializer}
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
     def get_queryset(self):
         item_profile = self.request.user.profile
