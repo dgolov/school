@@ -17,7 +17,7 @@ from management import forms
 from management.models import Client, Contract, Order, Vacancy, Interview, Request, Cost, CostCategory, Staff
 from management.mixins import GroupMixin, CourseMixin, FilterMixin, TeacherMixin, StudentMixin, TimeTAbleMixin, \
     StatisticMixin
-from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group
+from mainapp.models import Course, Lesson, Timetable, AcademicPerformance, Teacher, Student, Group, Achievement
 
 from datetime import datetime, timedelta
 
@@ -1080,11 +1080,14 @@ class StudentDetailView(DetailView, StudentMixin, StatisticMixin):
         """ Удаление курсов и групп в детальном представлении студента """
         course_id = request.POST.get('delete-course', None)
         group_id = request.POST.get('delete-group', None)
+        achievement_id = request.POST.get('delete-achievement', None)
 
         if course_id:
             self.delete_course(request, self.get_object(), course_id)
         elif group_id:
             self.delete_group(request, self.get_object(), group_id)
+        elif achievement_id:
+            self.delete_achievement(request, self.get_object(), achievement_id)
 
         return HttpResponseRedirect(f'/api/crm/students/{self.get_object().id}')
 
@@ -1139,12 +1142,14 @@ class UpdateStudentView(UpdateView, StudentMixin):
         context['title'] = 'Редактирование студента'
         context['group_list'] = Group.objects.all().exclude(student_groups=self.get_object())
         context['course_list'] = Course.objects.all().exclude(student_courses=self.get_object())
+        context['achievement_list'] = Achievement.objects.all().exclude(achievement=self.get_object())
         return context
 
     def form_valid(self, form):
         student = form.save()
         self.update_student_groups(student, self.request)
         self.update_student_courses(student, self.request)
+        self.update_student_achievements(student, self.request)
         return HttpResponseRedirect(f'/api/crm/students/{self.get_object().pk}')
 
     def form_invalid(self, form):
