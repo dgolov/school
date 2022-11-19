@@ -6,11 +6,6 @@
       <div class="groups">
         <div class="flex">
           <div class="top-text">{{ headerName }}</div>
-          <form>
-            <input v-if="header === 'Friends'" type="text" placeholder="Поиск друзей">
-            <input v-if="header === 'Followers'" type="text" placeholder="Поиск подписчиков">
-            <button></button>
-          </form>
         </div>
         <div v-for="profile in profiles" class="item">
           <div>
