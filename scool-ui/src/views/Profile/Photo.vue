@@ -56,7 +56,10 @@
                   </div>
                 </div>
               </div>
-              <h6 v-else class="mt-5">Вы не добавили ни одной фотографии</h6>
+              <div v-else>
+                <h6 v-if="Number(id) === $store.state.authUser.id" class="mt-5">Вы не добавили ни одной фотографии</h6>
+                <h6 v-else class="mt-5">Пользователь не добавил ни одной фотографии</h6>
+              </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-3"></div>
