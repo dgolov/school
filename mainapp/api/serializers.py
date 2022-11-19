@@ -415,6 +415,15 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AchievementSerializer(serializers.ModelSerializer):
+    """ Серилизация модели категирий курса
+    """
+
+    class Meta:
+        model = models.Achievement
+        fields = '__all__'
+
+
 class SkillSerializer(serializers.ModelSerializer):
     """ Серилизация модели скиллов
     """

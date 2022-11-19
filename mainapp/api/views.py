@@ -217,6 +217,13 @@ class FriendResponseView(APIView, AddFriendMixin):
         return Response(status=http_status)
 
 
+class AchievementListView(ListAPIView):
+    """ Эндпоинт списка категорий курсов
+    """
+    queryset = models.Achievement.objects.all()
+    serializer_class = serializers.AchievementSerializer
+
+
 # GROUPS
 
 class GroupViewSet(viewsets.ModelViewSet):
