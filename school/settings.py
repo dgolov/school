@@ -11,7 +11,7 @@ SECRET_KEY = str(os.environ.get("SECRET_KEY"))
 
 DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '80.78.253.102', '109.172.27.159', 'www.f-academy.ru', 'f-academy.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '80.78.253.102', '109.172.27.159', 'crm.f-academy.ru']
 
 SITE_ID = 1
 
