@@ -16,6 +16,16 @@
                     <div class="col-md-6">
                         {% include 'crm/inc/course_checkbox.html' %}
                     </div>
+                    <h4 class="mt-3 mb-4">Ачивки</h4>
+                    <div class="col-md-12 mb-4" style="max-height: 300px; overflow: scroll;">
+                        {% for achievement in achievement_list %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ achievement.id }}"
+                                       id="{{ achievement.id }}" name="achievements">
+                                <label class="form-check-label" for="defaultCheck1">{{ achievement }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-primary m-1 w-100 mt-4">Изменить</button>

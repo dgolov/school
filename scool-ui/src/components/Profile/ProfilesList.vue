@@ -7,9 +7,9 @@
       <div class="groups">
         <div class="flex">
           <div class="top-text">{{ headerName }}</div>
-          <form>
-            <input type="text" placeholder="Поиск">
-            <button></button>
+          <form method="get" onkeypress="if(event.keyCode === 13) return false;">
+            <input type="text" placeholder="Поиск" v-model="search_term" v-on:keyup.enter="search()">
+            <button type="button" @click="search()"></button>
           </form>
         </div>
         <div v-for="profile in profiles" class="item">
@@ -52,6 +52,7 @@
 import {friendMixin} from "../mixins/friendMixin";
 import {redirect} from "../mixins/redirect";
 import MessageModal from "../Modal/MessageModalFromUsersList";
+import {requestsMixin} from "../mixins/requestsMixin";
 
 export default {
   name: "ProfilesList",
@@ -60,6 +61,7 @@ export default {
     return {
       modalVisible: false,
       modalData: null,
+      search_term: '',
     }
   },
 
@@ -71,9 +73,13 @@ export default {
     MessageModal
   },
 
-  mixins: [friendMixin, redirect],
+  mixins: [requestsMixin, friendMixin, redirect],
 
   methods: {
+    async search() {
+      this.profiles = await this.createGetRequest(`/students?search=${this.search_term}`)
+    },
+
     showMessageModal(id) {
       // Показать окно отправки сообщения
       this.modalData = id

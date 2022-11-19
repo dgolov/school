@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
@@ -51,6 +51,8 @@ class StudentsViewSet(BaseProfileViewSet):
     """
     queryset = models.Student.objects.all()
     detail_serializer_class = serializers.ProfileSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('user__first_name', 'middle_name', 'user__last_name')
 
 
 class TeachersViewSet(BaseProfileViewSet):
@@ -80,7 +82,6 @@ class ProfileCreateView(CreateAPIView):
             super(ProfileCreateView, self).create(request, *args, **kwargs)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
-            print(e)
             return Response(status=status.HTTP_403_FORBIDDEN, data={'message': f'{e}'})
 
 
@@ -135,6 +136,7 @@ class PersonalProfileView(viewsets.ModelViewSet):
 
 class FriendsListView(ListAPIView):
     """ Эндпоинт друзей профиля """
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.FriendsSerializer
 
     def list(self, request, *args, **kwargs):
@@ -216,6 +218,20 @@ class FriendResponseView(APIView, AddFriendMixin):
         return Response(status=http_status)
 
 
+class AchievementListView(ListAPIView):
+    """ Эндпоинт списка всех ачивок
+    """
+    permission_classes = [IsAuthenticated]
+    queryset = models.Achievement.objects.all()
+    serializer_class = serializers.AchievementSerializer
+
+
+class StudentAchievementListView(FriendsListView):
+    """ Эндпоинт списка ачивок студента
+    """
+    serializer_class = serializers.ProfileAchievementSerializer
+
+
 # GROUPS
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -225,6 +241,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.GroupSerializer
     serializer_class_by_action = {'retrieve': serializers.GroupRetrieveSerializer}
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
     def get_queryset(self):
         item_profile = self.request.user.profile
@@ -669,7 +687,6 @@ class RequestsViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """ Добавить заявку """
         serializer = self.serializer_class(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             new_request = serializer.save()
             phone = get_normalize_phone(request.data.get('request_phone'))

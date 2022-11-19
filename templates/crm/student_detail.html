@@ -170,6 +170,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#Achievement">
+                            <span class="p-tab-name">Ачивки</span>
+                            <i class="bx bx-donate-blood font-24 d-sm-none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#About">
                             <span class="p-tab-name">О себе</span>
                             <i class="bx bx-donate-blood font-24 d-sm-none"></i>
@@ -390,6 +396,43 @@
                                                 <td>{{ academic_performance.date }}</td>
                                             </tr>
                                         {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Achievement">
+                        <div class="card shadow-none border mb-0 radius-15">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-3">
+                                    <h4 class="mb-0">Ачивки:</h4>
+                                </div>
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">id</th>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">Описание</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for achievement in student.achievement.all %}
+                                        <tr>
+                                            <td>{{ achievement.id }}</td>
+                                            <td>{{ achievement.name }}</td>
+                                            <td>{{ achievement.description }}</td>
+                                            <td>
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-danger" type="submit"
+                                                            name="delete-achievement" value="{{ achievement.id }}">
+                                                        Удалить
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>

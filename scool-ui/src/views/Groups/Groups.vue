@@ -11,9 +11,9 @@
                 <div class="top-text">
                   Группы
                 </div>
-                <form>
-                  <input type="text" placeholder="Поиск групп">
-                  <button></button>
+                <form method="get" onkeypress="if(event.keyCode === 13) return false;">
+                  <input type="text" placeholder="Поиск групп" v-model="search_term" v-on:keyup.enter="search()">
+                  <button type="button" @click="search()"></button>
                 </form>
               </div>
               <div v-for="group in responseData" class="item">
@@ -65,7 +65,8 @@ export default {
 
   data() {
     return {
-      header: 'Groups'
+      header: 'Groups',
+      search_term: ''
     }
   },
 
@@ -76,6 +77,12 @@ export default {
   created() {
     this.createGetRequest('/groups/')
   },
+
+  methods: {
+    async search() {
+      this.responseData = await this.createGetRequest(`/groups?search=${this.search_term}`)
+    },
+  }
 }
 </script>
 

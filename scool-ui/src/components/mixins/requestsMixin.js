@@ -51,6 +51,7 @@ export const requestsMixin = {
                 this.$store.commit("setProfileInfo", {profileInfo: this.responseData});
             }
             this.isLoaded = true;
+            return this.responseData
         },
 
         async refreshToken() {

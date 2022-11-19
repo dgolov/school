@@ -219,3 +219,11 @@ class CityAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
+
+
+@admin.register(models.Achievement)
+class CityAdmin(admin.ModelAdmin):
+    """ Отображение списка ачивок в админке
+    """
+    list_display = ['id', 'name']
+    list_display_links = ['id', 'name']
