@@ -18,6 +18,7 @@ import GroupSingle from "../views/Groups/GroupSingle";
 import Search from "../views/Profile/Search";
 import Photo from "../views/Profile/Photo";
 import MyProfile from "../views/Profile/MyProfile";
+import Achievement from "../views/Profile/Achievement";
 import Subscriptions from "../views/Profile/Subscriptions";
 import FriendRequests from "../views/Profile/FriendRequests";
 import CreateGroupChat from "../views/Messages/CreateGroupChat";
@@ -227,6 +228,15 @@ const routes = [
     }
   },
   {
+    path: '/profile/:id/achievement',
+    name: 'Achievement',
+    component: Achievement,
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
+  },
+  {
     path: "*",
     component: PageNotFound
   }
@@ -234,7 +244,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  //base: '/profiles',
+  base: '/profiles',
   routes
 })
 
