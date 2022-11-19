@@ -411,9 +411,6 @@ class StatisticMixin:
         """
         academic_performance_sum = 0
 
-        print(academic_performance)
-
-        print(1)
         for item in academic_performance:
             try:
                 academic_performance_sum += item.grade
@@ -424,7 +421,6 @@ class StatisticMixin:
         try:
             return academic_performance_sum / academic_performance_count
         except Exception as e:
-            print(e)
             return 'Отсутствует'
 
     @staticmethod

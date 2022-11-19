@@ -80,7 +80,6 @@ class ProfileCreateView(CreateAPIView):
             super(ProfileCreateView, self).create(request, *args, **kwargs)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
-            print(e)
             return Response(status=status.HTTP_403_FORBIDDEN, data={'message': f'{e}'})
 
 
@@ -669,7 +668,6 @@ class RequestsViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """ Добавить заявку """
         serializer = self.serializer_class(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             new_request = serializer.save()
             phone = get_normalize_phone(request.data.get('request_phone'))

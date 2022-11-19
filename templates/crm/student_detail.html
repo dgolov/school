@@ -411,6 +411,7 @@
                                 <table class="table mb-0">
                                     <thead>
                                     <tr>
+                                        <th scope="col">id</th>
                                         <th scope="col">Название</th>
                                         <th scope="col">Описание</th>
                                         <th scope="col"></th>
@@ -419,6 +420,7 @@
                                     <tbody>
                                     {% for achievement in student.achievement.all %}
                                         <tr>
+                                            <td>{{ achievement.id }}</td>
                                             <td>{{ achievement.name }}</td>
                                             <td>{{ achievement.description }}</td>
                                             <td>
