@@ -234,7 +234,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: '/profiles',
+  //base: '/profiles',
   routes
 })
 

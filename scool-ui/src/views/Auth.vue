@@ -165,7 +165,7 @@ export default {
                 isAuthenticated: true,
               });
               //this.goTo('Profile', {id: this.$store.state.authUser.id})
-              window.location.href = '/profiles/';
+              window.location.href = '/';
             });
           })
           .catch((error) => {
