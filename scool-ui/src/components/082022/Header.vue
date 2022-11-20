@@ -3,11 +3,11 @@
     <nav class="mobile-menu">
       <div class="container">
         <ul>
-          <li><a href="/education">Все курсы</a></li>
-          <li><a href="/events">Мероприятия</a></li>
-          <li><a href="/about">Об академии</a></li>
-          <li><a href="/reviews">Отзывы</a></li>
-          <li><a href="/contacts">Контакты</a></li>
+          <li><a href="https://f-academy.ru/education">Все курсы</a></li>
+          <li><a href="https://f-academy.ru/events">Мероприятия</a></li>
+          <li><a href="https://f-academy.ru/about">Об академии</a></li>
+          <li><a href="https://f-academy.ru/reviews">Отзывы</a></li>
+          <li><a href="https://f-academy.ru/contacts">Контакты</a></li>
         </ul>
         <div class="city">
           <a class="link">{{ $store.state.city }} <span></span></a>
@@ -75,14 +75,14 @@
       <header class="header">
         <div class="container flex">
           <div class="logo">
-            <a href="/"><img src="@/assets/082022/img/logo.svg"></a>
+            <a href="https://f-academy.ru"><img src="@/assets/082022/img/logo.svg"></a>
           </div>
           <ul>
-            <li><a href="/education">Все курсы</a></li>
-            <li><a href="/events">Мероприятия</a></li>
-            <li><a href="/about">Об академии</a></li>
-            <li><a href="/reviews">Отзывы</a></li>
-            <li><a href="/contacts">Контакты</a></li>
+            <li><a href="https://f-academy.ru/education">Все курсы</a></li>
+            <li><a href="https://f-academy.ru/events">Мероприятия</a></li>
+            <li><a href="https://f-academy.ru/about">Об академии</a></li>
+            <li><a href="https://f-academy.ru/reviews">Отзывы</a></li>
+            <li><a href="https://f-academy.ru/contacts">Контакты</a></li>
           </ul>
           <a v-bind:href="'tel:'+ $store.state.phone" class="phone">{{ $store.state.phone }}</a>
           <a class="menu-button"></a>
