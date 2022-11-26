@@ -18,8 +18,8 @@
             </select>
           </div>
           <div class="mb-3" v-if="selectedCourse">
-            <label>Выберите тему урока</label>
-            <select v-model="lessonId">
+            <label class="ml-2">Выберите тему урока</label>
+            <select class="mb-3" v-model="lessonId">
               <option disabled value="">Выберите урок</option>
               <option v-for="lesson in selectedCourse.lessons" :value="lesson.id">{{lesson.theme}}</option>
             </select>
@@ -39,6 +39,8 @@
               <option disabled value="">Выберите оценку</option>
               <option v-for="number in 10" :value="number">{{ number }}</option>
             </select>
+          </div>
+          <div class="mb-3" v-if="grade">
             <label v-if="student">Выберите тип оценки</label>
             <select v-model="gradeType" v-if="grade">
               <option disabled value="">Выберите тип оценки</option>
@@ -47,6 +49,8 @@
               <option :value="'test'">Контрольная работа</option>
               <option :value="'examination'">Экзамен</option>
             </select>
+          </div>
+          <div class="mb-3" v-if="gradeType">
             <label v-if="student">Опоздание</label>
             <select v-model="late" v-if="gradeType">
               <option disabled value="">Выберите значение</option>
@@ -59,7 +63,7 @@
               <option :value="true">Да</option>
               <option :value="false">Нет</option>
             </select>
-            <button v-if="gradeType" class="gray-button" @click="sendGrade">Поставить оценку</button>
+            <button v-if="gradeType" class="gray-button mt-3" @click="sendGrade">Поставить оценку</button>
           </div>
 
           <div class="cabinet-content">
