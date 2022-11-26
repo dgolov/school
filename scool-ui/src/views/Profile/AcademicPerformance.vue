@@ -5,6 +5,63 @@
       <div class="row">
         <profile-menu :header="header"></profile-menu>
         <div v-if="isLoaded" class="col-xl-10 col-lg-9">
+
+          <div class="mb-3">
+            <button  v-if="addButton" class="gray-button" @click="addToTimeTable">Поставить оценку</button>
+            <button v-if="cancelButton" class="red-button" @click="cancelAdd">Отмена</button>
+            <label v-if="showAddCourse">Выберите курс</label>
+          </div>
+          <div class="mb-3" v-if="showAddCourse">
+            <select class="mb-3" v-model="selectedCourse">
+              <option disabled value="">Выберите курс</option>
+              <option v-for="course in courseList" :value="course">{{course.name}}</option>
+            </select>
+          </div>
+          <div class="mb-3" v-if="selectedCourse">
+            <label>Выберите тему урока</label>
+            <select v-model="lessonId">
+              <option disabled value="">Выберите урок</option>
+              <option v-for="lesson in selectedCourse.lessons" :value="lesson.id">{{lesson.theme}}</option>
+            </select>
+          </div>
+          <div class="mb-3" v-if="lessonId">
+            <label v-if="lessonId">Выберите студента</label>
+            <select v-if="lessonId" v-model="student">
+              <option disabled value="">Выберите студента</option>
+              <option v-for="student in selectedCourse.students" :value="student.id">
+                {{ student.first_name }} {{ student.last_name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3" v-if="student">
+            <label v-if="student">Выберите оценку</label>
+            <select v-model="grade" v-if="student">
+              <option disabled value="">Выберите оценку</option>
+              <option v-for="number in 10" :value="number">{{ number }}</option>
+            </select>
+            <label v-if="student">Выберите тип оценки</label>
+            <select v-model="gradeType" v-if="grade">
+              <option disabled value="">Выберите тип оценки</option>
+              <option :value="'homework'">Домашняя работа</option>
+              <option :value="'classwork'">Классная работа</option>
+              <option :value="'test'">Контрольная работа</option>
+              <option :value="'examination'">Экзамен</option>
+            </select>
+            <label v-if="student">Опоздание</label>
+            <select v-model="late" v-if="gradeType">
+              <option disabled value="">Выберите значение</option>
+              <option :value="true">Дa</option>
+              <option :value="false">Нет</option>
+            </select>
+            <label v-if="student">Отсутствие</label>
+            <select v-model="absent" v-if="gradeType">
+              <option disabled value="">Выберите значение</option>
+              <option :value="true">Да</option>
+              <option :value="false">Нет</option>
+            </select>
+            <button v-if="gradeType" class="gray-button" @click="sendGrade">Поставить оценку</button>
+          </div>
+
           <div class="cabinet-content">
             <div class="results">
               <div class="top-text">
@@ -152,7 +209,7 @@ export default {
       if (!result) {
         return '-'
       }
-      return result
+      return result.toFixed(1)
     },
 
     getLessonCount(course) {
