@@ -5,7 +5,6 @@
       <div class="row">
         <profile-menu :header="header"></profile-menu>
         <div v-if="isLoaded" class="col-xl-10 col-lg-9">
-
           <div class="mb-3">
             <button  v-if="addButton" class="gray-button" @click="addToTimeTable">Поставить оценку</button>
             <button v-if="cancelButton" class="red-button" @click="cancelAdd">Отмена</button>
@@ -65,7 +64,6 @@
             </select>
             <button v-if="gradeType" class="gray-button mt-3" @click="sendGrade">Поставить оценку</button>
           </div>
-
           <div class="cabinet-content">
             <div class="results">
               <div class="top-text">
