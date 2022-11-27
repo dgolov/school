@@ -472,6 +472,8 @@ class CourseSerializer(serializers.ModelSerializer):
     teachers = ProfileSerializer(many=True)
     profession = ProfessionSerializer()
     skills = serializers.SerializerMethodField()
+    lessons = serializers.SerializerMethodField()
+    students = serializers.SerializerMethodField()
     city = CitySerializer()
     extra_kwargs = {
         'url': {'lookup_field': 'slug'}
@@ -483,8 +485,20 @@ class CourseSerializer(serializers.ModelSerializer):
             'id', 'category', 'name', 'teachers', 'price', 'description', 'poster', 'video_presentation', 'is_finished',
             'is_active', 'education_type', 'duration', 'complexity', 'color_hex', 'activity_mode', 'who_is', 'content',
             'profession', 'skills', 'in_main_page', 'slug', 'html_desc', 'title', 'city', 'start_date', 'end_date',
-            'lesson_count'
+            'lesson_count', 'lessons', 'students'
         ]
+
+    @staticmethod
+    def get_lessons(obj):
+        query_set = models.Lesson.objects.filter(course=obj)
+        lessons_serializer = LessonSerializerFromTeacher(query_set, many=True)
+        return lessons_serializer.data
+
+    @staticmethod
+    def get_students(obj):
+        students = obj.student_courses
+        students_serializer = ProfileSerializer(students, many=True)
+        return students_serializer.data
 
     @staticmethod
     def get_skills(obj):
