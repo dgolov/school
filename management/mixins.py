@@ -172,8 +172,12 @@ class TeacherMixin:
         try:
             course_list = request.POST.getlist('courses')
             if course_list:
-                for course in course_list:
-                    teacher.courses.add(course)
+                for course_id in course_list:
+                    try:
+                        course = Course.objects.get(pk=course_id)
+                    except Course.DoesNotExist:
+                        continue
+                    teacher.courses.add(course_id)
                     course.teachers.add(teacher)
                 messages.add_message(request, messages.SUCCESS, 'Курсы успешно добавлены.')
         except Exception as e:
