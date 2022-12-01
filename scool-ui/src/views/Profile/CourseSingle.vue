@@ -31,7 +31,11 @@
                 </div>
                 <p>{{ responseData[0].course.description }}</p>
                 <ul>
-                  <li v-for="lesson in responseData">{{ lesson.theme }}</li>
+                  <li v-for="lesson in responseData">
+                    <a href="#" @click="goToLesson(responseData[0].course.id, lesson.id)" class="lesson-link">
+                      {{ lesson.theme }}
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -101,7 +105,7 @@ export default {
   border-radius: 5%;
 }
 
-.lesson-list {
-  font-size: 20px;
+.lesson-link {
+  text-decoration: none;
 }
 </style>
