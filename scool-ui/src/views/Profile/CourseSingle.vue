@@ -1,7 +1,7 @@
 <template>
   <div class="cabinet-page">
     <div class="container">
-      <button class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
+      <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
       <div class="row">
         <profile-menu :header="header"></profile-menu>
         <div class="col-xl-10 col-lg-9">
