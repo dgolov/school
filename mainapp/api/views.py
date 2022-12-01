@@ -249,11 +249,9 @@ class GroupViewSet(viewsets.ModelViewSet):
         if item_profile.user_group == 'student':
             queryset = item_profile.student.group_list.all()
         elif item_profile.user_group == 'teacher':
-            teacher = item_profile.teacher
-            queryset = models.Group.objects.filter(teacher=teacher)
+            queryset = item_profile.teacher.group_list.all()
         elif item_profile.user_group == 'manager':
-            manager = item_profile.educationalmanager
-            queryset = models.Group.objects.filter(manager=manager)
+            queryset = item_profile.educationalmanager.group_list.all()
         else:
             return None
         return queryset
