@@ -76,9 +76,12 @@ class GroupMixin:
         for courses_id in courses_id_list:
             try:
                 course = Course.objects.get(pk=int(courses_id))
-                new_group.courses.add(course)
             except Course.DoesNotExist:
                 continue
+            new_group.courses.add(course)
+            teachers = Teacher.objects.filter(group_list=new_group)
+            for teacher in teachers:
+                teacher.courses.add(course)
 
 
 class CourseMixin:
