@@ -5,12 +5,14 @@
         <button @click="openProfileMenu" class="cabinet-menu-button">МЕНЮ ЛИЧНОГО КАБИНЕТА</button>
         <div class="row">
           <profile-menu :header="header"></profile-menu>
-          <div class="col-xl-10 col-lg-9">
+          <div v-if="isAllLoaded" class="col-xl-10 col-lg-9">
             <div class="cabinet-content">
               <FullCalendar :options="calendarOptions" />
             </div>
           </div>
-          <div class="col-xl-2 col-lg-3"></div>
+          <div v-if="isAllLoaded" class="col-xl-2 col-lg-3"></div>
+          <loader v-else object="#63a9da" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40"
+                  objectbg="#999793" opacity="80" disableScrolling="false" name="spinning"></loader>
           <div class="col-xl-10 col-lg-9">
             <div class="cabinet-copy">
               © Академия будущего «ХОД», 2022
@@ -91,13 +93,12 @@ export default {
   ],
 
   created() {
-    this.createGetRequest('/timetable/')
+    this.loadEvents()
     if (this.$store.state.profileInfo.user_group !== 'student') {
       this.addButton = true;
       this.courseList = this.$store.state.profileInfo.courses
       this.groupList = this.$store.state.profileInfo.group_list
     }
-    this.loadEvents()
   },
 
   methods: {
@@ -115,7 +116,7 @@ export default {
         for (let event of this.responseData) {
           let eventDate = Date.parse(event.date)
           this.calendarOptions.events.push({
-            title: event.lesson.theme,
+            title: event.group.name + ' ' + event.lesson.theme,
             date: eventDate
           })
         }
@@ -142,32 +143,32 @@ export default {
       this.lessonId = 0;
       this.date = ''
     },
-
-    async sendData() {
-      let data = {
-        "date": this.date,
-        "lesson": this.lessonId,
-        "group": this.groupId
-      }
-      const axiosInstance = axios.create(this.base);
-      await axiosInstance({
-        url: `/timetable/`,
-        method: "post",
-        data: data
-      })
-          .then(() => {
-            this.cancelAdd()
-            this.createGetRequest('/timetable/')
-          })
-          .catch((error) => {
-            if (error.request.status === 401) {
-              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
-              this.refreshToken();
-            } else {
-              console.log(error.request);
-            }
-          })
-    },
+    //
+    // async sendData() {
+    //   let data = {
+    //     "date": this.date,
+    //     "lesson": this.lessonId,
+    //     "group": this.groupId
+    //   }
+    //   const axiosInstance = axios.create(this.base);
+    //   await axiosInstance({
+    //     url: `/timetable/`,
+    //     method: "post",
+    //     data: data
+    //   })
+    //       .then(() => {
+    //         this.cancelAdd()
+    //         this.createGetRequest('/timetable/')
+    //       })
+    //       .catch((error) => {
+    //         if (error.request.status === 401) {
+    //           // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+    //           this.refreshToken();
+    //         } else {
+    //           console.log(error.request);
+    //         }
+    //       })
+    // },
   },
 }
 </script>
