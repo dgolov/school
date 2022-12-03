@@ -569,6 +569,7 @@ class AcademicPerformance(models.Model):
     grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка', blank=True, null=True)
     late = models.BooleanField(default=False, verbose_name='Опоздание')
     absent = models.BooleanField(default=False, verbose_name='Отсутствие')
+    comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     def __str__(self):
         return f'{self.student} - {self.lesson} - {self.date}'
