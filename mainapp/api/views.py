@@ -342,10 +342,13 @@ class LessonsDetailView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        lesson_objects = models.Lesson.objects.get(
-            pk=kwargs.get('pk'),
-            course=kwargs.get('course_pk')
-        )
+        try:
+            lesson_objects = models.Lesson.objects.get(
+                pk=kwargs.get('pk'),
+                course=kwargs.get('course_pk')
+            )
+        except models.Lesson.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         if not lesson_objects.is_active:
             return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = serializers.LessonRetrieveSerializer(lesson_objects, many=False)
