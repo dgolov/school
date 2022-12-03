@@ -249,11 +249,9 @@ class GroupViewSet(viewsets.ModelViewSet):
         if item_profile.user_group == 'student':
             queryset = item_profile.student.group_list.all()
         elif item_profile.user_group == 'teacher':
-            teacher = item_profile.teacher
-            queryset = models.Group.objects.filter(teacher=teacher)
+            queryset = item_profile.teacher.group_list.all()
         elif item_profile.user_group == 'manager':
-            manager = item_profile.educationalmanager
-            queryset = models.Group.objects.filter(manager=manager)
+            queryset = item_profile.educationalmanager.group_list.all()
         else:
             return None
         return queryset
@@ -344,15 +342,39 @@ class LessonsDetailView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        lesson_objects = models.Lesson.objects.get(
-            pk=kwargs.get('pk'),
-            course=kwargs.get('course_pk')
-        )
+
+        try:
+            lesson_objects = models.Lesson.objects.get(
+                pk=kwargs.get('pk'),
+                course=kwargs.get('course_pk')
+            )
+        except models.Lesson.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         if not lesson_objects.is_active:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
         serializer = serializers.LessonRetrieveSerializer(lesson_objects, many=False)
         return Response(serializer.data)
 
+    def post(self, *args, **kwargs):
+        try:
+            lesson_objects = models.Lesson.objects.get(
+                pk=kwargs.get('pk'),
+                course=kwargs.get('course_pk')
+            )
+        except models.Lesson.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            student = models.Student.objects.get(pk=self.request.data.get('user'))
+        except models.Student.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        new_comment = models.LessonComment.objects.create(student=student, comment=self.request.data.get('comment'))
+        lesson_objects.comments.add(new_comment)
+
+        return Response(status=status.HTTP_201_CREATED)
 
 # TIMETABLE AND ACADEMIC PERFORMANCE
 
@@ -378,12 +400,14 @@ class TimetableViewSet(viewsets.ModelViewSet):
             data_check_status = check_correct_data_for_add_in_timetable(request.user.profile, request.data)
             if data_check_status != 202:
                 return Response(status=data_check_status)
+
             serializer = serializers.TimetableCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
+
         elif request.user.profile.user_group == 'student':
             return Response(status=status.HTTP_403_FORBIDDEN)
 
@@ -406,6 +430,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         item_profile = self.request.user.profile
+
         if item_profile.user_group == 'student':
             return models.AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
@@ -456,7 +481,9 @@ class EditPhotoDescription(APIView):
         photo = self.get_queryset()
         if request.user.profile != photo.for_profile:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
         serializer = serializers.PhotoUpdateDescriptionSerializer(data=self.request.data)
+
         if serializer.is_valid():
             serializer.update(instance=photo, validated_data=self.request.data)
             return Response(status=status.HTTP_202_ACCEPTED)
@@ -500,6 +527,7 @@ class DeletePhotoView(DestroyAPIView):
             instance = self.get_object()
         except models.Photo.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
         if instance.for_profile == self.request.user.profile:
             if instance == self.request.user.profile.avatar:
                 self.request.user.profile.avatar = None

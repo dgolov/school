@@ -8,61 +8,71 @@
           <div class="mb-3">
             <button  v-if="addButton" class="gray-button" @click="addToTimeTable">Поставить оценку</button>
             <button v-if="cancelButton" class="red-button" @click="cancelAdd">Отмена</button>
-            <label v-if="showAddCourse">Выберите курс</label>
           </div>
           <div class="mb-3" v-if="showAddCourse">
-            <select class="mb-3" v-model="selectedCourse">
+            <p>Выберите группу:</p>
+            <select v-model="group">
+              <option disabled value="">Выберите группу</option>
+              <option v-for="group in groupList" :value="group">
+                {{ group.name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3" v-if="group">
+            <p>Выберите курс</p>
+            <select v-model="selectedCourse">
               <option disabled value="">Выберите курс</option>
-              <option v-for="course in courseList" :value="course">{{course.name}}</option>
+              <option v-for="course in group.courses" v-if="checkCourse(course)"
+                      :value="course">{{course.name}}</option>
             </select>
           </div>
           <div class="mb-3" v-if="selectedCourse">
-            <label class="ml-2">Выберите тему урока</label>
-            <select class="mb-3" v-model="lessonId">
+            <p>Выберите тему урока</p>
+            <select v-model="lessonId">
               <option disabled value="">Выберите урок</option>
               <option v-for="lesson in selectedCourse.lessons" :value="lesson.id">{{lesson.theme}}</option>
             </select>
           </div>
           <div class="mb-3" v-if="lessonId">
-            <label v-if="lessonId">Выберите студента</label>
-            <select v-if="lessonId" v-model="student">
-              <option disabled value="">Выберите студента</option>
-              <option v-for="student in selectedCourse.students" :value="student.id">
-                {{ student.first_name }} {{ student.last_name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3" v-if="student">
-            <label v-if="student">Выберите оценку</label>
-            <select v-model="grade" v-if="student">
-              <option disabled value="">Выберите оценку</option>
-              <option v-for="number in 10" :value="number">{{ number }}</option>
-            </select>
-          </div>
-          <div class="mb-3" v-if="grade">
-            <label v-if="student">Выберите тип оценки</label>
-            <select v-model="gradeType" v-if="grade">
-              <option disabled value="">Выберите тип оценки</option>
-              <option :value="'homework'">Домашняя работа</option>
-              <option :value="'classwork'">Классная работа</option>
-              <option :value="'test'">Контрольная работа</option>
-              <option :value="'examination'">Экзамен</option>
-            </select>
-          </div>
-          <div class="mb-3" v-if="gradeType">
-            <label v-if="student">Опоздание</label>
-            <select v-model="late" v-if="gradeType">
-              <option disabled value="">Выберите значение</option>
-              <option :value="true">Дa</option>
-              <option :value="false">Нет</option>
-            </select>
-            <label v-if="student">Отсутствие</label>
-            <select v-model="absent" v-if="gradeType">
-              <option disabled value="">Выберите значение</option>
-              <option :value="true">Да</option>
-              <option :value="false">Нет</option>
-            </select>
-            <button v-if="gradeType" class="gray-button mt-3" @click="sendGrade">Поставить оценку</button>
+            <table class="w-100">
+              <tr>
+                <th>Студент</th>
+                <th>Оценка</th>
+                <th>Тип оценки</th>
+                <th>Опоздание/пропуск</th>
+                <th>Комментарий</th>
+              </tr>
+              <tr v-for="student in group.students">
+                <td style="width: 40%;">{{ student.first_name }} {{ student.last_name }}</td>
+                <td style="width: 15%; padding-right: 15px;">
+                  <select @change="setGrade($event, student)">
+                    <option disabled selected value="">Выберите оценку</option>
+                    <option v-for="number in 10" :value="number">{{ number }}</option>
+                  </select>
+                </td>
+                <td style="width: 15%; padding-right: 15px;">
+                  <select @change="setGradeType($event, student)">
+                    <option disabled value="">Выберите тип оценки</option>
+                    <option :value="'homework'">Домашняя работа</option>
+                    <option selected :value="'classwork'">Классная работа</option>
+                    <option :value="'test'">Контрольная работа</option>
+                    <option :value="'examination'">Экзамен</option>
+                  </select>
+                </td>
+                <td style="width: 15%; padding-right: 15px;">
+                  <select @change="setLate($event, student)">
+                    <option disabled value="">Выберите значение</option>
+                    <option selected :value="'none'">нет</option>
+                    <option :value="'late'">Опоздание</option>
+                    <option :value="'absent'">Пропуск</option>
+                  </select>
+                </td>
+                <td style="width: 15%; padding-right: 15px;">
+                  <textarea @change="setComment($event, student)" class="mt-2 comment-field"></textarea>
+                </td>
+              </tr>
+            </table>
+            <button class="gray-button mt-3" @click="setGrades">Поставить оценку</button>
           </div>
           <div class="cabinet-content">
             <div class="results">
@@ -108,14 +118,20 @@
                         <tr>
                           <td>Дата</td>
                           <td>Тема урока</td>
+                          <td v-if="$store.state.profileInfo.user_group === 'teacher'">Студент</td>
+                          <td>Комментарий</td>
                           <td>Оценка</td>
                         </tr>
                         </thead>
                         <tbody>
                           <template v-for="performance in responseData">
                             <tr v-if="performance.lesson.course.id === course.id">
-                              <td class="w-30">{{ performance.date }}</td>
-                              <td class="w-50">{{ performance.lesson.theme }}</td>
+                              <td class="w-10">{{ performance.date }}</td>
+                              <td class="w-15">{{ performance.lesson.theme }}</td>
+                              <td v-if="$store.state.profileInfo.user_group === 'teacher'" class="pl-3">
+                                {{ performance.student.first_name }} {{ performance.student.last_name }}
+                              </td>
+                              <td  class="w-50">{{ performance.comment }}</td>
                               <td :class="setClassList(performance.grade)">{{ performance.grade }}</td>
                             </tr>
                           </template>
@@ -163,16 +179,14 @@ export default {
       defaultClassList: 'row row_list pt-4 ',
       nullText: '',
       courseList: [],
+      groupList: [],
+      studentsGrades: [],
       showAddCourse: false,
       addButton: false,
       cancelButton: false,
       selectedCourse: false,
       lessonId: 0,
-      student: 0,
-      grade: 0,
-      gradeType: '',
-      late: false,
-      absent: false
+      group: 0,
     }
   },
 
@@ -187,6 +201,7 @@ export default {
   created() {
     this.createGetRequest('/performance/')
     this.GetCourses()
+    this.GetGroups()
     if (this.$store.state.profileInfo.user_group === 'student') {
       this.nullText = "Вы пока еще не получили ни одной оценки";
     } else if (this.$store.state.profileInfo.user_group === 'teacher') {
@@ -198,6 +213,87 @@ export default {
   },
 
   methods: {
+    setGrade(event, student) {
+      for (let item of this.studentsGrades) {
+        if (item.student === student.id) {
+          item.grade = event.target.value;
+          return
+        }
+      }
+      this.studentsGrades.push(
+          {
+            student: student.id,
+            grade: event.target.value,
+            gradeType: 'classwork',
+            late: false,
+            absent: false, comment: ''
+          }
+      );
+    },
+
+    setGradeType(event, student) {
+      for (let item of this.studentsGrades) {
+        if (item.student === student.id) {
+          item.gradeType = event.target.value;
+          return
+        }
+      }
+      this.studentsGrades.push(
+          {student: student.id, grade: 0, gradeType: event.target.value, late: false, absent: false, comment: ''}
+      );
+    },
+
+    setLate(event, student) {
+      for (let item of this.studentsGrades) {
+        if (item.student === student.id) {
+          if (event.target.value === 'late') {
+            item.late = true;
+          } else if (event.target.value === 'absent') {
+            item.absent = true;
+          }
+          return
+        }
+      }
+      if (event.target.value === 'late') {
+        this.studentsGrades.push(
+            {student: student.id, grade: 0, gradeType: 'classwork', late: true, absent: false, comment: ''}
+        );
+      } else if (event.target.value === 'absent') {
+        this.studentsGrades.push(
+            {student: student.id, grade: 0, gradeType: 'classwork', late: false, absent: true, comment: ''}
+        );
+      }
+    },
+
+    setComment(event, student) {
+      for (let item of this.studentsGrades) {
+        if (item.student === student.id) {
+          item.comment = event.target.value;
+          return
+        }
+      }
+      this.studentsGrades.push(
+          {
+            student: student.id,
+            grade: 0,
+            gradeType: 'classwork',
+            late: false, absent: false,
+            comment: event.target.value
+          }
+      );
+    },
+
+    checkCourse(course) {
+      /// Проверка доступности курса в группе преподователю, если курс доступен, то он появляется в списке курсов
+      // в выпадающем списке (Нужно для установки оценок)
+      for (let item of this.$store.state.profileInfo.courses) {
+        if (course.id === item.id) {
+          return true
+        }
+      }
+      return false
+    },
+
     getAverageGrade(course) {
       let sumGrade = 0;
       let count = 0;
@@ -270,10 +366,7 @@ export default {
       this.selectedCourse = false;
       this.groupId = 0;
       this.lessonId = 0;
-      this.student = 0;
-      this.grade = 0;
-      this.gradeType = '';
-      this.date = ''
+      this.group = 0;
     },
 
     openAcademicPerformance() {
@@ -295,14 +388,33 @@ export default {
           .then((response) => this.courseList = response.data)
     },
 
-    async sendGrade() {
+    async GetGroups() {
+      const axiosInstance = axios.create(this.base);
+
+      await axiosInstance({
+        url: "/groups/",
+        method: "get",
+        params: {},
+      })
+          .then((response) => this.groupList = response.data)
+    },
+
+    setGrades() {
+      for (let item of this.studentsGrades) {
+        this.sendItemGrade(item.student, item.grade, item.gradeType, item.late, item.absent, item.comment)
+      }
+    },
+
+    async sendItemGrade(student, grade, gradeType, late, absent, comment) {
+
       const data = {
-        "student": this.student,
+        "student": student,
         "lesson": this.lessonId,
-        "grade": this.grade,
-        "type_grade": this.gradeType,
-        "late": this.late,
-        "absent": this.absent
+        "grade": grade,
+        "type_grade": gradeType,
+        "late": late,
+        "absent": absent,
+        "comment": comment
       }
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
@@ -327,4 +439,7 @@ export default {
 </script>
 
 <style scoped>
+.comment-field {
+  resize: none;
+}
 </style>

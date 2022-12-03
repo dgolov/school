@@ -350,6 +350,22 @@ class Category(models.Model):
         ordering = ['id']
 
 
+class LessonComment(models.Model):
+    """ Модель комментариев к урокам
+    """
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Студент')
+    comment = models.TextField(verbose_name='Комментарий')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата комментария')
+
+    def __str__(self):
+        return f'{self.created_at} - {self.student.user.first_name} {self.student.user.last_name}'
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = '02. Обучение - Комментарии к уроку'
+        ordering = ['id']
+
+
 class Course(models.Model):
     """ Модель курса
     """
@@ -487,6 +503,7 @@ class Lesson(models.Model):
         related_name='is_finished_lesson'
     )
     is_active = models.BooleanField(default=True, verbose_name='Доступный урок')
+    comments = models.ManyToManyField(LessonComment, blank=True, verbose_name='Комментарии студентов')
 
     def __str__(self):
         return self.theme
@@ -552,6 +569,7 @@ class AcademicPerformance(models.Model):
     grade = IntegerRangeField(min_value=1, max_value=10, verbose_name='Оценка', blank=True, null=True)
     late = models.BooleanField(default=False, verbose_name='Опоздание')
     absent = models.BooleanField(default=False, verbose_name='Отсутствие')
+    comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     def __str__(self):
         return f'{self.student} - {self.lesson} - {self.date}'

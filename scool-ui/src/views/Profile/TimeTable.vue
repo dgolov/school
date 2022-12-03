@@ -93,32 +93,32 @@ export default {
   ],
 
   created() {
-    this.createGetRequest('/timetable/')
+    this.loadEvents()
     if (this.$store.state.profileInfo.user_group !== 'student') {
       this.addButton = true;
-      this.courseList = this.$store.state.profileInfo.courses
-      this.groupList = this.$store.state.profileInfo.group_list
+      this.courseList = this.$store.state.profileInfo.courses;
+      this.groupList = this.$store.state.profileInfo.group_list;
     }
-    this.loadEvents()
   },
 
   methods: {
     setClassList(isFinished) {
-      let classList = this.defaultClassList
+      let classList = this.defaultClassList;
       if (isFinished) {
-        classList += this.finished
+        classList += this.finished;
       }
       return classList
     },
 
     async loadEvents() {
-      await this.createGetRequest('/timetable/')
+      await this.createGetRequest('/timetable/');
       if (this.responseData) {
         for (let event of this.responseData) {
-          let eventDate = Date.parse(event.date)
+          let eventDate = Date.parse(event.date);
           this.calendarOptions.events.push({
-            title: event.lesson.theme,
-            date: eventDate
+            title: event.group.name + ' ' + event.lesson.theme,
+            date: eventDate,
+            url: 'my-courses/' + event.lesson.course.id + '/lesson/' + event.lesson.id
           })
         }
       }
@@ -142,34 +142,34 @@ export default {
       this.selectedCourse = false;
       this.groupId = 0;
       this.lessonId = 0;
-      this.date = ''
+      this.date = '';
     },
-
-    async sendData() {
-      let data = {
-        "date": this.date,
-        "lesson": this.lessonId,
-        "group": this.groupId
-      }
-      const axiosInstance = axios.create(this.base);
-      await axiosInstance({
-        url: `/timetable/`,
-        method: "post",
-        data: data
-      })
-          .then(() => {
-            this.cancelAdd()
-            this.createGetRequest('/timetable/')
-          })
-          .catch((error) => {
-            if (error.request.status === 401) {
-              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
-              this.refreshToken();
-            } else {
-              console.log(error.request);
-            }
-          })
-    },
+    //
+    // async sendData() {
+    //   let data = {
+    //     "date": this.date,
+    //     "lesson": this.lessonId,
+    //     "group": this.groupId
+    //   }
+    //   const axiosInstance = axios.create(this.base);
+    //   await axiosInstance({
+    //     url: `/timetable/`,
+    //     method: "post",
+    //     data: data
+    //   })
+    //       .then(() => {
+    //         this.cancelAdd()
+    //         this.createGetRequest('/timetable/')
+    //       })
+    //       .catch((error) => {
+    //         if (error.request.status === 401) {
+    //           // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+    //           this.refreshToken();
+    //         } else {
+    //           console.log(error.request);
+    //         }
+    //       })
+    // },
   },
 }
 </script>
