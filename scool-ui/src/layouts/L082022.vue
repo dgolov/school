@@ -483,6 +483,7 @@ export default {
       var x = (e.pageY * 1 / 35), y = (e.pageX * 1 / 35);
       $('.rounds').css('margin', x + 'px ' + y + 'px');
     });
+    
     $('.first-block .bottom-link a').bind("click", function (e) {
       var anchor = $(this);
       $('html, body').stop().animate({
@@ -490,6 +491,8 @@ export default {
       }, 1000);
       e.preventDefault();
     });
+    
+    
     $('.index-page-slider').slick({});
 
     $('.faq-block .item .name').click(function () {
