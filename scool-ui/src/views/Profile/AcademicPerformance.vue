@@ -39,8 +39,8 @@
                 <th>Студент</th>
                 <th>Оценка</th>
                 <th>Тип оценки</th>
-                <th>Опоздание</th>
-                <th>Пропуск</th>
+                <th>Опоздание/пропуск</th>
+                <th>Комментарий</th>
               </tr>
               <tr v-for="student in group.students">
                 <td style="width: 40%;">{{ student.first_name }} {{ student.last_name }}</td>
@@ -62,16 +62,13 @@
                 <td style="width: 15%; padding-right: 15px;">
                   <select @change="setLate($event, student)">
                     <option disabled value="">Выберите значение</option>
-                    <option :value="true">Дa</option>
-                    <option selected :value="false">Нет</option>
+                    <option selected :value="'none'">нет</option>
+                    <option :value="'late'">Опоздание</option>
+                    <option :value="'absent'">Пропуск</option>
                   </select>
                 </td>
                 <td style="width: 15%; padding-right: 15px;">
-                  <select @change="setAbsent($event, student)">
-                    <option disabled value="">Выберите значение</option>
-                    <option :value="true">Да</option>
-                    <option selected :value="false">Нет</option>
-                  </select>
+                  <textarea @change="setComment($event, student)" class="mt-2 comment-field"></textarea>
                 </td>
               </tr>
             </table>
@@ -122,17 +119,19 @@
                           <td>Дата</td>
                           <td>Тема урока</td>
                           <td v-if="$store.state.profileInfo.user_group === 'teacher'">Студент</td>
+                          <td>Комментарий</td>
                           <td>Оценка</td>
                         </tr>
                         </thead>
                         <tbody>
                           <template v-for="performance in responseData">
                             <tr v-if="performance.lesson.course.id === course.id">
-                              <td class="w-30">{{ performance.date }}</td>
-                              <td class="w-50">{{ performance.lesson.theme }}</td>
-                              <td v-if="$store.state.profileInfo.user_group === 'teacher'">
+                              <td class="w-10">{{ performance.date }}</td>
+                              <td class="w-15">{{ performance.lesson.theme }}</td>
+                              <td v-if="$store.state.profileInfo.user_group === 'teacher'" class="pl-3">
                                 {{ performance.student.first_name }} {{ performance.student.last_name }}
                               </td>
+                              <td  class="w-50">{{ performance.comment }}</td>
                               <td :class="setClassList(performance.grade)">{{ performance.grade }}</td>
                             </tr>
                           </template>
@@ -222,7 +221,13 @@ export default {
         }
       }
       this.studentsGrades.push(
-          {student: student.id, grade: event.target.value, gradeType: 'classwork', late: false, absent: false}
+          {
+            student: student.id,
+            grade: event.target.value,
+            gradeType: 'classwork',
+            late: false,
+            absent: false, comment: ''
+          }
       );
     },
 
@@ -234,31 +239,47 @@ export default {
         }
       }
       this.studentsGrades.push(
-          {student: student.id, grade: 0, gradeType: event.target.value, late: false, absent: false}
+          {student: student.id, grade: 0, gradeType: event.target.value, late: false, absent: false, comment: ''}
       );
     },
 
     setLate(event, student) {
       for (let item of this.studentsGrades) {
         if (item.student === student.id) {
-          item.late = event.target.value;
+          if (event.target.value === 'late') {
+            item.late = true;
+          } else if (event.target.value === 'absent') {
+            item.absent = true;
+          }
           return
         }
       }
-      this.studentsGrades.push(
-          {student: student.id, grade: 0, gradeType: 'classwork', late: event.target.value, absent: false}
-      );
+      if (event.target.value === 'late') {
+        this.studentsGrades.push(
+            {student: student.id, grade: 0, gradeType: 'classwork', late: true, absent: false, comment: ''}
+        );
+      } else if (event.target.value === 'absent') {
+        this.studentsGrades.push(
+            {student: student.id, grade: 0, gradeType: 'classwork', late: false, absent: true, comment: ''}
+        );
+      }
     },
 
-    setAbsent(event, student) {
+    setComment(event, student) {
       for (let item of this.studentsGrades) {
         if (item.student === student.id) {
-          item.gradeType = event.target.value;
+          item.comment = event.target.value;
           return
         }
       }
       this.studentsGrades.push(
-          {student: student.id, grade: 0, gradeType: 'classwork', late: false, absent: event.target.value}
+          {
+            student: student.id,
+            grade: 0,
+            gradeType: 'classwork',
+            late: false, absent: false,
+            comment: event.target.value
+          }
       );
     },
 
@@ -380,11 +401,11 @@ export default {
 
     setGrades() {
       for (let item of this.studentsGrades) {
-        this.sendItemGrade(item.student, item.grade, item.gradeType, item.late, item.absent)
+        this.sendItemGrade(item.student, item.grade, item.gradeType, item.late, item.absent, item.comment)
       }
     },
 
-    async sendItemGrade(student, grade, gradeType, late, absent) {
+    async sendItemGrade(student, grade, gradeType, late, absent, comment) {
 
       const data = {
         "student": student,
@@ -392,7 +413,8 @@ export default {
         "grade": grade,
         "type_grade": gradeType,
         "late": late,
-        "absent": absent
+        "absent": absent,
+        "comment": comment
       }
       const axiosInstance = axios.create(this.base);
       await axiosInstance({
@@ -417,4 +439,7 @@ export default {
 </script>
 
 <style scoped>
+.comment-field {
+  resize: none;
+}
 </style>
