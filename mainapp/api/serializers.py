@@ -550,6 +550,18 @@ class TeacherDetailSerializer(ProfileSerializerBase):
         ]
 
 
+class LessonCommentSerializer(serializers.ModelSerializer):
+    """ Серилизация модели комментариев к урокам
+    """
+    student = ProfileSerializer()
+
+    class Meta:
+        model = models.LessonComment
+        fields = [
+            'id', 'student', 'comment', 'created_at'
+        ]
+
+
 class LessonSerializer(serializers.ModelSerializer):
     """ Серилизация модели всех уроков (только список без подробностей, видео и тд)
     """
@@ -566,6 +578,7 @@ class LessonRetrieveSerializer(LessonSerializer):
     """ Серилизация модели доступных уроков
     Для открытия конкретного урока доступного пользователю
     """
+    comments = LessonCommentSerializer(many=True)
 
     class Meta:
         model = models.Lesson
@@ -621,7 +634,7 @@ class AcademicPerformanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AcademicPerformance
         fields = [
-            'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent'
+            'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent', 'comment'
         ]
 
 
@@ -632,7 +645,7 @@ class AcademicPerformanceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AcademicPerformance
         fields = [
-            'student', 'lesson', 'teacher', 'grade', 'type_grade', 'late', 'absent'
+            'student', 'lesson', 'teacher', 'grade', 'type_grade', 'late', 'absent', 'comment'
         ]
 
     def create(self, validated_data):

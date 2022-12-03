@@ -107,11 +107,54 @@
                 </div>
             </div>
         </div>
-        <h4>Описание урока</h4>
-        <div class="card radius-15">
-            <div class="card-body">
-                <div class="row">
-                    <p class="mx-4 my-2">{{ lesson.description }}</p>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Description"><span
+                    class="p-tab-name">Описание</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Comments"><span
+                    class="p-tab-name">Комментарии</span><i class="bx bx-donate-blood font-24 d-sm-none"></i></a>
+            </li>
+        </ul>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="Description">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Описание урока</h4>
+                        </div>
+                        <div class="row">
+                            <p class="mx-4 my-2">{{ lesson.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade show" id="Comments">
+                <div class="card shadow-none border mb-0 radius-15">
+                    <div class="card-body">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <h4 class="mb-0">Комментарии студентов</h4>
+                        </div>
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Студент</th>
+                                <th scope="col">Дата комментария</th>
+                                <th scope="col">Комментарий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for comment in lesson.comments.all %}
+                                <tr>
+                                    <th scope="row">{{ comment.id }}</th>
+                                    <td>{{ comment.student.user.first_name }} {{ comment.student.user.last_name }}</td>
+                                    <td>{{ comment.created_at }}</td>
+                                    <td>{{ comment.comment }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
