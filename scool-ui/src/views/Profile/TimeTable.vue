@@ -117,7 +117,8 @@ export default {
           let eventDate = Date.parse(event.date)
           this.calendarOptions.events.push({
             title: event.group.name + ' ' + event.lesson.theme,
-            date: eventDate
+            date: eventDate,
+            url: 'my-courses/' + event.lesson.course.id + '/lesson/' + event.lesson.id
           })
         }
       }
