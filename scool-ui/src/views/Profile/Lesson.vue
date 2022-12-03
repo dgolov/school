@@ -66,12 +66,11 @@
             <h4 class="mt-4" style="color: green; margin: auto">Комментарий успешно отправлен</h4>
           </div>
         </div>
-        </div>
-        <div class="col-xl-2 col-lg-3"></div>
-        <div class="col-xl-10 col-lg-9">
-          <div class="cabinet-copy">
-            © Академия будущего «ХОД», 2022
-          </div>
+      </div>
+      <div class="col-xl-2 col-lg-3"></div>
+      <div class="col-xl-10 col-lg-9">
+        <div class="cabinet-copy">
+          © Академия будущего «ХОД», 2022
         </div>
       </div>
     </div>
