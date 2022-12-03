@@ -634,7 +634,7 @@ class AcademicPerformanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AcademicPerformance
         fields = [
-            'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent'
+            'id', 'student', 'lesson', 'teacher', 'date', 'grade', 'type_grade', 'late', 'absent', 'comment'
         ]
 
 
@@ -645,7 +645,7 @@ class AcademicPerformanceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AcademicPerformance
         fields = [
-            'student', 'lesson', 'teacher', 'grade', 'type_grade', 'late', 'absent'
+            'student', 'lesson', 'teacher', 'grade', 'type_grade', 'late', 'absent', 'comment'
         ]
 
     def create(self, validated_data):
