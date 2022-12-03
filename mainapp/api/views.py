@@ -342,6 +342,7 @@ class LessonsDetailView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
         try:
             lesson_objects = models.Lesson.objects.get(
                 pk=kwargs.get('pk'),
@@ -349,8 +350,10 @@ class LessonsDetailView(APIView):
             )
         except models.Lesson.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
         if not lesson_objects.is_active:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
         serializer = serializers.LessonRetrieveSerializer(lesson_objects, many=False)
         return Response(serializer.data)
 
@@ -397,12 +400,14 @@ class TimetableViewSet(viewsets.ModelViewSet):
             data_check_status = check_correct_data_for_add_in_timetable(request.user.profile, request.data)
             if data_check_status != 202:
                 return Response(status=data_check_status)
+
             serializer = serializers.TimetableCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
+
         elif request.user.profile.user_group == 'student':
             return Response(status=status.HTTP_403_FORBIDDEN)
 
@@ -425,6 +430,7 @@ class AcademicPerformanceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         item_profile = self.request.user.profile
+
         if item_profile.user_group == 'student':
             return models.AcademicPerformance.objects.filter(student=item_profile)
         elif item_profile.user_group == 'teacher':
@@ -475,7 +481,9 @@ class EditPhotoDescription(APIView):
         photo = self.get_queryset()
         if request.user.profile != photo.for_profile:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
         serializer = serializers.PhotoUpdateDescriptionSerializer(data=self.request.data)
+
         if serializer.is_valid():
             serializer.update(instance=photo, validated_data=self.request.data)
             return Response(status=status.HTTP_202_ACCEPTED)
@@ -519,6 +527,7 @@ class DeletePhotoView(DestroyAPIView):
             instance = self.get_object()
         except models.Photo.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
         if instance.for_profile == self.request.user.profile:
             if instance == self.request.user.profile.avatar:
                 self.request.user.profile.avatar = None
