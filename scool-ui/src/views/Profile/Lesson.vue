@@ -54,7 +54,18 @@
                 </a>
               </div>
             </div>
+            <div v-if="$store.state.profileInfo.user_group === 'student' && !sendSuccess">
+              <form class="form-control">
+                <p>Отправить комментарий к уроку</p>
+                <textarea class="w-100 my-4 comment-area" v-model="comment"></textarea>
+                <button type="button" @click="sendComment()" class="cabinet-link-button">Отправить</button>
+              </form>
+            </div>
           </div>
+          <div v-if="sendSuccess">
+            <h4 class="mt-4" style="color: green; margin: auto">Комментарий успешно отправлен</h4>
+          </div>
+        </div>
         </div>
         <div class="col-xl-2 col-lg-3"></div>
         <div class="col-xl-10 col-lg-9">
@@ -68,6 +79,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Navbar from "../../components/Navbar";
 import CourseInfo from "../../components/Course/CourseInfo";
 import {requestsMixin} from "../../components/mixins/requestsMixin";
@@ -78,6 +90,13 @@ import ProfileMenu from "../../components/Profile/ProfileMenu";
 export default {
   title: 'Академия будущего | Личный кабинет',
   name: "Lesson",
+
+  data() {
+    return {
+      comment: "",
+      sendSuccess: false
+    }
+  },
 
   components: {
     Navbar, CourseInfo, ProfileMenu
@@ -94,7 +113,38 @@ export default {
 
   created() {
     this.createGetRequest(`/courses/${this.courseId}/lessons/${this.lessonId}/`)
-  }
+  },
+
+  methods: {
+    async sendComment() {
+      if (!this.comment) {
+        console.log(111)
+        return
+      }
+      let data = {
+        "user": this.$store.state.authUser.id,
+        "comment": this.comment,
+      }
+      const axiosInstance = axios.create(this.base);
+      await axiosInstance({
+        url: `/courses/${this.courseId}/lessons/${this.lessonId}/`,
+        method: "post",
+        data: data
+      })
+          .then(() => {
+            this.comment = ''
+            this.sendSuccess = true
+          })
+          .catch((error) => {
+            if (error.request.status === 401) {
+              // Если 401 ошибка - токен просрочен, обновляем его и заново запрашиваем данные
+              this.refreshToken();
+            } else {
+              console.log(error.request);
+            }
+          })
+    },
+  },
 }
 </script>
 
@@ -118,5 +168,12 @@ export default {
   font-weight: 700;
   margin-bottom: 30px;
   background: linear-gradient(271.4deg, #27aae1 0.31%, #d851ff 99.71%);
+}
+
+.comment-area {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  height: 150px;
+  resize: none;
 }
 </style>
