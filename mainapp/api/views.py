@@ -351,6 +351,24 @@ class LessonsDetailView(APIView):
         serializer = serializers.LessonRetrieveSerializer(lesson_objects, many=False)
         return Response(serializer.data)
 
+    def post(self, *args, **kwargs):
+        try:
+            lesson_objects = models.Lesson.objects.get(
+                pk=kwargs.get('pk'),
+                course=kwargs.get('course_pk')
+            )
+        except models.Lesson.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            student = models.Student.objects.get(pk=self.request.data.get('user'))
+        except models.Student.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        new_comment = models.LessonComment.objects.create(student=student, comment=self.request.data.get('comment'))
+        lesson_objects.comments.add(new_comment)
+
+        return Response(status=status.HTTP_201_CREATED)
 
 # TIMETABLE AND ACADEMIC PERFORMANCE
 

@@ -227,3 +227,11 @@ class CityAdmin(admin.ModelAdmin):
     """
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
+
+
+@admin.register(models.LessonComment)
+class LessonCommentAdmin(admin.ModelAdmin):
+    """ Отображение списка комментариев к урокам
+    """
+    list_display = ['id', 'student', 'created_at']
+    list_display_links = ['id', 'student']
