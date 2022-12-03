@@ -96,25 +96,25 @@ export default {
     this.loadEvents()
     if (this.$store.state.profileInfo.user_group !== 'student') {
       this.addButton = true;
-      this.courseList = this.$store.state.profileInfo.courses
-      this.groupList = this.$store.state.profileInfo.group_list
+      this.courseList = this.$store.state.profileInfo.courses;
+      this.groupList = this.$store.state.profileInfo.group_list;
     }
   },
 
   methods: {
     setClassList(isFinished) {
-      let classList = this.defaultClassList
+      let classList = this.defaultClassList;
       if (isFinished) {
-        classList += this.finished
+        classList += this.finished;
       }
       return classList
     },
 
     async loadEvents() {
-      await this.createGetRequest('/timetable/')
+      await this.createGetRequest('/timetable/');
       if (this.responseData) {
         for (let event of this.responseData) {
-          let eventDate = Date.parse(event.date)
+          let eventDate = Date.parse(event.date);
           this.calendarOptions.events.push({
             title: event.group.name + ' ' + event.lesson.theme,
             date: eventDate,
@@ -142,7 +142,7 @@ export default {
       this.selectedCourse = false;
       this.groupId = 0;
       this.lessonId = 0;
-      this.date = ''
+      this.date = '';
     },
     //
     // async sendData() {
