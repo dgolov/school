@@ -73,10 +73,11 @@ export const requestsMixin = {
                         this.$store.commit("removeToken")
                         this.goTo('Home')
                     } else if (error.request.status === 400) {
-                        this.goTo(
+                    	window.location.href = '/profiles/auth';
+                        /*this.goTo(
                             'Auth',
                             {message: 'Необходимо авторизоваться в системе'}
-                        )
+                        )*/
                     }
                 })
             return access
