@@ -8,7 +8,7 @@
           <div class="cabinet-content">
             <div class="course">
               <div class="top-text">
-                <a href="#">Назад</a>
+                <a href="#" @click="goTo('MyCourses')">Назад</a>
                 {{ responseData[0].course.name }}
               </div>
               <div class="tbl">

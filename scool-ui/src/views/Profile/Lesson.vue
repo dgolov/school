@@ -8,7 +8,7 @@
           <div class="cabinet-content">
             <div class="course">
               <div class="top-text">
-                <a href="#">Назад</a>
+                <a href="#" @click="goToCourse(courseId)">Назад</a>
                 {{ responseData.course.name }} - {{ responseData.theme }}
               </div>
               <div class="tbl">
@@ -115,6 +115,10 @@ export default {
   },
 
   methods: {
+    goToCourse(id) {
+      this.$router.push({name: 'CourseSingle', params: {id: id}})
+    },
+
     async sendComment() {
       if (!this.comment) {
         console.log(111)
