@@ -8,7 +8,7 @@
           <div class="cabinet-content">
             <div class="course">
               <div class="top-text">
-                <a href="#">Назад</a>
+                <a href="#" @click="goToCourse(courseId)">Назад</a>
                 {{ responseData.course.name }} - {{ responseData.theme }}
               </div>
               <div class="tbl">
@@ -44,9 +44,9 @@
                 </div>
               </div>
               <div v-if="responseData.materials" class="mt-5">
-                <a href="#" @click="responseData.materials" download class="course-text">
-                  <button class="cabinet-link-button">Скачать материал к уроку</button>
-                </a>
+                <button @click="clickedDownload(responseData.materials)" class="cabinet-link-button">
+                  Скачать материал к уроку
+                </button>
               </div>
               <div v-if="responseData.material_link">
                 <a :href="responseData.material_link" class="course-text">
@@ -115,6 +115,14 @@ export default {
   },
 
   methods: {
+    clickedDownload(path){
+      window.open(path, 'Download');
+    },
+
+    goToCourse(id) {
+      this.$router.push({name: 'CourseSingle', params: {id: id}})
+    },
+
     async sendComment() {
       if (!this.comment) {
         console.log(111)

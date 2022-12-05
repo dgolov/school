@@ -495,6 +495,12 @@ class Lesson(models.Model):
         blank=True,
         null=True
     )
+    available_students = models.ManyToManyField(
+        Student,
+        blank=True,
+        verbose_name='Обучающиеся кому доступен урок',
+        related_name='available_students'
+    )
     material_link = models.CharField(max_length=150, verbose_name='Ссылка на материалы', blank=True, null=True)
     is_finished = models.ManyToManyField(
         Student,
