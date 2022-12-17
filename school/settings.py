@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'management.apps.ManagementConfig',
 
     'rest_framework',
+    'django_rest_passwordreset',
     'corsheaders',
     'celery',
     'django_celery_beat',
