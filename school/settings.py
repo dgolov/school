@@ -179,15 +179,11 @@ AUTHENTICATION_BACKENDS = (
 # REST
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
@@ -199,27 +195,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    # 'ROTATE_REFRESH_TOKENS': False,
-    # 'BLACKLIST_AFTER_ROTATION': True,
-    #
-    # 'ALGORITHM': 'HS256',
-    # 'SIGNING_KEY': SECRET_KEY,
-    # 'VERIFYING_KEY': None,
-    # 'AUDIENCE': None,
-    # 'ISSUER': None,
-    #
-    # 'AUTH_HEADER_TYPES': ('JWT',),
-    # 'USER_ID_FIELD': 'id',
-    # 'USER_ID_CLAIM': 'user_id',
-    #
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    # 'TOKEN_TYPE_CLAIM': 'token_type',
-    #
-    # 'JTI_CLAIM': 'jti',
-    #
-    # 'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    # 'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    # 'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
 
@@ -256,7 +232,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono',
-        # 'skin': 'office2013',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
@@ -282,32 +257,21 @@ CKEDITOR_CONFIGS = {
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
-            '/',  # put this to force next toolbar on new line
+            '/',
             {'name': 'yourcustomtools', 'items': [
-                # put the name of your editor.ui.addButton here
                 'Preview',
                 'Maximize',
-
             ]},
         ],
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        # 'height': 291,
-        # 'width': '100%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
-        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'toolbar': 'YourCustomToolbarConfig',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
-            # your extra plugins here
+            'uploadimage',
             'div',
             'autolink',
             'autoembed',
             'embedsemantic',
             'autogrow',
-            # 'devtools',
             'widget',
             'lineutils',
             'clipboard',
