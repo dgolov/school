@@ -28,8 +28,10 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/', views.UserRetrieveView.as_view(), name='user'),
     # Profile
-    # path('profile/<int:pk>/', PersonalProfileView.as_view(), name='profile'),
     path('profile/create/', views.ProfileCreateView.as_view(), name='create_profile'),
+    path('profile/reset-password/verify-token/', views.CustomPasswordTokenVerificationView.as_view(),
+         name='password_reset_verify_token'),
+    path('profile/reset-password/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('profile/<int:pk>/friends/', views.FriendsListView.as_view(), name='friends'),
     path('profile/<int:pk>/followers/', views.FollowersListView.as_view(), name='followers'),
     path('profile/<int:pk>/subscriptions/', views.OutRequestsListView.as_view(), name='subscriptions'),
