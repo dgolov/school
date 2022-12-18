@@ -26,6 +26,8 @@ import Settings from "../views/Profile/Settings";
 import Games from "../views/Profile/Games";
 import GroupChatSettings from "../views/Messages/GroupChatSettings";
 import PageNotFound from "../views/PageNotFound"
+import ForgotPassword from "../views/Profile/ForgotPassword"
+import ResetPassword from "../views/Profile/ResetPassword"
 
 Vue.use(VueRouter)
 
@@ -231,6 +233,23 @@ const routes = [
     path: '/profile/:id/achievement',
     name: 'Achievement',
     component: Achievement,
+    props: true,
+    meta:{
+      layout: "082022-layout"
+    }
+  },
+  {
+    path: '/profile/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+    meta:{
+      layout: "082022-layout"
+    }
+  },
+  {
+    path: '/profile/reset-password/:token',
+    name: 'ResetPassword',
+    component: ResetPassword,
     props: true,
     meta:{
       layout: "082022-layout"

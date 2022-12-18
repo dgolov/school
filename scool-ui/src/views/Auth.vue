@@ -24,7 +24,9 @@
                 </div>
                 <button type="button" class="my-4 button button__accent w-50" @click="login()">Войти</button>
               </form>
-              <h6 class="left-align"><a href="#">Забыли пароль?</a></h6>
+              <h6 class="left-align">
+                <a href="#" @click="goTo('ForgotPassword')">Забыли пароль?</a>
+              </h6>
               <h6 class="left-align">У вас еще нет аккаунта?
                 <a href="#" @click="setAuthMode('signUp')">Зарегистрироваться</a>
               </h6>
@@ -125,7 +127,7 @@ export default {
   created() {
     if (this.$store.state.isAuthenticated) {
       // Если пользователь вс системе - выгоняем его отсюда
-      this.goTo('Home')
+      this.goTo('MyProfile')
     }
   },
 
