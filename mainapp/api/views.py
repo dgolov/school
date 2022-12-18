@@ -1,5 +1,13 @@
+from datetime import timedelta
+
+from django.core.mail import send_mail
+from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status, filters
+from django_rest_passwordreset.signals import reset_password_token_created
+from django_rest_passwordreset.models import ResetPasswordToken
+from django_rest_passwordreset.views import get_password_reset_token_expiry_time
+from django.utils import timezone
+from rest_framework import viewsets, status, filters, parsers, renderers
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
@@ -12,6 +20,7 @@ from .classes import BuyingCourseManager
 from .methods import get_normalize_phone
 from .mixins import PhotoManagerMixin, AddFriendMixin, MessageMixin
 from . import serializers
+from .serializers import CustomTokenSerializer
 from .utils import (
     get_serializer_to_display_the_profile,
     check_correct_data_for_add_in_timetable, delete_file,
@@ -734,3 +743,55 @@ class RequestsViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
             return IsAdminUser()
+
+
+class CustomPasswordResetView:
+    @receiver(reset_password_token_created)
+    def password_reset_token_created(sender, reset_password_token, *args, **kwargs):
+        """ Handles password reset tokens
+            When a token is created, an e-mail needs to be sent to the user
+        """
+        reset_url = f'https://f-academy.ru/{reset_password_token}'
+        message = f"Добрый день!\nСсылка для сброса пароля: {reset_url}\n\n" \
+                  f"Это письмо создано автоматически с сайта f-academy.ru\n"
+        email_from = 'info@f-academy.ru'
+        send_mail("Сброс пароля f-academy.ru", message, email_from, ['dgolov@icloud.com'], fail_silently=False)
+
+
+class CustomPasswordTokenVerificationView(APIView):
+    """ An Api View which provides a method to verifiy that a given pw-reset token is valid before actually
+    confirming the reset.
+    """
+    throttle_classes = ()
+    permission_classes = ()
+    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
+    renderer_classes = (renderers.JSONRenderer,)
+    serializer_class = CustomTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        token = serializer.validated_data['token']
+
+        # get token validation time
+        password_reset_token_validation_time = get_password_reset_token_expiry_time()
+
+        # find token
+        reset_password_token = ResetPasswordToken.objects.filter(key=token).first()
+
+        if reset_password_token is None:
+            return Response({'status': 'invalid'}, status=status.HTTP_404_NOT_FOUND)
+
+        # check expiry date
+        expiry_date = reset_password_token.created_at + timedelta(hours=password_reset_token_validation_time)
+
+        if timezone.now() > expiry_date:
+            # delete expired token
+            reset_password_token.delete()
+            return Response({'status': 'expired'}, status=status.HTTP_404_NOT_FOUND)
+
+        # check if user has password to change
+        if not reset_password_token.user.has_usable_password():
+            return Response({'status': 'irrelevant'})
+
+        return Response({'status': 'OK'})

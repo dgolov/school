@@ -139,6 +139,10 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
         ]
 
 
+class CustomTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+
+
 class PhotoSerializer(serializers.ModelSerializer):
     """ Серилизация модели фотографий
     """
