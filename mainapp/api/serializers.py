@@ -140,6 +140,8 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
 
 
 class CustomTokenSerializer(serializers.Serializer):
+    """ Серилизация токена сброса пароля
+    """
     token = serializers.CharField()
 
 
