@@ -751,11 +751,13 @@ class CustomPasswordResetView:
         """ Handles password reset tokens
             When a token is created, an e-mail needs to be sent to the user
         """
-        reset_url = f'https://f-academy.ru/{reset_password_token}'
+        reset_url = f'https://crm.f-academy.ru/profiles/profile/reset-password/{reset_password_token.key}'
         message = f"Добрый день!\nСсылка для сброса пароля: {reset_url}\n\n" \
                   f"Это письмо создано автоматически с сайта f-academy.ru\n"
         email_from = 'info@f-academy.ru'
-        send_mail("Сброс пароля f-academy.ru", message, email_from, ['dgolov@icloud.com'], fail_silently=False)
+        send_mail(
+            "Сброс пароля f-academy.ru", message, email_from, [reset_password_token.user.email], fail_silently=False
+        )
 
 
 class CustomPasswordTokenVerificationView(APIView):
