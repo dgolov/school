@@ -8,13 +8,16 @@
           </div>
           <div class="auth__auth white-block">
             <div id="signInForm">
+              <div class="mb-4" v-if="showErrorMessage">
+                <p class="errors" v-for="message in errorMessage">{{ message }}</p>
+              </div>
               <h3 class="mb-4">Восстановление пароя</h3>
-              <form action="#" method="get" class="form" id="formLogin">
+              <form action="#" method="get" class="form" id="formLogin" v-if="showResetForm">
                 <div class="mb-3">
                   <label class="form-label" for="Password1">Введите новый пароль</label>
                   <input v-model="newPassword" class="form-control" type="password" name="login" id="Password1"
                          placeholder="Введите новый пароль..." required>
-                  <label class="form-label" for="Password12">Повторите пароль</label>
+                  <label class="form-label mt-2" for="Password12">Повторите пароль</label>
                   <input v-model="newPassword2" class="form-control" type="password" name="login" id="Password12"
                          placeholder="Повторите пароль..." required>
                 </div>
@@ -52,7 +55,9 @@ export default {
     return {
       newPassword: '',
       newPassword2: '',
-      showErrorMessage: false
+      errorMessage: [],
+      showErrorMessage: false,
+      showResetForm: false
     }
   },
 
@@ -76,11 +81,12 @@ export default {
       axios
           .post(`${this.$store.getters.getServerUrl}/profile/reset-password/verify-token/`, body)
           .then((response) => {
-            if (response.status === 200) {
-              console.log(response)
-            }
+            this.showResetForm = true;
           })
           .catch((error) => {
+            this.errorMessage = [
+                'Сессия восстановления пароля просрочена или не существует, пожалуйста повторите попытку заново.'
+            ]
             this.showErrorMessage = true;
             console.log(error);
             console.debug(error);
@@ -97,10 +103,11 @@ export default {
           .post(`${this.$store.getters.getServerUrl}/profile/reset-password/confirm/`, body)
           .then((response) => {
             if (response.status === 200) {
-              console.log(response)
+              this.goTo('Auth')
             }
           })
           .catch((error) => {
+            this.errorMessage = error.response.data.password
             this.showErrorMessage = true;
             console.log(error);
             console.debug(error);
@@ -116,5 +123,9 @@ export default {
   background-color: #fff;
   padding: 40px 80px;
   border-radius: 15px;
+}
+
+.errors {
+  color: red;
 }
 </style>
