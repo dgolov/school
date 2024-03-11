@@ -70,22 +70,12 @@ services:
     build: .
     working_dir: /home/app/web
     command: celery -A school worker -l INFO --pool=solo
-#    volumes:
-#      - ./project/:/usr/src/app/
     depends_on:
       - redis
       - web
       - db
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - DB_ENGINE=django.db.backends.postgresql_psycopg2
-      - DB_DATABASE=school_db
-      - DB_USER=school_db_admin
-      - DB_PASSWORD=FAcademy5671313
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DATABASE=postgres
+    env_file:
+      - ./.env.db
     links:
       - redis
   celery-beat:
@@ -96,16 +86,8 @@ services:
       - redis
       - web
       - db
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - DB_ENGINE=django.db.backends.postgresql_psycopg2
-      - DB_DATABASE=school_db
-      - DB_USER=school_db_admin
-      - DB_PASSWORD=FAcademy5671313
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DATABASE=postgres
+    env_file:
+      - ./.env.db
     links:
       - redis
 volumes:
